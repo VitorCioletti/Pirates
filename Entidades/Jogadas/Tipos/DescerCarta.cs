@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Entidades.Jogadas
+namespace ServidorPiratas.Entidades.Jogadas.Tipos
 {
     using Entidades.Cartas;
 
@@ -11,7 +11,7 @@ namespace ServidorPiratas.Entidades.Jogadas
             Carta = carta;
         }
 
-        public override void AplicaRegra(Mesa mesa)
+        public override void AplicarRegra(Mesa mesa)
         {
 
         }

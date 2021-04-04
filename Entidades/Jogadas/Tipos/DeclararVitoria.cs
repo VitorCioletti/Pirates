@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Entidades.Jogadas
+namespace ServidorPiratas.Entidades.Jogadas.Tipos
 {
     public class DeclararVitoria : Jogada
     {
@@ -7,7 +7,7 @@ namespace ServidorPiratas.Entidades.Jogadas
 
         }
 
-        public override void AplicaRegra(Mesa mesa)
+        public override void AplicarRegra(Mesa mesa)
         {
 
         }

@@ -1,5 +1,4 @@
-
-namespace ServidorPiratas.Entidades
+namespace ServidorPiratas.Entidades.Baralhos.Tipos
 {
     using Baralhos;
     using Cartas;

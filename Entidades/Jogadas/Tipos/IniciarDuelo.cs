@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Entidades.Jogadas
+namespace ServidorPiratas.Entidades.Jogadas.Tipos
 {
     public class IniciarDuelo: Jogada
     {
@@ -9,7 +9,7 @@ namespace ServidorPiratas.Entidades.Jogadas
             Defensor = defensor;
         }
 
-        public override void AplicaRegra(Mesa mesa)
+        public override void AplicarRegra(Mesa mesa)
         {
 
         }

@@ -1,8 +1,8 @@
 namespace ServidorPiratas.Entidades
 {
-    using Cartas.Tipos;
+    using Cartas.Tipos.Tripulacao;
     using Cartas;
-    using Jogadas;
+    using Jogadas.Tipos;
     using System.Collections.Generic;
 
     public class Jogador 

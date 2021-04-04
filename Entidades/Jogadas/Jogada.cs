@@ -20,6 +20,6 @@ namespace ServidorPiratas.Entidades.Jogadas
             Jogador = jogador;
         }
 
-        public abstract void AplicaRegra(Mesa mesa);
+        public abstract void AplicarRegra(Mesa mesa);
     }
 }

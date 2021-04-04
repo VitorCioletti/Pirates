@@ -1,7 +1,7 @@
 namespace ServidorPiratas.Entidades
 {
+    using Baralhos.Tipos;
     using Jogadas;
-    using Baralhos;
     using System.Collections.Generic;
     using System;
 
@@ -22,6 +22,8 @@ namespace ServidorPiratas.Entidades
         public Central BaralhoCentral { get; private set; }
 
         private Descarte BaralhoDescarte { get; set; }
+        
+        public Stack<Jogada> HistoricoJogadas { get; private set; }
 
         public Mesa(List<Jogador> jogadores)
         {
@@ -40,11 +42,14 @@ namespace ServidorPiratas.Entidades
             var jogador = jogada.Jogador;
 
             if (jogador == JogadorAtual)
-                jogada.AplicaRegra(this);
+            {
+                jogada.AplicarRegra(this);
+
+                HistoricoJogadas.Push(jogada);
+            }
             else
                 throw new Exception($"Não é a vez do jogador \"{jogador}\" jogar.");
         }
-
         public Jogador ObtemProximoJogador() 
         {
             var proximoJogador = OrdemDeJogadores.Dequeue();

@@ -7,7 +7,7 @@ namespace ServidorPiratas.Entidades.Jogadas.Tipos
 
         }
 
-        public override void AplicarRegra(Mesa mesa)
+        public override void AplicaRegra(Mesa mesa)
         {
 
         }

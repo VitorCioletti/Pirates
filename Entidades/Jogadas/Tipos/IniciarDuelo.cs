@@ -4,7 +4,7 @@ namespace ServidorPiratas.Entidades.Jogadas.Tipos
     {
         public IniciarDuelo(Jogador atacante, Jogador alvo) : base(atacante, alvo) {}
 
-        public override void AplicarRegra(Mesa mesa)
+        public override void AplicaRegra(Mesa mesa)
         {
 
         }

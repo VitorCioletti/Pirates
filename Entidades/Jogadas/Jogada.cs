@@ -23,6 +23,6 @@ namespace ServidorPiratas.Entidades.Jogadas
             Alvo = alvo;
         }
 
-        public abstract void AplicarRegra(Mesa mesa);
+        public abstract void AplicaRegra(Mesa mesa);
     }
 }

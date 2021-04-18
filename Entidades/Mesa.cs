@@ -43,7 +43,7 @@ namespace ServidorPiratas.Entidades
 
             if (realizador == JogadorAtual)
             {
-                jogada.AplicarRegra(this);
+                jogada.AplicaRegra(this);
 
                 HistoricoJogadas.Push(jogada);
             }

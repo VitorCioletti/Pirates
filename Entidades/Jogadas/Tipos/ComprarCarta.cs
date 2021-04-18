@@ -4,7 +4,7 @@ namespace ServidorPiratas.Entidades.Jogadas.Tipos
     {
         public ComprarCarta(Jogador jogador) : base(jogador) { }
 
-        public override void AplicarRegra(Mesa mesa)
+        public override void AplicaRegra(Mesa mesa)
         {
 
         }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>poc_ServidorPiratas</RootNamespace>
+    <RootNamespace>ServidorPiratas</RootNamespace>
   </PropertyGroup>
 
 </Project>

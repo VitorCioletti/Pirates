@@ -11,9 +11,6 @@ namespace ServidorPiratas.Entidades.Jogadas.Tipos
             Carta = carta;
         }
 
-        public override void AplicarRegra(Mesa mesa)
-        {
-
-        }
+        public override void AplicarRegra(Mesa mesa) => Carta.AplicarRegra(this, mesa);
     }
 }

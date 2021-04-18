@@ -10,14 +10,17 @@ namespace ServidorPiratas.Entidades.Jogadas
         public DateTime DataHora { get; private set; }
 
         // melhorar nome
-        public Jogador Jogador { get; private set; }
+        public Jogador Realizador { get; private set; }
 
-        public Jogada(Jogador jogador)
+        public Jogador Alvo { get; private set; }
+
+        public Jogada(Jogador realizador, Jogador alvo = null)
         {
             Id = Guid.NewGuid().ToString(); 
             DataHora = DateTime.UtcNow;
 
-            Jogador = jogador;
+            Realizador = realizador;
+            Alvo = alvo;
         }
 
         public abstract void AplicarRegra(Mesa mesa);

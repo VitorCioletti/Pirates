@@ -39,16 +39,16 @@ namespace ServidorPiratas.Entidades
 
         public void ProcessaJogada(Jogada jogada)
         {
-            var jogador = jogada.Jogador;
+            var realizador = jogada.Realizador;
 
-            if (jogador == JogadorAtual)
+            if (realizador == JogadorAtual)
             {
                 jogada.AplicarRegra(this);
 
                 HistoricoJogadas.Push(jogada);
             }
             else
-                throw new Exception($"Não é a vez do jogador \"{jogador}\" jogar.");
+                throw new Exception($"Não é a vez do jogador \"{realizador}\" jogar.");
         }
         public Jogador ObtemProximoJogador() 
         {

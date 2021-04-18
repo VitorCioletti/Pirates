@@ -4,6 +4,7 @@ namespace ServidorPiratas.Entidades
     using Cartas;
     using Jogadas.Tipos;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class Jogador 
     {
@@ -26,6 +27,8 @@ namespace ServidorPiratas.Entidades
         public ComprarCarta ComprarCarta() => new ComprarCarta(this);
 
         public IniciarDuelo IniciarDuelo(Jogador jogadorAtacado) => new IniciarDuelo(this, jogadorAtacado);
+
+        public int CalculaPontosDuelo() => Tripulacao.Sum(t => t.Tiros);
 
         public DeclararVitoria DeclararVitoria() => new DeclararVitoria(this);
 

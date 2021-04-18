@@ -8,6 +8,6 @@ namespace ServidorPiratas.Entidades.Cartas
 
         public Carta(string nome) => Nome = nome;
 
-        public abstract void AplicarRegra(Jogada jogada, Mesa mesa);
+        public abstract void AplicaEfeito(Jogada jogada, Mesa mesa);
     }
 }

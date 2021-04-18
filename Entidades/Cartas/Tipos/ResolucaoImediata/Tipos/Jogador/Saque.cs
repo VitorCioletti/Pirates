@@ -7,7 +7,7 @@ namespace ServidorPiratas.Entidades.Cartas.Tipos.ResolucaoImediata
     {
         public Saque(string nome) : base(nome) { }
 
-        public override void AplicarRegra(Jogada jogada, Mesa _)
+        public override void AplicaEfeito(Jogada jogada, Mesa _)
         {
             var realizador = jogada.Realizador;
             var alvo = jogada.Alvo;

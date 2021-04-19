@@ -9,7 +9,7 @@ namespace ServidorPiratas.Entidades.Jogadas
 
         public DateTime DataHora { get; private set; }
 
-        // melhorar nome
+        // TODO: melhorar nome
         public Jogador Realizador { get; private set; }
 
         public Jogador Alvo { get; private set; }

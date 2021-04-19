@@ -5,6 +5,7 @@ namespace ServidorPiratas.Entidades
     using Jogadas.Tipos;
     using System.Collections.Generic;
     using System.Linq;
+    using System;
 
     public class Jogador 
     {
@@ -21,10 +22,24 @@ namespace ServidorPiratas.Entidades
             Id = id;
             CartasNaMao = new List<Carta>();
         }
-        
-        public DescerCarta DescerCarta(Carta carta) => new DescerCarta(this, carta); 
 
-        public ComprarCarta ComprarCarta() => new ComprarCarta(this);
+        public DescerCarta DescerCarta(Carta carta)
+        {
+            if (!CartasNaMao.Contains(carta))
+                throw new Exception($"Jogador \"{Id}\" não possui carta \"{carta.Nome}\".");
+
+            return new DescerCarta(this, carta); 
+        }
+
+        public ComprarCarta ComprarCarta() 
+        {
+            var quantidadeMaximaCartas = 10;
+
+            if (CartasNaMao.Count >= quantidadeMaximaCartas)
+                throw new Exception("Limite de cartas na mão atingido.");
+
+            return new ComprarCarta(this);
+        }
 
         public IniciarDuelo IniciarDuelo(Jogador jogadorAtacado) => new IniciarDuelo(this, jogadorAtacado);
 

@@ -6,15 +6,6 @@ namespace ServidorPiratas.Entidades.Jogadas.Tipos
     {
         public ComprarCarta(Jogador jogador) : base(jogador) { }
 
-        public override void AplicaRegra(Mesa mesa)
-        {
-            var quantidadeMaximaCartas = 10;
-            var cartasNaMao = Realizador.CartasNaMao;
-
-            if (cartasNaMao.Count < quantidadeMaximaCartas)
-                cartasNaMao.Add(mesa.BaralhoCentral.ObtemTopo());
-            else
-                throw new Exception("Limite de cartas na mão atingido.");
-        }
+        public override void AplicaRegra(Mesa mesa) => Realizador.CartasNaMao.Add(mesa.BaralhoCentral.ObtemTopo());
     }
 }

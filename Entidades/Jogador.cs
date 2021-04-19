@@ -30,8 +30,6 @@ namespace ServidorPiratas.Entidades
 
         public int CalculaPontosDuelo() => Tripulacao.Sum(t => t.Tiros);
 
-        public DeclararVitoria DeclararVitoria() => new DeclararVitoria(this);
-
         public override string ToString() => Id;
 
         public override bool Equals(object obj) => obj is Jogador jogador && this == jogador; 

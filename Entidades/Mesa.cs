@@ -21,7 +21,7 @@ namespace ServidorPiratas.Entidades
 
         public Central BaralhoCentral { get; private set; }
 
-        private Descarte BaralhoDescarte { get; set; }
+        public Descarte BaralhoDescarte { get; set; }
         
         public Stack<Jogada> HistoricoJogadas { get; private set; }
 

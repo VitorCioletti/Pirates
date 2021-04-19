@@ -11,6 +11,12 @@ namespace ServidorPiratas.Entidades.Jogadas.Tipos
             Carta = carta;
         }
 
-        public override void AplicaRegra(Mesa mesa) => Carta.AplicaEfeito(this, mesa);
+        public override void AplicaRegra(Mesa mesa) 
+        {
+            Realizador.CartasNaMao.Remove(Carta);
+            mesa.BaralhoDescarte.InsereTopo(Carta);
+
+            Carta.AplicaEfeito(this, mesa);
+        }
     }
 }

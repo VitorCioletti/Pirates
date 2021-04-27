@@ -41,7 +41,7 @@ namespace ServidorPiratas.Entidades
             return new ComprarCarta(this);
         }
 
-        public IniciarDuelo IniciarDuelo(Jogador jogadorAtacado) => new IniciarDuelo(this, jogadorAtacado);
+        public Duelar IniciarDuelo(Jogador jogadorAtacado) => new Duelar(this, jogadorAtacado);
 
         public int CalculaPontosDuelo() => Tripulacao.Sum(t => t.Tiros);
 

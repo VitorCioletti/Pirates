@@ -1,10 +1,12 @@
 namespace ServidorPiratas.Entidades.Jogadas.Tipos
 {
-    public class IniciarDuelo: Jogada
+    using Cartas;
+
+    public class Duelar: Jogada
     {
         public Jogador Vitorioso { get; private set; }
 
-        public IniciarDuelo(Jogador atacante, Jogador alvo) : base(atacante, alvo) {}
+        public Duelar(Jogador atacante, Jogador alvo) : base(atacante, alvo) {}
 
         public override void AplicaRegra(Mesa mesa)
         {

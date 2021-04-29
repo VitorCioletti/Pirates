@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Entidades.Cartas.Tipos.ResolucaoImediata
+namespace ServidorPiratas.Entidades.Cartas.Tipos.ResolucaoImediata.Tipos.EmJogador
 {
     using System;
     using Acoes;

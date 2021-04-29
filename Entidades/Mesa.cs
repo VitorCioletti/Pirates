@@ -1,7 +1,7 @@
 namespace ServidorPiratas.Entidades
 {
     using Baralhos.Tipos;
-    using Jogadas;
+    using Acoes;
     using System.Collections.Generic;
     using System;
 
@@ -23,7 +23,7 @@ namespace ServidorPiratas.Entidades
 
         public Descarte BaralhoDescarte { get; set; }
         
-        public Stack<Jogada> HistoricoJogadas { get; private set; }
+        public Stack<Acao> HistoricoAcao { get; private set; }
 
         public Mesa(List<Jogador> jogadores)
         {
@@ -37,15 +37,15 @@ namespace ServidorPiratas.Entidades
             OrdemDeJogadores = _geraOrdemDeJogadores(jogadores);
         }
 
-        public void ProcessaJogada(Jogada jogada)
+        public void ProcessaAcao(Acao Acao)
         {
-            var realizador = jogada.Realizador;
+            var realizador = Acao.Realizador;
 
             if (realizador == JogadorAtual)
             {
-                jogada.AplicaRegra(this);
+                Acao.AplicaRegra(this);
 
-                HistoricoJogadas.Push(jogada);
+                HistoricoAcao.Push(Acao);
             }
             else
                 throw new Exception($"Não é a vez do jogador \"{realizador}\" jogar.");

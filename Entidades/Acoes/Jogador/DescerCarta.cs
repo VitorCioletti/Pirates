@@ -1,8 +1,8 @@
-namespace ServidorPiratas.Entidades.Jogadas.Tipos
+namespace ServidorPiratas.Entidades.Acoes.Tipos
 {
     using Entidades.Cartas;
 
-    public class DescerCarta : Jogada
+    public class DescerCarta : Acao
     {
         public Carta Carta { get; private set; }
 

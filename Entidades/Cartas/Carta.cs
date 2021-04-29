@@ -1,6 +1,6 @@
 namespace ServidorPiratas.Entidades.Cartas
 {
-    using Jogadas;
+    using Acoes;
 
     public abstract class Carta
     {
@@ -8,6 +8,6 @@ namespace ServidorPiratas.Entidades.Cartas
 
         public Carta(string nome) => Nome = nome;
 
-        public abstract void AplicaEfeito(Jogada jogada, Mesa mesa);
+        public abstract void AplicaEfeito(Acao Acao, Mesa mesa);
     }
 }

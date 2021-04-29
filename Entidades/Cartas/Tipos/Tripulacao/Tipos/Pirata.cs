@@ -1,6 +1,6 @@
 namespace ServidorPiratas.Entidades.Cartas.Tipos.Tripulacao
 {
-    using Jogadas;
+    using Acoes;
 
     public class Pirata : Tripulacao
     {

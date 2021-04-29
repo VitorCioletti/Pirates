@@ -1,11 +1,11 @@
-namespace ServidorPiratas.Entidades.Jogadas.Tipos
+namespace ServidorPiratas.Entidades.Acoes.Tipos
 {
     using System;
     using Cartas;
 
-    public class DescartarCarta: Jogada
+    public class DescartarCarta: Acao
     {
-        public string IdJogadaOrigem { get; private set; }
+        public string IdAcaoOrigem { get; private set; }
 
         public Carta CartaDescartada { get; private set; }
 

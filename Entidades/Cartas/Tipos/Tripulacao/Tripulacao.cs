@@ -1,4 +1,4 @@
-using ServidorPiratas.Entidades.Jogadas;
+using ServidorPiratas.Entidades.Acoes;
 
 namespace ServidorPiratas.Entidades.Cartas.Tipos.Tripulacao
 {
@@ -8,6 +8,6 @@ namespace ServidorPiratas.Entidades.Cartas.Tipos.Tripulacao
 
         public int Tiros { get; protected set; }
 
-        public override void AplicaEfeito(Jogada _, Mesa __) {}
+        public override void AplicaEfeito(Acao _, Mesa __) {}
     }
 }

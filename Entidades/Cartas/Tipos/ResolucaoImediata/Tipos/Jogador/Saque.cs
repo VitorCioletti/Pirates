@@ -1,16 +1,16 @@
 namespace ServidorPiratas.Entidades.Cartas.Tipos.ResolucaoImediata
 {
     using System;
-    using Jogadas;
+    using Acoes;
 
     public class Saque : ResolucaoImediata
     {
         public Saque(string nome) : base(nome) { }
 
-        public override void AplicaEfeito(Jogada jogada, Mesa _)
+        public override void AplicaEfeito(Acao Acao, Mesa _)
         {
-            var realizador = jogada.Realizador;
-            var alvo = jogada.Alvo;
+            var realizador = Acao.Realizador;
+            var alvo = Acao.Alvo;
 
             if (alvo != null)
             {

@@ -1,8 +1,8 @@
-namespace ServidorPiratas.Entidades.Jogadas
+namespace ServidorPiratas.Entidades.Acoes
 {
     using System;
 
-    public abstract class Jogada
+    public abstract class Acao
     {
 
         public string Id { get; private set; }
@@ -14,7 +14,7 @@ namespace ServidorPiratas.Entidades.Jogadas
 
         public Jogador Alvo { get; private set; }
 
-        public Jogada(Jogador realizador, Jogador alvo = null)
+        public Acao(Jogador realizador, Jogador alvo = null)
         {
             Id = Guid.NewGuid().ToString(); 
             DataHora = DateTime.UtcNow;

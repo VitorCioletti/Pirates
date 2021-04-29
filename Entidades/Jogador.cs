@@ -2,7 +2,7 @@ namespace ServidorPiratas.Entidades
 {
     using Cartas.Tipos.Tripulacao;
     using Cartas;
-    using Jogadas.Tipos;
+    using Acoes.Tipos;
     using System.Collections.Generic;
     using System.Linq;
     using System;
@@ -11,7 +11,7 @@ namespace ServidorPiratas.Entidades
     {
         public string Id { get; private set; }
 
-        public int JogadasDisponiveis { get; set; }
+        public int AcaoDisponiveis { get; set; }
 
         public List<Carta> CartasNaMao { get; set; } 
 

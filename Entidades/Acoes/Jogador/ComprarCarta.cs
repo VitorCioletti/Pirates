@@ -1,8 +1,8 @@
-namespace ServidorPiratas.Entidades.Jogadas.Tipos
+namespace ServidorPiratas.Entidades.Acoes.Tipos
 {
     using System;
 
-    public class ComprarCarta : Jogada
+    public class ComprarCarta : Acao
     {
         public ComprarCarta(Jogador jogador) : base(jogador) { }
 

@@ -47,7 +47,9 @@ namespace ServidorPiratas.Entidades
 
         public override string ToString() => Id;
 
-        public override bool Equals(object obj) => obj is Jogador jogador && this == jogador; 
+        public override bool Equals(object obj) => obj is Jogador jogador && this == jogador;
+
+        public override int GetHashCode() => Id.GetHashCode();
 
         public static bool operator ==(Jogador jogador1, Jogador jogador2) => jogador1.Id == jogador2.Id;
 

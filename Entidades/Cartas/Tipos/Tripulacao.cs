@@ -1,7 +1,7 @@
-using ServidorPiratas.Entidades.Acoes;
-
-namespace ServidorPiratas.Entidades.Cartas.Tipos.Tripulacao
+namespace ServidorPiratas.Entidades.Cartas.Tipos
 {
+    using Acoes;
+
     public abstract class Tripulacao : Carta
     {
         public Tripulacao(string nome) : base(nome) { }

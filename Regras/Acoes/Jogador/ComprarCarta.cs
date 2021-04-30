@@ -6,6 +6,6 @@ namespace ServidorPiratas.Regras.Acoes.Tipos.Jogador
     {
         public ComprarCarta(Jogador jogador) : base(jogador) { }
 
-        public override void AplicaRegra(Mesa mesa) => Realizador.CartasNaMao.Add(mesa.BaralhoCentral.ObtemTopo());
+        public override void AplicaRegra(Mesa mesa) => Realizador.Mao.Add(mesa.BaralhoCentral.ObtemTopo());
     }
 }

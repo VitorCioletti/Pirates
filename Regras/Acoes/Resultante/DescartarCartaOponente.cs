@@ -14,7 +14,7 @@ namespace ServidorPiratas.Regras.Acoes.Tipos.Resultante
 
         public override void AplicaRegra(Mesa mesa)
         {
-            if (Alvo.CartasNaMao.Remove(CartaDescartada))
+            if (Alvo.Mao.Remove(CartaDescartada))
                 mesa.BaralhoDescarte.InsereTopo(CartaDescartada);
             else
                 throw new Exception(

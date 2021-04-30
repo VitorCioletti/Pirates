@@ -15,11 +15,11 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
             if (alvo != null)
             {
-                var posicaoCartaSaqueada = _calculaCartaSaqeuada(alvo.CartasNaMao.Count);
-                var cartaSaqueada = alvo.CartasNaMao[posicaoCartaSaqueada];
+                var posicaoCartaSaqueada = _calculaCartaSaqeuada(alvo.Mao.Count);
+                var cartaSaqueada = alvo.Mao[posicaoCartaSaqueada];
 
-                alvo.CartasNaMao.RemoveAt(posicaoCartaSaqueada);
-                realizador.CartasNaMao.Add(cartaSaqueada);
+                alvo.Mao.RemoveAt(posicaoCartaSaqueada);
+                realizador.Mao.Add(cartaSaqueada);
             }
             else
                 throw new Exception("Não é possível aplicar regra da carta sem um alvo.");

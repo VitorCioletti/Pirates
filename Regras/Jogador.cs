@@ -13,19 +13,19 @@ namespace ServidorPiratas.Regras
 
         public int AcaoDisponiveis { get; set; }
 
-        public List<Carta> CartasNaMao { get; set; } 
+        public List<Carta> Mao { get; set; } 
 
         public List<Tripulacao> Tripulacao { get; set; }
 
         public Jogador(string id)
         {
             Id = id;
-            CartasNaMao = new List<Carta>();
+            Mao = new List<Carta>();
         }
 
         public DescerCarta DescerCarta(Carta carta)
         {
-            if (!CartasNaMao.Contains(carta))
+            if (!Mao.Contains(carta))
                 throw new Exception($"Jogador \"{Id}\" não possui carta \"{carta.Nome}\".");
 
             return new DescerCarta(this, carta); 
@@ -35,7 +35,7 @@ namespace ServidorPiratas.Regras
         {
             var quantidadeMaximaCartas = 10;
 
-            if (CartasNaMao.Count >= quantidadeMaximaCartas)
+            if (Mao.Count >= quantidadeMaximaCartas)
                 throw new Exception("Limite de cartas na mão atingido.");
 
             return new ComprarCarta(this);

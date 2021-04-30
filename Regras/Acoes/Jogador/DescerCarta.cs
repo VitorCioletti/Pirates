@@ -14,7 +14,7 @@ namespace ServidorPiratas.Regras.Acoes.Tipos.Jogador
 
         public override void AplicaRegra(Mesa mesa) 
         {
-            Realizador.CartasNaMao.Remove(Carta);
+            Realizador.Mao.Remove(Carta);
             mesa.BaralhoDescarte.InsereTopo(Carta);
 
             Carta.AplicaEfeito(this, mesa);

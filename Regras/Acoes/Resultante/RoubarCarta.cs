@@ -1,7 +1,7 @@
-namespace ServidorPiratas.Entidades.Acoes.Tipos.Resultante
+namespace ServidorPiratas.Regras.Acoes.Tipos.Resultante
 {
     using Cartas;
-    using Entidades;
+    using Regras;
     using System;
 
     public class RoubarCarta: Acao

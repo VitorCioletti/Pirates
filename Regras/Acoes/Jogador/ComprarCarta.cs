@@ -1,6 +1,6 @@
-namespace ServidorPiratas.Entidades.Acoes.Tipos.Jogador
+namespace ServidorPiratas.Regras.Acoes.Tipos.Jogador
 {
-    using Entidades;
+    using Regras;
 
     public class ComprarCarta : Acao
     {

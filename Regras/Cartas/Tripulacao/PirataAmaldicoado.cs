@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Entidades.Cartas.Tripulacao
+namespace ServidorPiratas.Regras.Cartas.Tripulacao
 {
     using Tipos;
 

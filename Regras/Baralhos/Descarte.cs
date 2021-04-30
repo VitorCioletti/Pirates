@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Entidades.Baralhos
+namespace ServidorPiratas.Regras.Baralhos
 {
     using Cartas;
 

@@ -1,7 +1,7 @@
-namespace ServidorPiratas.Entidades.Acoes.Tipos.Jogador
+namespace ServidorPiratas.Regras.Acoes.Tipos.Jogador
 {
-    using Entidades.Cartas;
-    using Entidades;
+    using Regras.Cartas;
+    using Regras;
 
     public class DescerCarta : Acao
     {

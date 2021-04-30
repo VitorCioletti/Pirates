@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Entidades.Cartas.ResolucaoImediata
+namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
     using System;
     using Acoes;

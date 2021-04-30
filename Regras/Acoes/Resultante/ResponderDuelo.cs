@@ -1,6 +1,6 @@
-namespace ServidorPiratas.Entidades.Acoes.Tipos.Resultante
+namespace ServidorPiratas.Regras.Acoes.Tipos.Resultante
 {
-    using Entidades;
+    using Regras;
 
     public class ResponderDuelo : Acao
     {

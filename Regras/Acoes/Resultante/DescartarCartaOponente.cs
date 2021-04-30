@@ -1,7 +1,7 @@
-namespace ServidorPiratas.Entidades.Acoes.Tipos.Resultante
+namespace ServidorPiratas.Regras.Acoes.Tipos.Resultante
 {
     using System;
-    using Entidades;
+    using Regras;
     using Cartas;
 
     public class DescartarCartaOponente: Acao

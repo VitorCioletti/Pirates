@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Entidades
+namespace ServidorPiratas.Regras
 {
     using Acoes;
     using Baralhos;

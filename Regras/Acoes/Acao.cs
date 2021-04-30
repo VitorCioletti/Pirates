@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Entidades.Acoes
+namespace ServidorPiratas.Regras.Acoes
 {
     using System;
 

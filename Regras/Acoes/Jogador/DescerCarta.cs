@@ -1,7 +1,9 @@
 namespace ServidorPiratas.Regras.Acoes.Tipos.Jogador
 {
+    using Cartas.Tipos;
     using Regras.Cartas;
     using Regras;
+    using System;
 
     public class DescerCarta : Acao
     {
@@ -14,6 +16,12 @@ namespace ServidorPiratas.Regras.Acoes.Tipos.Jogador
 
         public override void AplicaRegra(Mesa mesa) 
         {
+            if (Carta.GetType() == typeof(Tesouro))
+                throw new Exception($"Não é permitido jogar cartas \"{nameof(Tesouro)}\".");
+
+            if (!Realizador.Mao.Contains(Carta))
+                throw new Exception($"O jogador \"{Realizador.Id}\" não possui a carta \"{Carta.Nome}\".");
+
             Realizador.Mao.Remove(Carta);
             mesa.BaralhoDescarte.InsereTopo(Carta);
 

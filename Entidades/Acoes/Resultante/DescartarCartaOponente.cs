@@ -1,15 +1,16 @@
-namespace ServidorPiratas.Entidades.Acoes.Tipos
+namespace ServidorPiratas.Entidades.Acoes.Tipos.Resultante
 {
     using System;
+    using Entidades;
     using Cartas;
 
-    public class DescartarCarta: Acao
+    public class DescartarCartaOponente: Acao
     {
         public string IdAcaoOrigem { get; private set; }
 
         public Carta CartaDescartada { get; private set; }
 
-        public DescartarCarta(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
+        public DescartarCartaOponente(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
 
         public override void AplicaRegra(Mesa mesa)
         {

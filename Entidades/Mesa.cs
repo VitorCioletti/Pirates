@@ -1,7 +1,7 @@
 namespace ServidorPiratas.Entidades
 {
-    using Baralhos.Tipos;
     using Acoes;
+    using Baralhos;
     using System.Collections.Generic;
     using System;
 

@@ -1,6 +1,6 @@
-namespace ServidorPiratas.Entidades.Acoes.Tipos
+namespace ServidorPiratas.Entidades.Acoes.Tipos.Jogador
 {
-    using Cartas;
+    using Entidades;
 
     public class Duelar: Acao
     {

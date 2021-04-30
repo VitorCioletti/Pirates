@@ -15,6 +15,10 @@ namespace ServidorPiratas.Regras
 
         public List<Carta> Mao { get; set; } 
 
+        public Embarcacao Embarcacao { get; set; }
+
+        public List<Duelo> Canhoes { get ; set; }
+
         public List<Tripulacao> Tripulacao { get; set; }
 
         public Jogador(string id)

@@ -9,10 +9,7 @@ namespace ServidorPiratas.Regras.Acoes.Tipos.Jogador
     {
         public Carta Carta { get; private set; }
 
-        public DescerCarta(Jogador jogador, Carta carta) : base(jogador)
-        {
-            Carta = carta;
-        }
+        public DescerCarta(Jogador jogador, Carta carta) : base(jogador) => Carta = carta;
 
         public override void AplicaRegra(Mesa mesa) 
         {

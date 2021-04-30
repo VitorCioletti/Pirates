@@ -6,5 +6,10 @@ namespace ServidorPiratas.Entidades.Baralhos
     public abstract class Baralho
     {
         public Stack<Carta> Cartas { get; protected set; }
+
+        public void Embaralhar()
+        {
+            Cartas = Cartas;
+        }
     }
 }

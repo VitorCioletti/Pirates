@@ -1,6 +1,5 @@
-namespace ServidorPiratas.Entidades.Baralhos.Tipos
+namespace ServidorPiratas.Entidades.Baralhos
 {
-    using Baralhos;
     using Cartas;
     using System.Collections.Generic;
 

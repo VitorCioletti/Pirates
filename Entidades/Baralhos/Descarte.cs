@@ -1,6 +1,5 @@
-namespace ServidorPiratas.Entidades.Baralhos.Tipos
+namespace ServidorPiratas.Entidades.Baralhos
 {
-    using Baralhos;
     using Cartas;
 
     public class Descarte : Baralho

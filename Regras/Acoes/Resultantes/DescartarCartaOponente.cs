@@ -7,8 +7,6 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
     public class DescartarCartaOponente: Resultante
     {
-        public string IdAcaoOrigem { get; private set; }
-
         public Carta CartaDescartada { get; private set; }
 
         public DescartarCartaOponente(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}

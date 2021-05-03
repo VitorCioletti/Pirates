@@ -6,8 +6,6 @@ namespace ServidorPiratas.Regras.Acoes.Primarias
 
     public class Duelar: Primaria
     {
-        public Jogador Vitorioso { get; private set; }
-
         public Duelar(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
 
         public override void AplicaRegra(Mesa mesa)

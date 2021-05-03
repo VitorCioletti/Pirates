@@ -1,10 +1,11 @@
-namespace ServidorPiratas.Regras.Acoes.Tipos.Resultante
+namespace ServidorPiratas.Regras.Acoes.Resultantes
 {
-    using System;
-    using Regras;
     using Cartas;
+    using Regras;
+    using System;
+    using Tipos;
 
-    public class DescartarCartaOponente: Acao
+    public class DescartarCartaOponente: Resultante
     {
         public string IdAcaoOrigem { get; private set; }
 

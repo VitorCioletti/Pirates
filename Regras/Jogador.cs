@@ -1,6 +1,6 @@
 namespace ServidorPiratas.Regras
 {
-    using Acoes.Tipos.Jogador;
+    using Acoes.Primarias;
     using Cartas.Tipos;
     using Cartas;
     using System.Collections.Generic;
@@ -47,7 +47,14 @@ namespace ServidorPiratas.Regras
 
         public Duelar IniciarDuelo(Jogador jogadorAtacado) => new Duelar(this, jogadorAtacado);
 
-        public int CalculaPontosDuelo() => Tripulacao.Sum(t => t.Tiros) + Canhao.Tiros;
+        public int CalculaPontosDuelo()
+        {
+            var pontosDuelo = Tripulacao.Sum(t => t.Tiros);
+
+            pontosDuelo += Canhao != null ? Canhao.Tiros : 0;
+
+            return pontosDuelo;
+        }
 
         public override string ToString() => Id;
 

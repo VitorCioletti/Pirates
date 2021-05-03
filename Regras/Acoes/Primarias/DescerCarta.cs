@@ -1,11 +1,12 @@
-namespace ServidorPiratas.Regras.Acoes.Tipos.Jogador
+namespace ServidorPiratas.Regras.Acoes.Primarias
 {
     using Cartas.Tipos;
     using Regras.Cartas;
     using Regras;
     using System;
+    using Tipos;
 
-    public class DescerCarta : Acao
+    public class DescerCarta : Primarias
     {
         public Carta Carta { get; private set; }
 

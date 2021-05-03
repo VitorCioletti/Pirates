@@ -1,8 +1,9 @@
-namespace ServidorPiratas.Regras.Acoes.Tipos.Jogador
+namespace ServidorPiratas.Regras.Acoes.Primarias
 {
     using Regras;
+    using Tipos;
 
-    public class ComprarCarta : Acao
+    public class ComprarCarta : Primarias
     {
         public ComprarCarta(Jogador jogador) : base(jogador) { }
 

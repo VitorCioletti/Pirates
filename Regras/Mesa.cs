@@ -17,6 +17,10 @@ namespace ServidorPiratas.Regras
 
         public Jogador JogadorAtual { get; set; }
 
+        public bool EmDuelo { get; set; }
+
+        public Tuple<Jogador, Jogador> Duelistas { get; set; }
+
         public Queue<Jogador> OrdemDeJogadores { get; private set; }
 
         public Central BaralhoCentral { get; private set; }

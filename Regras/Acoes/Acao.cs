@@ -4,7 +4,6 @@ namespace ServidorPiratas.Regras.Acoes
 
     public abstract class Acao
     {
-
         public string Id { get; private set; }
 
         public DateTime DataHora { get; private set; }

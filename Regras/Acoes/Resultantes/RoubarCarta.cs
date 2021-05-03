@@ -1,10 +1,11 @@
-namespace ServidorPiratas.Regras.Acoes.Tipos.Resultante
+namespace ServidorPiratas.Regras.Acoes.Resultantes
 {
     using Cartas;
     using Regras;
     using System;
+    using Tipos;
 
-    public class RoubarCarta: Acao
+    public class RoubarCarta: Resultante
     {
         public string IdAcaoOrigem { get; private set; }
 

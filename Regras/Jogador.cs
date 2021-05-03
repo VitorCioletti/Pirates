@@ -17,7 +17,7 @@ namespace ServidorPiratas.Regras
 
         public Embarcacao Embarcacao { get; set; }
 
-        public List<Duelo> Canhoes { get ; set; }
+        public Duelo Canhao { get ; set; }
 
         public List<Tripulacao> Tripulacao { get; set; }
 
@@ -29,10 +29,10 @@ namespace ServidorPiratas.Regras
 
         public DescerCarta DescerCarta(Carta carta)
         {
-            if (!Mao.Contains(carta))
+            if (Mao.Contains(carta))
+                return new DescerCarta(this, carta);
+            else
                 throw new Exception($"Jogador \"{Id}\" não possui carta \"{carta.Nome}\".");
-
-            return new DescerCarta(this, carta); 
         }
 
         public ComprarCarta ComprarCarta() 
@@ -47,7 +47,7 @@ namespace ServidorPiratas.Regras
 
         public Duelar IniciarDuelo(Jogador jogadorAtacado) => new Duelar(this, jogadorAtacado);
 
-        public int CalculaPontosDuelo() => Tripulacao.Sum(t => t.Tiros);
+        public int CalculaPontosDuelo() => Tripulacao.Sum(t => t.Tiros) + Canhao.Tiros;
 
         public override string ToString() => Id;
 

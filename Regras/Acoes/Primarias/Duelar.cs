@@ -4,7 +4,7 @@ namespace ServidorPiratas.Regras.Acoes.Primarias
     using System;
     using Tipos;
 
-    public class Duelar: Primarias
+    public class Duelar: Primaria
     {
         public Jogador Vitorioso { get; private set; }
 

@@ -1,7 +1,7 @@
 namespace ServidorPiratas.Regras.Acoes.Tipos
 {
-    public abstract class Primarias : Acao
+    public abstract class Primaria : Acao
     {
-        public Primarias(Jogador realizador, Jogador alvo = null) : base(realizador, alvo) {}
+        public Primaria(Jogador realizador, Jogador alvo = null) : base(realizador, alvo) {}
     }
 }

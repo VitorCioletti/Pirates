@@ -6,7 +6,7 @@ namespace ServidorPiratas.Regras.Acoes.Primarias
     using System;
     using Tipos;
 
-    public class DescerCarta : Primarias
+    public class DescerCarta : Primaria
     {
         public Carta Carta { get; private set; }
 

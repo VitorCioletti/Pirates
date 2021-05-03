@@ -50,6 +50,7 @@ namespace ServidorPiratas.Regras
             else
                 throw new Exception($"Não é a vez do jogador \"{realizador}\" jogar.");
         }
+
         public Jogador ObtemProximoJogador() 
         {
             var proximoJogador = OrdemDeJogadores.Dequeue();

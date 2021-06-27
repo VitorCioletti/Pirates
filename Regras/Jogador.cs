@@ -11,7 +11,7 @@ namespace ServidorPiratas.Regras
     {
         public string Id { get; private set; }
 
-        public int AcaoDisponiveis { get; set; }
+        public int AcoesDisponiveis { get; set; }
 
         public List<Carta> Mao { get; set; } 
 

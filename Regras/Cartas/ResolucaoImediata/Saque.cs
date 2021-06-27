@@ -15,7 +15,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
             if (alvo != null)
             {
-                var posicaoCartaSaqueada = _calculaCartaSaqeuada(alvo.Mao.Count);
+                var posicaoCartaSaqueada = _calculaCartaSaqueada(alvo.Mao.Count);
                 var cartaSaqueada = alvo.Mao[posicaoCartaSaqueada];
 
                 alvo.Mao.RemoveAt(posicaoCartaSaqueada);
@@ -25,6 +25,6 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
                 throw new Exception("Não é possível aplicar regra da carta sem um alvo.");
         }
 
-        private int _calculaCartaSaqeuada(int quantidadeCartas) => new Random().Next(0, quantidadeCartas);
+        private int _calculaCartaSaqueada(int quantidadeCartas) => new Random().Next(0, quantidadeCartas);
     }
 }

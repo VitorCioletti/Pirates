@@ -1,13 +1,15 @@
-namespace ServidorPiratas.Regras.Baralhos
+namespace ServidorPiratas.Regras
 {
     using Cartas;
     using System.Collections.Generic;
 
-    public class Central : Baralho
+    public class BaralhoCentral
     {
-        public Central() => base.Cartas = _geraCartas();
+        private Stack<Carta> _cartas;
 
-        public Carta ObtemTopo() => Cartas.Pop();
+        public BaralhoCentral() => _cartas = _geraCartas();
+
+        public Carta ObtemTopo() => _cartas.Pop();
 
         public List<Carta> ObtemTopo(int quantidade)
         {

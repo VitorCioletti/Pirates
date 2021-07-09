@@ -9,8 +9,6 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
     {
         public Luneta(string nome) : base(nome) { }
 
-        public void AplicaEfeito(List<Carta> maoRealizador, List<Carta> maoAlvo) { }
-
         public override void AplicaEfeito(Acao acao, Mesa _) => 
             _aplicaEfeito(null, acao.Alvo.Mao);
 

@@ -1,7 +1,6 @@
 namespace ServidorPiratas.Regras
 {
     using Acoes;
-    using Baralhos;
     using System.Collections.Generic;
     using System;
 
@@ -23,9 +22,9 @@ namespace ServidorPiratas.Regras
 
         public Queue<Jogador> OrdemDeJogadores { get; private set; }
 
-        public Central BaralhoCentral { get; private set; }
+        public BaralhoCentral BaralhoCentral { get; private set; }
 
-        public Descarte BaralhoDescarte { get; set; }
+        public PilhaDescarte PilhaDescarte { get; set; }
         
         public Stack<Acao> HistoricoAcao { get; private set; }
 
@@ -34,8 +33,8 @@ namespace ServidorPiratas.Regras
             Id = Guid.NewGuid().ToString();
             DataHoraInicio = DateTime.UtcNow;
 
-            BaralhoCentral = new Central();
-            BaralhoDescarte = new Descarte();
+            BaralhoCentral = new BaralhoCentral();
+            PilhaDescarte = new PilhaDescarte();
 
             Jogadores = jogadores;
             OrdemDeJogadores = _geraOrdemDeJogadores(jogadores);

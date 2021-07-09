@@ -18,7 +18,7 @@ namespace ServidorPiratas.Regras.Acoes.Primarias
                 throw new Exception($"Não é permitido jogar cartas \"{nameof(Tesouro)}\".");
 
             Realizador.Mao.Remover(Carta);
-            mesa.BaralhoDescarte.InsereTopo(Carta);
+            mesa.PilhaDescarte.InsereTopo(Carta);
 
             Carta.AplicaEfeito(this, mesa);
         }

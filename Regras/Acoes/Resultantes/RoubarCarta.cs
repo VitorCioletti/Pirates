@@ -13,7 +13,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public RoubarCarta(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
 
-        public override void AplicaRegra(Mesa mesa)
+        public override void AplicarRegra(Mesa mesa)
         {
             Realizador.Mao.Adicionar(CartaRoubada);
             Alvo.Mao.Remover(CartaRoubada);

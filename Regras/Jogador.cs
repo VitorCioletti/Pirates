@@ -27,19 +27,13 @@ namespace ServidorPiratas.Regras
             Mao = new Mao(new List<Carta>());
         }
 
-        public DescerCarta DescerCarta(Carta carta)
-        {
-            if (Mao.Possui(carta))
-                return new DescerCarta(this, carta);
-            else
-                throw new Exception($"Jogador \"{Id}\" não possui carta \"{carta.Nome}\".");
-        }
+        public DescerCarta DescerCarta(Carta carta) => new DescerCarta(this, carta);
 
         public ComprarCarta ComprarCarta() => new ComprarCarta(this);
 
         public Duelar IniciarDuelo(Jogador jogadorAtacado) => new Duelar(this, jogadorAtacado);
 
-        public int CalculaPontosDuelo()
+        public int CalcularPontosDuelo()
         {
             var pontosDuelo = Tripulacao.Sum(t => t.Tiros);
 

@@ -13,12 +13,12 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
         public ResponderDuelo(Jogador realizador, Jogador alvo, Duelo canhao) : base(realizador, alvo) =>
             Canhao = canhao;
 
-        public override void AplicaRegra(Mesa mesa)
+        public override void AplicarRegra(Mesa mesa)
         {
             if (Canhao != null)
                 Realizador.Canhao = Canhao;
 
-            Vitorioso = Realizador.CalculaPontosDuelo() > Alvo.CalculaPontosDuelo() ? Realizador : Alvo;
+            Vitorioso = Realizador.CalcularPontosDuelo() > Alvo.CalcularPontosDuelo() ? Realizador : Alvo;
 
             Alvo.Tripulacao.Clear();
             Realizador.Tripulacao.Clear();

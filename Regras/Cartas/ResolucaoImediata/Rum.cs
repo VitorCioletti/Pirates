@@ -10,12 +10,12 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
         private int _cartasCompradas = 2;
 
-        public override void AplicaEfeito(Acao acao, Mesa mesa) => 
+        public override void AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicaEfeito(acao.Realizador.Mao, mesa.BaralhoCentral);
 
         internal void _aplicaEfeito(Mao maoRealizador, BaralhoCentral baralhoCentral)
         {
-            var cartasCompradas = baralhoCentral.ObtemTopo(_cartasCompradas);
+            var cartasCompradas = baralhoCentral.ObterTopo(_cartasCompradas);
             maoRealizador.Adicionar(cartasCompradas);
         }
 

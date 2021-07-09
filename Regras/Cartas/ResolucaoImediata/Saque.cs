@@ -11,7 +11,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
         public void AplicaEfeito(List<Carta> maoRealizador, List<Carta> maoAlvo) { }
 
-        public override void AplicaEfeito(Acao acao, Mesa _) => 
+        public override void AplicarEfeito(Acao acao, Mesa _) => 
             _aplicaEfeito(acao.Realizador.Mao, acao.Alvo.Mao);
 
         internal void _aplicaEfeito(Mao maoRealizador, Mao maoAlvo)

@@ -9,7 +9,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
         public ConvocarTripulacao(string nome) : base(nome) { }
 
 
-        public override void AplicaEfeito(Acao acao, Mesa mesa) => 
+        public override void AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicaEfeito(acao.Realizador.Tripulacao, mesa.PilhaDescarte);
 
         internal void _aplicaEfeito(List<Tripulacao> embarcacao, PilhaDescarte pilhaDescarte)

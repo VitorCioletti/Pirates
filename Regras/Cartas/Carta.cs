@@ -8,6 +8,6 @@ namespace ServidorPiratas.Regras.Cartas
 
         public Carta(string nome) => Nome = nome;
 
-        public abstract void AplicaEfeito(Acao Acao, Mesa mesa);
+        public abstract void AplicarEfeito(Acao Acao, Mesa mesa);
     }
 }

@@ -8,7 +8,7 @@ namespace ServidorPiratas.Regras.Acoes.Primarias
     {
         public Duelar(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
 
-        public override void AplicaRegra(Mesa mesa)
+        public override void AplicarRegra(Mesa mesa)
         {
             mesa.EmDuelo = true;
             mesa.Duelistas = new Tuple<Jogador, Jogador>(Realizador, Alvo);

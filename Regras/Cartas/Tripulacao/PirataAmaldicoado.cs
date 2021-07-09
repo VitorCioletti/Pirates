@@ -7,6 +7,6 @@ namespace ServidorPiratas.Regras.Cartas.Tripulacao
     {
         public PirataAmaldicoado(string nome) : base(nome) => Tiros = -1;
 
-        public override void AplicaEfeito(Acao acao, Mesa mesa) { }
+        public override void AplicarEfeito(Acao acao, Mesa mesa) { }
     }
 }

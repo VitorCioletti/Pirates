@@ -11,7 +11,7 @@ namespace ServidorPiratas.Regras
 
         public PilhaDescarte() => _cartas = new List<Carta>();
 
-        public void InsereTopo(Carta carta) => _cartas.Add(carta);
+        public void InserirTopo(Carta carta) => _cartas.Add(carta);
 
         public T Obter<T>() where T : Carta 
         {

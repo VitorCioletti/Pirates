@@ -46,7 +46,7 @@ namespace ServidorPiratas.Regras
 
             if (realizador == JogadorAtual)
             {
-                Acao.AplicaRegra(this);
+                Acao.AplicarRegra(this);
 
                 HistoricoAcao.Push(Acao);
             }

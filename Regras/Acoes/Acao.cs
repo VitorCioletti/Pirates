@@ -22,6 +22,6 @@ namespace ServidorPiratas.Regras.Acoes
             Alvo = alvo;
         }
 
-        public abstract void AplicaRegra(Mesa mesa);
+        public abstract void AplicarRegra(Mesa mesa);
     }
 }

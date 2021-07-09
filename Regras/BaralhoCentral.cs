@@ -7,20 +7,20 @@ namespace ServidorPiratas.Regras
     {
         private Stack<Carta> _cartas;
 
-        public BaralhoCentral() => _cartas = _geraCartas();
+        public BaralhoCentral() => _cartas = _gerarCartas();
 
-        public Carta ObtemTopo() => _cartas.Pop();
+        public Carta ObterTopo() => _cartas.Pop();
 
-        public List<Carta> ObtemTopo(int quantidade)
+        public List<Carta> ObterTopo(int quantidade)
         {
             var cartas = new List<Carta>();
 
             for (int i = 0; i >= quantidade; i++)
-                cartas.Add(ObtemTopo());
+                cartas.Add(ObterTopo());
 
             return cartas;
         }
 
-        private Stack<Carta> _geraCartas() => new Stack<Carta>();
+        private Stack<Carta> _gerarCartas() => new Stack<Carta>();
     }
 }

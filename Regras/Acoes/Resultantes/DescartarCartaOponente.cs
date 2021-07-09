@@ -13,11 +13,8 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public override void AplicaRegra(Mesa mesa)
         {
-            if (Alvo.Mao.Remove(CartaDescartada))
-                mesa.BaralhoDescarte.InsereTopo(CartaDescartada);
-            else
-                throw new Exception(
-                    $"Carta \"{CartaDescartada.Nome}\" não está na mão do jogador \"{Realizador.Id}\".");
+            Alvo.Mao.Remover(CartaDescartada);
+            mesa.BaralhoDescarte.InsereTopo(CartaDescartada);
         }
     }
 }

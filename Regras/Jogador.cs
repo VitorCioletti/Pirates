@@ -13,7 +13,7 @@ namespace ServidorPiratas.Regras
 
         public int AcoesDisponiveis { get; set; }
 
-        public List<Carta> Mao { get; set; } 
+        public Mao Mao { get; set; } 
 
         public Embarcacao Embarcacao { get; set; }
 
@@ -24,26 +24,18 @@ namespace ServidorPiratas.Regras
         public Jogador(string id)
         {
             Id = id;
-            Mao = new List<Carta>();
+            Mao = new Mao(new List<Carta>());
         }
 
         public DescerCarta DescerCarta(Carta carta)
         {
-            if (Mao.Contains(carta))
+            if (Mao.Possui(carta))
                 return new DescerCarta(this, carta);
             else
                 throw new Exception($"Jogador \"{Id}\" não possui carta \"{carta.Nome}\".");
         }
 
-        public ComprarCarta ComprarCarta() 
-        {
-            var quantidadeMaximaCartas = 10;
-
-            if (Mao.Count >= quantidadeMaximaCartas)
-                throw new Exception("Limite de cartas na mão atingido.");
-
-            return new ComprarCarta(this);
-        }
+        public ComprarCarta ComprarCarta() => new ComprarCarta(this);
 
         public Duelar IniciarDuelo(Jogador jogadorAtacado) => new Duelar(this, jogadorAtacado);
 

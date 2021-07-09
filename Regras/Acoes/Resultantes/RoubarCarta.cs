@@ -15,11 +15,8 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public override void AplicaRegra(Mesa mesa)
         {
-            if (Alvo.Mao.Remove(CartaRoubada))
-                Realizador.Mao.Add(CartaRoubada);
-            else
-                throw new Exception(
-                    $"Carta \"{CartaRoubada.Nome}\" não está na mão do jogador \"{Alvo.Id}\".");
+            Realizador.Mao.Adicionar(CartaRoubada);
+            Alvo.Mao.Remover(CartaRoubada);
         }
     }
 }

@@ -14,15 +14,12 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
         public override void AplicaEfeito(Acao acao, Mesa _) => 
             _aplicaEfeito(acao.Realizador.Mao, acao.Alvo.Mao);
 
-        internal void _aplicaEfeito(List<Carta> maoRealizador, List<Carta> maoAlvo)
+        internal void _aplicaEfeito(Mao maoRealizador, Mao maoAlvo)
         {
-            var posicaoCartaSaqueada = _calculaCartaSaqueada(maoAlvo.Count);
-            var cartaSaqueada = maoAlvo[posicaoCartaSaqueada];
+            var cartaSaqueada = maoAlvo.ObterQualquer();
 
-            maoAlvo.RemoveAt(posicaoCartaSaqueada);
-            maoRealizador.Add(cartaSaqueada);
+            maoAlvo.Remover(cartaSaqueada);
+            maoRealizador.Adicionar(cartaSaqueada);
         }
-
-        private int _calculaCartaSaqueada(int quantidadeCartas) => new Random().Next(0, quantidadeCartas);
     }
 }

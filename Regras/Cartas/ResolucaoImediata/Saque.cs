@@ -1,28 +1,26 @@
 namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
-    using System;
     using Acoes;
+    using System.Collections.Generic;
+    using System;
     using Tipos;
 
     public class Saque : ResolucaoImediata
     {
         public Saque(string nome) : base(nome) { }
 
-        public override void AplicaEfeito(Acao Acao, Mesa _)
+        public void AplicaEfeito(List<Carta> maoRealizador, List<Carta> maoAlvo) { }
+
+        public override void AplicaEfeito(Acao acao, Mesa _) => 
+            _aplicaEfeito(acao.Realizador.Mao, acao.Alvo.Mao);
+
+        internal void _aplicaEfeito(List<Carta> maoRealizador, List<Carta> maoAlvo)
         {
-            var realizador = Acao.Realizador;
-            var alvo = Acao.Alvo;
+            var posicaoCartaSaqueada = _calculaCartaSaqueada(maoAlvo.Count);
+            var cartaSaqueada = maoAlvo[posicaoCartaSaqueada];
 
-            if (alvo != null)
-            {
-                var posicaoCartaSaqueada = _calculaCartaSaqueada(alvo.Mao.Count);
-                var cartaSaqueada = alvo.Mao[posicaoCartaSaqueada];
-
-                alvo.Mao.RemoveAt(posicaoCartaSaqueada);
-                realizador.Mao.Add(cartaSaqueada);
-            }
-            else
-                throw new Exception("Não é possível aplicar regra da carta sem um alvo.");
+            maoAlvo.RemoveAt(posicaoCartaSaqueada);
+            maoRealizador.Add(cartaSaqueada);
         }
 
         private int _calculaCartaSaqueada(int quantidadeCartas) => new Random().Next(0, quantidadeCartas);

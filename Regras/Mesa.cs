@@ -1,6 +1,7 @@
 namespace ServidorPiratas.Regras
 {
     using Acoes;
+    using Acoes.Tipos;
     using System.Collections.Generic;
     using System;
 
@@ -40,15 +41,18 @@ namespace ServidorPiratas.Regras
             OrdemDeJogadores = _geraOrdemDeJogadores(jogadores);
         }
 
-        public void ProcessaAcao(Acao Acao)
+        public void ProcessaAcao(Acao acao)
         {
-            var realizador = Acao.Realizador;
+            var realizador = acao.Realizador;
 
             if (realizador == JogadorAtual)
             {
-                Acao.AplicarRegra(this);
+                acao.AplicarRegra(this);
 
-                HistoricoAcao.Push(Acao);
+                HistoricoAcao.Push(acao);
+
+                if (acao.GetType() == typeof(Primaria))
+                    realizador.AcoesDisponiveis--;
             }
             else
                 throw new Exception($"Não é a vez do jogador \"{realizador}\" jogar.");

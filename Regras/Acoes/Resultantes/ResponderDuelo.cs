@@ -27,10 +27,10 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public override Resultante AplicarRegra(Mesa mesa)
         {
-            if (!CartasRespostaPermitidas.Contains(CartaResposta.GetType()))
+            if (!CartasRespostaPermitidas.Contains(CartaResposta?.GetType()))
                 throw new Exception($"Não é possível usar \"{CartaResposta.Nome}\" em resposta a um duelo.");
 
-            CartaResposta.AplicarEfeito(this, mesa);
+            CartaResposta?.AplicarEfeito(this, mesa);
 
             Vitorioso = Realizador.CalcularPontosDuelo() > Alvo.CalcularPontosDuelo() ? Realizador : Alvo;
 

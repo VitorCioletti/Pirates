@@ -14,7 +14,7 @@ namespace ServidorPiratas.Regras.Acoes.Primarias
             mesa.EmDuelo = true;
             mesa.Duelistas = new Tuple<Jogador, Jogador>(Realizador, Alvo);
 
-            return new ResponderDuelo(Realizador, Alvo);
+            return new ResponderDuelo(Alvo, Realizador);
         }
     }
 }

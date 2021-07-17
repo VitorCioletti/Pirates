@@ -9,8 +9,6 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
     {
         public Saque(string nome) : base(nome) { }
 
-        public void AplicaEfeito(List<Carta> maoRealizador, List<Carta> maoAlvo) { }
-
         public override Resultante AplicarEfeito(Acao acao, Mesa _) => 
             _aplicaEfeito(acao.Realizador.Mao, acao.Alvo.Mao);
 

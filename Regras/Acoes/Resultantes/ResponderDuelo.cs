@@ -21,7 +21,6 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
             CartasRespostaPermitidas = new List<Type>
             {
                 typeof(Canhao),
-                typeof(Papagaio),
                 typeof(Timoneiro),
             };
         }

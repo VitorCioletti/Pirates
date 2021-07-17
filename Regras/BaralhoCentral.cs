@@ -5,11 +5,19 @@ namespace ServidorPiratas.Regras
 
     public class BaralhoCentral
     {
-        private Stack<Carta> _cartas;
+        private LinkedList<Carta> _cartas;
 
         public BaralhoCentral() => _cartas = _gerarCartas();
 
-        public Carta ObterTopo() => _cartas.Pop();
+        public Carta ObterTopo()
+        {
+            var ultimoNodo = _cartas.Last;
+            _cartas.RemoveLast();
+
+            return ultimoNodo.Value;
+        }
+
+        public void InserirFundo(List<Carta> cartas) => cartas.ForEach(c => _cartas.AddFirst(c));
 
         public List<Carta> ObterTopo(int quantidade)
         {
@@ -21,6 +29,6 @@ namespace ServidorPiratas.Regras
             return cartas;
         }
 
-        private Stack<Carta> _gerarCartas() => new Stack<Carta>();
+        private LinkedList<Carta> _gerarCartas() => new LinkedList<Carta>();
     }
 }

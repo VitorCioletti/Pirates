@@ -7,6 +7,11 @@ namespace ServidorPiratas.Regras.Acoes.Primarias
     {
         public ComprarCarta(Jogador jogador) : base(jogador) { }
 
-        public override void AplicarRegra(Mesa mesa) => Realizador.Mao.Adicionar(mesa.BaralhoCentral.ObterTopo());
+        public override Resultante AplicarRegra(Mesa mesa)
+        {
+            Realizador.Mao.Adicionar(mesa.BaralhoCentral.ObterTopo());
+
+            return null;
+        }
     }
 }

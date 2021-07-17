@@ -1,5 +1,6 @@
 namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
+    using Acoes.Tipos;
     using Acoes;
     using Cartas.Tipos;
     using System.Collections.Generic;
@@ -8,15 +9,17 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
     {
         public HomemAoMar(string nome) : base(nome) { }
 
-        public override void AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicaEfeito(acao.Alvo.Tripulacao, mesa.PilhaDescarte);
 
-        internal void _aplicaEfeito(List<Tripulacao> tripulacao, PilhaDescarte pilhaDescarte)
+        internal Resultante _aplicaEfeito(List<Tripulacao> tripulacao, PilhaDescarte pilhaDescarte)
         {
             var tripulacaoAfogada = tripulacao[0];
             tripulacao.RemoveAt(0);
 
             pilhaDescarte.InserirTopo(tripulacaoAfogada);
+
+            return null;
         }
     }
 }

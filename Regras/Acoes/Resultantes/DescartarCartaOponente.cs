@@ -11,10 +11,12 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public DescartarCartaOponente(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
 
-        public override void AplicarRegra(Mesa mesa)
+        public override Resultante AplicarRegra(Mesa mesa)
         {
             Alvo.Mao.Remover(CartaDescartada);
             mesa.PilhaDescarte.InserirTopo(CartaDescartada);
+
+            return null;
         }
     }
 }

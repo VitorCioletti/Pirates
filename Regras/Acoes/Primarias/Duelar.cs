@@ -1,5 +1,6 @@
 namespace ServidorPiratas.Regras.Acoes.Primarias
 {
+    using Acoes.Resultantes;
     using Regras;
     using System;
     using Tipos;
@@ -8,10 +9,12 @@ namespace ServidorPiratas.Regras.Acoes.Primarias
     {
         public Duelar(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
 
-        public override void AplicarRegra(Mesa mesa)
+        public override Resultante AplicarRegra(Mesa mesa)
         {
             mesa.EmDuelo = true;
             mesa.Duelistas = new Tuple<Jogador, Jogador>(Realizador, Alvo);
+
+            return new ResponderDuelo(Realizador, Alvo);
         }
     }
 }

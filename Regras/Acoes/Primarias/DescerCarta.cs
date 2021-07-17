@@ -12,7 +12,7 @@ namespace ServidorPiratas.Regras.Acoes.Primarias
 
         public DescerCarta(Jogador jogador, Carta carta) : base(jogador) => Carta = carta;
 
-        public override void AplicarRegra(Mesa mesa) 
+        public override Resultante AplicarRegra(Mesa mesa) 
         {
             if (Carta.GetType() == typeof(Tesouro))
                 throw new Exception($"Não é permitido jogar cartas \"{nameof(Tesouro)}\".");
@@ -20,7 +20,7 @@ namespace ServidorPiratas.Regras.Acoes.Primarias
             Realizador.Mao.Remover(Carta);
             mesa.PilhaDescarte.InserirTopo(Carta);
 
-            Carta.AplicarEfeito(this, mesa);
+            return Carta.AplicarEfeito(this, mesa);
         }
     }
 }

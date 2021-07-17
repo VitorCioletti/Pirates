@@ -1,5 +1,6 @@
 namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
+    using Acoes.Tipos;
     using Acoes;
     using Cartas.Tipos;
     using System.Collections.Generic;
@@ -9,13 +10,15 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
         public ConvocarTripulacao(string nome) : base(nome) { }
 
 
-        public override void AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicaEfeito(acao.Realizador.Tripulacao, mesa.PilhaDescarte);
 
-        internal void _aplicaEfeito(List<Tripulacao> embarcacao, PilhaDescarte pilhaDescarte)
+        internal Resultante _aplicaEfeito(List<Tripulacao> embarcacao, PilhaDescarte pilhaDescarte)
         {
             var tripulacao = pilhaDescarte.Obter<Tripulacao>();
             embarcacao.Add(tripulacao); // TODO: Criar uma classe para validar quantidade de itens?
+
+            return null;
         }
     }
 }

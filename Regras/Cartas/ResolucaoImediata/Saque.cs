@@ -1,8 +1,8 @@
 namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
+    using Acoes.Tipos;
     using Acoes;
     using System.Collections.Generic;
-    using System;
     using Tipos;
 
     public class Saque : ResolucaoImediata
@@ -11,15 +11,17 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
         public void AplicaEfeito(List<Carta> maoRealizador, List<Carta> maoAlvo) { }
 
-        public override void AplicarEfeito(Acao acao, Mesa _) => 
+        public override Resultante AplicarEfeito(Acao acao, Mesa _) => 
             _aplicaEfeito(acao.Realizador.Mao, acao.Alvo.Mao);
 
-        internal void _aplicaEfeito(Mao maoRealizador, Mao maoAlvo)
+        internal Resultante _aplicaEfeito(Mao maoRealizador, Mao maoAlvo)
         {
             var cartaSaqueada = maoAlvo.ObterQualquer();
 
             maoAlvo.Remover(cartaSaqueada);
             maoRealizador.Adicionar(cartaSaqueada);
+
+            return null;
         }
     }
 }

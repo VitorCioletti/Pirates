@@ -17,6 +17,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
         {
             var ultimaAcao = historicoAcao.Peek();
 
+            // TODO: Verificar se a última acao é primária e se foi o realizador que a fez.
             executa(ultimaAcao);
 
             return null;

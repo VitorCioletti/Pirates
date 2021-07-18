@@ -12,6 +12,8 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
     {
         public Jogador Vitorioso { get; private set; }
 
+        public Jogador Perdedor { get; private set; }
+
         public Carta CartaResposta { get; private set; }
 
         private List<Type> CartasRespostaPermitidas;
@@ -33,8 +35,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
             CartaResposta?.AplicarEfeito(this, mesa);
 
             Vitorioso = Realizador.Campo.CalcularPontosDuelo() > Alvo.Campo.CalcularPontosDuelo() ? Realizador : Alvo;
-
-            var perdedor = Vitorioso == Realizador ? Realizador : Alvo;
+            Perdedor = Vitorioso == Realizador ? Realizador : Alvo;
 
             Alvo.Campo.RemoverTodaTripulacao();
             Realizador.Campo.RemoverTodaTripulacao();
@@ -42,7 +43,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
             mesa.EmDuelo = false;
             mesa.Duelistas = null;
 
-            return new RoubarCarta(Vitorioso, perdedor);
+            return new RoubarCarta(Vitorioso, Perdedor);
         }
     }
 }

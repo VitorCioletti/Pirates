@@ -10,7 +10,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
         public HomemAoMar(string nome) : base(nome) { }
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicaEfeito(acao.Alvo.Tripulacao, mesa.PilhaDescarte);
+            _aplicaEfeito(acao.Alvo.Campo.Tripulacao, mesa.PilhaDescarte);
 
         internal Resultante _aplicaEfeito(List<Tripulacao> tripulacao, PilhaDescarte pilhaDescarte)
         {

@@ -11,7 +11,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicaEfeito(acao.Realizador.Tripulacao, mesa.PilhaDescarte);
+            _aplicaEfeito(acao.Realizador.Campo.Tripulacao, mesa.PilhaDescarte);
 
         internal Resultante _aplicaEfeito(List<Tripulacao> embarcacao, PilhaDescarte pilhaDescarte)
         {

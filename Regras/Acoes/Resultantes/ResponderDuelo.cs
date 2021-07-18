@@ -32,12 +32,12 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
             CartaResposta?.AplicarEfeito(this, mesa);
 
-            Vitorioso = Realizador.CalcularPontosDuelo() > Alvo.CalcularPontosDuelo() ? Realizador : Alvo;
+            Vitorioso = Realizador.Campo.CalcularPontosDuelo() > Alvo.Campo.CalcularPontosDuelo() ? Realizador : Alvo;
 
             var perdedor = Vitorioso == Realizador ? Realizador : Alvo;
 
-            Alvo.Tripulacao.Clear();
-            Realizador.Tripulacao.Clear();
+            Alvo.Campo.RemoverTodaTripulacao();
+            Realizador.Campo.RemoverTodaTripulacao();
 
             mesa.EmDuelo = false;
             mesa.Duelistas = null;

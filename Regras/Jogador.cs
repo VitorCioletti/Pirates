@@ -1,11 +1,8 @@
 namespace ServidorPiratas.Regras
 {
     using Acoes.Primarias;
-    using Cartas.Tipos;
     using Cartas;
     using System.Collections.Generic;
-    using System.Linq;
-    using System;
 
     public class Jogador 
     {
@@ -15,11 +12,7 @@ namespace ServidorPiratas.Regras
 
         public Mao Mao { get; set; } 
 
-        public Embarcacao Embarcacao { get; set; }
-
-        public Duelo Canhao { get ; set; }
-
-        public List<Tripulacao> Tripulacao { get; set; }
+        public Campo Campo { get; set; }
 
         public Jogador(string id)
         {
@@ -32,15 +25,6 @@ namespace ServidorPiratas.Regras
         public ComprarCarta ComprarCarta() => new ComprarCarta(this);
 
         public Duelar IniciarDuelo(Jogador jogadorAtacado) => new Duelar(this, jogadorAtacado);
-
-        public int CalcularPontosDuelo()
-        {
-            var pontosDuelo = Tripulacao.Sum(t => t.Tiros);
-
-            pontosDuelo += Canhao != null ? Canhao.Tiros : 0;
-
-            return pontosDuelo;
-        }
 
         public override string ToString() => Id;
 

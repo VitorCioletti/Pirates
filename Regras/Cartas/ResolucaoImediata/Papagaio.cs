@@ -13,7 +13,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicaEfeito(mesa.HistoricoAcao, mesa.ProcessaAcao);
 
-        internal Resultante _aplicaEfeito(Stack<Acao> historicoAcao, Action<Acao> executa)
+        internal Resultante _aplicaEfeito(Stack<Acao> historicoAcao, Func<Acao, Resultante> executa)
         {
             var ultimaAcao = historicoAcao.Peek();
 

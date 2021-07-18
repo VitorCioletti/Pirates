@@ -41,18 +41,20 @@ namespace ServidorPiratas.Regras
             OrdemDeJogadores = _geraOrdemDeJogadores(jogadores);
         }
 
-        public void ProcessaAcao(Acao acao)
+        public Resultante ProcessaAcao(Acao acao)
         {
             var realizador = acao.Realizador;
 
             if (realizador == JogadorAtual)
             {
-                acao.AplicarRegra(this);
+                var acaoResultante = acao.AplicarRegra(this);
 
                 HistoricoAcao.Push(acao);
 
                 if (acao.GetType() == typeof(Primaria))
                     realizador.AcoesDisponiveis--;
+
+                return acaoResultante;
             }
             else
                 throw new Exception($"Não é a vez do jogador \"{realizador}\" jogar.");

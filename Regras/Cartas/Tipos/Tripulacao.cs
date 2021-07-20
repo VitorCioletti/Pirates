@@ -3,16 +3,19 @@ namespace ServidorPiratas.Regras.Cartas.Tipos
     using Acoes;
     using ServidorPiratas.Regras.Acoes.Tipos;
 
-    public abstract class Tripulacao : Carta // TODO: Tripulação é uma carta ?
+    public abstract class Tripulacao : Carta
     {
         public Tripulacao(string nome) : base(nome) { }
 
         public int Tiros { get; protected set; }
 
-        // TODO: Deveria possuir esse método?
-        public override Resultante AplicarEfeito(Acao Acao, Mesa mesa)
+        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao.Realizador.Campo);
+
+        internal Resultante _aplicarEfeito(Campo campoRealizador)
         {
-           return null; 
+            campoRealizador.Adicionar(this);
+
+            return null;
         }
     }
 }

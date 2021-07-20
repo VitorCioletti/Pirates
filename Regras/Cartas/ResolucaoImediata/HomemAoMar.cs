@@ -1,25 +1,16 @@
 namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
+    using Acoes.Resultantes;
     using Acoes.Tipos;
     using Acoes;
     using Cartas.Tipos;
-    using System.Collections.Generic;
 
     public class HomemAoMar : ResolucaoImediata
     {
         public HomemAoMar(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicaEfeito(acao.Alvo.Campo.Tripulacao, mesa.PilhaDescarte);
+        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicaEfeito(acao.Realizador, acao.Alvo);
 
-        internal Resultante _aplicaEfeito(List<Tripulacao> tripulacao, PilhaDescarte pilhaDescarte)
-        {
-            var tripulacaoAfogada = tripulacao[0];
-            tripulacao.RemoveAt(0);
-
-            pilhaDescarte.InserirTopo(tripulacaoAfogada);
-
-            return null;
-        }
+        internal Resultante _aplicaEfeito(Jogador realizador, Jogador alvo) => new AfogarTripulacao(realizador, alvo);
     }
 }

@@ -4,6 +4,8 @@ namespace ServidorPiratas.Regras.Cartas.Tipos
 
     public abstract class Tesouro : Carta
     {
+        public int Valor { get; protected set; }
+
         public Tesouro(string nome) : base(nome) { }
     }
 }

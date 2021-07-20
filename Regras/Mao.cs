@@ -3,6 +3,7 @@ namespace ServidorPiratas.Regras
     using Cartas;
     using System.Collections.Generic;
     using System;
+    using System.Linq;
 
     public class Mao
     {
@@ -39,6 +40,8 @@ namespace ServidorPiratas.Regras
 
             return _cartas[posicaoCarta];
         }
+
+        public List<T> ObterTodas<T>() where T : Carta => (List<T>)_cartas.Where(c => c is T);
 
         public void Remover(int posicao) => _cartas.RemoveAt(posicao);
 

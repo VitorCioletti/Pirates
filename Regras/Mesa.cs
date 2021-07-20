@@ -68,7 +68,7 @@ namespace ServidorPiratas.Regras
             return proximoJogador;
         }
 
-        public void Finaliza() => throw new NotImplementedException();
+        public void Finaliza(Jogador vencedor) => throw new NotImplementedException();
 
         private Queue<Jogador> _geraOrdemDeJogadores(List<Jogador> jogadores) => new Queue<Jogador>(jogadores);
     }

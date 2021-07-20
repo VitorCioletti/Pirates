@@ -2,7 +2,9 @@ namespace ServidorPiratas.Regras
 {
     using Cartas;
     using System.Collections.Generic;
+    using System;
 
+    // TODO : Transformar em tipo Baralho?
     public class BaralhoCentral
     {
         private LinkedList<Carta> _cartas;
@@ -28,6 +30,8 @@ namespace ServidorPiratas.Regras
 
             return cartas;
         }
+
+        public void Embaralhar() => throw new NotImplementedException();
 
         private LinkedList<Carta> _gerarCartas() => new LinkedList<Carta>();
     }

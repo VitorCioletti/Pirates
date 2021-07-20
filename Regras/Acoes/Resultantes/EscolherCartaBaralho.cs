@@ -5,6 +5,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
     using System.Collections.Generic;
     using Tipos;
 
+    // TODO : Fazer um EscolherCarta genérico?
     public class EscolherCartaBaralho : Resultante
     {
         public Carta CartaEscolhida { get; private set; }

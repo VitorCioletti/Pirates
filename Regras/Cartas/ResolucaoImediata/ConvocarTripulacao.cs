@@ -1,9 +1,9 @@
 namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
+    using Acoes.Resultantes;
     using Acoes.Tipos;
     using Acoes;
     using Cartas.Tipos;
-    using System.Collections.Generic;
 
     public class ConvocarTripulacao : ResolucaoImediata
     {
@@ -11,14 +11,13 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicaEfeito(acao.Realizador.Campo, mesa.PilhaDescarte);
+            _aplicaEfeito(acao.Realizador, mesa.PilhaDescarte);
 
-        internal Resultante _aplicaEfeito(Campo campo , PilhaDescarte pilhaDescarte)
+        internal Resultante _aplicaEfeito(Jogador realizador, PilhaDescarte pilhaDescarte)
         {
-            var tripulacao = pilhaDescarte.Obter<Tripulacao>();
-            campo.Adicionar(tripulacao);
-
-            return null;
+            var tripulacoesDescartadas = pilhaDescarte.ObterTodas<Tripulacao>();
+  
+            return new EscolherCartaPilhaDescarte<Tripulacao>(realizador, tripulacoesDescartadas);
         }
     }
 }

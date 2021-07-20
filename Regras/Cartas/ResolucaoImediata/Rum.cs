@@ -21,7 +21,5 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
             return null;
         }
-
-        private int _calculaCartaSaqueada(int quantidadeCartas) => new Random().Next(0, quantidadeCartas);
     }
 }

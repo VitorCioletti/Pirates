@@ -2,7 +2,6 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
     using Acoes.Tipos;
     using Acoes;
-    using System.Collections.Generic;
     using Tipos;
 
     public class Saque : ResolucaoImediata

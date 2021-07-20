@@ -1,7 +1,9 @@
 namespace ServidorPiratas.Regras.Acoes.Resultantes
 {
     using Cartas.Tipos;
+    using Cartas.Tripulacao;
     using Regras;
+    using System;
     using Tipos;
 
     public class AfogarTripulacao : Resultante
@@ -12,6 +14,9 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public override Resultante AplicarRegra(Mesa mesa)
         {
+            if (TripulacaoAfogada.PermiteAfogamento)
+                throw new Exception($"Essa tripulação não pode ser afogada.");
+
             Alvo.Campo.Remover(TripulacaoAfogada);
             mesa.PilhaDescarte.InserirTopo(TripulacaoAfogada);
 

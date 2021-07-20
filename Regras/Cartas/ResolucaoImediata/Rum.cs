@@ -2,7 +2,6 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
     using Acoes;
     using Acoes.Tipos;
-    using System;
     using Tipos;
 
     public class Rum : ResolucaoImediata

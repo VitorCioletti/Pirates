@@ -2,14 +2,13 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 {
     using Cartas;
     using Regras;
-    using System;
     using Tipos;
 
-    public class DescartarCartaOponente: Resultante
+    public class DescartarCarta: Resultante
     {
         public Carta CartaDescartada { get; private set; }
 
-        public DescartarCartaOponente(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
+        public DescartarCarta(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
 
         public override Resultante AplicarRegra(Mesa mesa)
         {

@@ -1,7 +1,9 @@
 namespace ServidorPiratas.Regras.Acoes.Resultantes
 {
+    using Cartas.Tipos;
     using Cartas;
     using Regras;
+    using System;
     using Tipos;
 
     public class DescartarCarta: Resultante
@@ -12,6 +14,9 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public override Resultante AplicarRegra(Mesa mesa)
         {
+            if (CartaDescartada.GetType() == typeof(Tesouro))
+                throw new Exception("Não é possível descartar cartas tesouro.");
+
             Alvo.Mao.Remover(CartaDescartada);
             mesa.PilhaDescarte.InserirTopo(CartaDescartada);
 

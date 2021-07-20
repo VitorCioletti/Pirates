@@ -11,12 +11,12 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicaEfeito(acao.Realizador.Campo.Tripulacao, mesa.PilhaDescarte);
+            _aplicaEfeito(acao.Realizador.Campo, mesa.PilhaDescarte);
 
-        internal Resultante _aplicaEfeito(List<Tripulacao> embarcacao, PilhaDescarte pilhaDescarte)
+        internal Resultante _aplicaEfeito(Campo campo , PilhaDescarte pilhaDescarte)
         {
             var tripulacao = pilhaDescarte.Obter<Tripulacao>();
-            embarcacao.Add(tripulacao); // TODO: Criar uma classe para validar quantidade de itens?
+            campo.Adicionar(tripulacao);
 
             return null;
         }

@@ -1,9 +1,9 @@
 namespace ServidorPiratas.Regras.Cartas.Embarcacao
 {
+    using Acoes.Resultantes;
     using Acoes.Tipos;
     using Acoes;
     using Cartas.Tipos;
-    using ServidorPiratas.Regras.Acoes.Resultantes;
     using System.Collections.Generic;
     using System.Linq;
     using System;

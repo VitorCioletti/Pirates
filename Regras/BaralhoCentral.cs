@@ -18,8 +18,10 @@ namespace ServidorPiratas.Regras
 
             return ultimoNodo.Value;
         }
+    
+        public void InserirTopo(List<Carta> cartas) => _inserir(cartas, true);
 
-        public void InserirFundo(List<Carta> cartas) => cartas.ForEach(c => _cartas.AddFirst(c));
+        public void InserirFundo(List<Carta> cartas) => _inserir(cartas, false);
 
         public List<Carta> ObterTopo(int quantidade)
         {
@@ -34,5 +36,17 @@ namespace ServidorPiratas.Regras
         public void Embaralhar() => throw new NotImplementedException();
 
         private LinkedList<Carta> _gerarCartas() => new LinkedList<Carta>();
+
+        private void _inserir(List<Carta> cartas, bool topo)
+        {
+            cartas.ForEach(c => 
+                {
+                    if (topo)
+                        _cartas.AddFirst(c);
+                    else
+                        _cartas.AddLast(c);
+                }
+            );
+        }
     }
 }

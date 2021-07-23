@@ -22,6 +22,7 @@ namespace ServidorPiratas.Regras.Cartas.Embarcacao
             var jogadoresOpcao = 
                 jogadoresNaMesa.Where(j => j.Mao.QuantidadeCartas() >= _cartasMinimasNaMao && j != realizador).ToList();
 
+            // TODO: Randômico ou permite escolha?
             Func<Jogador, Resultante> roubarCarta = (jogadorAlvo) => new RoubarCarta(realizador, jogadorAlvo);
 
             return new EscolherJogador(realizador, jogadoresOpcao, roubarCarta);

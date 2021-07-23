@@ -36,10 +36,12 @@ namespace ServidorPiratas.Regras
 
         public Carta ObterQualquer()
         {
-            var posicaoCarta = new Random().Next(0, _cartas.Count);
+            var posicaoCarta = new Random().Next(0, QuantidadeCartas());
 
             return _cartas[posicaoCarta];
         }
+
+        public int QuantidadeCartas() => _cartas.Count;
 
         public List<T> ObterTodas<T>() where T : Carta => (List<T>)_cartas.Where(c => c is T);
 

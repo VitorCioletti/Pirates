@@ -14,9 +14,9 @@ namespace ServidorPiratas.Regras
 
         public Duelo Canhao { get ; set; }
 
-        public List<Tripulacao> Tripulacao { get; private set; }
+        public List<Tripulacao> Tripulacao { get; private set; } // TODO: Privado?
 
-        public Embarcacao Embarcacao { get; private set; }
+        public Embarcacao Embarcacao { get; private set; } // TODO: Privado?
 
         public int CalcularPontosDuelo()
         {

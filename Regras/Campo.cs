@@ -8,6 +8,8 @@ namespace ServidorPiratas.Regras
 
     public class Campo
     {
+        private int _danoEmbarcacao = 1;
+ 
         private int _tripulacaoMaxima = 2;
 
         public Duelo Canhao { get ; set; }
@@ -26,6 +28,14 @@ namespace ServidorPiratas.Regras
                 pontosDuelo += ((GuerrilhaNaval)Embarcacao).TirosAdicionais;
 
             return pontosDuelo;
+        }
+
+        public void DanificarEmbarcacao()
+        {
+            Embarcacao.ReceberDano(_danoEmbarcacao);
+
+            if (Embarcacao.Vida == 0)
+               RemoverEmbarcacao(); 
         }
 
         public void Adicionar(Tripulacao tripulacao)

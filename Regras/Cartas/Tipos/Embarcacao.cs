@@ -1,10 +1,19 @@
-
 namespace ServidorPiratas.Regras.Cartas.Tipos
 {
-    using Acoes;
+    using System;
 
     public abstract class Embarcacao : Carta
     {
+        public int Vida { get; private set; } = 3;
+ 
         public Embarcacao(string nome) : base(nome) { }
+
+        public void ReceberDano(int dano)
+        {
+            if (Vida == 0)
+                throw new Exception("Embarcacao está com a vida zerada.");
+
+            Vida -= dano;
+        }
     }
 }

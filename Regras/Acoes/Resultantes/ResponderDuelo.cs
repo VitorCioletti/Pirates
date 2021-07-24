@@ -37,8 +37,8 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
             Vitorioso = Realizador.Campo.CalcularPontosDuelo() > Alvo.Campo.CalcularPontosDuelo() ? Realizador : Alvo;
             Perdedor = Vitorioso == Realizador ? Realizador : Alvo;
 
-            Alvo.Campo.AfogarTripulacao();
-            Realizador.Campo.AfogarTripulacao();
+            Perdedor.Campo.AfogarTripulacao();
+            Perdedor.Campo.DanificarEmbarcacao();
 
             mesa.EmDuelo = false;
             mesa.Duelistas = null;

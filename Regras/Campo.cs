@@ -1,5 +1,6 @@
 namespace ServidorPiratas.Regras
 {
+    using Cartas.Embarcacao;
     using Cartas.Tipos;
     using System.Collections.Generic;
     using System.Linq;
@@ -20,6 +21,9 @@ namespace ServidorPiratas.Regras
             var pontosDuelo = Tripulacao.Sum(t => t.Tiros);
 
             pontosDuelo += Canhao != null ? Canhao.Tiros : 0;
+
+            if (Embarcacao.GetType() == typeof(GuerrilhaNaval))
+                pontosDuelo += ((GuerrilhaNaval)Embarcacao).TirosAdicionais;
 
             return pontosDuelo;
         }

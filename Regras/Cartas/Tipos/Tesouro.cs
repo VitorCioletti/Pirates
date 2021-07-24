@@ -6,6 +6,6 @@ namespace ServidorPiratas.Regras.Cartas.Tipos
     {
         public int Valor { get; protected set; }
 
-        public Tesouro(string nome) : base(nome) { }
+        public Tesouro(string nome, int valor) : base(nome) => Valor = valor;
     }
 }

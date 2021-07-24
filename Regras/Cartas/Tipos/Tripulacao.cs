@@ -7,11 +7,11 @@ namespace ServidorPiratas.Regras.Cartas.Tipos
     {
         public int Tiros { get; protected set; }
 
-        public bool PermiteAfogamento { get; protected set; }
+        public bool Afogavel { get; protected set; }
 
         public Tripulacao(string nome) : base(nome)
         {
-            PermiteAfogamento = true;
+            Afogavel = true;
         }
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao.Realizador.Campo);

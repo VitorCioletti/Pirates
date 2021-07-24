@@ -65,7 +65,7 @@ namespace ServidorPiratas.Regras
             Tripulacao.Remove(tripulacao);
         }
 
-        public void AfogarTripulacao() => Tripulacao.RemoveAll(t => t.PermiteAfogamento);
+        public void AfogarTripulacao() => Tripulacao.RemoveAll(t => t.Afogavel);
 
         public void RemoverEmbarcacao()
         {

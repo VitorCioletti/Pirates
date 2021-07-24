@@ -7,7 +7,7 @@ namespace ServidorPiratas.Regras.Cartas.Tripulacao
         public PirataFantasma(string nome) : base(nome)
         {
             Tiros = 0;
-            PermiteAfogamento = false;
+            Afogavel = false;
         }
     }
 }

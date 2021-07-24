@@ -9,9 +9,9 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
         public Saque(string nome) : base(nome) { }
 
         public override Resultante AplicarEfeito(Acao acao, Mesa _) => 
-            _aplicaEfeito(acao.Realizador.Mao, acao.Alvo.Mao);
+            _aplicarEfeito(acao.Realizador.Mao, acao.Alvo.Mao);
 
-        internal Resultante _aplicaEfeito(Mao maoRealizador, Mao maoAlvo)
+        internal Resultante _aplicarEfeito(Mao maoRealizador, Mao maoAlvo)
         {
             var cartaSaqueada = maoAlvo.ObterQualquer();
 

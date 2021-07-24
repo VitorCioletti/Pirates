@@ -11,9 +11,9 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicaEfeito(acao.Realizador, mesa.PilhaDescarte);
+            _aplicarEfeito(acao.Realizador, mesa.PilhaDescarte);
 
-        internal Resultante _aplicaEfeito(Jogador realizador, PilhaDescarte pilhaDescarte)
+        internal Resultante _aplicarEfeito(Jogador realizador, PilhaDescarte pilhaDescarte)
         {
             var tripulacoesDescartadas = pilhaDescarte.ObterTodas<Tripulacao>();
   

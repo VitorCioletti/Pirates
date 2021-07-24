@@ -11,9 +11,9 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
         private int _cartasCompradas = 2;
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicaEfeito(acao.Realizador.Mao, mesa.BaralhoCentral);
+            _aplicarEfeito(acao.Realizador.Mao, mesa.BaralhoCentral);
 
-        internal Resultante _aplicaEfeito(Mao maoRealizador, BaralhoCentral baralhoCentral)
+        internal Resultante _aplicarEfeito(Mao maoRealizador, BaralhoCentral baralhoCentral)
         {
             var cartasCompradas = baralhoCentral.ObterTopo(_cartasCompradas);
             maoRealizador.Adicionar(cartasCompradas);

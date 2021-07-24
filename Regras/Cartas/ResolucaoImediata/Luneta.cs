@@ -9,8 +9,8 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
     {
         public Luneta(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa _) => _aplicaEfeito(acao.Realizador, acao.Alvo);
+        public override Resultante AplicarEfeito(Acao acao, Mesa _) => _aplicarEfeito(acao.Realizador, acao.Alvo);
 
-        internal Resultante _aplicaEfeito(Jogador realizador, Jogador alvo) => new DescartarCarta(realizador, alvo);
+        internal Resultante _aplicarEfeito(Jogador realizador, Jogador alvo) => new DescartarCarta(realizador, alvo);
     }
 }

@@ -32,7 +32,7 @@ namespace ServidorPiratas.Regras
 
         public void DanificarEmbarcacao()
         {
-            Embarcacao.ReceberDano(_danoEmbarcacao);
+            Embarcacao.Danificar(_danoEmbarcacao);
 
             if (Embarcacao.Vida == 0)
                RemoverEmbarcacao(); 

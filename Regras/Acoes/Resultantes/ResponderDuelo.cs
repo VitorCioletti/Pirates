@@ -20,6 +20,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public ResponderDuelo(Jogador realizador, Jogador alvo) : base(realizador, alvo) 
         {
+            // TODO : Timoneiro é uma carta Duelo, isso provavelmente não é necessário.
             CartasRespostaPermitidas = new List<Type>
             {
                 typeof(Canhao),

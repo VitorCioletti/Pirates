@@ -17,6 +17,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
         public override Resultante AplicarRegra(Mesa mesa)
         {
             Realizador.Mao.Adicionar(CartaEscolhida);
+            CartasOpcoes.Remove(CartaEscolhida);
 
             mesa.PilhaDescarte.InserirTopo(CartasOpcoes);
             mesa.PilhaDescarte.Embaralhar();

@@ -21,6 +21,8 @@ namespace ServidorPiratas.Regras
             _cartas.Add(carta);
         }
 
+        public List<Carta> ObterTodas() => _cartas.ToList();
+
         public void Adicionar(List<Carta> cartas) => cartas.ForEach(c => Adicionar(c));
 
         public void Remover(Carta carta)

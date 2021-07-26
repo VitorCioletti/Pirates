@@ -1,8 +1,6 @@
 namespace ServidorPiratas.Regras.Acoes.Resultantes
 {
     using Cartas.Tipos;
-    using Regras.Cartas.ResolucaoImediata;
-    using Regras.Cartas;
     using Regras;
     using System.Collections.Generic;
     using System;
@@ -14,19 +12,11 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public Jogador Perdedor { get; private set; }
 
-        public Carta CartaResposta { get; private set; }
+        public Duelo CartaResposta { get; private set; }
 
         private List<Type> CartasRespostaPermitidas;
 
-        public ResponderDuelo(Jogador realizador, Jogador alvo) : base(realizador, alvo) 
-        {
-            // TODO : Timoneiro é uma carta Duelo, isso provavelmente não é necessário.
-            CartasRespostaPermitidas = new List<Type>
-            {
-                typeof(Canhao),
-                typeof(Timoneiro),
-            };
-        }
+        public ResponderDuelo(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
 
         public override Resultante AplicarRegra(Mesa mesa)
         {

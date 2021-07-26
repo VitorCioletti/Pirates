@@ -1,18 +1,22 @@
 namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
+    using Acoes.Resultantes;
     using Acoes.Tipos;
     using Acoes;
     using System;
     using Tipos;
 
-    public class Timoneiro : ResolucaoImediata
+    public class Timoneiro : Duelo
     {
         public Timoneiro(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao _, Mesa mesa) => _aplicarEfeito(mesa);
+        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, mesa);
 
-        internal Resultante _aplicarEfeito(Mesa mesa)
+        internal Resultante _aplicarEfeito(Acao acao, Mesa mesa)
         {
+            if (!(acao is ResponderDuelo))
+                throw new Exception("Carta só pode ser usada em resposta a um duelo.");
+
             if (!mesa.EmDuelo)
                 throw new Exception("A mesa não está em duelo");
 

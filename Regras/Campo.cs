@@ -12,7 +12,7 @@ namespace ServidorPiratas.Regras
  
         private int _tripulacaoMaxima = 2;
 
-        public Duelo Canhao { get ; set; }
+        public Canhao Canhao { get ; set; }
 
         public List<Tripulacao> Tripulacao { get; private set; } // TODO: Privado?
 

@@ -3,6 +3,7 @@ namespace ServidorPiratas.Regras.Cartas.Embarcacao
     using Acoes.Resultantes;
     using Acoes.Tipos;
     using Acoes;
+    using Baralhos;
     using Cartas.Tipos;
 
     public class ServoDePoseidon : Embarcacao
@@ -13,6 +14,6 @@ namespace ServidorPiratas.Regras.Cartas.Embarcacao
             _aplicarEfeito(acao.Realizador, mesa.PilhaDescarte);
 
         internal Resultante _aplicarEfeito(Jogador realizador, PilhaDescarte pilhaDescarte) =>
-            new EscolherCartaPilhaDescarte<Carta>(realizador, pilhaDescarte.ObterTodas<Carta>());
+            new EscolherCartaBaralho(realizador, pilhaDescarte, pilhaDescarte.ObterTodas<Carta>());
     }
 }

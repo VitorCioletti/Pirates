@@ -3,6 +3,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
     using Acoes.Resultantes;
     using Acoes.Tipos;
     using Acoes;
+    using Baralhos;
     using Tipos;
 
     public class MapaDoTesouro : ResolucaoImediata
@@ -15,7 +16,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
         {
             var cartasOpcoes = baralhoCentral.ObterTopo(4);
 
-            return new EscolherCartaBaralho(acao.Realizador, cartasOpcoes);
+            return new EscolherCartaBaralho(acao.Realizador, baralhoCentral, cartasOpcoes);
         }
     }
 }

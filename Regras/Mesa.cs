@@ -2,6 +2,7 @@ namespace ServidorPiratas.Regras
 {
     using Acoes;
     using Acoes.Tipos;
+    using Baralhos;
     using System.Collections.Generic;
     using System;
 

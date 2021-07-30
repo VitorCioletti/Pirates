@@ -1,8 +1,10 @@
 namespace ServidorPiratas.Regras
 {
     using Acoes.Primarias;
+    using Cartas.Tipos;
     using Cartas;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class Jogador 
     {
@@ -25,6 +27,17 @@ namespace ServidorPiratas.Regras
         public ComprarCarta ComprarCarta() => new ComprarCarta(this);
 
         public Duelar IniciarDuelo(Jogador jogadorAtacado) => new Duelar(this, jogadorAtacado);
+
+        public int CalcularPontosTesouro()
+        {
+            var tesourosMao = Mao.ObterTodas<Tesouro>();
+            var somaTesourosMao = tesourosMao.Sum(c => c.Valor);
+
+            var tesourosProtegidos = Campo.ObterTodasProtegidas().OfType<Tesouro>();
+            var somaTesourosProtegidos = tesourosProtegidos.Sum(c => c.Valor);
+
+           return somaTesourosMao + somaTesourosProtegidos; 
+        }
 
         public override string ToString() => Id;
 

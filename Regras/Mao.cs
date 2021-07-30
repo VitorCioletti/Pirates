@@ -45,7 +45,7 @@ namespace ServidorPiratas.Regras
 
         public int QuantidadeCartas() => _cartas.Count;
 
-        public List<T> ObterTodas<T>() where T : Carta => (List<T>)_cartas.Where(c => c is T);
+        public List<T> ObterTodas<T>() where T : Carta => _cartas.OfType<T>().ToList();
 
         public void Remover(int posicao) => _cartas.RemoveAt(posicao);
 

@@ -5,6 +5,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
     using Acoes;
     using Baralhos;
     using Cartas.Tipos;
+    using System.Linq;
 
     public class ConvocarTripulacao : ResolucaoImediata
     {
@@ -16,7 +17,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
         internal Resultante _aplicarEfeito(Jogador realizador, PilhaDescarte pilhaDescarte)
         {
-            var tripulacoesDescartadas = pilhaDescarte.ObterTodas<Tripulacao>().ConvertAll<Carta>(t => (Carta)t);
+            var tripulacoesDescartadas = pilhaDescarte.ObterTodas<Tripulacao>().OfType<Carta>().ToList();
 
             return new EscolherCartaBaralho(realizador, pilhaDescarte, tripulacoesDescartadas);
         }

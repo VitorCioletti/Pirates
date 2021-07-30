@@ -2,6 +2,7 @@ namespace ServidorPiratas.Regras
 {
     using Cartas.Embarcacao;
     using Cartas.Tipos;
+    using Cartas;
     using System.Collections.Generic;
     using System.Linq;
     using System;
@@ -17,6 +18,8 @@ namespace ServidorPiratas.Regras
         public List<Tripulacao> Tripulacao { get; private set; } // TODO: Privado?
 
         public Embarcacao Embarcacao { get; private set; } // TODO: Privado?
+
+        public List<Carta> Protegidas { get; private set; }
 
         public int CalcularPontosDuelo()
         {
@@ -79,6 +82,22 @@ namespace ServidorPiratas.Regras
         {
             RemoverEmbarcacao();
             Adicionar(embarcacao);
+        }
+
+        public void AdicionarProtegida(Carta carta)
+        {
+            Protegidas.Add(carta);
+        }
+
+        public List<Carta> ObterTodasProtegidas() => Protegidas.ToList();
+
+        public List<Carta> RemoverTodasProtegidas()
+        {
+            var protegidas = ObterTodasProtegidas(); 
+
+            Protegidas = null;
+
+            return protegidas;
         }
     }
 }

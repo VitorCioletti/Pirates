@@ -83,15 +83,6 @@ namespace ServidorPiratas.Regras
 
         public List<Carta> ObterTodasProtegidas() => Protegidas.ToList();
 
-        public List<Carta> RemoverTodasProtegidas()
-        {
-            var protegidas = ObterTodasProtegidas(); 
-
-            Protegidas = null;
-
-            return protegidas;
-        }
-
         private void _removerEmbarcacao()
         {
             if (Embarcacao == null)
@@ -99,7 +90,16 @@ namespace ServidorPiratas.Regras
  
             Embarcacao = null; 
 
-            RemoverTodasProtegidas();
+            _removerTodasProtegidas();
+        }
+
+        private List<Carta> _removerTodasProtegidas()
+        {
+            var protegidas = ObterTodasProtegidas(); 
+
+            Protegidas = null;
+
+            return protegidas;
         }
 
         private int _calcularTirosCanhoes() => Canhoes.Sum(c => c.Tiros);

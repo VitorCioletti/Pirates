@@ -13,25 +13,21 @@ namespace ServidorPiratas.Regras
  
         private int _tripulacaoMaxima = 2;
 
-        public Canhao Canhao { get ; set; }
+        public List<Canhao> Canhoes { get; private set; } // TODO: Privado?
 
         public List<Tripulacao> Tripulacao { get; private set; } // TODO: Privado?
 
         public Embarcacao Embarcacao { get; private set; } // TODO: Privado?
 
-        public List<Carta> Protegidas { get; private set; }
+        public List<Carta> Protegidas { get; private set; } // TODO: Privado?
 
         public int CalcularPontosDuelo()
         {
-            var pontosDuelo = Tripulacao.Sum(t => t.Tiros);
+            var pontosDuelo = 0;
 
-            pontosDuelo += Canhao != null ? Canhao.Tiros : 0;
-
-            if (Embarcacao.GetType() == typeof(GuerrilhaNaval))
-                pontosDuelo += ((GuerrilhaNaval)Embarcacao).TirosAdicionais;
-
-            if (Embarcacao.GetType() == typeof(OuricoInfernal))
-                pontosDuelo += ((OuricoInfernal)Embarcacao).Tiros;
+            pontosDuelo += _calcularTirosCanhoes();
+            pontosDuelo += _calcularTirosTripulacao();
+            pontosDuelo += _calcularTirosEmbarcacao();
 
             return pontosDuelo;
         }
@@ -101,6 +97,28 @@ namespace ServidorPiratas.Regras
             Protegidas = null;
 
             return protegidas;
+        }
+
+        private int _calcularTirosCanhoes() => Canhoes.Sum(c => c.Tiros);
+
+        private int _calcularTirosTripulacao() =>  Tripulacao.Sum(t => t.Tiros);
+
+        private int _calcularTirosEmbarcacao()
+        {
+            var tiros = 0;
+
+            if (Embarcacao.GetType() == typeof(GuerrilhaNaval))
+            {
+                var quantidadeCanhoes = Canhoes.Count;
+
+                tiros += Embarcacao.GetType() == typeof(GuerrilhaNaval) ?
+                    ((GuerrilhaNaval)Embarcacao).TirosAdicionais * quantidadeCanhoes : 0;
+            }
+
+            tiros += Embarcacao.GetType() == typeof(OuricoInfernal) ?
+                ((OuricoInfernal)Embarcacao).Tiros : 0;
+
+            return tiros;
         }
     }
 }

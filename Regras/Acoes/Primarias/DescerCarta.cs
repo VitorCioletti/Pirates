@@ -17,10 +17,12 @@ namespace ServidorPiratas.Regras.Acoes.Primarias
             if (Carta.GetType() == typeof(Tesouro))
                 throw new Exception($"Não é permitido jogar cartas \"{nameof(Tesouro)}\".");
 
+            var resultanteEfeitoCarta = Carta.AplicarEfeito(this, mesa);
+
             Realizador.Mao.Remover(Carta);
             mesa.PilhaDescarte.InserirTopo(Carta);
 
-            return Carta.AplicarEfeito(this, mesa);
+            return resultanteEfeitoCarta; 
         }
     }
 }

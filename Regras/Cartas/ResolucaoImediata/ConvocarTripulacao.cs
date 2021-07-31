@@ -11,7 +11,6 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
     {
         public ConvocarTripulacao(string nome) : base(nome) { }
 
-
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicarEfeito(acao.Realizador, mesa.PilhaDescarte);
 

@@ -21,6 +21,8 @@ namespace ServidorPiratas.Regras
 
         public List<Carta> Protegidas { get; private set; } // TODO: Privado?
 
+        public event Action<List<Carta>> AoRemoverProtegidas;
+
         public int CalcularPontosDuelo()
         {
             var pontosDuelo = 0;
@@ -98,6 +100,8 @@ namespace ServidorPiratas.Regras
             var protegidas = ObterTodasProtegidas(); 
 
             Protegidas = null;
+
+            AoRemoverProtegidas(protegidas);
 
             return protegidas;
         }

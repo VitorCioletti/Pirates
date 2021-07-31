@@ -21,6 +21,8 @@ namespace ServidorPiratas.Regras
             Id = id;
             Mao = new Mao(new List<Carta>());
             Campo = new Campo();
+
+            Campo.AoRemoverProtegidas += (protegidas) => Mao.Adicionar(protegidas);
         }
 
         public DescerCarta DescerCarta(Carta carta) => new DescerCarta(this, carta);

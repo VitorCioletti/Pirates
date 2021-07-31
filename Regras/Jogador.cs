@@ -20,6 +20,7 @@ namespace ServidorPiratas.Regras
         {
             Id = id;
             Mao = new Mao(new List<Carta>());
+            Campo = new Campo();
         }
 
         public DescerCarta DescerCarta(Carta carta) => new DescerCarta(this, carta);

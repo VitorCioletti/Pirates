@@ -18,9 +18,9 @@ namespace ServidorPiratas.Regras
 
         public Jogador JogadorAtual { get; set; }
 
-        public bool EmDuelo { get; set; }
+        public bool EmDuelo { get; private set; }
 
-        public Tuple<Jogador, Jogador> Duelistas { get; set; }
+        public Tuple<Jogador, Jogador> Duelistas { get; private set; }
 
         public Queue<Jogador> OrdemDeJogadores { get; private set; }
 
@@ -67,6 +67,24 @@ namespace ServidorPiratas.Regras
             OrdemDeJogadores.Enqueue(proximoJogador);
 
             return proximoJogador;
+        }
+
+        public void EntrarModoDuelo(Jogador realizador, Jogador alvo)
+        {
+            if (EmDuelo)
+                throw new Exception("Mesa já em duelo.");
+
+            EmDuelo = true;
+            Duelistas = new Tuple<Jogador, Jogador>(realizador, alvo);
+        }
+
+        public void SairModoDuelo()
+        {
+            if (!EmDuelo)
+                throw new Exception("Mesa não está em duelo.");
+
+            EmDuelo = false;
+            Duelistas = null;
         }
 
         public void Finaliza(Jogador vencedor) => throw new NotImplementedException();

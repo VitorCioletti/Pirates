@@ -20,8 +20,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
             if (!mesa.EmDuelo)
                 throw new Exception("A mesa não está em duelo");
 
-            mesa.EmDuelo = false;
-            mesa.Duelistas = null;
+            mesa.SairModoDuelo();
 
             return null;
         }

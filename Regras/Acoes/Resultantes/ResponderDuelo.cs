@@ -24,8 +24,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
             Perdedor.Campo.AfogarTripulacao();
             Perdedor.Campo.DanificarEmbarcacao();
 
-            mesa.EmDuelo = false;
-            mesa.Duelistas = null;
+            mesa.SairModoDuelo();
 
             return new RoubarCarta(Vitorioso, Perdedor);
         }

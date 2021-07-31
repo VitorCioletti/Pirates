@@ -114,9 +114,8 @@ namespace ServidorPiratas.Regras
                 tiros += Embarcacao.GetType() == typeof(GuerrilhaNaval) ?
                     ((GuerrilhaNaval)Embarcacao).TirosAdicionais * quantidadeCanhoes : 0;
             }
-
-            tiros += Embarcacao.GetType() == typeof(OuricoInfernal) ?
-                ((OuricoInfernal)Embarcacao).Tiros : 0;
+            else if (Embarcacao.GetType() == typeof(OuricoInfernal))
+                tiros += ((OuricoInfernal)Embarcacao).Tiros;
 
             return tiros;
         }

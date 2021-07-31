@@ -30,6 +30,9 @@ namespace ServidorPiratas.Regras
             if (Embarcacao.GetType() == typeof(GuerrilhaNaval))
                 pontosDuelo += ((GuerrilhaNaval)Embarcacao).TirosAdicionais;
 
+            if (Embarcacao.GetType() == typeof(OuricoInfernal))
+                pontosDuelo += ((OuricoInfernal)Embarcacao).Tiros;
+
             return pontosDuelo;
         }
 

@@ -2,8 +2,6 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 {
     using Cartas.Tipos;
     using Regras;
-    using System.Collections.Generic;
-    using System;
     using Tipos;
 
     public class ResponderDuelo : Resultante

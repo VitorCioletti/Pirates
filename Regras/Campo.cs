@@ -73,8 +73,10 @@ namespace ServidorPiratas.Regras
         {
             if (Embarcacao == null)
                 throw new Exception("Não há embarcação no campo.");
+ 
+            Embarcacao = null; 
 
-           Embarcacao = null; 
+            RemoverTodasProtegidas();
         }
 
         public void TrocarEmbarcacao(Embarcacao embarcacao)

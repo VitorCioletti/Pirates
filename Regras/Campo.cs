@@ -37,7 +37,7 @@ namespace ServidorPiratas.Regras
             Embarcacao.Danificar(_danoEmbarcacao);
 
             if (Embarcacao.Vida == 0)
-               RemoverEmbarcacao(); 
+               _removerEmbarcacao(); 
         }
 
         public void Adicionar(Tripulacao tripulacao)
@@ -69,19 +69,10 @@ namespace ServidorPiratas.Regras
 
         public void AfogarTripulacao() => Tripulacao.RemoveAll(t => t.Afogavel);
 
-        public void RemoverEmbarcacao()
-        {
-            if (Embarcacao == null)
-                throw new Exception("Não há embarcação no campo.");
- 
-            Embarcacao = null; 
-
-            RemoverTodasProtegidas();
-        }
 
         public void TrocarEmbarcacao(Embarcacao embarcacao)
         {
-            RemoverEmbarcacao();
+            _removerEmbarcacao();
             Adicionar(embarcacao);
         }
 
@@ -99,6 +90,16 @@ namespace ServidorPiratas.Regras
             Protegidas = null;
 
             return protegidas;
+        }
+
+        private void _removerEmbarcacao()
+        {
+            if (Embarcacao == null)
+                throw new Exception("Não há embarcação no campo.");
+ 
+            Embarcacao = null; 
+
+            RemoverTodasProtegidas();
         }
 
         private int _calcularTirosCanhoes() => Canhoes.Sum(c => c.Tiros);

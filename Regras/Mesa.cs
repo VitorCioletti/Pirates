@@ -1,8 +1,8 @@
 namespace ServidorPiratas.Regras
 {
-    using Acoes;
     using Acoes.Tipos;
-    using Baralhos;
+    using Acoes;
+    using Baralhos.Tipos;
     using System.Collections.Generic;
     using System;
 
@@ -39,7 +39,7 @@ namespace ServidorPiratas.Regras
             PilhaDescarte = new PilhaDescarte();
 
             Jogadores = jogadores;
-            OrdemDeJogadores = _geraOrdemDeJogadores(jogadores);
+            OrdemDeJogadores = _gerarOrdemDeJogadores(jogadores);
         }
 
         public Resultante ProcessaAcao(Acao acao)
@@ -52,7 +52,7 @@ namespace ServidorPiratas.Regras
 
                 HistoricoAcao.Push(acao);
 
-                if (acao.GetType() == typeof(Primaria))
+                if (acao is Primaria)
                     realizador.AcoesDisponiveis--;
 
                 return acaoResultante;
@@ -61,12 +61,13 @@ namespace ServidorPiratas.Regras
                 throw new Exception($"Não é a vez do jogador \"{realizador}\" jogar.");
         }
 
-        public Jogador ObtemProximoJogador() 
+        public Tuple<Jogador, Resultante> MoverProximoTurno()
         {
-            var proximoJogador = OrdemDeJogadores.Dequeue();
-            OrdemDeJogadores.Enqueue(proximoJogador);
+            var proximoJogador = _obterProximoJogador();
 
-            return proximoJogador;
+            // TODO: Aplicar efeito de embarcação do jogador?
+
+           return new Tuple<Jogador, Resultante>(proximoJogador, null);
         }
 
         public void EntrarModoDuelo(Jogador realizador, Jogador alvo)
@@ -87,8 +88,18 @@ namespace ServidorPiratas.Regras
             Duelistas = null;
         }
 
-        public void Finaliza(Jogador vencedor) => throw new NotImplementedException();
+        public void Finalizar(Jogador vencedor) => throw new NotImplementedException();
 
-        private Queue<Jogador> _geraOrdemDeJogadores(List<Jogador> jogadores) => new Queue<Jogador>(jogadores);
+        private Queue<Jogador> _gerarOrdemDeJogadores(List<Jogador> jogadores) => new Queue<Jogador>(jogadores);
+
+        private Jogador _obterProximoJogador()
+        {
+            var proximoJogador = OrdemDeJogadores.Dequeue();
+            OrdemDeJogadores.Enqueue(proximoJogador);
+
+            JogadorAtual = proximoJogador;
+
+            return proximoJogador;
+        }
     }
 }

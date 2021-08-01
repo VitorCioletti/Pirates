@@ -3,7 +3,6 @@ namespace ServidorPiratas.Regras.Cartas.Embarcacao
     using Acoes.Tipos;
     using Acoes;
     using Cartas.Tipos;
-    using System.Linq;
 
     public class HolanderAlado : Embarcacao
     {
@@ -18,7 +17,7 @@ namespace ServidorPiratas.Regras.Cartas.Embarcacao
             var somaTodosTesouros = realizador.CalcularPontosTesouro();
 
             if (somaTodosTesouros >= _tesourosParaVitoria)
-                mesa.Finaliza(realizador);
+                mesa.Finalizar(realizador);
 
             return null;
         }

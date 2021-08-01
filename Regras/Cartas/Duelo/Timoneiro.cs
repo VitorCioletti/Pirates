@@ -17,9 +17,6 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
             if (!(acao is ResponderDuelo))
                 throw new Exception("Carta só pode ser usada em resposta a um duelo.");
 
-            if (!mesa.EmDuelo)
-                throw new Exception("A mesa não está em duelo");
-
             mesa.SairModoDuelo();
 
             return null;

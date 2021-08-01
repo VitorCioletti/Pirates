@@ -3,7 +3,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
     using Acoes.Resultantes;
     using Acoes.Tipos;
     using Acoes;
-    using Baralhos;
+    using Baralhos.Tipos;
     using Tipos;
 
     public class MapaDoTesouro : ResolucaoImediata

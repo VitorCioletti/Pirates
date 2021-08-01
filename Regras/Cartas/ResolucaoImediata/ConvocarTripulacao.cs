@@ -3,7 +3,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
     using Acoes.Resultantes;
     using Acoes.Tipos;
     using Acoes;
-    using Baralhos;
+    using Baralhos.Tipos;
     using Cartas.Tipos;
     using System.Linq;
 

@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Regras.Baralhos
+namespace ServidorPiratas.Regras.Baralhos.Tipos
 {
     using Cartas;
     using System.Collections.Generic;

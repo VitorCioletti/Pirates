@@ -113,14 +113,9 @@ namespace ServidorPiratas.Regras
         {
             var tiros = 0;
 
-            if (Embarcacao.GetType() == typeof(GuerrilhaNaval))
-            {
-                var quantidadeCanhoes = Canhoes.Count;
-
-                tiros += Embarcacao.GetType() == typeof(GuerrilhaNaval) ?
-                    ((GuerrilhaNaval)Embarcacao).TirosAdicionais * quantidadeCanhoes : 0;
-            }
-            else if (Embarcacao.GetType() == typeof(OuricoInfernal))
+            if (Embarcacao is GuerrilhaNaval)
+                tiros += ((GuerrilhaNaval)Embarcacao).TirosAdicionais * Canhoes.Count;
+            else if (Embarcacao is OuricoInfernal)
                 tiros += ((OuricoInfernal)Embarcacao).Tiros;
 
             return tiros;

@@ -1,7 +1,9 @@
 namespace ServidorPiratas.Regras.Cartas.Tipos
 {
+    using Acoes.Tipos;
     using Acoes;
-    using ServidorPiratas.Regras.Acoes.Tipos;
+    using Cartas.Tripulacao;
+    using System;
 
     public abstract class Tripulacao : Carta
     {
@@ -14,11 +16,20 @@ namespace ServidorPiratas.Regras.Cartas.Tipos
             Afogavel = true;
         }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao.Realizador.Campo);
+        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
+            _aplicarEfeito(acao.Alvo?.Campo, acao.Realizador.Campo);
 
-        internal Resultante _aplicarEfeito(Campo campoRealizador)
+        internal Resultante _aplicarEfeito(Campo campoRealizador, Campo campoAlvo)
         {
-            campoRealizador.Adicionar(this);
+            if (campoAlvo != null)
+                campoAlvo.Adicionar(this);
+            else
+            {
+                if (this is PirataAmaldicoado || this is PirataFantasma)
+                    throw new Exception($"Não é possível descer \"{this}\" no próprio campo.");
+
+                campoRealizador.Adicionar(this);
+            }
 
             return null;
         }

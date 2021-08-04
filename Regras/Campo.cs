@@ -116,7 +116,10 @@ namespace ServidorPiratas.Regras
             if (Embarcacao is GuerrilhaNaval)
                 tiros += ((GuerrilhaNaval)Embarcacao).TirosAdicionais * Canhoes.Count;
             else if (Embarcacao is OuricoInfernal)
-                tiros += ((OuricoInfernal)Embarcacao).Tiros;
+            {
+                if (tiros > 0)
+                    tiros += ((OuricoInfernal)Embarcacao).Tiros;
+            }
 
             return tiros;
         }

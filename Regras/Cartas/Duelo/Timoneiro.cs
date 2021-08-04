@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
+namespace ServidorPiratas.Regras.Cartas.Duelo
 {
     using Acoes.Resultantes;
     using Acoes.Tipos;

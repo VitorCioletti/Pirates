@@ -17,7 +17,7 @@ namespace ServidorPiratas.Regras.Cartas.Tipos
         }
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicarEfeito(acao.Alvo?.Campo, acao.Realizador.Campo);
+            _aplicarEfeito(acao.Realizador.Campo, acao.Alvo?.Campo);
 
         internal Resultante _aplicarEfeito(Campo campoRealizador, Campo campoAlvo)
         {

@@ -14,7 +14,7 @@ namespace ServidorPiratas.Regras.Acoes
 
         public Jogador Alvo { get; private set; }
 
-        // TODO: init only setter? Qualquer um pode setar :()
+        // TODO: init only setter? Qualquer um pode setar :(
         public int Turno { get; set; }
 
         public Acao(Jogador realizador, Jogador alvo = null)

@@ -14,6 +14,9 @@ namespace ServidorPiratas.Regras.Acoes
 
         public Jogador Alvo { get; private set; }
 
+        // TODO: init only setter? Qualquer um pode seta
+        public int Turno { get; set; }
+
         public Acao(Jogador realizador, Jogador alvo = null)
         {
             Id = Guid.NewGuid().ToString(); 

@@ -31,10 +31,15 @@ namespace ServidorPiratas.Regras
         
         public Stack<Acao> HistoricoAcao { get; private set; }
 
-        private int _tesourosParaVitoria = 5;
+        private int _tesourosParaVitoria;
+
+        private int _turnoAtual;
 
         public Mesa(List<Jogador> jogadores)
         {
+            _tesourosParaVitoria = 5;
+            _turnoAtual = 1;
+
             Id = Guid.NewGuid().ToString();
             DataHoraInicio = DateTime.UtcNow;
 
@@ -58,6 +63,8 @@ namespace ServidorPiratas.Regras
                 if (acao is Primaria)
                     realizador.AcoesDisponiveis--;
 
+                acao.Turno = _turnoAtual;
+
                 return acaoResultante;
             }
             else
@@ -68,6 +75,8 @@ namespace ServidorPiratas.Regras
         {
             if (JogadorAtual.AcoesDisponiveis > 0)
                 throw new Exception("O jogador atual ainda possui ações disponíveis.");
+
+            _turnoAtual++;
 
             var proximoJogador = _obterProximoJogador();
 

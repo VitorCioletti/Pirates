@@ -25,6 +25,7 @@ namespace ServidorPiratas.Regras.Cartas.Tipos
                 campoAlvo.Adicionar(this);
             else
             {
+                // TODO: Essa linha funciona feliz?
                 if (this is PirataAmaldicoado || this is PirataFantasma)
                     throw new Exception($"Não é possível descer \"{this}\" no próprio campo.");
 

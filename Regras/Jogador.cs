@@ -31,7 +31,7 @@ namespace ServidorPiratas.Regras
 
         public Duelar IniciarDuelo(Jogador jogadorAtacado) => new Duelar(this, jogadorAtacado);
 
-        public int CalcularPontosTesouro()
+        public int CalcularTesouros()
         {
             var tesourosMao = Mao.ObterTodas<Tesouro>();
             var somaTesourosMao = tesourosMao.Sum(c => c.Valor);

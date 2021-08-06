@@ -14,7 +14,7 @@ namespace ServidorPiratas.Regras.Cartas.Embarcacao
 
         internal Resultante _aplicarEfeito(Jogador realizador, Mesa mesa)
         {
-            var somaTodosTesouros = realizador.CalcularPontosTesouro();
+            var somaTodosTesouros = realizador.CalcularTesouros();
 
             if (somaTodosTesouros >= _tesourosParaVitoria)
                 mesa.Finalizar(realizador);

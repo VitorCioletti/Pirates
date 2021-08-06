@@ -1,5 +1,6 @@
 namespace ServidorPiratas.Regras
 {
+    using Acoes.Resultantes;
     using Acoes.Tipos;
     using Acoes;
     using Baralhos.Tipos;
@@ -29,6 +30,8 @@ namespace ServidorPiratas.Regras
         public PilhaDescarte PilhaDescarte { get; set; }
         
         public Stack<Acao> HistoricoAcao { get; private set; }
+
+        private int _tesourosParaVitoria = 5;
 
         public Mesa(List<Jogador> jogadores)
         {
@@ -61,13 +64,20 @@ namespace ServidorPiratas.Regras
                 throw new Exception($"Não é a vez do jogador \"{realizador}\" jogar.");
         }
 
-        public Tuple<Jogador, Resultante> MoverProximoTurno()
+        public Tuple<Jogador, Resultante> ProximoTurno()
         {
+            if (JogadorAtual.AcoesDisponiveis > 0)
+                throw new Exception("O jogador atual ainda possui ações disponíveis.");
+
             var proximoJogador = _obterProximoJogador();
 
-            // TODO: Aplicar efeito de embarcação do jogador?
+            if (proximoJogador.CalcularTesouros() >= _tesourosParaVitoria)
+                Finalizar(proximoJogador);
 
-           return new Tuple<Jogador, Resultante>(proximoJogador, null);
+            var efeitoEmbarcacao = new EfeitoEmbarcacao(proximoJogador, proximoJogador.Campo.Embarcacao);
+            var resultanteEmbarcacao = ProcessaAcao(efeitoEmbarcacao);
+
+           return new Tuple<Jogador, Resultante>(proximoJogador, resultanteEmbarcacao);
         }
 
         public void EntrarModoDuelo(Jogador realizador, Jogador alvo)
@@ -83,6 +93,8 @@ namespace ServidorPiratas.Regras
         {
             if (!EmDuelo)
                 throw new Exception("Mesa não está em duelo.");
+
+            // TODO: Verificar se todas as ações resposta de duelo foram realizadas?
 
             EmDuelo = false;
             Duelistas = null;

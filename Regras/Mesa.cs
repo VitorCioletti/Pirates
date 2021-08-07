@@ -55,7 +55,7 @@ namespace ServidorPiratas.Regras
             _distribuirCartas();
         }
 
-        public Resultante ProcessaAcao(Acao acao)
+        public Resultante ProcessarAcao(Acao acao)
         {
             var realizador = acao.Realizador;
 
@@ -76,7 +76,7 @@ namespace ServidorPiratas.Regras
                 throw new Exception($"Não é a vez do jogador \"{realizador}\" jogar.");
         }
 
-        public Tuple<Jogador, Resultante> ProximoTurno()
+        public Tuple<Jogador, Resultante> MoverParaProximoTurno()
         {
             if (JogadorAtual.AcoesDisponiveis > 0)
                 throw new Exception("O jogador atual ainda possui ações disponíveis.");
@@ -89,7 +89,7 @@ namespace ServidorPiratas.Regras
                 Finalizar(proximoJogador);
 
             var efeitoEmbarcacao = new EfeitoEmbarcacao(proximoJogador, proximoJogador.Campo.Embarcacao);
-            var resultanteEmbarcacao = ProcessaAcao(efeitoEmbarcacao);
+            var resultanteEmbarcacao = ProcessarAcao(efeitoEmbarcacao);
 
            return new Tuple<Jogador, Resultante>(proximoJogador, resultanteEmbarcacao);
         }

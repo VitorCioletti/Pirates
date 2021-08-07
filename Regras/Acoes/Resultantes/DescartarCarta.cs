@@ -14,6 +14,9 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public override Resultante AplicarRegra(Mesa mesa)
         {
+            if (CartaDescartada == null)
+                return null;
+
             if (CartaDescartada.GetType() == typeof(Tesouro))
                 throw new Exception("Não é possível descartar cartas tesouro.");
 

@@ -30,6 +30,8 @@ namespace ServidorPiratas.Regras
         public PilhaDescarte PilhaDescarte { get; set; }
         
         public Stack<Acao> HistoricoAcao { get; private set; }
+ 
+        private int _cartasIniciaisPorJogador;
 
         private int _tesourosParaVitoria;
 
@@ -37,6 +39,7 @@ namespace ServidorPiratas.Regras
 
         public Mesa(List<Jogador> jogadores)
         {
+            _cartasIniciaisPorJogador = 5;
             _tesourosParaVitoria = 5;
             _turnoAtual = 1;
 
@@ -48,6 +51,8 @@ namespace ServidorPiratas.Regras
 
             Jogadores = jogadores;
             OrdemDeJogadores = _gerarOrdemDeJogadores(jogadores);
+
+            _distribuirCartas();
         }
 
         public Resultante ProcessaAcao(Acao acao)
@@ -121,6 +126,16 @@ namespace ServidorPiratas.Regras
             JogadorAtual = proximoJogador;
 
             return proximoJogador;
+        }
+
+        private void _distribuirCartas()
+        {
+            foreach (var jogador in Jogadores)
+            {
+                var cartas = BaralhoCentral.ObterTopo(_cartasIniciaisPorJogador);
+
+                jogador.Mao.Adicionar(cartas);
+            }
         }
     }
 }

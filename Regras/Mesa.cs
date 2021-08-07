@@ -114,7 +114,7 @@ namespace ServidorPiratas.Regras
             Duelistas = null;
         }
 
-        public void Finalizar(Jogador vencedor) => throw new NotImplementedException();
+        public void Finalizar(Jogador vencedor) => DataHoraFim = DateTime.UtcNow;
 
         private Queue<Jogador> _gerarOrdemDeJogadores(List<Jogador> jogadores) => new Queue<Jogador>(jogadores);
 

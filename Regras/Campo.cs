@@ -82,6 +82,8 @@ namespace ServidorPiratas.Regras
 
         public void RemoverTodosCanhoes() => Canhoes.Clear();
 
+        public bool TripulacaoCheia() => Tripulacao.Count == _tripulacaoMaxima;
+
         public void TrocarEmbarcacao(Embarcacao embarcacao)
         {
             _removerEmbarcacao();

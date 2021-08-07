@@ -28,6 +28,9 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
             Vitorioso = Realizador.Campo.CalcularPontosDuelo() > Alvo.Campo.CalcularPontosDuelo() ? Realizador : Alvo;
             Perdedor = Vitorioso == Realizador ? Realizador : Alvo;
 
+            Vitorioso.Campo.RemoverTodosCanhoes();
+            Perdedor.Campo.RemoverTodosCanhoes();
+
             Perdedor.Campo.AfogarTripulacao();
             Perdedor.Campo.DanificarEmbarcacao();
 

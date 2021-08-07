@@ -15,13 +15,22 @@ namespace ServidorPiratas.Regras
 
         public List<Canhao> Canhoes { get; private set; } // TODO: Privado?
 
+        public List<Carta> Protegidas { get; private set; } // TODO: Privado?
+
         public List<Tripulacao> Tripulacao { get; private set; } // TODO: Privado?
 
         public Embarcacao Embarcacao { get; private set; } // TODO: Privado?
 
-        public List<Carta> Protegidas { get; private set; } // TODO: Privado?
-
         public event Action<List<Carta>> AoRemoverProtegidas;
+
+        public Campo()
+        {
+            Canhoes = new List<Canhao>();
+            Protegidas = new List<Carta>();
+            Tripulacao = new List<Tripulacao>();
+
+            Embarcacao = null;
+        }
 
         public int CalcularPontosDuelo()
         {
@@ -70,6 +79,8 @@ namespace ServidorPiratas.Regras
         }
 
         public void AfogarTripulacao() => Tripulacao.RemoveAll(t => t.Afogavel);
+
+        public void RemoverTodosCanhoes() => Canhoes.Clear();
 
         public void TrocarEmbarcacao(Embarcacao embarcacao)
         {

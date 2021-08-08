@@ -61,6 +61,14 @@ namespace ServidorPiratas.Regras
 
             if (realizador == JogadorAtual)
             {
+                if (acao is Resultante)
+                {
+                    var resultante = (Resultante)acao;
+
+                    if (resultante.Origem != HistoricoAcao.Peek())
+                        throw new Exception("Resultante não foi gerada pela última ação.");
+                }
+
                 var acaoResultante = acao.AplicarRegra(this);
 
                 HistoricoAcao.Push(acao);
@@ -88,8 +96,15 @@ namespace ServidorPiratas.Regras
             if (proximoJogador.CalcularTesouros() >= _tesourosParaVitoria)
                 Finalizar(proximoJogador);
 
-            var efeitoEmbarcacao = new EfeitoEmbarcacao(null, proximoJogador, proximoJogador.Campo.Embarcacao);
-            var resultanteEmbarcacao = ProcessarAcao(efeitoEmbarcacao);
+            var embarcacao = proximoJogador.Campo.Embarcacao;
+            Resultante resultanteEmbarcacao = null;
+
+            if (embarcacao != null)
+            {
+                // TODO: Embarcação não pode ter origem nula pois quebra ProcessarAcao
+                var efeitoEmbarcacao = new EfeitoEmbarcacao(null, proximoJogador, embarcacao);
+                resultanteEmbarcacao = ProcessarAcao(efeitoEmbarcacao);
+            }
 
            return new Tuple<Jogador, Resultante>(proximoJogador, resultanteEmbarcacao);
         }

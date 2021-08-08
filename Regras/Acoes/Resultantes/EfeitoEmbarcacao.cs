@@ -1,6 +1,7 @@
 
 namespace ServidorPiratas.Regras.Acoes.Resultantes
 {
+    using System;
     using Cartas.Tipos;
     using Regras;
     using Tipos;
@@ -13,6 +14,12 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
             base(origem, realizador) =>
             Embarcacao = embarcacao;
 
-        public override Resultante AplicarRegra(Mesa mesa) => Embarcacao?.AplicarEfeito(this, mesa);
+        public override Resultante AplicarRegra(Mesa mesa) 
+        {
+            if (Embarcacao == null)
+                throw new ArgumentNullException(nameof(Embarcacao));
+
+            return Embarcacao.AplicarEfeito(this, mesa);
+        }
     }
 }

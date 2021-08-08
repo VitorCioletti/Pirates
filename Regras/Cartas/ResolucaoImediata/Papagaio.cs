@@ -15,6 +15,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
         internal Resultante _aplicarEfeito(Stack<Acao> historicoAcao, Func<Acao, Resultante> executa)
         {
+            // TODO: Só pode duplicar efeito se a ação anterior for DescerCarta?
             var ultimaAcao = historicoAcao.Peek();
 
             // TODO: Verificar se a última acao é primária e se foi o realizador que a fez.

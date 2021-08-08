@@ -88,7 +88,7 @@ namespace ServidorPiratas.Regras
             if (proximoJogador.CalcularTesouros() >= _tesourosParaVitoria)
                 Finalizar(proximoJogador);
 
-            var efeitoEmbarcacao = new EfeitoEmbarcacao(proximoJogador, proximoJogador.Campo.Embarcacao);
+            var efeitoEmbarcacao = new EfeitoEmbarcacao(null, proximoJogador, proximoJogador.Campo.Embarcacao);
             var resultanteEmbarcacao = ProcessarAcao(efeitoEmbarcacao);
 
            return new Tuple<Jogador, Resultante>(proximoJogador, resultanteEmbarcacao);

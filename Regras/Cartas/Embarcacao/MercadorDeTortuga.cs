@@ -9,6 +9,8 @@ namespace ServidorPiratas.Regras.Cartas.Embarcacao
     {
         public MercadorDeTortuga(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => new ComprarCarta(acao.Realizador);
+        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao); 
+
+        internal Resultante _aplicarEfeito(Acao acao) => new ComprarCarta(acao, acao.Realizador);
     }
 }

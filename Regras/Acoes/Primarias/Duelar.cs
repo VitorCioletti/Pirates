@@ -20,7 +20,7 @@ namespace ServidorPiratas.Regras.Acoes.Primarias
 
             mesa.EntrarModoDuelo(Realizador, Alvo);
 
-            return new ResponderDuelo(Alvo, Realizador);
+            return new ResponderDuelo(this, Alvo, Realizador);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
     {
         public Carta CartaRoubada { get; private set; }
 
-        public RoubarCarta(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
+        public RoubarCarta(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) {}
 
         public override Resultante AplicarRegra(Mesa mesa)
         {

@@ -18,7 +18,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
         {
             var cartasOpcoes = baralhoCentral.ObterTopo(_cartasObtidas);
 
-            return new EscolherCartaBaralho(acao.Realizador, baralhoCentral, cartasOpcoes);
+            return new EscolherCartaBaralho(acao, acao.Realizador, baralhoCentral, cartasOpcoes);
         }
     }
 }

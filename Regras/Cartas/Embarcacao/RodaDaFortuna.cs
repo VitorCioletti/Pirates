@@ -13,13 +13,13 @@ namespace ServidorPiratas.Regras.Cartas.Embarcacao
         public RodaDaFortuna(string nome) : base(nome) { }
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicarEfeito(acao.Realizador, mesa.BaralhoCentral);
+            _aplicarEfeito(acao, mesa.BaralhoCentral);
 
-        internal Resultante _aplicarEfeito(Jogador realizador, BaralhoCentral baralhoCentral)
+        internal Resultante _aplicarEfeito(Acao acao, BaralhoCentral baralhoCentral)
         {
             var cartasOpcoes = baralhoCentral.ObterTopo(_cartasAOlhar);
 
-            return new OlharCartasBaralho(realizador, cartasOpcoes);
+            return new OlharCartasBaralho(acao, acao.Realizador, cartasOpcoes);
         }
     }
 }

@@ -9,7 +9,8 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
     {
         public Embarcacao Embarcacao { get; private set; }
         
-        public EfeitoEmbarcacao(Jogador realizador, Embarcacao embarcacao) : base(realizador) =>
+        public EfeitoEmbarcacao(Acao origem, Jogador realizador, Embarcacao embarcacao) : 
+            base(origem, realizador) =>
             Embarcacao = embarcacao;
 
         public override Resultante AplicarRegra(Mesa mesa) => Embarcacao?.AplicarEfeito(this, mesa);

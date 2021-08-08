@@ -11,12 +11,13 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public List<Jogador> JogadoresOpcao { get; private set; }
 
-        public Func<Jogador, Resultante> ResultanteAposEscolha { get; private set; }
+        public Func<Acao, Jogador, Resultante> ResultanteAposEscolha { get; private set; }
 
         public EscolherJogador(
+            Acao origem,
             Jogador realizador, 
             List<Jogador> jogadoresOpcao, 
-            Func<Jogador, Resultante> resultanteAposEscolha) : base(realizador) => 
+            Func<Acao, Jogador, Resultante> resultanteAposEscolha) : base(origem, realizador) => 
             ResultanteAposEscolha = resultanteAposEscolha;
 
         public override Resultante AplicarRegra(Mesa mesa)
@@ -24,7 +25,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
             if (!JogadoresOpcao.Contains(JogadorEscolhido))
                 throw new Exception($"Jogador \"{JogadorEscolhido.Id}\" não é uma opção.");
 
-            return ResultanteAposEscolha(JogadorEscolhido); 
+            return ResultanteAposEscolha(this, JogadorEscolhido); 
         }
     }
 }

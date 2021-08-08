@@ -9,8 +9,9 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
     {
         public HomemAoMar(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao.Realizador, acao.Alvo);
+        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, acao.Alvo);
 
-        internal Resultante _aplicarEfeito(Jogador realizador, Jogador alvo) => new AfogarTripulacao(realizador, alvo);
+        internal Resultante _aplicarEfeito(Acao acao, Jogador alvo) => 
+            new AfogarTripulacao(acao, acao.Realizador, alvo);
     }
 }

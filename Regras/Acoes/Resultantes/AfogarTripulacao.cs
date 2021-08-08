@@ -10,7 +10,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
     {
         public Tripulacao TripulacaoAfogada { get; private set; }
 
-        public AfogarTripulacao(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
+        public AfogarTripulacao(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) {}
 
         public override Resultante AplicarRegra(Mesa mesa)
         {

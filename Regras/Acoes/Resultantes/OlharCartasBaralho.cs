@@ -11,7 +11,8 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
     
         public List<Carta> CartasOpcoes { get; private set; }
 
-        public OlharCartasBaralho(Jogador realizador, List<Carta> cartasOpcoes) : base(realizador) {}
+        public OlharCartasBaralho(Acao origem, Jogador realizador, List<Carta> cartasOpcoes) : 
+            base(origem, realizador) {}
 
         public override Resultante AplicarRegra(Mesa mesa)
         {

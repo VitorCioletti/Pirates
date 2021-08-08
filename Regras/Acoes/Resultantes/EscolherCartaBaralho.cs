@@ -14,7 +14,8 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public Baralho Baralho { get; private set; }
 
-        public EscolherCartaBaralho(Jogador realizador, Baralho baralho, List<Carta> cartasOpcoes) : base(realizador)
+        public EscolherCartaBaralho(Acao origem, Jogador realizador, Baralho baralho, List<Carta> cartasOpcoes) : 
+            base(origem, realizador)
         {
             Baralho = baralho;
             CartasOpcoes = cartasOpcoes;

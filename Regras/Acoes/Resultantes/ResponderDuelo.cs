@@ -16,7 +16,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         public List<Duelo> CartasResposta { get; private set; }
 
-        public ResponderDuelo(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
+        public ResponderDuelo(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) {}
 
         public override Resultante AplicarRegra(Mesa mesa)
         {
@@ -36,7 +36,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
             mesa.SairModoDuelo();
 
-            return new RoubarCarta(Vitorioso, Perdedor);
+            return new RoubarCarta(this, Vitorioso, Perdedor);
         }
     }
 }

@@ -11,16 +11,18 @@ namespace ServidorPiratas.Regras.Cartas.Embarcacao
     {
         public OlhoDeCiclope(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao.Realizador, mesa);
+        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, mesa);
 
-        internal Resultante _aplicarEfeito(Jogador realizador, Mesa mesa)
+        internal Resultante _aplicarEfeito(Acao acao, Mesa mesa)
         {
-            Func<Jogador, Resultante> olharCartas = (jogador) => 
-                new OlharCartasJogador(realizador, jogador.Mao.ObterTodas());
+            var realizador = acao.Realizador;
+
+            Func<Acao, Jogador, Resultante> olharCartas = (acao, jogador) => 
+                new OlharCartasJogador(acao, realizador, jogador.Mao.ObterTodas());
 
             var outrosJogadoresMesa = mesa.Jogadores.Where(j => j != realizador).ToList();
 
-            return new EscolherJogador(realizador, outrosJogadoresMesa, olharCartas);
+            return new EscolherJogador(acao, realizador, outrosJogadoresMesa, olharCartas);
         }
     }
 }

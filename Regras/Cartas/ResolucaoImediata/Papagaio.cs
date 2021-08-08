@@ -11,7 +11,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
         public Papagaio(string nome) : base(nome) { }
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicarEfeito(mesa.HistoricoAcao, mesa.ProcessaAcao);
+            _aplicarEfeito(mesa.HistoricoAcao, mesa.ProcessarAcao);
 
         internal Resultante _aplicarEfeito(Stack<Acao> historicoAcao, Func<Acao, Resultante> executa)
         {

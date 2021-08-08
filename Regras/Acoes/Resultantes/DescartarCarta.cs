@@ -10,7 +10,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
     {
         public Carta CartaDescartada { get; private set; }
 
-        public DescartarCarta(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
+        public DescartarCarta(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) {}
 
         public override Resultante AplicarRegra(Mesa mesa)
         {

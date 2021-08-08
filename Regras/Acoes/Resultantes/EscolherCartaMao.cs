@@ -13,8 +13,8 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
         private Action<Carta> _aposEscolha;
 
-        public EscolherCartaMao(Jogador realizador, List<Carta> cartasOpcao, 
-            Action<Carta> aposEscolha) : base(realizador)
+        public EscolherCartaMao(Acao origem, Jogador realizador, List<Carta> cartasOpcao, 
+            Action<Carta> aposEscolha) : base(origem, realizador)
         {
             CartasOpcao = cartasOpcao;
             _aposEscolha = aposEscolha;

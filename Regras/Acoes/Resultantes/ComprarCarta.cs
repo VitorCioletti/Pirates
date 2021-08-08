@@ -5,7 +5,7 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
 
     public class ComprarCarta : Resultante
     {
-        public ComprarCarta(Jogador jogador) : base(jogador) { }
+        public ComprarCarta(Acao origem, Jogador jogador) : base(origem, jogador) { }
 
         public override Resultante AplicarRegra(Mesa mesa)
         {

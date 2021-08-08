@@ -15,17 +15,20 @@ namespace ServidorPiratas.Regras.Cartas.Embarcacao
         public VossaAlteza(string nome) : base(nome) { }
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicarEfeito(acao.Realizador, mesa.Jogadores);
+            _aplicarEfeito(acao, mesa.Jogadores);
 
-        internal Resultante _aplicarEfeito(Jogador realizador, List<Jogador> jogadoresNaMesa)
+        internal Resultante _aplicarEfeito(Acao acao, List<Jogador> jogadoresNaMesa)
         {
+            var realizador = acao.Realizador;
+
             var jogadoresOpcao = 
                 jogadoresNaMesa.Where(j => j.Mao.QuantidadeCartas() >= _cartasMinimasNaMao && j != realizador).ToList();
 
             // TODO: Randômico ou permite escolha?
-            Func<Jogador, Resultante> roubarCarta = (jogadorAlvo) => new RoubarCarta(realizador, jogadorAlvo);
+            Func<Acao, Jogador, Resultante> roubarCarta = (acao, jogadorAlvo) => 
+                new RoubarCarta(acao, realizador, jogadorAlvo);
 
-            return new EscolherJogador(realizador, jogadoresOpcao, roubarCarta);
+            return new EscolherJogador(acao, realizador, jogadoresOpcao, roubarCarta);
         }
     }
 }

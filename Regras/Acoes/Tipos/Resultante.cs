@@ -2,8 +2,8 @@ namespace ServidorPiratas.Regras.Acoes.Tipos
 {
     public abstract class Resultante : Acao
     {
-        public Primaria Origem { get; set; }
+        public Acao Origem { get; set; }
 
-        public Resultante(Jogador realizador, Jogador alvo = null) : base(realizador, alvo) {}
+        public Resultante(Acao origem, Jogador realizador, Jogador alvo = null) : base(realizador, alvo) {}
     }
 }

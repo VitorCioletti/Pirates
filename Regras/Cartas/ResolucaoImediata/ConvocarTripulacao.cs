@@ -12,11 +12,12 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
     {
         public ConvocarTripulacao(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicarEfeito(acao.Realizador, mesa.PilhaDescarte);
+        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, mesa.PilhaDescarte);
 
-        internal Resultante _aplicarEfeito(Jogador realizador, PilhaDescarte pilhaDescarte)
+        internal Resultante _aplicarEfeito(Acao acao, PilhaDescarte pilhaDescarte)
         {
+            var realizador = acao.Realizador;
+
             if (realizador.Campo.TripulacaoCheia())
                 throw new Exception("Tripulação do jogador está cheia.");
 
@@ -25,7 +26,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
             if (tripulacoesDescartadas.Count == 0)
                 throw new Exception("Não existe tripualção na pilha de descarte.");
 
-            return new EscolherCartaBaralho(realizador, pilhaDescarte, tripulacoesDescartadas);
+            return new EscolherCartaBaralho(acao, realizador, pilhaDescarte, tripulacoesDescartadas);
         }
     }
 }

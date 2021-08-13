@@ -6,12 +6,11 @@ namespace ServidorPiratas.Regras.Acoes.Resultantes
     using Regras;
     using Tipos;
 
-    public class EfeitoEmbarcacao : Resultante
+    public class AplicarEfeitoEmbarcacao : Passiva
     {
         public Embarcacao Embarcacao { get; private set; }
         
-        public EfeitoEmbarcacao(Acao origem, Jogador realizador, Embarcacao embarcacao) : 
-            base(origem, realizador) =>
+        public AplicarEfeitoEmbarcacao(Jogador realizador, Embarcacao embarcacao) : base(realizador) =>
             Embarcacao = embarcacao;
 
         public override Resultante AplicarRegra(Mesa mesa) 

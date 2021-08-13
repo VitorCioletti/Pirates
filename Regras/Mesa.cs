@@ -101,9 +101,8 @@ namespace ServidorPiratas.Regras
 
             if (embarcacao != null)
             {
-                // TODO: Embarcação não pode ter origem nula pois quebra ProcessarAcao
-                var efeitoEmbarcacao = new EfeitoEmbarcacao(null, proximoJogador, embarcacao);
-                resultanteEmbarcacao = ProcessarAcao(efeitoEmbarcacao);
+                var aplicarEfeitoEmbarcacao = new AplicarEfeitoEmbarcacao(proximoJogador, embarcacao);
+                resultanteEmbarcacao = ProcessarAcao(aplicarEfeitoEmbarcacao);
             }
 
            return new Tuple<Jogador, Resultante>(proximoJogador, resultanteEmbarcacao);

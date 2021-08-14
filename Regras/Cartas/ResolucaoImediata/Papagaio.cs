@@ -1,8 +1,11 @@
 namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
+    using Acoes.Primarias;
+    using Acoes.Resultantes;
     using Acoes.Tipos;
     using Acoes;
     using System.Collections.Generic;
+    using System.Linq;
     using System;
     using Tipos;
 
@@ -11,17 +14,44 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
         public Papagaio(string nome) : base(nome) { }
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
-            _aplicarEfeito(mesa.HistoricoAcao, mesa.ProcessarAcao);
+            _aplicarEfeito(acao, mesa.Jogadores, mesa.HistoricoAcao, mesa.ProcessarAcao);
 
-        internal Resultante _aplicarEfeito(Stack<Acao> historicoAcao, Func<Acao, Resultante> executa)
+        internal Resultante _aplicarEfeito(
+             Acao acao, List<Jogador> jogadores, Stack<Acao> historicoAcao, Func<Acao, Resultante> processarAcao)
         {
-            // TODO: Só pode duplicar efeito se a ação anterior for DescerCarta?
-            var ultimaAcao = historicoAcao.Peek();
+            var ultimaAcao = historicoAcao.FirstOrDefault(
+                a => a.Turno == acao.Turno && (a is DescerCarta || a is Acoes.Primarias.Duelar));
 
-            // TODO: Verificar se a última acao é primária e se foi o realizador que a fez.
-            executa(ultimaAcao);
+            if (ultimaAcao == null)
+                throw new Exception("Nenhuma ação válida foi realizada");
 
-            return null;
+            if (ultimaAcao is DescerCarta)
+            {
+                var cartaJogada = ((DescerCarta)ultimaAcao).Carta;
+
+                var tipoNaoPermitido = !(cartaJogada is ResolucaoImediata || cartaJogada is Canhao);
+
+                if (tipoNaoPermitido)
+                    throw new Exception($"Não é possível copiar \"{cartaJogada}\".");
+
+                return processarAcao(ultimaAcao);
+            }
+            else if (ultimaAcao is Acoes.Primarias.Duelar) 
+            {
+                var duelarPrimaria = (Acoes.Primarias.Duelar)ultimaAcao;
+                var realizador = duelarPrimaria.Realizador;
+
+                var cartaIniciadora = duelarPrimaria.CartaIniciadora;
+
+                var outrosJogadores = jogadores.Where(j => j != realizador).ToList();
+
+                Func<Acao, Jogador, Resultante> duelarResultante = (acao, jogadorEscolhido) => 
+                    new Acoes.Resultantes.Duelar(acao, realizador, jogadorEscolhido, cartaIniciadora);
+
+                return new EscolherJogador(acao, realizador, outrosJogadores, duelarResultante);
+            }
+            else
+                throw new Exception("Ação não reconhecida.");
         }
     }
 }

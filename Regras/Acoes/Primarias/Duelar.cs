@@ -1,17 +1,18 @@
 namespace ServidorPiratas.Regras.Acoes.Primarias
 {
-    using System;
     using Acoes.Resultantes;
     using Cartas.Duelo;
     using Cartas.Tipos;
     using Regras;
+    using System;
     using Tipos;
 
     public class Duelar: Primaria
     {
         public Duelo CartaIniciadora { get; private set; }
 
-        public Duelar(Jogador realizador, Jogador alvo) : base(realizador, alvo) {}
+        public Duelar(Jogador realizador, Jogador alvo, Duelo cartaIniciadora) : base(realizador, alvo) 
+            => CartaIniciadora = cartaIniciadora;
 
         public override Resultante AplicarRegra(Mesa mesa)
         {

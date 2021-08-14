@@ -29,7 +29,8 @@ namespace ServidorPiratas.Regras
 
         public ComprarCarta ComprarCarta() => new ComprarCarta(this);
 
-        public Duelar IniciarDuelo(Jogador jogadorAtacado) => new Duelar(this, jogadorAtacado);
+        public Duelar IniciarDuelo(Jogador jogadorAtacado, Duelo cartaIniciadora) => 
+            new Duelar(this, jogadorAtacado, cartaIniciadora);
 
         public int CalcularTesouros()
         {

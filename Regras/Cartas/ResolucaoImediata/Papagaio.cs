@@ -20,7 +20,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
              Acao acao, List<Jogador> jogadores, Stack<Acao> historicoAcao, Func<Acao, Resultante> processarAcao)
         {
             var ultimaAcao = historicoAcao.FirstOrDefault(
-                a => a.Turno == acao.Turno && (a is DescerCarta || a is Acoes.Primarias.Duelar));
+                a => a.Turno == acao.Turno && (a is DescerCarta || a is Duelar));
 
             if (ultimaAcao == null)
                 throw new Exception("Nenhuma ação válida foi realizada");
@@ -36,9 +36,9 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
                 return processarAcao(ultimaAcao);
             }
-            else if (ultimaAcao is Acoes.Primarias.Duelar) 
+            else if (ultimaAcao is Duelar)
             {
-                var duelarPrimaria = (Acoes.Primarias.Duelar)ultimaAcao;
+                var duelarPrimaria = (Duelar)ultimaAcao;
                 var realizador = duelarPrimaria.Realizador;
 
                 var cartaIniciadora = duelarPrimaria.CartaIniciadora;

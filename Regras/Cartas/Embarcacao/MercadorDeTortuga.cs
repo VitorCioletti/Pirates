@@ -1,5 +1,6 @@
 namespace ServidorPiratas.Regras.Cartas.Embarcacao
 {
+    using Acoes.Primarias;
     using Acoes.Resultantes;
     using Acoes.Tipos;
     using Acoes;
@@ -11,6 +12,11 @@ namespace ServidorPiratas.Regras.Cartas.Embarcacao
 
         public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao); 
 
-        internal Resultante _aplicarEfeito(Acao acao) => new ComprarCarta(acao, acao.Realizador);
+        internal Resultante _aplicarEfeito(Acao acao)
+        {
+            var comprarCarta = new ComprarCarta(acao.Realizador);
+
+            return new CopiarPrimaria(acao, acao.Realizador, comprarCarta);
+        }
     }
 }

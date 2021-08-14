@@ -46,7 +46,12 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
                 var outrosJogadores = jogadores.Where(j => j != realizador).ToList();
 
                 Func<Acao, Jogador, Resultante> duelarResultante = (acao, jogadorEscolhido) => 
-                    new Acoes.Resultantes.Duelar(acao, realizador, jogadorEscolhido, cartaIniciadora);
+                {
+                    var duelar = new Duelar(realizador, jogadorEscolhido, cartaIniciadora);
+                    var copiarPrimaria = new CopiarPrimaria(acao, realizador, duelar);
+
+                    return copiarPrimaria;
+                };
 
                 return new EscolherJogador(acao, realizador, outrosJogadores, duelarResultante);
             }

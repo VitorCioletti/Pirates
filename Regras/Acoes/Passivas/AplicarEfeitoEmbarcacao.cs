@@ -1,5 +1,5 @@
 
-namespace ServidorPiratas.Regras.Acoes.Resultantes
+namespace ServidorPiratas.Regras.Acoes.Passivas
 {
     using System;
     using Cartas.Tipos;

@@ -1,6 +1,6 @@
-namespace ServidorPiratas.Regras.Acoes.Primarias
+namespace ServidorPiratas.Regras.Acoes.Primaria
 {
-    using Acoes.Resultantes;
+    using Acoes.Resultante;
     using Cartas.Duelo;
     using Cartas.Tipos;
     using Regras;

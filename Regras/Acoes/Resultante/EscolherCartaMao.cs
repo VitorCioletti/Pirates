@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Regras.Acoes.Resultantes
+namespace ServidorPiratas.Regras.Acoes.Resultante
 {
     using Cartas;
     using System.Collections.Generic;

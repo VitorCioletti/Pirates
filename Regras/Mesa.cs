@@ -1,6 +1,6 @@
 namespace ServidorPiratas.Regras
 {
-    using Acoes.Passivas;
+    using Acoes.Passiva;
     using Acoes.Tipos;
     using Acoes;
     using Baralhos.Tipos;

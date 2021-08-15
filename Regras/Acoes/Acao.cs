@@ -1,6 +1,5 @@
 namespace ServidorPiratas.Regras.Acoes
 {
-    using Acoes.Tipos;
     using System;
 
     public abstract class Acao
@@ -26,6 +25,6 @@ namespace ServidorPiratas.Regras.Acoes
             Alvo = alvo;
         }
 
-        public abstract Resultante AplicarRegra(Mesa mesa);
+        public abstract Tipos.Resultante AplicarRegra(Mesa mesa);
     }
 }

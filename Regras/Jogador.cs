@@ -1,6 +1,6 @@
 namespace ServidorPiratas.Regras
 {
-    using Acoes.Primarias;
+    using Acoes.Primaria;
     using Cartas.Tesouro;
     using Cartas.Tipos;
     using Cartas;

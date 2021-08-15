@@ -1,6 +1,6 @@
 namespace ServidorPiratas.Regras.Cartas.Duelo
 {
-    using Acoes.Resultantes;
+    using Acoes.Resultante;
     using Acoes.Tipos;
     using Acoes;
     using System;

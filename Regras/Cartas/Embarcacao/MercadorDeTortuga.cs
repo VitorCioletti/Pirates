@@ -1,7 +1,7 @@
 namespace ServidorPiratas.Regras.Cartas.Embarcacao
 {
-    using Acoes.Primarias;
-    using Acoes.Resultantes;
+    using Acoes.Primaria;
+    using Acoes.Resultante;
     using Acoes.Tipos;
     using Acoes;
     using Cartas.Tipos;

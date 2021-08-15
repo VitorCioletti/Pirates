@@ -1,10 +1,10 @@
 
-namespace ServidorPiratas.Regras.Acoes.Passivas
+namespace ServidorPiratas.Regras.Acoes.Passiva
 {
-    using System;
+    using Acoes.Tipos;
     using Cartas.Tipos;
     using Regras;
-    using Tipos;
+    using System;
 
     public class AplicarEfeitoEmbarcacao : Passiva
     {

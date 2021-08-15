@@ -1,6 +1,6 @@
 namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
-    using Acoes.Resultantes;
+    using Acoes.Resultante;
     using Acoes.Tipos;
     using Acoes;
     using Cartas.Tipos;

@@ -1,7 +1,6 @@
-namespace ServidorPiratas.Regras.Acoes.Resultantes
+namespace ServidorPiratas.Regras.Acoes.Resultante
 {
     using Cartas.Tipos;
-    using Cartas.Tripulacao;
     using Regras;
     using System;
     using Tipos;

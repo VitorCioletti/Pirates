@@ -1,10 +1,12 @@
 namespace ServidorPiratas.Regras
 {
     using Acoes.Primarias;
+    using Cartas.Tesouro;
     using Cartas.Tipos;
     using Cartas;
     using System.Collections.Generic;
     using System.Linq;
+    using System;
 
     public class Jogador 
     {
@@ -34,13 +36,16 @@ namespace ServidorPiratas.Regras
 
         public int CalcularTesouros()
         {
+            var meiosAmuletos = Mao.ObterTodas<MeioAmuleto>();
+            var somaMeiosAmuletos = MeioAmuleto.CalcularPontosTesouro(meiosAmuletos);
+
             var tesourosMao = Mao.ObterTodas<Tesouro>();
             var somaTesourosMao = tesourosMao.Sum(c => c.Valor);
 
             var tesourosProtegidos = Campo.ObterTodasProtegidas().OfType<Tesouro>();
             var somaTesourosProtegidos = tesourosProtegidos.Sum(c => c.Valor);
 
-           return somaTesourosMao + somaTesourosProtegidos; 
+           return somaTesourosMao + somaTesourosProtegidos + somaMeiosAmuletos;
         }
 
         public override string ToString() => Id;

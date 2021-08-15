@@ -14,6 +14,7 @@ namespace Piratas.Servidor.Regras.Cartas.ResolucaoImediata
 
         internal Resultante _aplicarEfeito(Mao maoRealizador, Mao maoAlvo)
         {
+            // TODO: Como avisar o cliente que foi um Bau Armadilha?
             (Mao maoSaqueador, Mao maoSaqueado) = maoAlvo.Possui<BauArmadilha>() ?
                 (maoAlvo, maoRealizador) : (maoRealizador, maoAlvo);
 

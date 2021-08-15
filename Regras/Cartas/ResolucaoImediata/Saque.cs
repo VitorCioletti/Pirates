@@ -2,6 +2,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 {
     using Acoes.Tipos;
     using Acoes;
+    using Cartas.Passivo;
     using Tipos;
 
     public class Saque : ResolucaoImediata
@@ -13,12 +14,20 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
 
         internal Resultante _aplicarEfeito(Mao maoRealizador, Mao maoAlvo)
         {
-            var cartaSaqueada = maoAlvo.ObterQualquer();
+            (Mao maoSaqueador, Mao maoSaqueado) = maoAlvo.Possui<BauArmadilha>() ?
+                (maoAlvo, maoRealizador) : (maoRealizador, maoAlvo);
 
-            maoAlvo.Remover(cartaSaqueada);
-            maoRealizador.Adicionar(cartaSaqueada);
+            _saquear(maoSaqueador, maoAlvo);
 
             return null;
+        }
+
+        private void _saquear(Mao maoSaqueador, Mao maoSaqueado)
+        {
+            var cartaSaqueada = maoSaqueado.ObterQualquer();
+            maoSaqueado.Remover(cartaSaqueada);
+
+            maoSaqueador.Adicionar(cartaSaqueada);
         }
     }
 }

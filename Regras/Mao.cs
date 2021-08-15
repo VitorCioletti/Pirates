@@ -50,5 +50,7 @@ namespace ServidorPiratas.Regras
         public void Remover(int posicao) => _cartas.RemoveAt(posicao);
 
         public bool Possui(Carta carta) => _cartas.Contains(carta);
+
+        public bool Possui<T>() where T : Carta => _cartas.Any(c => c is T);
     }
 }

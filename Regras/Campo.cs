@@ -1,5 +1,6 @@
 namespace ServidorPiratas.Regras
 {
+    using Cartas.Duelo;
     using Cartas.Embarcacao;
     using Cartas.Tipos;
     using Cartas;

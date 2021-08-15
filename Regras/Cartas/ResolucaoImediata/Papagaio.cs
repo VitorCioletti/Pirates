@@ -4,6 +4,7 @@ namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
     using Acoes.Resultante;
     using Acoes.Tipos;
     using Acoes;
+    using Cartas.Duelo;
     using System.Collections.Generic;
     using System.Linq;
     using System;

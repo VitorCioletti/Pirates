@@ -1,5 +1,7 @@
-namespace ServidorPiratas.Regras.Cartas.Tipos
+namespace ServidorPiratas.Regras.Cartas.Duelo
 {
+    using Tipos;
+
     public abstract class Canhao : Duelo
     {
         public int Tiros { get; private set; }

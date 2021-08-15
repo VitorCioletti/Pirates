@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Regras.Cartas.Tipos
+namespace Piratas.Servidor.Regras.Cartas.Tipos
 {
     public abstract class ResolucaoImediata : Carta
     {

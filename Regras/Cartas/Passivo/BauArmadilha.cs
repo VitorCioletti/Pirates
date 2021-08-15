@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Regras.Cartas.Passivo
+namespace Piratas.Servidor.Regras.Cartas.Passivo
 {
     using Acoes.Tipos;
     using Acoes;

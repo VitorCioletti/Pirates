@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Regras.Cartas.ResolucaoImediata
+namespace Piratas.Servidor.Regras.Cartas.ResolucaoImediata
 {
     using Acoes.Resultante;
     using Acoes.Tipos;

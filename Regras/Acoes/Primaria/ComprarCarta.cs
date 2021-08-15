@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Regras.Acoes.Primaria
+namespace Piratas.Servidor.Regras.Acoes.Primaria
 {
     using Regras;
     using Tipos;

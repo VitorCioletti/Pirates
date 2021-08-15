@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Regras.Cartas.Tesouro
+namespace Piratas.Servidor.Regras.Cartas.Tesouro
 {
     using Cartas.Tipos;
     using System.Collections.Generic;

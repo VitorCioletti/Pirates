@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Regras
+namespace Piratas.Servidor.Regras
 {
     using Cartas.Duelo;
     using Cartas.Embarcacao;

@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Regras.Acoes.Tipos
+namespace Piratas.Servidor.Regras.Acoes.Tipos
 {
     public abstract class Passiva : Acao
     {

@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Regras.Cartas.Duelo
+namespace Piratas.Servidor.Regras.Cartas.Duelo
 {
     using Tipos;
 

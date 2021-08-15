@@ -1,4 +1,4 @@
-namespace ServidorPiratas.Regras.Cartas.Embarcacao
+namespace Piratas.Servidor.Regras.Cartas.Embarcacao
 {
     using Acoes.Tipos;
     using Acoes;

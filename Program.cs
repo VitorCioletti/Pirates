@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServidorServidorPiratas
+namespace ServidorPiratas.Servidor
 {
     class Program
     {

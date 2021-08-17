@@ -14,8 +14,8 @@ namespace Piratas.Servidor.Regras.Acoes.Primaria
 
         public override Resultante AplicarRegra(Mesa mesa) 
         {
-            if (Carta.GetType() == typeof(Tesouro))
-                throw new Exception($"Não é permitido jogar cartas \"{nameof(Tesouro)}\".");
+            if (Carta is Tesouro || Carta is Passivo)
+                throw new Exception($"Não é permitido jogar cartas \"{Carta.GetType()}\".");
 
             var resultanteEfeitoCarta = Carta.AplicarEfeito(this, mesa);
 

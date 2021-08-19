@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
         public OlharCartasBaralho(Acao origem, Jogador realizador, List<Carta> cartasOpcoes) : 
             base(origem, realizador) {}
 
-        public override Resultante AplicarRegra(Mesa mesa)
+        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             var baralhoCentral = mesa.BaralhoCentral;
 
@@ -23,7 +23,7 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
             else
                 baralhoCentral.InserirFundo(CartasOpcoes);
 
-            return null;
+            yield return null;
         }
     }
 }

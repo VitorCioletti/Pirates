@@ -12,6 +12,6 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
         public OlharCartasJogador(Acao origem, Jogador realizador, List<Carta> cartas) 
             : base(origem, realizador) => Cartas = cartas;
 
-        public override Resultante AplicarRegra(Mesa mesa) => null;
+        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa) => null;
     }
 }

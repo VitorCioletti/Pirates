@@ -1,5 +1,6 @@
 namespace Piratas.Servidor.Regras.Cartas
 {
+    using System.Collections.Generic;
     using Acoes;
     using Acoes.Tipos;
 
@@ -9,6 +10,6 @@ namespace Piratas.Servidor.Regras.Cartas
 
         public Carta(string nome) => Nome = nome;
 
-        public abstract Resultante AplicarEfeito(Acao Acao, Mesa mesa);
+        public abstract IEnumerable<Resultante> AplicarEfeito(Acao Acao, Mesa mesa);
     }
 }

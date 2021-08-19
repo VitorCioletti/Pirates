@@ -1,5 +1,6 @@
 namespace Piratas.Servidor.Regras.Cartas.ResolucaoImediata
 {
+    using System.Collections.Generic;
     using Acoes;
     using Acoes.Tipos;
     using Baralhos.Tipos;
@@ -11,15 +12,15 @@ namespace Piratas.Servidor.Regras.Cartas.ResolucaoImediata
 
         private int _cartasCompradas = 2;
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicarEfeito(acao.Realizador.Mao, mesa.BaralhoCentral);
 
-        internal Resultante _aplicarEfeito(Mao maoRealizador, BaralhoCentral baralhoCentral)
+        internal IEnumerable<Resultante> _aplicarEfeito(Mao maoRealizador, BaralhoCentral baralhoCentral)
         {
             var cartasCompradas = baralhoCentral.ObterTopo(_cartasCompradas);
             maoRealizador.Adicionar(cartasCompradas);
 
-            return null;
+            yield return null;
         }
     }
 }

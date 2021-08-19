@@ -3,6 +3,7 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
     using Cartas.Tipos;
     using Cartas;
     using Regras;
+    using System.Collections.Generic;
     using System;
     using Tipos;
 
@@ -12,10 +13,10 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
 
         public DescartarCarta(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) {}
 
-        public override Resultante AplicarRegra(Mesa mesa)
+        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             if (CartaDescartada == null)
-                return null;
+                yield return null;
 
             if (CartaDescartada.GetType() == typeof(Tesouro))
                 throw new Exception("Não é possível descartar cartas tesouro.");
@@ -23,7 +24,7 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
             Alvo.Mao.Remover(CartaDescartada);
             mesa.PilhaDescarte.InserirTopo(CartaDescartada);
 
-            return null;
+            yield return null;
         }
     }
 }

@@ -14,11 +14,12 @@ namespace Piratas.Servidor.Regras.Cartas.ResolucaoImediata
     {
         public Papagaio(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicarEfeito(acao, mesa.Jogadores, mesa.HistoricoAcao, mesa.ProcessarAcao);
 
-        internal Resultante _aplicarEfeito(
-             Acao acao, List<Jogador> jogadores, Stack<Acao> historicoAcao, Func<Acao, Resultante> processarAcao)
+        internal IEnumerable<Resultante> _aplicarEfeito(
+             Acao acao, 
+             List<Jogador> jogadores, Stack<Acao> historicoAcao, Func<Acao, IEnumerable<Resultante>> processarAcao)
         {
             var ultimaAcao = historicoAcao.FirstOrDefault(
                 a => a.Turno == acao.Turno && (a is DescerCarta || a is Duelar));
@@ -35,7 +36,8 @@ namespace Piratas.Servidor.Regras.Cartas.ResolucaoImediata
                 if (tipoNaoPermitido)
                     throw new Exception($"Não é possível copiar \"{cartaJogada}\".");
 
-                return processarAcao(ultimaAcao);
+                foreach (var resultante in processarAcao(ultimaAcao))
+                    yield return resultante;
             }
             else if (ultimaAcao is Duelar)
             {
@@ -46,15 +48,15 @@ namespace Piratas.Servidor.Regras.Cartas.ResolucaoImediata
 
                 var outrosJogadores = jogadores.Where(j => j != realizador).ToList();
 
-                Func<Acao, Jogador, Resultante> duelarResultante = (acao, jogadorEscolhido) => 
+                Func<Acao, Jogador, IEnumerable<Resultante>> duelarResultante = (acao, jogadorEscolhido) => 
                 {
                     var duelar = new Duelar(realizador, jogadorEscolhido, cartaIniciadora);
                     var copiarPrimaria = new CopiarPrimaria(acao, realizador, duelar);
 
-                    return copiarPrimaria;
+                    return copiarPrimaria as IEnumerable<Resultante>;
                 };
 
-                return new EscolherJogador(acao, realizador, outrosJogadores, duelarResultante);
+                yield return new EscolherJogador(acao, realizador, outrosJogadores, duelarResultante);
             }
             else
                 throw new Exception("Ação não reconhecida.");

@@ -18,7 +18,7 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
 
         public ResponderDuelo(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) {}
 
-        public override Resultante AplicarRegra(Mesa mesa)
+        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             if (CartasResposta.Count > _limiteCartasResposta)
                 throw new Exception("Limite de cartas resposta atigindo.");
@@ -36,7 +36,7 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
 
             mesa.SairModoDuelo();
 
-            return new RoubarCarta(this, Vitorioso, Perdedor);
+            yield return new RoubarCarta(this, Vitorioso, Perdedor);
         }
     }
 }

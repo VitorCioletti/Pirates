@@ -5,15 +5,19 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
     using Acoes;
     using Baralhos.Tipos;
     using Cartas.Tipos;
+    using System.Collections.Generic;
 
     public class ServoDePoseidon : Embarcacao
     {
         public ServoDePoseidon(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicarEfeito(acao, mesa.PilhaDescarte);
 
-        internal Resultante _aplicarEfeito(Acao acao, PilhaDescarte pilhaDescarte) =>
-            new EscolherCartaBaralho(acao, acao.Realizador, pilhaDescarte, pilhaDescarte.ObterTodas<Carta>());
+        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, PilhaDescarte pilhaDescarte)
+        {
+            yield return 
+                new EscolherCartaBaralho(acao, acao.Realizador, pilhaDescarte, pilhaDescarte.ObterTodas<Carta>());
+        }
     }
 }

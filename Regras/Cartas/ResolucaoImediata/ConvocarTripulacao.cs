@@ -7,14 +7,16 @@ namespace Piratas.Servidor.Regras.Cartas.ResolucaoImediata
     using Cartas.Tipos;
     using System.Linq;
     using System;
+    using System.Collections.Generic;
 
     public class ConvocarTripulacao : ResolucaoImediata
     {
         public ConvocarTripulacao(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, mesa.PilhaDescarte);
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
+            _aplicarEfeito(acao, mesa.PilhaDescarte);
 
-        internal Resultante _aplicarEfeito(Acao acao, PilhaDescarte pilhaDescarte)
+        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, PilhaDescarte pilhaDescarte)
         {
             var realizador = acao.Realizador;
 
@@ -26,7 +28,7 @@ namespace Piratas.Servidor.Regras.Cartas.ResolucaoImediata
             if (tripulacoesDescartadas.Count == 0)
                 throw new Exception("Não existe tripualção na pilha de descarte.");
 
-            return new EscolherCartaBaralho(acao, realizador, pilhaDescarte, tripulacoesDescartadas);
+            yield return new EscolherCartaBaralho(acao, realizador, pilhaDescarte, tripulacoesDescartadas);
         }
     }
 }

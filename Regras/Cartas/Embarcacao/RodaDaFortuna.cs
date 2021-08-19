@@ -5,6 +5,7 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
     using Acoes;
     using Baralhos.Tipos;
     using Cartas.Tipos;
+    using System.Collections.Generic;
 
     public class RodaDaFortuna : Embarcacao
     {
@@ -12,14 +13,14 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
 
         public RodaDaFortuna(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicarEfeito(acao, mesa.BaralhoCentral);
 
-        internal Resultante _aplicarEfeito(Acao acao, BaralhoCentral baralhoCentral)
+        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, BaralhoCentral baralhoCentral)
         {
             var cartasOpcoes = baralhoCentral.ObterTopo(_cartasAOlhar);
 
-            return new OlharCartasBaralho(acao, acao.Realizador, cartasOpcoes);
+            yield return new OlharCartasBaralho(acao, acao.Realizador, cartasOpcoes);
         }
     }
 }

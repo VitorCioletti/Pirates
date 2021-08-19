@@ -4,16 +4,17 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
     using Acoes.Tipos;
     using Acoes;
     using Cartas.Tipos;
-    using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System;
 
     public class CascoDeAco : Embarcacao
     {
         public CascoDeAco(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao);
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao);
 
-        internal Resultante _aplicarEfeito(Acao acao)
+        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao)
         {
             var realizador = acao.Realizador;
 
@@ -25,7 +26,7 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
                 realizador.Campo.AdicionarProtegida(carta);
             };
 
-            return new EscolherCartaMao(acao, realizador, tesourosMao, aposEscolha);
+            yield return new EscolherCartaMao(acao, realizador, tesourosMao, aposEscolha);
         }
     }
 }

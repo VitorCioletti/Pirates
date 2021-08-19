@@ -14,10 +14,10 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
  
         public VossaAlteza(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicarEfeito(acao, mesa.Jogadores);
 
-        internal Resultante _aplicarEfeito(Acao acao, List<Jogador> jogadoresNaMesa)
+        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, List<Jogador> jogadoresNaMesa)
         {
             var realizador = acao.Realizador;
 
@@ -25,10 +25,10 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
                 jogadoresNaMesa.Where(j => j.Mao.QuantidadeCartas() >= _cartasMinimasNaMao && j != realizador).ToList();
 
             // TODO: Randômico ou permite escolha?
-            Func<Acao, Jogador, Resultante> roubarCarta = (acao, jogadorAlvo) => 
-                new RoubarCarta(acao, realizador, jogadorAlvo);
+            Func<Acao, Jogador, IEnumerable<Resultante>> roubarCarta = (acao, jogadorAlvo) =>
+                new RoubarCarta(acao, realizador, jogadorAlvo) as IEnumerable<Resultante>;
 
-            return new EscolherJogador(acao, realizador, jogadoresOpcao, roubarCarta);
+            yield return new EscolherJogador(acao, realizador, jogadoresOpcao, roubarCarta);
         }
     }
 }

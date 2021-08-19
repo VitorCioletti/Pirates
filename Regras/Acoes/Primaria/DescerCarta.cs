@@ -3,6 +3,7 @@ namespace Piratas.Servidor.Regras.Acoes.Primaria
     using Cartas.Tipos;
     using Regras.Cartas;
     using Regras;
+    using System.Collections.Generic;
     using System;
     using Tipos;
 
@@ -12,7 +13,7 @@ namespace Piratas.Servidor.Regras.Acoes.Primaria
 
         public DescerCarta(Jogador jogador, Carta carta, Jogador alvo = null) : base(jogador, alvo) => Carta = carta;
 
-        public override Resultante AplicarRegra(Mesa mesa) 
+        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa) 
         {
             if (Carta is Tesouro || Carta is Passivo)
                 throw new Exception($"Não é permitido jogar cartas \"{Carta.GetType()}\".");

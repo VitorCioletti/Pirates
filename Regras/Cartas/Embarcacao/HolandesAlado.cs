@@ -3,6 +3,7 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
     using Acoes.Tipos;
     using Acoes;
     using Cartas.Tipos;
+    using System.Collections.Generic;
 
     public class HolanderAlado : Embarcacao
     {
@@ -10,16 +11,16 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
  
         public HolanderAlado(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao.Realizador, mesa);
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao.Realizador, mesa);
 
-        internal Resultante _aplicarEfeito(Jogador realizador, Mesa mesa)
+        internal IEnumerable<Resultante> _aplicarEfeito(Jogador realizador, Mesa mesa)
         {
             var somaTodosTesouros = realizador.CalcularTesouros();
 
             if (somaTodosTesouros >= _tesourosParaVitoria)
                 mesa.Finalizar(realizador);
 
-            return null;
+            yield return null;
         }
     }
 }

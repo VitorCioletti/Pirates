@@ -2,6 +2,7 @@ namespace Piratas.Servidor.Regras.Cartas.Tipos
 {
     using Acoes.Tipos;
     using Acoes;
+    using System.Collections.Generic;
 
     public class Tesouro : Carta
     {
@@ -9,6 +10,6 @@ namespace Piratas.Servidor.Regras.Cartas.Tipos
 
         public Tesouro(string nome, int valor) : base(nome) => Valor = valor;
 
-        public override Resultante AplicarEfeito(Acao Acao, Mesa mesa) => null;
+        public override IEnumerable<Resultante> AplicarEfeito(Acao Acao, Mesa mesa) => null;
     }
 }

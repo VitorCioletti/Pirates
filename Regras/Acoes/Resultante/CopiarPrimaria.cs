@@ -1,6 +1,7 @@
 namespace Piratas.Servidor.Regras.Acoes.Resultante
 {
     using Regras;
+    using System.Collections.Generic;
     using Tipos;
 
     public class CopiarPrimaria: Resultante
@@ -10,6 +11,6 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
         public CopiarPrimaria(Acao origem, Jogador realizador, Primaria copiada) : base(origem, realizador) => 
             Copiada = copiada;
 
-        public override Resultante AplicarRegra(Mesa mesa) => Copiada.AplicarRegra(mesa);
+        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa) => Copiada.AplicarRegra(mesa);
     }
 }

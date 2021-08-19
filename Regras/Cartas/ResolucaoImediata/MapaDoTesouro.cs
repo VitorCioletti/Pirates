@@ -4,6 +4,7 @@ namespace Piratas.Servidor.Regras.Cartas.ResolucaoImediata
     using Acoes.Tipos;
     using Acoes;
     using Baralhos.Tipos;
+    using System.Collections.Generic;
     using Tipos;
 
     public class MapaDoTesouro : ResolucaoImediata
@@ -12,13 +13,14 @@ namespace Piratas.Servidor.Regras.Cartas.ResolucaoImediata
 
         public MapaDoTesouro(string nome) : base(nome) {}
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, mesa.BaralhoCentral);
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
+            _aplicarEfeito(acao, mesa.BaralhoCentral);
 
-        internal Resultante _aplicarEfeito(Acao acao, BaralhoCentral baralhoCentral)
+        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, BaralhoCentral baralhoCentral)
         {
             var cartasOpcoes = baralhoCentral.ObterTopo(_cartasObtidas);
 
-            return new EscolherCartaBaralho(acao, acao.Realizador, baralhoCentral, cartasOpcoes);
+            yield return new EscolherCartaBaralho(acao, acao.Realizador, baralhoCentral, cartasOpcoes);
         }
     }
 }

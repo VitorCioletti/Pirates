@@ -2,6 +2,7 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
 {
     using Cartas;
     using Regras;
+    using System.Collections.Generic;
     using Tipos;
 
     public class RoubarCarta: Resultante
@@ -10,12 +11,12 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
 
         public RoubarCarta(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) {}
 
-        public override Resultante AplicarRegra(Mesa mesa)
+        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             Realizador.Mao.Adicionar(CartaRoubada);
             Alvo.Mao.Remover(CartaRoubada);
 
-            return null;
+            yield return null;
         }
     }
 }

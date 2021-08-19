@@ -3,6 +3,7 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
     using Acoes.Tipos;
     using Acoes;
     using Cartas.Tipos;
+    using System.Collections.Generic;
 
     public class GuerrilhaNaval : Embarcacao
     {
@@ -10,6 +11,6 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
  
         public GuerrilhaNaval(string nome) : base(nome) { }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => null; 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => null; 
     }
 }

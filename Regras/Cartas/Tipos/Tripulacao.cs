@@ -4,6 +4,7 @@ namespace Piratas.Servidor.Regras.Cartas.Tipos
     using Acoes;
     using Cartas.Tripulacao;
     using System;
+    using System.Collections.Generic;
 
     public abstract class Tripulacao : Carta
     {
@@ -16,10 +17,10 @@ namespace Piratas.Servidor.Regras.Cartas.Tipos
             Afogavel = true;
         }
 
-        public override Resultante AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicarEfeito(acao.Realizador.Campo, acao.Alvo?.Campo);
 
-        internal Resultante _aplicarEfeito(Campo campoRealizador, Campo campoAlvo)
+        internal IEnumerable<Resultante> _aplicarEfeito(Campo campoRealizador, Campo campoAlvo)
         {
             if (campoAlvo != null)
                 campoAlvo.Adicionar(this);
@@ -32,7 +33,7 @@ namespace Piratas.Servidor.Regras.Cartas.Tipos
                 campoRealizador.Adicionar(this);
             }
 
-            return null;
+            yield return null;
         }
     }
 }

@@ -5,6 +5,7 @@ namespace Piratas.Servidor.Regras
     using Acoes;
     using Baralhos.Tipos;
     using System.Collections.Generic;
+    using System.Linq;
     using System;
 
     public class Mesa
@@ -28,8 +29,10 @@ namespace Piratas.Servidor.Regras
         public BaralhoCentral BaralhoCentral { get; private set; }
 
         public PilhaDescarte PilhaDescarte { get; set; }
-        
+
         public Stack<Acao> HistoricoAcao { get; private set; }
+
+        private List<Resultante> _resultantesPendentes;
  
         private int _cartasIniciaisPorJogador;
 
@@ -43,6 +46,8 @@ namespace Piratas.Servidor.Regras
             _tesourosParaVitoria = 5;
             _turnoAtual = 1;
 
+            _resultantesPendentes = new List<Resultante>();
+
             Id = Guid.NewGuid().ToString();
             DataHoraInicio = DateTime.UtcNow;
 
@@ -55,33 +60,31 @@ namespace Piratas.Servidor.Regras
             _distribuirCartas();
         }
 
-        public Resultante ProcessarAcao(Acao acao)
+        public IEnumerable<Resultante> ProcessarAcao(Acao acao)
         {
             var realizador = acao.Realizador;
 
-            if (realizador == JogadorAtual)
+            _verificarPrimariaJogadorAtual(acao);
+            _verificarResultantePendente(acao);
+
+            var acoesResultantes = acao.AplicarRegra(this);
+
+            HistoricoAcao.Push(acao);
+
+            if (acao is Primaria)
+                realizador.AcoesDisponiveis--;
+
+            else if (acao is Resultante)
+                _resultantesPendentes.Remove((Resultante)acao);
+
+            acao.Turno = _turnoAtual;
+
+            foreach (var acaoResultante in acoesResultantes)
             {
-                if (acao is Resultante)
-                {
-                    var resultante = (Resultante)acao;
+                _resultantesPendentes.Add(acaoResultante);
 
-                    if (resultante.Origem != HistoricoAcao.Peek())
-                        throw new Exception("Resultante não foi gerada pela última ação.");
-                }
-
-                var acaoResultante = acao.AplicarRegra(this);
-
-                HistoricoAcao.Push(acao);
-
-                if (acao is Primaria)
-                    realizador.AcoesDisponiveis--;
-
-                acao.Turno = _turnoAtual;
-
-                return acaoResultante;
+                yield return acaoResultante;
             }
-            else
-                throw new Exception($"Não é a vez do jogador \"{realizador}\" jogar.");
         }
 
         public Tuple<Jogador, Resultante> MoverParaProximoTurno()
@@ -102,7 +105,7 @@ namespace Piratas.Servidor.Regras
             if (embarcacao != null)
             {
                 var aplicarEfeitoEmbarcacao = new AplicarEfeitoEmbarcacao(proximoJogador, embarcacao);
-                resultanteEmbarcacao = ProcessarAcao(aplicarEfeitoEmbarcacao);
+                resultanteEmbarcacao = ProcessarAcao(aplicarEfeitoEmbarcacao).FirstOrDefault();
             }
 
            return new Tuple<Jogador, Resultante>(proximoJogador, resultanteEmbarcacao);
@@ -149,6 +152,26 @@ namespace Piratas.Servidor.Regras
                 var cartas = BaralhoCentral.ObterTopo(_cartasIniciaisPorJogador);
 
                 jogador.Mao.Adicionar(cartas);
+            }
+        }
+
+        private void _verificarPrimariaJogadorAtual(Acao acao)
+        {
+            var realizador = acao.Realizador;
+
+            if (acao is Primaria)
+            {
+                if (realizador != JogadorAtual)
+                    throw new Exception($"Não é a vez do jogador \"{realizador}\" jogar.");
+            }
+        }
+
+        private void _verificarResultantePendente(Acao acao)
+        {
+            if (acao is Resultante)
+            {
+                if (!_resultantesPendentes.Contains(acao))
+                    throw new Exception($"Resultante \"{acao}\" não esperada.");
             }
         }
     }

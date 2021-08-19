@@ -22,14 +22,14 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
 
         public Func<Jogador, Resultante> ResultanteAposEscolha { get; private set; }
 
-        public override Resultante AplicarRegra(Mesa mesa)
+        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             if (!CartasOpcao.Contains(CartaEscolhida))
                 throw new ArgumentException($"Carta \"{CartaEscolhida.Nome}\" não é uma opção.");
         
             _aposEscolha(CartaEscolhida);
 
-            return null;
+            yield return null;
         }
     }
 }

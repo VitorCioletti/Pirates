@@ -11,16 +11,16 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
 
         public List<Jogador> JogadoresOpcao { get; private set; }
 
-        public Func<Acao, Jogador, Resultante> ResultanteAposEscolha { get; private set; }
+        public Func<Acao, Jogador, IEnumerable<Resultante>> ResultanteAposEscolha { get; private set; }
 
         public EscolherJogador(
             Acao origem,
             Jogador realizador, 
             List<Jogador> jogadoresOpcao, 
-            Func<Acao, Jogador, Resultante> resultanteAposEscolha) : base(origem, realizador) => 
+            Func<Acao, Jogador, IEnumerable<Resultante>> resultanteAposEscolha) : base(origem, realizador) => 
             ResultanteAposEscolha = resultanteAposEscolha;
 
-        public override Resultante AplicarRegra(Mesa mesa)
+        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             if (!JogadoresOpcao.Contains(JogadorEscolhido))
                 throw new Exception($"Jogador \"{JogadorEscolhido.Id}\" não é uma opção.");

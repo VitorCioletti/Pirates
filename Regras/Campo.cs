@@ -46,6 +46,9 @@ namespace Piratas.Servidor.Regras
 
         public void DanificarEmbarcacao()
         {
+            if (Embarcacao == null)
+                return;
+
             Embarcacao.Danificar(_danoEmbarcacao);
 
             if (Embarcacao.Vida == 0)

@@ -7,9 +7,9 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
     using Cartas.Tipos;
     using System.Collections.Generic;
 
-    public class MercadorDeTortuga : Embarcacao
+    public class MercadorTortuga : Embarcacao
     {
-        public MercadorDeTortuga(string nome) : base(nome) { }
+        public MercadorTortuga(string nome) : base(nome) { }
 
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao); 
 

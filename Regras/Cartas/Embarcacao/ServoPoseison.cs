@@ -7,9 +7,9 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
     using Cartas.Tipos;
     using System.Collections.Generic;
 
-    public class ServoDePoseidon : Embarcacao
+    public class ServoPoseidon : Embarcacao
     {
-        public ServoDePoseidon(string nome) : base(nome) { }
+        public ServoPoseidon(string nome) : base(nome) { }
 
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicarEfeito(acao, mesa.PilhaDescarte);

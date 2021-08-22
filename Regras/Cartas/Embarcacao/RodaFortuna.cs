@@ -7,11 +7,11 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
     using Cartas.Tipos;
     using System.Collections.Generic;
 
-    public class RodaDaFortuna : Embarcacao
+    public class RodaFortuna : Embarcacao
     {
         private int _cartasAOlhar = 2;
 
-        public RodaDaFortuna(string nome) : base(nome) { }
+        public RodaFortuna(string nome) : base(nome) { }
 
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicarEfeito(acao, mesa.BaralhoCentral);

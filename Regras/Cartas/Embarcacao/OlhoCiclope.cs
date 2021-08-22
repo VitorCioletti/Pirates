@@ -8,9 +8,9 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
     using System.Linq;
     using System;
 
-    public class OlhoDeCiclope : Embarcacao
+    public class OlhoCiclope : Embarcacao
     {
-        public OlhoDeCiclope(string nome) : base(nome) { }
+        public OlhoCiclope(string nome) : base(nome) { }
 
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, mesa);
 

@@ -7,6 +7,7 @@ namespace Piratas.Servidor.Regras
     using System.Collections.Generic;
     using System.Linq;
     using System;
+    using Piratas.Servidor.Regras.Cartas.Tripulacao;
 
     public class Jogador 
     {
@@ -45,7 +46,10 @@ namespace Piratas.Servidor.Regras
             var tesourosProtegidos = Campo.ObterTodasProtegidas().OfType<Tesouro>();
             var somaTesourosProtegidos = tesourosProtegidos.Sum(c => c.Valor);
 
-           return somaTesourosMao + somaTesourosProtegidos + somaMeiosAmuletos;
+            var tesourosPiratasNobres = 
+                Campo.Tripulacao.Where(t => t is PirataNobre).Sum(t => ((PirataNobre)t).Tesouros);
+
+           return somaTesourosMao + somaTesourosProtegidos + somaMeiosAmuletos + tesourosPiratasNobres;
         }
 
         public override string ToString() => Id;

@@ -1,6 +1,9 @@
 namespace Piratas.Servidor.Regras.Acoes.Resultante
 {
+    using Acoes.Primaria;
+    using Cartas.ResolucaoImediata;
     using Cartas.Tipos;
+    using Cartas.Tripulacao;
     using Regras;
     using System.Collections.Generic;
     using System.Linq;
@@ -24,6 +27,12 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
+            if (Origem is DescerCarta && ((DescerCarta)Origem).Carta is HomemAoMar)
+            {
+                if (TripulacaoAfogada is PirataNobre)
+                    throw new Exception($"\"{nameof(PirataNobre)}\" não pode ser afogada por \"{nameof(HomemAoMar)}\".");
+            }
+
             if (!TripulacaoAfogada.Afogavel)
                 throw new Exception($"Essa tripulação não pode ser afogada.");
 

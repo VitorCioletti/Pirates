@@ -5,7 +5,7 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
     using System.Collections.Generic;
     using Tipos;
 
-    public class RoubarCarta: Resultante
+    public class RoubarCarta : Resultante
     {
         public Carta CartaRoubada { get; private set; }
 

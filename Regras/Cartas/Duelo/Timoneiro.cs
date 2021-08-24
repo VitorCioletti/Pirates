@@ -15,7 +15,7 @@ namespace Piratas.Servidor.Regras.Cartas.Duelo
 
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, Mesa mesa)
         {
-            if (!(acao is ResponderDuelo))
+            if (!(acao is DescerCartasDuelo))
                 throw new Exception("Carta só pode ser usada em resposta a um duelo.");
 
             mesa.SairModoDuelo();

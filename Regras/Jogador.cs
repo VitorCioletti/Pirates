@@ -3,11 +3,10 @@ namespace Piratas.Servidor.Regras
     using Acoes.Primaria;
     using Cartas.Tesouro;
     using Cartas.Tipos;
+    using Cartas.Tripulacao;
     using Cartas;
     using System.Collections.Generic;
     using System.Linq;
-    using System;
-    using Piratas.Servidor.Regras.Cartas.Tripulacao;
 
     public class Jogador 
     {

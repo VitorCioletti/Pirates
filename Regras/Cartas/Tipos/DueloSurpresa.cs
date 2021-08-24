@@ -1,15 +1,14 @@
-namespace Piratas.Servidor.Regras.Cartas.Duelo
+namespace Piratas.Servidor.Regras.Cartas.Tipos
 {
     using Acoes.Tipos;
     using Acoes;
     using System.Collections.Generic;
-    using Tipos;
 
-    public abstract class Canhao : Duelo
+    public abstract class DueloSurpresa : Duelo
     {
         public int Tiros { get; private set; }
- 
-        public Canhao(string nome, int tiros) : base(nome) { Tiros = tiros; }
+
+        public DueloSurpresa(string nome) : base(nome) => Tiros = 1;
 
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
             _aplicarEfeito(acao.Realizador.Campo);

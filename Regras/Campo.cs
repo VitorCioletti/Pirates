@@ -16,17 +16,21 @@ namespace Piratas.Servidor.Regras
 
         public List<Canhao> Canhoes { get; private set; } // TODO: Privado?
 
+        public List<DueloSurpresa> DuelosSurpresa { get; private set; } // TODO: Privado?
+
         public List<Carta> Protegidas { get; private set; } // TODO: Privado?
 
         public List<Tripulacao> Tripulacao { get; private set; } // TODO: Privado?
 
         public Embarcacao Embarcacao { get; private set; } // TODO: Privado?
 
+
         public event Action<List<Carta>> AoRemoverProtegidas;
 
         public Campo()
         {
             Canhoes = new List<Canhao>();
+            DuelosSurpresa = new List<DueloSurpresa>();
             Protegidas = new List<Carta>();
             Tripulacao = new List<Tripulacao>();
 
@@ -38,8 +42,9 @@ namespace Piratas.Servidor.Regras
             var pontosDuelo = 0;
 
             pontosDuelo += _calcularTirosCanhoes();
-            pontosDuelo += _calcularTirosTripulacao();
+            pontosDuelo += _calcularTirosDueloSurpresa();
             pontosDuelo += _calcularTirosEmbarcacao();
+            pontosDuelo += _calcularTirosTripulacao();
 
             return pontosDuelo;
         }
@@ -71,6 +76,14 @@ namespace Piratas.Servidor.Regras
             Embarcacao = embarcacao;
         }
 
+        public void Adicionar(List<Canhao> canhoes) => canhoes.ForEach(c => Adicionar(c));
+
+        public void Adicionar(Canhao canhao) => Canhoes.Add(canhao);
+
+        public void Adicionar(List<DueloSurpresa> duelosSurpresa) => duelosSurpresa.ForEach(d => Adicionar(d));
+
+        public void Adicionar(DueloSurpresa dueloSurpresa) => DuelosSurpresa.Add(dueloSurpresa);
+
         public void Remover(Tripulacao tripulacao)
         {
             if (Tripulacao.Count == 0)
@@ -84,7 +97,11 @@ namespace Piratas.Servidor.Regras
 
         public void AfogarTripulacao() => Tripulacao.RemoveAll(t => t.Afogavel);
 
-        public void RemoverTodosCanhoes() => Canhoes.Clear();
+        public void RemoverCartasDuelo()
+        {
+            Canhoes.Clear();
+            DuelosSurpresa.Clear();
+        }
 
         public bool TripulacaoCheia() => Tripulacao.Count == _tripulacaoMaxima;
 
@@ -123,6 +140,8 @@ namespace Piratas.Servidor.Regras
         }
 
         private int _calcularTirosCanhoes() => Canhoes.Sum(c => c.Tiros);
+
+        private int _calcularTirosDueloSurpresa() => DuelosSurpresa.Sum(d => d.Tiros);
 
         private int _calcularTirosTripulacao() =>  Tripulacao.Sum(t => t.Tiros);
 

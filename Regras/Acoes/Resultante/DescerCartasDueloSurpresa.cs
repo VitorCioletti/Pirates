@@ -1,35 +1,32 @@
 namespace Piratas.Servidor.Regras.Acoes.Resultante
 {
     using Cartas.Tipos;
-    using Regras;
-    using System;
     using System.Collections.Generic;
     using Tipos;
 
-    public class ResponderDuelo : Resultante
+    public class DescerCartasDueloSurpresa : Resultante
     {
-        private int _limiteCartasResposta = 2;
-
         public Jogador Vitorioso { get; private set; }
 
         public Jogador Perdedor { get; private set; }
 
-        public List<Duelo> CartasResposta { get; private set; }
+        public List<DueloSurpresa> DuelosSurpresa { get; private set; }
 
-        public ResponderDuelo(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) {}
+        public DescerCartasDueloSurpresa(Acao origem, Jogador realizador) : base(origem, realizador, null)
+        {
+            DuelosSurpresa = new List<DueloSurpresa>();
+        }
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
-            if (CartasResposta.Count > _limiteCartasResposta)
-                throw new Exception("Limite de cartas resposta atigindo.");
+            DuelosSurpresa.ForEach(c => c.AplicarEfeito(this, mesa));
 
-            CartasResposta.ForEach(c => c.AplicarEfeito(this, mesa));
-
+            // TODO: Criar uma ação do tipo Imediata para separar esse tipo de regra dessa resultante?
             Vitorioso = Realizador.Campo.CalcularPontosDuelo() > Alvo.Campo.CalcularPontosDuelo() ? Realizador : Alvo;
             Perdedor = Vitorioso == Realizador ? Realizador : Alvo;
 
-            Vitorioso.Campo.RemoverTodosCanhoes();
-            Perdedor.Campo.RemoverTodosCanhoes();
+            Vitorioso.Campo.RemoverCartasDuelo();
+            Perdedor.Campo.RemoverCartasDuelo();
 
             Perdedor.Campo.AfogarTripulacao();
             Perdedor.Campo.DanificarEmbarcacao();

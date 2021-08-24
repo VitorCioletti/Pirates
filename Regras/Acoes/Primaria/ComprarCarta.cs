@@ -13,6 +13,7 @@ namespace Piratas.Servidor.Regras.Acoes.Primaria
         {
             var cartaComprada = mesa.BaralhoCentral.ObterTopo();
 
+            // TODO: Como avisar que foi uma carta evento comprada?
             if (cartaComprada is Evento)
                 return cartaComprada.AplicarEfeito(this, mesa);
             else

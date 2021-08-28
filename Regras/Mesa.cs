@@ -87,7 +87,7 @@ namespace Piratas.Servidor.Regras
             }
         }
 
-        public Tuple<Jogador, Resultante> MoverParaProximoTurno()
+        public Tuple<Jogador, IEnumerable<Resultante>> MoverParaProximoTurno()
         {
             if (JogadorAtual.AcoesDisponiveis > 0)
                 throw new Exception("O jogador atual ainda possui ações disponíveis.");
@@ -100,15 +100,15 @@ namespace Piratas.Servidor.Regras
                 Finalizar(proximoJogador);
 
             var embarcacao = proximoJogador.Campo.Embarcacao;
-            Resultante resultanteEmbarcacao = null;
+            IEnumerable<Resultante> resultantesEmbarcacao = null;
 
             if (embarcacao != null)
             {
                 var aplicarEfeitoEmbarcacao = new AplicarEfeitoEmbarcacao(proximoJogador, embarcacao);
-                resultanteEmbarcacao = ProcessarAcao(aplicarEfeitoEmbarcacao).FirstOrDefault();
+                resultantesEmbarcacao = ProcessarAcao(aplicarEfeitoEmbarcacao);
             }
 
-           return new Tuple<Jogador, Resultante>(proximoJogador, resultanteEmbarcacao);
+           return new Tuple<Jogador, IEnumerable<Resultante>>(proximoJogador, resultantesEmbarcacao);
         }
 
         public void EntrarModoDuelo(Jogador realizador, Jogador alvo)

@@ -11,7 +11,8 @@ namespace Piratas.Servidor.Regras.Cartas.Passivo
     {
         public Kraken(string nome) : base(nome) { }
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, mesa.Jogadores);
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
+            _aplicarEfeito(acao, mesa.Jogadores);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, List<Jogador> jogadores)
         {

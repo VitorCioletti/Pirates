@@ -33,6 +33,8 @@ namespace Piratas.Servidor.Regras
         public Stack<Acao> HistoricoAcao { get; private set; }
 
         private List<Resultante> _resultantesPendentes;
+
+        private Imediata _imediataAposResultantes;
  
         private int _cartasIniciaisPorJogador;
 
@@ -47,6 +49,7 @@ namespace Piratas.Servidor.Regras
             _turnoAtual = 1;
 
             _resultantesPendentes = new List<Resultante>();
+            _imediataAposResultantes = null;
 
             Id = Guid.NewGuid().ToString();
             DataHoraInicio = DateTime.UtcNow;
@@ -60,31 +63,39 @@ namespace Piratas.Servidor.Regras
             _distribuirCartas();
         }
 
-        public IEnumerable<Resultante> ProcessarAcao(Acao acao)
+        public IList<Resultante> ProcessarAcao(Acao acao)
         {
             var realizador = acao.Realizador;
 
             _verificarPrimariaJogadorAtual(acao);
             _verificarResultantePendente(acao);
 
-            var acoesResultantes = acao.AplicarRegra(this);
+            var acoesResultantes = acao.AplicarRegra(this).ToList();
 
             HistoricoAcao.Push(acao);
+
+            foreach (var acaoResultante in acoesResultantes)
+            {
+                if (acaoResultante is Imediata)
+                    acoesResultantes.AddRange(ProcessarAcao(acaoResultante));
+            }
 
             if (acao is Primaria)
                 realizador.AcoesDisponiveis--;
 
             else if (acao is Resultante)
+            {
                 _resultantesPendentes.Remove((Resultante)acao);
+
+                if (_resultantesPendentes.Count == 0 && _imediataAposResultantes != null)
+                    acoesResultantes.AddRange(ProcessarAcao(_imediataAposResultantes));
+            }
 
             acao.Turno = _turnoAtual;
 
-            foreach (var acaoResultante in acoesResultantes)
-            {
-                _resultantesPendentes.Add(acaoResultante);
+            _resultantesPendentes.AddRange(acoesResultantes);
 
-                yield return acaoResultante;
-            }
+            return acoesResultantes;
         }
 
         public Tuple<Jogador, IEnumerable<Resultante>> MoverParaProximoTurno()
@@ -132,6 +143,10 @@ namespace Piratas.Servidor.Regras
         }
 
         public void Finalizar(Jogador vencedor) => DataHoraFim = DateTime.UtcNow;
+
+        public void RegistrarImediataAposResultantes(Imediata imediata) => _imediataAposResultantes = imediata;
+
+        public void RemoverImediataAposResultantes() => _imediataAposResultantes = null;
 
         private Queue<Jogador> _gerarOrdemDeJogadores(List<Jogador> jogadores) => new Queue<Jogador>(jogadores);
 

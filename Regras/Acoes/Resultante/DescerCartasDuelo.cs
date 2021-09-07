@@ -1,5 +1,6 @@
 namespace Piratas.Servidor.Regras.Acoes.Resultante
 {
+    using Acoes.Imediata;
     using Cartas.Tipos;
     using Regras;
     using System.Collections.Generic;
@@ -7,20 +8,31 @@ namespace Piratas.Servidor.Regras.Acoes.Resultante
 
     public class DescerCartasDuelo : Resultante
     {
-        public List<Duelo> CartasResposta { get; private set; }
+        public List<Duelo> CartasRespostaDuelo { get; private set; }
 
         public DescerCartasDuelo(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) {}
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
-            CartasResposta.ForEach(c => c.AplicarEfeito(this, mesa));
+            CartasRespostaDuelo.ForEach(c => c.AplicarEfeito(this, mesa));
 
-            var jogadores = mesa.Jogadores;
+            var realizadorPossuiDueloSurpresa = Realizador.Mao.Possui<DueloSurpresa>();
+            var alvoPossuiDueloSurpresa = Alvo.Mao.Possui<DueloSurpresa>();
 
-            foreach (var jogador in jogadores)
+            var calcularResultadoDuelo = new CalcularResultadoDuelo(this, Realizador, Alvo);
+
+            if (!realizadorPossuiDueloSurpresa && !alvoPossuiDueloSurpresa)
+                yield return calcularResultadoDuelo;
+
+            else 
             {
-                if (jogador.Mao.Possui<DueloSurpresa>())
-                    yield return new DescerCartasDueloSurpresa(this, jogador);
+                mesa.RegistrarImediataAposResultantes(calcularResultadoDuelo);
+
+                if (realizadorPossuiDueloSurpresa)
+                    yield return new DescerCartasDueloSurpresa(this, Realizador);
+
+                if (alvoPossuiDueloSurpresa)
+                    yield return new DescerCartasDueloSurpresa(this, Alvo);
             }
         }
     }

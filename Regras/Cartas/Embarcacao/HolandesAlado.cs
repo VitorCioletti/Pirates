@@ -11,7 +11,8 @@ namespace Piratas.Servidor.Regras.Cartas.Embarcacao
  
         public HolanderAlado(string nome) : base(nome) { }
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao.Realizador, mesa);
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
+            _aplicarEfeito(acao.Realizador, mesa);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Jogador realizador, Mesa mesa)
         {

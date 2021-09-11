@@ -88,7 +88,13 @@ namespace Piratas.Servidor.Regras
                 _resultantesPendentes.Remove((Resultante)acao);
 
                 if (_resultantesPendentes.Count == 0 && _imediataAposResultantes != null)
-                    acoesResultantes.AddRange(ProcessarAcao(_imediataAposResultantes));
+                {
+                    var resultantesImediata = ProcessarAcao(_imediataAposResultantes);
+
+                    if (resultantesImediata.Count > 0)
+                        acoesResultantes.AddRange(resultantesImediata);
+
+                }
             }
 
             acao.Turno = _turnoAtual;
@@ -144,7 +150,13 @@ namespace Piratas.Servidor.Regras
 
         public void Finalizar(Jogador vencedor) => DataHoraFim = DateTime.UtcNow;
 
-        public void RegistrarImediataAposResultantes(Imediata imediata) => _imediataAposResultantes = imediata;
+        public void RegistrarImediataAposResultantes(Imediata imediata)
+        {
+            if (_imediataAposResultantes != null)
+                throw new Exception("Já existe uma imediata registrada");
+
+            _imediataAposResultantes = imediata;
+        }
 
         public void RemoverImediataAposResultantes() => _imediataAposResultantes = null;
 

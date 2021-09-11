@@ -8,11 +8,11 @@ namespace Piratas.Servidor.Servico.WebSocket
 
         private WebSocketServer _conexao;
 
-        public WebSocket(int porta)
+        public WebSocket(string ip, int porta)
         {
             _porta = porta;
  
-            _conexao = new WebSocketServer($"ws://0.0.0.0:{porta}");
+            _conexao = new WebSocketServer($"ws://{ip}:{porta}");
 
             _conexao.AddWebSocketService<PartidaController>("/partida");
         }

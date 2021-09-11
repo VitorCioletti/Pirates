@@ -88,13 +88,7 @@ namespace Piratas.Servidor.Regras
                 _resultantesPendentes.Remove((Resultante)acao);
 
                 if (_resultantesPendentes.Count == 0 && _imediataAposResultantes != null)
-                {
-                    var resultantesImediata = ProcessarAcao(_imediataAposResultantes);
-
-                    if (resultantesImediata.Count > 0)
-                        acoesResultantes.AddRange(resultantesImediata);
-
-                }
+                    acoesResultantes.AddRange(ProcessarAcao(_imediataAposResultantes));
             }
 
             acao.Turno = _turnoAtual;

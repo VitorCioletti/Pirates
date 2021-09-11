@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Inicializador",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Piratas.Servidor.Inicializador/bin/Debug/netcoreapp5.0/Piratas.Servidor.Inicializador.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Piratas.Servidor.Inicializador",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        }
+    ]
+}

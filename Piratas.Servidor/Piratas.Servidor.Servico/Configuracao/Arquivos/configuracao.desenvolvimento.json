@@ -1,0 +1,20 @@
+{
+    "Serilog": {
+        "Using":  [ "Serilog.Sinks.Console", "Serilog.Sinks.File" ],
+        "MinimumLevel": "Debug",
+        "WriteTo": [
+            {
+                "Name": "Console",
+                "Args": {
+                    "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} - {Level:u} - {Message:lj}{NewLine}"
+                }
+            },
+            {
+                "Name": "File",
+                "Args": {
+                    "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} - {Level:u} - {Message:lj}{NewLine}"
+                }
+            }
+        ]
+    }
+}

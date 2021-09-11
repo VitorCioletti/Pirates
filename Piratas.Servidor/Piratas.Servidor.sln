@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piratas.Servidor.Dominio", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piratas.Servidor.Servico", "Piratas.Servidor.Servico\Piratas.Servidor.Servico.csproj", "{5A549084-E873-4AF9-899F-8BA1B385FDEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piratas.Servidor.Inicializador", "Piratas.Servidor.Inicializador\Piratas.Servidor.Inicializador.csproj", "{D858AEDB-F750-41FB-8A21-64AE0618CD39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piratas.Servidor.Aplicacao", "Piratas.Servidor.Aplicacao\Piratas.Servidor.Aplicacao.csproj", "{D858AEDB-F750-41FB-8A21-64AE0618CD39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

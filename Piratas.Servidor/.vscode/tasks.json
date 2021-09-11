@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Piratas.Servidor.Inicializador/Piratas.Servidor.Inicializador.csproj",
+                "${workspaceFolder}/Piratas.Servidor.Aplicacao/Piratas.Servidor.Aplicacao.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/Piratas.Servidor.Inicializador/Piratas.Servidor.Inicializador.csproj",
+                "${workspaceFolder}/Piratas.Servidor.Aplicacao/Piratas.Servidor.Aplicacao.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

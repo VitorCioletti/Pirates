@@ -1,9 +1,9 @@
-﻿namespace Piratas.Servidor.Inicializador
+﻿namespace Piratas.Servidor.Aplicacao
 {
     using System;
     using Servico.WebSocket;
 
-    class Program
+    class Aplicacao
     {
         static void Main(string[] args)
         {

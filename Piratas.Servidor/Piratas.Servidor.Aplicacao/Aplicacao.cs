@@ -1,21 +1,29 @@
 ﻿namespace Piratas.Servidor.Aplicacao
 {
-    using System;
+    using Servico.Configuracao;
+    using Servico.Log;
     using Servico.WebSocket;
+    using System;
 
     class Aplicacao
     {
         static void Main(string[] args)
         {
-            var ip = "0.0.0.0";
-            var porta = 8182;
+            var configuracao = new Configuracao();
 
-            Console.WriteLine("Inicializado servidor.");
+            var log = new Log(configuracao.Dados);
 
-            var webSocket = new WebSocket(ip, porta);
+            log.Logger.Debug("Servidor inicializado.");
+
+            var configuracaoWebSocket = configuracao.Dados.GetSection("WebSocket");
+
+            var endereco = configuracaoWebSocket.GetSection("Endereco").Value;
+            var porta = configuracaoWebSocket.GetSection("Porta").Value;
+
+            var webSocket = new WebSocket(endereco, porta);
 
             webSocket.Conectar();
-            Console.WriteLine($"Escutando na porta: \"{porta}\".");
+            log.Logger.Debug($"Escutando no endereço: \"{endereco}:{porta}\".");
 
             Console.ReadLine();
         }

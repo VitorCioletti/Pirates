@@ -6,17 +6,25 @@ namespace Piratas.Servidor.Servico.Log
 
     public class Log
     {
-        public ILogger Loga;
+        public ILogger Logger;
 
-        public void Configura(IConfiguration configuracao)
+        public Log(IConfiguration configuracao)
         {
-            Loga = new LoggerConfiguration().ReadFrom.Configuration(configuracao).CreateLogger();
+            Logger =  _obterLogger(configuracao);
 
+            _configuraExcecaoNaoTratada();
+        }
+
+        private ILogger _obterLogger(IConfiguration configuracao) =>
+           new LoggerConfiguration().ReadFrom.Configuration(configuracao).CreateLogger();
+
+        private void _configuraExcecaoNaoTratada()
+        {
             AppDomain.CurrentDomain.UnhandledException += 
                 (_, e) => 
                 {
-                    Loga.Error($"Ocorreu um não tratado:\n\"{e.ExceptionObject}\".");
-                    Loga.Information("Servidor finalizado com erro.");
+                    Logger.Error($"Ocorreu um não tratado:\n\"{e.ExceptionObject}\".");
+                    Logger.Information("Servidor finalizado com erro.");
 
                     Environment.Exit(1);
                 };

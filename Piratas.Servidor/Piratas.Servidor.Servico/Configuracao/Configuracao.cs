@@ -1,17 +1,23 @@
-namespace Piratas.Servidor.Servidor.Configuracao
+namespace Piratas.Servidor.Servico.Configuracao
 {
-    using System.IO;
     using Microsoft.Extensions.Configuration;
+    using System.IO;
+    using System.Reflection;
 
     public class Configuracao
     {
         public IConfigurationRoot Dados { get; set; }
 
-        public void Carrega()
+        public Configuracao() => Dados = _obterDados();
+
+        private IConfigurationRoot _obterDados()
         {
-            Dados = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile($"Arquivos/configuracao.json")
+            var caminhoBinario = Assembly.GetExecutingAssembly().Location;
+            var pastaBinario = Path.GetDirectoryName(caminhoBinario);
+
+            return new ConfigurationBuilder()
+                .SetBasePath(pastaBinario)
+                .AddJsonFile($"configuracao.json")
                 .Build();
         }
     }

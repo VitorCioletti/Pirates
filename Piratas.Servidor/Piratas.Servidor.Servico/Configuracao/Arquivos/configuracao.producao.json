@@ -1,4 +1,8 @@
 {
+    "WebSocket": {
+        "Endereco": "0.0.0.0",
+        "Porta": 8182
+    },
     "Serilog": {
         "Using":  [ "Serilog.Sinks.Console", "Serilog.Sinks.File" ],
         "MinimumLevel": "Debug",

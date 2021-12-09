@@ -1,6 +1,6 @@
 namespace Piratas.Servidor.Dominio.Cartas.Tipos
 {
-    using System;
+    using Excecoes.Cartas;
 
     public abstract class Embarcacao : Carta
     {
@@ -11,7 +11,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
         public void Danificar(int dano)
         {
             if (Vida == 0)
-                throw new Exception("Embarcacao está com a vida zerada.");
+                throw new EmbarcacaoSemVidaException(this);
 
             Vida -= dano;
         }

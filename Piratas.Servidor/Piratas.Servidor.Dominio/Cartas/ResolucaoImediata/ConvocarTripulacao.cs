@@ -5,9 +5,9 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using Acoes;
     using Baralhos.Tipos;
     using Cartas.Tipos;
-    using System.Linq;
-    using System;
+    using Excecoes.Cartas;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class ConvocarTripulacao : ResolucaoImediata
     {
@@ -21,12 +21,12 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             var realizador = acao.Realizador;
 
             if (realizador.Campo.TripulacaoCheia())
-                throw new Exception("Tripulação do jogador está cheia.");
+                throw new TripulacaoCheiaException(this, realizador);
 
             var tripulacoesDescartadas = pilhaDescarte.ObterTodas<Tripulacao>().OfType<Carta>().ToList();
 
             if (tripulacoesDescartadas.Count == 0)
-                throw new Exception("Não existe tripualção na pilha de descarte.");
+                throw new SemTripulacaoPilhaDescarteException(this); 
 
             yield return new EscolherCartaBaralho(acao, realizador, pilhaDescarte, tripulacoesDescartadas);
         }

@@ -3,7 +3,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
     using Acoes.Tipos;
     using Acoes;
     using Cartas.Tripulacao;
-    using System;
+    using Excecoes.Cartas;
     using System.Collections.Generic;
 
     public abstract class Tripulacao : Carta
@@ -28,7 +28,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
             {
                 // TODO: Essa linha funciona feliz?
                 if (this is PirataAmaldicoado || this is PirataFantasma)
-                    throw new Exception($"Não é possível descer \"{this}\" no próprio campo.");
+                    throw new ImpossivelDescerException(this);
 
                 campoRealizador.Adicionar(this);
             }

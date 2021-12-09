@@ -5,6 +5,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using Acoes.Tipos;
     using Acoes;
     using Cartas.Duelo;
+    using Excecoes.Cartas;
     using System.Collections.Generic;
     using System.Linq;
     using System;
@@ -19,22 +20,24 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
         internal IEnumerable<Resultante> _aplicarEfeito(
              Acao acao, 
-             List<Jogador> jogadores, Stack<Acao> historicoAcao, Func<Acao, IEnumerable<Resultante>> processarAcao)
+             List<Jogador> jogadores, 
+             Stack<Acao> historicoAcao, 
+             Func<Acao, IEnumerable<Resultante>> processarAcao)
         {
             var ultimaAcao = historicoAcao.FirstOrDefault(
                 a => a.Turno == acao.Turno && (a is DescerCarta || a is Duelar));
 
             if (ultimaAcao == null)
-                throw new Exception("Nenhuma ação válida foi realizada");
+                throw new SemAcaoValidaException(this);
 
             if (ultimaAcao is DescerCarta)
             {
-                var cartaJogada = ((DescerCarta)ultimaAcao).Carta;
+                var cartaACopiar = ((DescerCarta)ultimaAcao).Carta;
 
-                var tipoNaoPermitido = !(cartaJogada is ResolucaoImediata || cartaJogada is Canhao);
+                var tipoNaoPermitido = !(cartaACopiar is ResolucaoImediata || cartaACopiar is Canhao);
 
                 if (tipoNaoPermitido)
-                    throw new Exception($"Não é possível copiar \"{cartaJogada}\".");
+                    throw new ImpossivelCopiarException(this, cartaACopiar);
 
                 foreach (var resultante in processarAcao(ultimaAcao))
                     yield return resultante;
@@ -59,7 +62,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                 yield return new EscolherJogador(acao, realizador, outrosJogadores, duelarResultante);
             }
             else
-                throw new Exception("Ação não reconhecida.");
+                throw new SemAcaoValidaException(this);
         }
     }
 }

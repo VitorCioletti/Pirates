@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Dominio.Excecoes.Cartas
 
     public class TripulacaoCheiaException : CartaException
     {
-        public TripulacaoCheiaException(Carta cartaJogada, Jogador jogador) 
+        public TripulacaoCheiaException(Carta cartaJogada, Jogador jogador)
             : base(cartaJogada, $"Tripulação do jogador \"{jogador.Id}\" cheia.")
         {
         }

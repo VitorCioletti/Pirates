@@ -10,9 +10,9 @@ namespace Piratas.Servidor.Dominio
 
     public class Campo
     {
-        private int _danoEmbarcacao = 1;
- 
-        private int _tripulacaoMaxima = 2;
+        private readonly int _danoEmbarcacao = 1;
+
+        private readonly int _tripulacaoMaxima = 2;
 
         public List<Canhao> Canhoes { get; private set; } // TODO: Privado?
 
@@ -57,12 +57,12 @@ namespace Piratas.Servidor.Dominio
             Embarcacao.Danificar(_danoEmbarcacao);
 
             if (Embarcacao.Vida == 0)
-               _removerEmbarcacao(); 
+                _removerEmbarcacao();
         }
 
         public void Adicionar(Tripulacao tripulacao)
         {
-            if (Tripulacao.Count >= _tripulacaoMaxima) 
+            if (Tripulacao.Count >= _tripulacaoMaxima)
                 throw new Exception("Tripulação do jogador está cheia.");
 
             Tripulacao.Add(tripulacao);
@@ -88,7 +88,7 @@ namespace Piratas.Servidor.Dominio
         {
             if (Tripulacao.Count == 0)
                 throw new Exception("Tripulação vazia.");
- 
+
             if (Tripulacao.FirstOrDefault(t => t == tripulacao) == null)
                 throw new Exception("Tripulação não encontrada.");
 
@@ -111,10 +111,7 @@ namespace Piratas.Servidor.Dominio
             Adicionar(embarcacao);
         }
 
-        public void AdicionarProtegida(Carta carta)
-        {
-            Protegidas.Add(carta);
-        }
+        public void AdicionarProtegida(Carta carta) => Protegidas.Add(carta);
 
         public List<Carta> ObterTodasProtegidas() => Protegidas.ToList();
 
@@ -122,15 +119,15 @@ namespace Piratas.Servidor.Dominio
         {
             if (Embarcacao == null)
                 throw new Exception("Não há embarcação no campo.");
- 
-            Embarcacao = null; 
+
+            Embarcacao = null;
 
             _removerTodasProtegidas();
         }
 
         private List<Carta> _removerTodasProtegidas()
         {
-            var protegidas = ObterTodasProtegidas(); 
+            var protegidas = ObterTodasProtegidas();
 
             Protegidas = null;
 
@@ -143,19 +140,19 @@ namespace Piratas.Servidor.Dominio
 
         private int _calcularTirosDueloSurpresa() => DuelosSurpresa.Sum(d => d.Tiros);
 
-        private int _calcularTirosTripulacao() =>  Tripulacao.Sum(t => t.Tiros);
+        private int _calcularTirosTripulacao() => Tripulacao.Sum(t => t.Tiros);
 
         private int _calcularTirosEmbarcacao()
         {
             var tiros = 0;
 
-            if (Embarcacao is GuerrilhaNaval)
-                tiros += ((GuerrilhaNaval)Embarcacao).TirosAdicionais * Canhoes.Count;
+            if (Embarcacao is GuerrilhaNaval guerrilhaNaval)
+                tiros += guerrilhaNaval.TirosAdicionais * Canhoes.Count;
 
-            else if (Embarcacao is OuricoInfernal)
+            else if (Embarcacao is OuricoInfernal ouricoInfernal)
             {
                 if (tiros > 0)
-                    tiros += ((OuricoInfernal)Embarcacao).Tiros;
+                    tiros += ouricoInfernal.Tiros;
             }
 
             return tiros;

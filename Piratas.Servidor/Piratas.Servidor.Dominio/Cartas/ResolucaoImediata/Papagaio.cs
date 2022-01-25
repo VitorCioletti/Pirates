@@ -15,13 +15,13 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     {
         public Papagaio(string nome) : base(nome) { }
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao, mesa.Jogadores, mesa.HistoricoAcao, mesa.ProcessarAcao);
 
         internal IEnumerable<Resultante> _aplicarEfeito(
-             Acao acao, 
-             List<Jogador> jogadores, 
-             Stack<Acao> historicoAcao, 
+             Acao acao,
+             List<Jogador> jogadores,
+             Stack<Acao> historicoAcao,
              Func<Acao, IEnumerable<Resultante>> processarAcao)
         {
             var ultimaAcao = historicoAcao.FirstOrDefault(
@@ -30,39 +30,42 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             if (ultimaAcao == null)
                 throw new SemAcaoValidaException(this);
 
-            if (ultimaAcao is DescerCarta)
+            switch (ultimaAcao)
             {
-                var cartaACopiar = ((DescerCarta)ultimaAcao).Carta;
+                case DescerCarta descerCarta:
+                    var cartaACopiar = descerCarta.Carta;
 
-                var tipoNaoPermitido = !(cartaACopiar is ResolucaoImediata || cartaACopiar is Canhao);
+                    var tipoNaoPermitido = !(cartaACopiar is ResolucaoImediata || cartaACopiar is Canhao);
 
-                if (tipoNaoPermitido)
-                    throw new ImpossivelCopiarException(this, cartaACopiar);
+                    if (tipoNaoPermitido)
+                        throw new ImpossivelCopiarException(this, cartaACopiar);
 
-                foreach (var resultante in processarAcao(ultimaAcao))
-                    yield return resultante;
+                    foreach (var resultante in processarAcao(ultimaAcao))
+                        yield return resultante;
+
+                    break;
+
+                case Duelar duelar:
+                    var realizador = duelar.Realizador;
+
+                    var cartaIniciadora = duelar.CartaIniciadora;
+
+                    var outrosJogadores = jogadores.Where(j => j != realizador).ToList();
+
+                    IEnumerable<Resultante> duelarResultante(Acao acao, Jogador escolhido)
+                    {
+                        var duelar = new Duelar(realizador, escolhido, cartaIniciadora);
+                        var copiarPrimaria = new CopiarPrimaria(acao, realizador, duelar);
+
+                        return copiarPrimaria as IEnumerable<Resultante>;
+                    }
+
+                    yield return new EscolherJogador(acao, realizador, outrosJogadores, duelarResultante);
+                    break;
+
+                default:
+                    throw new SemAcaoValidaException(this);
             }
-            else if (ultimaAcao is Duelar)
-            {
-                var duelarPrimaria = (Duelar)ultimaAcao;
-                var realizador = duelarPrimaria.Realizador;
-
-                var cartaIniciadora = duelarPrimaria.CartaIniciadora;
-
-                var outrosJogadores = jogadores.Where(j => j != realizador).ToList();
-
-                Func<Acao, Jogador, IEnumerable<Resultante>> duelarResultante = (acao, jogadorEscolhido) => 
-                {
-                    var duelar = new Duelar(realizador, jogadorEscolhido, cartaIniciadora);
-                    var copiarPrimaria = new CopiarPrimaria(acao, realizador, duelar);
-
-                    return copiarPrimaria as IEnumerable<Resultante>;
-                };
-
-                yield return new EscolherJogador(acao, realizador, outrosJogadores, duelarResultante);
-            }
-            else
-                throw new SemAcaoValidaException(this);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
 
         public DescerCarta(Jogador jogador, Carta carta, Jogador alvo = null) : base(jogador, alvo) => Carta = carta;
 
-        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa) 
+        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             if (Carta is Tesouro || Carta is Passivo)
                 throw new Exception($"Não é permitido jogar cartas \"{Carta.GetType()}\".");
@@ -23,7 +23,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
             Realizador.Mao.Remover(Carta);
             mesa.PilhaDescarte.InserirTopo(Carta);
 
-            return resultanteEfeitoCarta; 
+            return resultanteEfeitoCarta;
         }
     }
 }

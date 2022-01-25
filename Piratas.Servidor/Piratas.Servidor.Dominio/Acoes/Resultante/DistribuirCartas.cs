@@ -1,10 +1,8 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
-    using Cartas.Tipos;
     using Cartas;
     using Dominio;
     using System.Collections.Generic;
-    using System.Linq; 
     using System;
     using Tipos;
 
@@ -28,9 +26,9 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
-            foreach ((Jogador jogador, Carta carta) in CartasPorJogador)
+            foreach ((var jogador, var carta) in CartasPorJogador)
             {
-                if (carta == null) 
+                if (carta == null)
                     throw new Exception($"Jogador \"{jogador}\" não possui carta escolhida");
 
                 if (!CartasOpcoes.Contains(carta))

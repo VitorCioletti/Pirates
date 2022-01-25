@@ -6,7 +6,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using Cartas.Tipos;
     using System.Collections.Generic;
     using System.Linq;
-    using System;
 
     public class CascoAco : Embarcacao
     {
@@ -20,11 +19,11 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 
             var tesourosMao = realizador.Mao.ObterTodas<Tesouro>().OfType<Carta>().ToList();
 
-            Action<Carta> aposEscolha = (carta) =>
+            void aposEscolha(Carta carta)
             {
                 realizador.Mao.Remover(carta);
                 realizador.Campo.AdicionarProtegida(carta);
-            };
+            }
 
             yield return new EscolherCartaMao(acao, realizador, tesourosMao, aposEscolha);
         }

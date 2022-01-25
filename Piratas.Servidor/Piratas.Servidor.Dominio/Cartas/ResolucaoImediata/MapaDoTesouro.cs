@@ -9,11 +9,11 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class MapaDoTesouro : ResolucaoImediata
     {
-        private int _cartasObtidas = 4;
+        private readonly int _cartasObtidas = 4;
 
-        public MapaDoTesouro(string nome) : base(nome) {}
+        public MapaDoTesouro(string nome) : base(nome) { }
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao, mesa.BaralhoCentral);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, BaralhoCentral baralhoCentral)

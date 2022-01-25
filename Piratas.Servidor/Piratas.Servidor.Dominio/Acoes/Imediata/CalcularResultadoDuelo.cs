@@ -13,10 +13,13 @@ namespace Piratas.Servidor.Dominio.Acoes.Imediata
         public Jogador Perdedor { get; private set; }
 
         public Embarcacao Embarcacao { get; private set; }
-  
-        public CalcularResultadoDuelo(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) {}
 
-        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa) 
+        public CalcularResultadoDuelo(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo)
+        {
+
+        }
+
+        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             Vitorioso = Realizador.Campo.CalcularPontosDuelo() > Alvo.Campo.CalcularPontosDuelo() ? Realizador : Alvo;
             Perdedor = Vitorioso == Realizador ? Alvo : Realizador;

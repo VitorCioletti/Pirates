@@ -7,9 +7,9 @@ namespace Piratas.Servidor.Dominio
 
     public class Mao
     {
-        private int _limiteCartas = 10;
+        private readonly int _limiteCartas = 10;
 
-        private List<Carta> _cartas;
+        private readonly List<Carta> _cartas;
 
         public Mao(List<Carta> cartas) => _cartas = cartas;
 

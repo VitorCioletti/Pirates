@@ -4,30 +4,24 @@ namespace Piratas.Servidor.Servico.WebSocket
 
     public class WebSocket
     {
-        private string _endereco;
+        private readonly string _endereco;
 
-        private string _porta;
+        private readonly string _porta;
 
-        private WebSocketServer _conexao;
+        private readonly WebSocketServer _conexao;
 
         public WebSocket(string endereco, string porta)
         {
             _endereco = endereco;
             _porta = porta;
- 
-            _conexao = new WebSocketServer($"ws://{endereco}:{porta}");
+
+            _conexao = new WebSocketServer($"ws://{_endereco}:{_porta}");
 
             _conexao.AddWebSocketService<PartidaController>("/partida");
         }
 
-        public void Conectar()
-        {
-            _conexao.Start();
-        }
+        public void Conectar() => _conexao.Start();
 
-        public void Desconectar()
-        {
-            _conexao.Stop();
-        }
+        public void Desconectar() => _conexao.Stop();
     }
 }

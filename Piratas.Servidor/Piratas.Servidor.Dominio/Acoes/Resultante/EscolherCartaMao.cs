@@ -11,9 +11,12 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
         public List<Carta> CartasOpcao { get; private set; }
 
-        private Action<Carta> _aposEscolha;
+        private readonly Action<Carta> _aposEscolha;
 
-        public EscolherCartaMao(Acao origem, Jogador realizador, List<Carta> cartasOpcao, 
+        public EscolherCartaMao(
+            Acao origem,
+            Jogador realizador,
+            List<Carta> cartasOpcao,
             Action<Carta> aposEscolha) : base(origem, realizador)
         {
             CartasOpcao = cartasOpcao;
@@ -26,7 +29,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         {
             if (!CartasOpcao.Contains(CartaEscolhida))
                 throw new ArgumentException($"Carta \"{CartaEscolhida.Nome}\" não é uma opção.");
-        
+
             _aposEscolha(CartaEscolhida);
 
             yield return null;

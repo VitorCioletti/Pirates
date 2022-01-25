@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Dominio.Excecoes.Cartas
 
     public class SemTripulacaoPilhaDescarteException : CartaException
     {
-        public SemTripulacaoPilhaDescarteException(Carta cartaJogada) 
+        public SemTripulacaoPilhaDescarteException(Carta cartaJogada)
             : base(cartaJogada, "Sem tripulação na pilha de descarte.")
         {
         }

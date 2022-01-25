@@ -8,7 +8,10 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     {
         public List<DueloSurpresa> DuelosSurpresa { get; private set; }
 
-        public DescerCartasDueloSurpresa(Acao origem, Jogador realizador) : base(origem, realizador, null) {}
+        public DescerCartasDueloSurpresa(Acao origem, Jogador realizador) : base(origem, realizador, null)
+        {
+
+        }
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {

@@ -6,26 +6,25 @@ namespace Piratas.Servidor.Dominio.Baralhos
 
     public abstract class Baralho
     {
-        protected LinkedList<Carta> Cartas;
-    
+        protected LinkedList<Carta> Cartas { get; set; }
+
         public void Embaralhar() => throw new NotImplementedException();
 
-        public void InserirTopo(Carta carta) => InserirTopo(new List<Carta>(){ carta });
+        public void InserirTopo(Carta carta) => InserirTopo(new List<Carta>() { carta });
 
         public void InserirTopo(List<Carta> cartas) => _inserir(cartas, true);
 
         public void InserirFundo(List<Carta> cartas) => _inserir(cartas, false);
- 
+
         private void _inserir(List<Carta> cartas, bool topo)
         {
-            cartas.ForEach(c => 
-                {
-                    if (topo)
-                        Cartas.AddFirst(c);
-                    else
-                        Cartas.AddLast(c);
-                }
-            );
+            foreach (var carta in cartas)
+            {
+                if (topo)
+                    Cartas.AddFirst(carta);
+                else
+                    Cartas.AddLast(carta);
+            }
         }
     }
 }

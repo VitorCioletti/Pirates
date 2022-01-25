@@ -13,7 +13,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     {
         public ConvocarTripulacao(string nome) : base(nome) { }
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao, mesa.PilhaDescarte);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, PilhaDescarte pilhaDescarte)
@@ -26,7 +26,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             var tripulacoesDescartadas = pilhaDescarte.ObterTodas<Tripulacao>().OfType<Carta>().ToList();
 
             if (tripulacoesDescartadas.Count == 0)
-                throw new SemTripulacaoPilhaDescarteException(this); 
+                throw new SemTripulacaoPilhaDescarteException(this);
 
             yield return new EscolherCartaBaralho(acao, realizador, pilhaDescarte, tripulacoesDescartadas);
         }

@@ -14,12 +14,12 @@ namespace Piratas.Servidor.Dominio.Baralhos.Tipos
 
             return ultimoNodo.Value;
         }
- 
+
         public List<Carta> ObterTopo(int quantidade)
         {
             var cartas = new List<Carta>();
 
-            for (int i = 0; i >= quantidade; i++)
+            for (var i = 0; i >= quantidade; i++)
                 cartas.Add(ObterTopo());
 
             return cartas;

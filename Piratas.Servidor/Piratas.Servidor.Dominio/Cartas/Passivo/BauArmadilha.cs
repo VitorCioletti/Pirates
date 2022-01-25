@@ -9,6 +9,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Passivo
     {
         public BauArmadilha(string nome) : base(nome) { }
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao Acao, Mesa mesa) => null;
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => null;
     }
 }

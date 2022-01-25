@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     {
         public Tripulacao TripulacaoAfogada { get; private set; }
 
-        public AfogarTripulacao(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) 
+        public AfogarTripulacao(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo)
         {
             var tripulacao = realizador.Campo.Tripulacao;
 
@@ -27,10 +27,16 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
-            if (Origem is DescerCarta && ((DescerCarta)Origem).Carta is HomemAoMar)
+            if (Origem is DescerCarta descerCarta)
             {
-                if (TripulacaoAfogada is PirataNobre)
-                    throw new Exception($"\"{nameof(PirataNobre)}\" não pode ser afogada por \"{nameof(HomemAoMar)}\".");
+                if (descerCarta.Carta is HomemAoMar)
+                {
+                    if (TripulacaoAfogada is PirataNobre)
+                    {
+                        throw new Exception(
+                            $"\"{nameof(PirataNobre)}\" não pode ser afogada por \"{nameof(HomemAoMar)}\".");
+                    }
+                }
             }
 
             if (!TripulacaoAfogada.Afogavel)

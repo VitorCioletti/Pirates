@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Dominio.Excecoes.Cartas
 
     public class EmbarcacaoSemVidaException : CartaException
     {
-        public EmbarcacaoSemVidaException(Embarcacao embarcacao) 
+        public EmbarcacaoSemVidaException(Embarcacao embarcacao)
             : base(embarcacao, $"Embarcação \"{embarcacao.Nome}\" sem vida.")
         {
         }

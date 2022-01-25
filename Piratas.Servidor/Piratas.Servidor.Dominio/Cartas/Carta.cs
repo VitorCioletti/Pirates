@@ -6,10 +6,10 @@ namespace Piratas.Servidor.Dominio.Cartas
 
     public abstract class Carta
     {
-        public string Nome { get; private set; } 
+        public string Nome { get; private set; }
 
         public Carta(string nome) => Nome = nome;
 
-        public abstract IEnumerable<Resultante> AplicarEfeito(Acao Acao, Mesa mesa);
+        public abstract IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa);
     }
 }

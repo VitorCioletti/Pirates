@@ -1,4 +1,4 @@
-namespace Piratas.Servidor.Dominio.Cartas.Passivo
+namespace Piratas.Servidor.Dominio.Cartas.Evento
 {
     using Acoes.Resultante;
     using Acoes.Tipos;
@@ -9,7 +9,10 @@ namespace Piratas.Servidor.Dominio.Cartas.Passivo
 
     public class Kraken : Evento
     {
-        public Kraken(string nome) : base(nome) { }
+        public Kraken(string nome) : base(nome)
+        {
+
+        }
 
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao, mesa.Jogadores);
@@ -25,7 +28,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Passivo
                 var resultanteDanificarEmbarcacao = new DanificarEmbarcacao(acao, jogador);
 
                 if (!possuiEmbarcacao && !possuiTripulacao)
-                    continue; 
+                    continue;
 
                 else if (possuiEmbarcacao && possuiTripulacao)
                 {
@@ -39,10 +42,10 @@ namespace Piratas.Servidor.Dominio.Cartas.Passivo
 
                     if (afogaveis.Count == 0)
                         continue;
-                    
+
                     else if (afogaveis.Count == 1)
                         jogador.Campo.AfogarTripulacao();
-                    
+
                     else
                         yield return resultanteAfogarTripulacao;
                 }

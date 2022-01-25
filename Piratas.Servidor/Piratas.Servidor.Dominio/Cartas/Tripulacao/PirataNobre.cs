@@ -5,7 +5,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
 
     public class PirataNobre : Tripulacao
     {
-        public int Tesouros = 1;
+        public int Tesouros { get; private set; } = 1;
 
         public PirataNobre(string nome) : base(nome) => Tiros = 0;
     }

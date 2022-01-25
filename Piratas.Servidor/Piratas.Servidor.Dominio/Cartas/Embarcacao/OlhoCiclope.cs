@@ -6,7 +6,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using Cartas.Tipos;
     using System.Collections.Generic;
     using System.Linq;
-    using System;
 
     public class OlhoCiclope : Embarcacao
     {
@@ -18,8 +17,13 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
         {
             var realizador = acao.Realizador;
 
-            Func<Acao, Jogador, IEnumerable<Resultante>> olharCartas = (acao, jogador) =>
-                new OlharCartasJogador(acao, realizador, jogador.Mao.ObterTodas()) as IEnumerable<Resultante>;
+            IEnumerable<Resultante> olharCartas(Acao acao, Jogador jogador)
+            {
+                var olharCartasJogador =
+                    new OlharCartasJogador(acao, realizador, jogador.Mao.ObterTodas()) as IEnumerable<Resultante>;
+
+                return olharCartasJogador;
+            }
 
             var outrosJogadoresMesa = mesa.Jogadores.Where(j => j != realizador).ToList();
 

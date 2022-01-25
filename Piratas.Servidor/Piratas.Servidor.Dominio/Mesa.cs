@@ -32,13 +32,13 @@ namespace Piratas.Servidor.Dominio
 
         public Stack<Acao> HistoricoAcao { get; private set; }
 
-        private List<Resultante> _resultantesPendentes;
-
         private Imediata _imediataAposResultantes;
- 
-        private int _cartasIniciaisPorJogador;
 
-        private int _tesourosParaVitoria;
+        private readonly List<Resultante> _resultantesPendentes;
+
+        private readonly int _cartasIniciaisPorJogador;
+
+        private readonly int _tesourosParaVitoria;
 
         private int _turnoAtual;
 
@@ -83,9 +83,9 @@ namespace Piratas.Servidor.Dominio
             if (acao is Primaria)
                 realizador.AcoesDisponiveis--;
 
-            else if (acao is Resultante)
+            else if (acao is Resultante resultante)
             {
-                _resultantesPendentes.Remove((Resultante)acao);
+                _resultantesPendentes.Remove(resultante);
 
                 if (_resultantesPendentes.Count == 0 && _imediataAposResultantes != null)
                     acoesResultantes.AddRange(ProcessarAcao(_imediataAposResultantes));
@@ -119,7 +119,7 @@ namespace Piratas.Servidor.Dominio
                 resultantesEmbarcacao = ProcessarAcao(aplicarEfeitoEmbarcacao);
             }
 
-           return new Tuple<Jogador, IEnumerable<Resultante>>(proximoJogador, resultantesEmbarcacao);
+            return new Tuple<Jogador, IEnumerable<Resultante>>(proximoJogador, resultantesEmbarcacao);
         }
 
         public void EntrarModoDuelo(Jogador realizador, Jogador alvo)
@@ -142,7 +142,7 @@ namespace Piratas.Servidor.Dominio
             Duelistas = null;
         }
 
-        public void Finalizar(Jogador vencedor) => DataHoraFim = DateTime.UtcNow;
+        public void Finalizar(Jogador _) => DataHoraFim = DateTime.UtcNow;
 
         public void RegistrarImediataAposResultantes(Imediata imediata)
         {

@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     {
         public List<Carta> Cartas { get; private set; }
 
-        public OlharCartasJogador(Acao origem, Jogador realizador, List<Carta> cartas) 
+        public OlharCartasJogador(Acao origem, Jogador realizador, List<Carta> cartas)
             : base(origem, realizador) => Cartas = cartas;
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa) => null;

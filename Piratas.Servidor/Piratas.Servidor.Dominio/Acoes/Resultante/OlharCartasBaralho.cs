@@ -8,11 +8,12 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     public class OlharCartasBaralho : Resultante
     {
         public bool DevolverNoTopo { get; private set; }
-    
+
         public List<Carta> CartasOpcoes { get; private set; }
 
-        public OlharCartasBaralho(Acao origem, Jogador realizador, List<Carta> cartasOpcoes) : 
-            base(origem, realizador) {}
+        public OlharCartasBaralho(
+            Acao origem, Jogador realizador, List<Carta> cartasOpcoes) : base(origem, realizador) =>
+            CartasOpcoes = cartasOpcoes;
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {

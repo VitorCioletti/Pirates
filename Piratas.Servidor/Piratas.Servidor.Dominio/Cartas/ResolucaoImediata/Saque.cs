@@ -10,13 +10,13 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     {
         public Saque(string nome) : base(nome) { }
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa _) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa _) =>
             _aplicarEfeito(acao.Realizador.Mao, acao.Alvo.Mao);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Mao maoRealizador, Mao maoAlvo)
         {
             // TODO: Como avisar o cliente que foi um Bau Armadilha?
-            (Mao maoSaqueador, Mao maoSaqueado) = maoAlvo.Possui<BauArmadilha>() ?
+            (var maoSaqueador, var maoSaqueado) = maoAlvo.Possui<BauArmadilha>() ?
                 (maoAlvo, maoRealizador) : (maoRealizador, maoAlvo);
 
             var cartaSaqueada = maoSaqueado.ObterQualquer();

@@ -6,7 +6,10 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
     public class DanificarEmbarcacao : Resultante
     {
-        public DanificarEmbarcacao(Acao origem, Jogador realizador) : base(origem, realizador) {}
+        public DanificarEmbarcacao(Acao origem, Jogador realizador) : base(origem, realizador)
+        {
+
+        }
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {

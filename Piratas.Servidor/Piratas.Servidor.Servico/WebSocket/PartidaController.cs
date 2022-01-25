@@ -6,9 +6,6 @@ namespace Piratas.Servidor.Servico.WebSocket
     internal class PartidaController : WebSocketBehavior
     {
 
-        protected override void OnMessage(MessageEventArgs e)
-        {
-            Send(e.Data);
-        }
+        protected override void OnMessage(MessageEventArgs e) => Send(e.Data);
     }
 }

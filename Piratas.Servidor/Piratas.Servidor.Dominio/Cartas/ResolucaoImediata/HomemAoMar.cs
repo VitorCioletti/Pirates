@@ -15,6 +15,6 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, Jogador alvo)
         {
             yield return new AfogarTripulacao(acao, acao.Realizador, alvo);
-        } 
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace Piratas.Servidor.Dominio.Acoes
 
         public Acao(Jogador realizador, Jogador alvo = null)
         {
-            Id = Guid.NewGuid().ToString(); 
+            Id = Guid.NewGuid().ToString();
             DataHora = DateTime.UtcNow;
 
             Realizador = realizador;

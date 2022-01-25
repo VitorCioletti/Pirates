@@ -14,8 +14,8 @@ namespace Piratas.Servidor.Dominio.Baralhos.Tipos
             var cartas = (List<T>)Cartas.Select(c => c is T);
 
             if (cartas.Count == 0)
-               throw new Exception("Tipo de carta não existe na pilha de descarte.");
-            
+                throw new Exception("Tipo de carta não existe na pilha de descarte.");
+
             return cartas;
         }
     }

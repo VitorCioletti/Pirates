@@ -7,11 +7,11 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 
     public class HolanderAlado : Embarcacao
     {
-        private int _tesourosParaVitoria = 4;
- 
+        private readonly int _tesourosParaVitoria = 4;
+
         public HolanderAlado(string nome) : base(nome) { }
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao.Realizador, mesa);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Jogador realizador, Mesa mesa)

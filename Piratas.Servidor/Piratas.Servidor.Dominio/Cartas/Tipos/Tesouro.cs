@@ -10,6 +10,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
 
         public Tesouro(string nome, int valor) : base(nome) => Valor = valor;
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao Acao, Mesa mesa) => null;
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => null;
     }
 }

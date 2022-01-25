@@ -13,10 +13,8 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         public List<Resultante> ResultantesOpcao { get; private set; }
 
         public EscolherResultante(
-            Acao origem, Jogador realizador, params Resultante[] resultantesOpcao) : base(origem, realizador)
-        {
+            Acao origem, Jogador realizador, params Resultante[] resultantesOpcao) : base(origem, realizador) =>
             ResultantesOpcao = resultantesOpcao.ToList();
-        }
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {

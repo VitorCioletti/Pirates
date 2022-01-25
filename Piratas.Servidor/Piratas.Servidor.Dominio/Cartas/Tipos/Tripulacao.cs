@@ -12,12 +12,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
 
         public bool Afogavel { get; protected set; }
 
-        public Tripulacao(string nome) : base(nome)
-        {
-            Afogavel = true;
-        }
+        public Tripulacao(string nome) : base(nome) => Afogavel = true;
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao.Realizador.Campo, acao.Alvo?.Campo);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Campo campoRealizador, Campo campoAlvo)

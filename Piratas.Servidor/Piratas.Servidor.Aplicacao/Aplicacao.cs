@@ -5,9 +5,9 @@
     using Servico.WebSocket;
     using System;
 
-    class Aplicacao
+    public class Aplicacao
     {
-        static void Main(string[] args)
+        public static void Main(string[] _)
         {
             var configuracao = new Configuracao();
 
@@ -25,7 +25,7 @@
             webSocket.Conectar();
             log.Logger.Debug($"Escutando no endereço: \"{endereco}:{porta}\".");
 
-            Console.ReadLine();
+            Console.ReadKey();
         }
     }
 }

@@ -7,11 +7,14 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     using System;
     using Tipos;
 
-    public class DescartarCarta: Resultante
+    public class DescartarCarta : Resultante
     {
         public Carta CartaDescartada { get; private set; }
 
-        public DescartarCarta(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) {}
+        public DescartarCarta(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo)
+        {
+
+        }
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {

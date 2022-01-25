@@ -10,7 +10,10 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     {
         public List<Duelo> CartasRespostaDuelo { get; private set; }
 
-        public DescerCartasDuelo(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo) {}
+        public DescerCartasDuelo(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo)
+        {
+
+        }
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
@@ -24,7 +27,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             if (!realizadorPossuiDueloSurpresa && !alvoPossuiDueloSurpresa)
                 yield return calcularResultadoDuelo;
 
-            else 
+            else
             {
                 mesa.RegistrarImediataAposResultantes(calcularResultadoDuelo);
 

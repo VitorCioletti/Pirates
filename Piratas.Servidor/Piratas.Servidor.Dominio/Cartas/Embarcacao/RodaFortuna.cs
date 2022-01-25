@@ -9,11 +9,11 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 
     public class RodaFortuna : Embarcacao
     {
-        private int _cartasAOlhar = 2;
+        private readonly int _cartasAOlhar = 2;
 
         public RodaFortuna(string nome) : base(nome) { }
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao, mesa.BaralhoCentral);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, BaralhoCentral baralhoCentral)

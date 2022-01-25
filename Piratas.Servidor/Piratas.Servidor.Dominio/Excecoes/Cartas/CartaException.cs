@@ -5,7 +5,7 @@ namespace Piratas.Servidor.Dominio.Excecoes.Cartas
 
     public class CartaException : Exception
     {
-        public CartaException(Carta cartaJogada, string mensagem) 
+        public CartaException(Carta _, string mensagem)
             : base(mensagem)
         {
         }

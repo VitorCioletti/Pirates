@@ -11,7 +11,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     {
         public MercadorTortuga(string nome) : base(nome) { }
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao); 
+        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao)
         {

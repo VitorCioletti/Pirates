@@ -8,13 +8,13 @@ namespace Piratas.Servidor.Dominio
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Jogador 
+    public class Jogador
     {
         public string Id { get; private set; }
 
         public int AcoesDisponiveis { get; set; }
 
-        public Mao Mao { get; set; } 
+        public Mao Mao { get; set; }
 
         public Campo Campo { get; set; }
 
@@ -31,7 +31,7 @@ namespace Piratas.Servidor.Dominio
 
         public ComprarCarta ComprarCarta() => new ComprarCarta(this);
 
-        public Duelar Duelar(Jogador jogadorAtacado, Duelo cartaIniciadora) => 
+        public Duelar Duelar(Jogador jogadorAtacado, Duelo cartaIniciadora) =>
             new Duelar(this, jogadorAtacado, cartaIniciadora);
 
         public int CalcularTesouros()
@@ -45,10 +45,10 @@ namespace Piratas.Servidor.Dominio
             var tesourosProtegidos = Campo.ObterTodasProtegidas().OfType<Tesouro>();
             var somaTesourosProtegidos = tesourosProtegidos.Sum(c => c.Valor);
 
-            var tesourosPiratasNobres = 
+            var tesourosPiratasNobres =
                 Campo.Tripulacao.Where(t => t is PirataNobre).Sum(t => ((PirataNobre)t).Tesouros);
 
-           return somaTesourosMao + somaTesourosProtegidos + somaMeiosAmuletos + tesourosPiratasNobres;
+            return somaTesourosMao + somaTesourosProtegidos + somaMeiosAmuletos + tesourosPiratasNobres;
         }
 
         public override string ToString() => Id;

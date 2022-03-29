@@ -24,7 +24,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
                 var possuiEmbarcacao = jogador.Campo.Embarcacao != null;
                 var possuiTripulacao = jogador.Campo.Tripulacao.Count == 0;
 
-                var resultanteAfogarTripulacao = new AfogarTripulacao(acao, jogador, jogador);
+                var resultanteAfogarTripulacao = new AfogarTripulante(acao, jogador, jogador);
                 var resultanteDanificarEmbarcacao = new DanificarEmbarcacao(acao, jogador);
 
                 if (!possuiEmbarcacao && !possuiTripulacao)

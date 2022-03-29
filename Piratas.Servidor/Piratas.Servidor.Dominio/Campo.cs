@@ -20,7 +20,7 @@ namespace Piratas.Servidor.Dominio
 
         public List<Carta> Protegidas { get; private set; } // TODO: Privado?
 
-        public List<Tripulacao> Tripulacao { get; private set; } // TODO: Privado?
+        public List<Tripulante> Tripulacao { get; private set; } // TODO: Privado?
 
         public Embarcacao Embarcacao { get; private set; } // TODO: Privado?
 
@@ -32,7 +32,7 @@ namespace Piratas.Servidor.Dominio
             Canhoes = new List<Canhao>();
             DuelosSurpresa = new List<DueloSurpresa>();
             Protegidas = new List<Carta>();
-            Tripulacao = new List<Tripulacao>();
+            Tripulacao = new List<Tripulante>();
 
             Embarcacao = null;
         }
@@ -60,12 +60,12 @@ namespace Piratas.Servidor.Dominio
                 _removerEmbarcacao();
         }
 
-        public void Adicionar(Tripulacao tripulacao)
+        public void Adicionar(Tripulante tripulante)
         {
             if (Tripulacao.Count >= _tripulacaoMaxima)
                 throw new Exception("Tripulação do jogador está cheia.");
 
-            Tripulacao.Add(tripulacao);
+            Tripulacao.Add(tripulante);
         }
 
         public void Adicionar(Embarcacao embarcacao)
@@ -84,15 +84,15 @@ namespace Piratas.Servidor.Dominio
 
         public void Adicionar(DueloSurpresa dueloSurpresa) => DuelosSurpresa.Add(dueloSurpresa);
 
-        public void Remover(Tripulacao tripulacao)
+        public void Remover(Tripulante tripulante)
         {
             if (Tripulacao.Count == 0)
                 throw new Exception("Tripulação vazia.");
 
-            if (Tripulacao.FirstOrDefault(t => t == tripulacao) == null)
-                throw new Exception("Tripulação não encontrada.");
+            if (Tripulacao.FirstOrDefault(t => t == tripulante) == null)
+                throw new Exception("Tripulante não encontrada.");
 
-            Tripulacao.Remove(tripulacao);
+            Tripulacao.Remove(tripulante);
         }
 
         public void AfogarTripulacao() => Tripulacao.RemoveAll(t => t.Afogavel);

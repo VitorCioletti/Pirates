@@ -23,12 +23,12 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             if (realizador.Campo.TripulacaoCheia())
                 throw new TripulacaoCheiaException(this, realizador);
 
-            var tripulacoesDescartadas = pilhaDescarte.ObterTodas<Tripulacao>().OfType<Carta>().ToList();
+            var tripulantesDescartados = pilhaDescarte.ObterTodas<Tripulante>().OfType<Carta>().ToList();
 
-            if (tripulacoesDescartadas.Count == 0)
+            if (tripulantesDescartados.Count == 0)
                 throw new SemTripulacaoPilhaDescarteException(this);
 
-            yield return new EscolherCartaBaralho(acao, realizador, pilhaDescarte, tripulacoesDescartadas);
+            yield return new EscolherCartaBaralho(acao, realizador, pilhaDescarte, tripulantesDescartados);
         }
     }
 }

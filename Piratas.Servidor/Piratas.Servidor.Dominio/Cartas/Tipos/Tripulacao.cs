@@ -6,13 +6,13 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
     using Excecoes.Cartas;
     using System.Collections.Generic;
 
-    public abstract class Tripulacao : Carta
+    public abstract class Tripulante : Carta
     {
         public int Tiros { get; protected set; }
 
         public bool Afogavel { get; protected set; }
 
-        public Tripulacao(string nome) : base(nome) => Afogavel = true;
+        public Tripulante(string nome) : base(nome) => Afogavel = true;
 
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao.Realizador.Campo, acao.Alvo?.Campo);

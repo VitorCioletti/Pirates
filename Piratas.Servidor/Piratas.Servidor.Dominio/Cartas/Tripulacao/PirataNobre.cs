@@ -3,7 +3,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
 {
     using Tipos;
 
-    public class PirataNobre : Tripulacao
+    public class PirataNobre : Tripulante
     {
         public int Tesouros { get; private set; } = 1;
 

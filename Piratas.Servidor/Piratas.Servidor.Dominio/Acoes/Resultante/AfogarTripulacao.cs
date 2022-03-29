@@ -16,13 +16,13 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
         public AfogarTripulacao(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo)
         {
-            var tripulacao = realizador.Campo.Tripulacao;
+            var tripulacao = alvo.Campo.Tripulacao;
 
             if (tripulacao.Count == 0)
-                throw new Exception($"Jogador \"{realizador}\" não possui tripulação.");
+                throw new Exception($"Jogador \"{alvo}\" não possui tripulação.");
 
             if (tripulacao.All(t => !t.Afogavel))
-                throw new Exception($"Nenhuma tripulação de \"{realizador}\" pode ser afogada.");
+                throw new Exception($"Nenhuma tripulação de \"{alvo}\" pode ser afogada.");
         }
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)

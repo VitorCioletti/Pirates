@@ -1,4 +1,4 @@
-namespace Piratas.Protocolo.Cliente
+namespace Piratas.Protocolo.Cliente.Acoes
 {
     using System;
     using Cartas;
@@ -7,9 +7,9 @@ namespace Piratas.Protocolo.Cliente
     {
         public Guid JogadorDesafiado { get; private set; }
 
-        public Duelo CartaIniciadora { get; private set; }
+        public Carta CartaIniciadora { get; private set; }
 
-        public Duelar(Guid idJogador, Guid jogadorDesafiado, Duelo cartaIniciadora) : base(idJogador)
+        public Duelar(Guid idJogador, Guid jogadorDesafiado, Carta cartaIniciadora) : base(idJogador)
         {
             JogadorDesafiado = jogadorDesafiado;
             CartaIniciadora = cartaIniciadora;

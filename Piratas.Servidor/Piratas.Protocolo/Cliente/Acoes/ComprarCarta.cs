@@ -1,4 +1,4 @@
-namespace Piratas.Protocolo.Cliente
+namespace Piratas.Protocolo.Cliente.Acoes
 {
     using System;
     using Piratas.Servidor;

@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Piratas.Servidor.Dominio\Piratas.Servidor.Dominio.csproj" />
+  </ItemGroup>
+
 </Project>

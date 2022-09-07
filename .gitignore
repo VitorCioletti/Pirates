@@ -1,5 +1,6 @@
 configuracao.json
 
+.idea/
 *.swp
 *.*~
 project.lock.json

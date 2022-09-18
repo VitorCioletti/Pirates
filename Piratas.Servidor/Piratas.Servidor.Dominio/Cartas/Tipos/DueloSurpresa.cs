@@ -8,7 +8,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
     {
         public int Tiros { get; private set; }
 
-        public DueloSurpresa(string nome) : base(nome) => Tiros = 1;
+        public DueloSurpresa() => Tiros = 1;
 
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao.Realizador.Campo);

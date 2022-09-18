@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Dominio.Cartas.DueloSurpresa
 
     public class AtaqueSurpresa : DueloSurpresa
     {
-        public AtaqueSurpresa(string nome) : base(nome)
+        public AtaqueSurpresa() : base()
         {
 
         }

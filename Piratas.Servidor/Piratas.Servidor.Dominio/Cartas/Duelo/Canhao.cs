@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Duelo
     {
         public int Tiros { get; private set; }
 
-        public Canhao(string nome, int tiros) : base(nome) => Tiros = tiros;
+        public Canhao(int tiros) => Tiros = tiros;
 
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao.Realizador.Campo);

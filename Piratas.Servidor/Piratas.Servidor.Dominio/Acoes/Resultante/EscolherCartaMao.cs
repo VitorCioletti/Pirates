@@ -28,7 +28,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             if (!CartasOpcao.Contains(CartaEscolhida))
-                throw new ArgumentException($"Carta \"{CartaEscolhida.Nome}\" não é uma opção.");
+                throw new ArgumentException($"Carta \"{CartaEscolhida.Id}\" não é uma opção.");
 
             _aposEscolha(CartaEscolhida);
 

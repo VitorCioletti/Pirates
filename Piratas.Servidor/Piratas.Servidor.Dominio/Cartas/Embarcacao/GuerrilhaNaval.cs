@@ -9,8 +9,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     {
         public int TirosAdicionais { get; private set; } = 2;
 
-        public GuerrilhaNaval(string nome) : base(nome) { }
-
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => null;
     }
 }

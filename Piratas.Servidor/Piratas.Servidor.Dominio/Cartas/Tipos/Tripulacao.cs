@@ -12,7 +12,11 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
 
         public bool Afogavel { get; protected set; }
 
-        public Tripulante(string nome) : base(nome) => Afogavel = true;
+        public Tripulante()
+        {
+            Id = "tripulante";
+            Afogavel = true;
+        }
 
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao.Realizador.Campo, acao.Alvo?.Campo);

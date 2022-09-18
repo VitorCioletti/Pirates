@@ -13,8 +13,6 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class Papagaio : ResolucaoImediata
     {
-        public Papagaio(string nome) : base(nome) { }
-
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao, mesa.Jogadores, mesa.HistoricoAcao, mesa.ProcessarAcao);
 

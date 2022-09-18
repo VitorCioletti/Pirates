@@ -11,8 +11,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     {
         private readonly int _cartasAOlhar = 2;
 
-        public RodaFortuna(string nome) : base(nome) { }
-
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao, mesa.BaralhoCentral);
 

@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
 
     public class PirataFantasma : Tripulante
     {
-        public PirataFantasma(string nome) : base(nome)
+        public PirataFantasma()
         {
             Tiros = 0;
             Afogavel = false;

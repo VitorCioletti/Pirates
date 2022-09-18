@@ -1,7 +1,6 @@
 namespace Piratas.Protocolo.Cliente.Acoes
 {
     using System;
-    using Piratas.Servidor;
 
     public class ComprarCarta : Pacote
     {

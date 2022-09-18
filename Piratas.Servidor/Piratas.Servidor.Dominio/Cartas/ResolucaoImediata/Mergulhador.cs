@@ -9,8 +9,6 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class Mergulhador : ResolucaoImediata
     {
-        public Mergulhador(string nome) : base(nome) { }
-
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao, mesa.PilhaDescarte);
 

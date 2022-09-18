@@ -8,7 +8,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
     {
         public int Valor { get; protected set; }
 
-        public Tesouro(string nome, int valor) : base(nome) => Valor = valor;
+        public Tesouro(int valor) => Valor = valor;
 
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => null;
     }

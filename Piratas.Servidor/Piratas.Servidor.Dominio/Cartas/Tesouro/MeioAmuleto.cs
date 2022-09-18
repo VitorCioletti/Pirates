@@ -1,6 +1,6 @@
 namespace Piratas.Servidor.Dominio.Cartas.Tesouro
 {
-    using Cartas.Tipos;
+    using Tipos;
     using System.Collections.Generic;
 
     public class MeioAmuleto : Tesouro
@@ -9,7 +9,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Tesouro
 
         private static readonly int _valorAmuletoCompleto = 2;
 
-        public MeioAmuleto(string nome) : base(nome, 0) { }
+        public MeioAmuleto(int valor) : base(valor)
+        {
+        }
 
         public static int CalcularPontosTesouro(List<MeioAmuleto> amuletos)
         {

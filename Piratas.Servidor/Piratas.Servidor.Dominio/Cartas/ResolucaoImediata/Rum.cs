@@ -8,8 +8,6 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class Rum : ResolucaoImediata
     {
-        public Rum(string nome) : base(nome) { }
-
         private readonly int _cartasCompradas = 2;
 
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>

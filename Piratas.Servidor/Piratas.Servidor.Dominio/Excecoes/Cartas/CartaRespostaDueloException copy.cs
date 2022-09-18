@@ -5,6 +5,6 @@ namespace Piratas.Servidor.Dominio.Excecoes.Cartas
     public class CartaRespostaDueloException : CartaException
     {
         public CartaRespostaDueloException(Carta cartaJogada)
-            : base(cartaJogada, $"Carta \"{cartaJogada.Nome}\" só pode ser usada em duelo.") { }
+            : base(cartaJogada, $"Carta \"{cartaJogada.Id}\" só pode ser usada em duelo.") { }
     }
 }

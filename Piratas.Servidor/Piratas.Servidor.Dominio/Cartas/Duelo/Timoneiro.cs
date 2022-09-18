@@ -9,8 +9,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Duelo
 
     public class Timoneiro : Duelo
     {
-        public Timoneiro(string nome) : base(nome) { }
-
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, mesa);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, Mesa mesa)

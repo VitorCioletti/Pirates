@@ -4,6 +4,5 @@ namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
 
     public class Pirata : Tripulante
     {
-        public Pirata(string nome) : base(nome) => Tiros = 1;
     }
 }

@@ -11,8 +11,6 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     {
         private readonly int _cartasObtidas = 3;
 
-        public Explosivos(string nome) : base(nome) { }
-
         public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao, mesa.BaralhoCentral, mesa.Jogadores);
 

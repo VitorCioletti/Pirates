@@ -12,7 +12,7 @@ namespace Piratas.Protocolo.Servidor
         public Escolha(Guid idJogador, T escolhido, List<T> opcoes)
             : this(idJogador, new List<T> { escolhido }, opcoes) { }
 
-        public Escolha(Guid idJogador, List<T> escolhas, List<T> opcoes) : base(idJogador)
+        public Escolha(Guid idJogador, List<T> escolhas, List<T> opcoes)
         {
             Escolhas = escolhas;
             Opcoes = opcoes;

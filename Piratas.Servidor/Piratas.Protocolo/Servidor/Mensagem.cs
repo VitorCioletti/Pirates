@@ -2,7 +2,6 @@ namespace Piratas.Protocolo.Servidor
 {
     using System;
     using System.Collections.Generic;
-    using Acoes;
 
     public class Mensagem : Pacote
     {
@@ -10,9 +9,7 @@ namespace Piratas.Protocolo.Servidor
 
         public int Tesouros { get; private set; }
 
-        public List<Primaria> PrimariasDisponiveis { get; private set; }
-
-        // TODO: Adicionar resultante Escolha.
+        public Escolha Escolha { get; private set; }
 
         public Dictionary<Guid, List<Evento>> Eventos { get; private set; }
 
@@ -20,11 +17,11 @@ namespace Piratas.Protocolo.Servidor
             Guid idJogador,
             int acoesRestantes,
             int tesouros,
-            List<Primaria> primariasDisponiveis,
-            Dictionary<Guid, List<Evento>> eventos) : base(idJogador)
+            Dictionary<Guid, List<Evento>> eventos,
+            Escolha escolha) : base(idJogador)
         {
+            Escolha = escolha;
             AcoesRestantes = acoesRestantes;
-            PrimariasDisponiveis = primariasDisponiveis;
             Eventos = eventos;
             Tesouros = tesouros;
         }

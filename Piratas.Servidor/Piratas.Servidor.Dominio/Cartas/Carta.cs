@@ -8,8 +8,7 @@ namespace Piratas.Servidor.Dominio.Cartas
     {
         public string Id { get; protected set; }
 
-        public Carta() =>
-            Id = this.GetType().ToString();
+        public Carta() => Id = this.GetType().ToString();
 
         public abstract IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa);
     }

@@ -14,7 +14,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
 
         public Tripulante()
         {
-            Id = "tripulante";
             Afogavel = true;
         }
 

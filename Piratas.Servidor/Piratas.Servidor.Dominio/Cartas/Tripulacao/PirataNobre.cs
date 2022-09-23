@@ -1,4 +1,3 @@
-
 namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
 {
     using Tipos;

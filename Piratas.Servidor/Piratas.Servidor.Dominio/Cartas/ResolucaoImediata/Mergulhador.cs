@@ -1,11 +1,11 @@
 namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 {
+    using System.Collections.Generic;
+    using Acoes;
     using Acoes.Resultante;
     using Acoes.Tipos;
-    using Acoes;
     using Baralhos.Tipos;
     using Tipos;
-    using System.Collections.Generic;
 
     public class Mergulhador : ResolucaoImediata
     {

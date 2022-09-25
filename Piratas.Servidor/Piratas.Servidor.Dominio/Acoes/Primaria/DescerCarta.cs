@@ -1,10 +1,9 @@
 namespace Piratas.Servidor.Dominio.Acoes.Primaria
 {
-    using Cartas.Tipos;
-    using Dominio.Cartas;
-    using Dominio;
     using System.Collections.Generic;
-    using System;
+    using Cartas;
+    using Cartas.Tipos;
+    using Excecoes.Acoes;
     using Tipos;
 
     public class DescerCarta : Primaria
@@ -16,7 +15,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             if (Carta is Tesouro || Carta is Passivo)
-                throw new Exception($"Não é permitido jogar cartas \"{Carta.GetType()}\".");
+                throw new ProibidoDescerCartaException(this, Carta);
 
             var resultanteEfeitoCarta = Carta.AplicarEfeito(this, mesa);
 

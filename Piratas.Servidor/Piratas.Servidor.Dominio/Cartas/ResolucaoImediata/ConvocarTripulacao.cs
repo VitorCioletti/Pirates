@@ -1,13 +1,13 @@
 namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 {
-    using Acoes.Resultante;
-    using Acoes.Tipos;
-    using Acoes;
-    using Baralhos.Tipos;
-    using Cartas.Tipos;
-    using Excecoes.Cartas;
     using System.Collections.Generic;
     using System.Linq;
+    using Acoes;
+    using Acoes.Resultante;
+    using Acoes.Tipos;
+    using Baralhos.Tipos;
+    using Excecoes.Cartas;
+    using Tipos;
 
     public class ConvocarTripulacao : ResolucaoImediata
     {

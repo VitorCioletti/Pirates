@@ -1,10 +1,9 @@
 namespace Piratas.Servidor.Dominio.Acoes.Passiva
 {
-    using Acoes.Tipos;
-    using Cartas.Tipos;
-    using Dominio;
-    using System.Collections.Generic;
     using System;
+    using System.Collections.Generic;
+    using Cartas.Tipos;
+    using Tipos;
 
     public class AplicarEfeitoEmbarcacao : Passiva
     {

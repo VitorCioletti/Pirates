@@ -1,8 +1,7 @@
 namespace Piratas.Servidor.Dominio.Acoes.Primaria
 {
-    using Cartas.Tipos;
-    using Dominio;
     using System.Collections.Generic;
+    using Cartas.Tipos;
     using Tipos;
 
     public class ComprarCarta : Primaria
@@ -16,12 +15,10 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
             // TODO: Como avisar que foi uma carta evento comprada?
             if (cartaComprada is Evento)
                 return cartaComprada.AplicarEfeito(this, mesa);
-            else
-            {
-                Realizador.Mao.Adicionar(cartaComprada);
 
-                return null;
-            }
+            Realizador.Mao.Adicionar(cartaComprada);
+
+            return null;
         }
     }
 }

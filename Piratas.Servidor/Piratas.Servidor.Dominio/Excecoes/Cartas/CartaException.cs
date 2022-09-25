@@ -1,13 +1,14 @@
 namespace Piratas.Servidor.Dominio.Excecoes.Cartas
 {
     using Dominio.Cartas;
-    using System;
 
-    public class CartaException : Exception
+    public abstract class CartaException : BaseRegraException
     {
-        public CartaException(Carta _, string mensagem)
-            : base(mensagem)
+        public Carta Carta { get; private set; }
+
+        protected CartaException(Carta carta, string id, string mensagem) : base(id, mensagem)
         {
+            Carta = carta;
         }
     }
 }

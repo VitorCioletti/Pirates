@@ -1,14 +1,14 @@
 namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Acoes;
     using Acoes.Primaria;
     using Acoes.Resultante;
     using Acoes.Tipos;
-    using Acoes;
-    using Cartas.Duelo;
+    using Duelo;
     using Excecoes.Cartas;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System;
     using Tipos;
 
     public class Papagaio : ResolucaoImediata
@@ -17,10 +17,10 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             _aplicarEfeito(acao, mesa.Jogadores, mesa.HistoricoAcao, mesa.ProcessarAcao);
 
         internal IEnumerable<Resultante> _aplicarEfeito(
-             Acao acao,
-             List<Jogador> jogadores,
-             Stack<Acao> historicoAcao,
-             Func<Acao, IEnumerable<Resultante>> processarAcao)
+            Acao acao,
+            List<Jogador> jogadores,
+            Stack<Acao> historicoAcao,
+            Func<Acao, IEnumerable<Resultante>> processarAcao)
         {
             var ultimaAcao = historicoAcao.FirstOrDefault(
                 a => a.Turno == acao.Turno && (a is DescerCarta || a is Duelar));

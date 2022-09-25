@@ -1,11 +1,10 @@
 namespace Piratas.Servidor.Dominio.Acoes.Primaria
 {
-    using Acoes.Resultante;
+    using System.Collections.Generic;
     using Cartas.Duelo;
     using Cartas.Tipos;
-    using Dominio;
-    using System.Collections.Generic;
-    using System;
+    using Excecoes.Acoes;
+    using Resultante;
     using Tipos;
 
     public class Duelar : Primaria
@@ -18,7 +17,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             if (CartaIniciadora is Timoneiro)
-                throw new Exception($"\"{nameof(Timoneiro)}\" não pode iniciar um Duelo.");
+                throw new CartaProibidaIniciarDuelo(this, CartaIniciadora);
 
             mesa.EntrarModoDuelo(Realizador, Alvo);
 

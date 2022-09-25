@@ -4,7 +4,8 @@ namespace Piratas.Servidor.Dominio.Excecoes.Cartas
 
     public class SemAcaoValidaException : CartaException
     {
-        public SemAcaoValidaException(Carta cartaJogada) : base(cartaJogada, "Nenhuma ação válida encontrada.")
+        public SemAcaoValidaException(Carta cartaJogada) :
+            base(cartaJogada, "sem-acao-valida", "Nenhuma ação válida encontrada.")
         {
         }
     }

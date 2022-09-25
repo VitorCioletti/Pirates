@@ -1,8 +1,8 @@
 namespace Piratas.Servidor.Dominio.Cartas.Tipos
 {
-    using Acoes.Tipos;
-    using Acoes;
     using System.Collections.Generic;
+    using Acoes;
+    using Acoes.Tipos;
 
     public class Tesouro : Carta
     {

@@ -5,7 +5,7 @@ namespace Piratas.Servidor.Dominio.Excecoes.Cartas
     public class ImpossivelCopiarException : CartaException
     {
         public ImpossivelCopiarException(Carta cartaJogada, Carta cartaCopiada)
-            : base(cartaJogada, $"Não é possível copiar carta \"{cartaCopiada.Id}\".")
+            : base(cartaJogada, "impossivel-copiar-carta", $"Não é possível copiar carta \"{cartaCopiada.Id}\".")
         {
         }
     }

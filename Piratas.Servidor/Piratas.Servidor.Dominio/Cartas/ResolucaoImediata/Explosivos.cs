@@ -1,11 +1,11 @@
 namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 {
+    using System.Collections.Generic;
+    using Acoes;
     using Acoes.Resultante;
     using Acoes.Tipos;
-    using Acoes;
     using Baralhos.Tipos;
-    using Cartas.Tipos;
-    using System.Collections.Generic;
+    using Tipos;
 
     public class Explosivos : ResolucaoImediata
     {

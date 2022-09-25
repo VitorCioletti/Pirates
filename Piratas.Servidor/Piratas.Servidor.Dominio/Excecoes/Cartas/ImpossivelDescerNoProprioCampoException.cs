@@ -5,7 +5,7 @@ namespace Piratas.Servidor.Dominio.Excecoes.Cartas
     public class ImpossivelDescerException : CartaException
     {
         public ImpossivelDescerException(Carta cartaJogada)
-            : base(cartaJogada, $"Não é possível descer \"{cartaJogada.Id}\".")
+            : base(cartaJogada, "impossivel-descer-carta", $"Não é possível descer \"{cartaJogada.Id}\".")
         {
         }
     }

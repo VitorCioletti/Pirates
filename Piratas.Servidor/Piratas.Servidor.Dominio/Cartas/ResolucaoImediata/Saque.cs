@@ -1,10 +1,10 @@
 namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 {
-    using Acoes.Tipos;
-    using Acoes;
-    using Cartas.Passivo;
-    using Tipos;
     using System.Collections.Generic;
+    using Acoes;
+    using Acoes.Tipos;
+    using Passivo;
+    using Tipos;
 
     public class Saque : ResolucaoImediata
     {
@@ -14,8 +14,8 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
         internal IEnumerable<Resultante> _aplicarEfeito(Mao maoRealizador, Mao maoAlvo)
         {
             // TODO: Como avisar o cliente que foi um Bau Armadilha?
-            (var maoSaqueador, var maoSaqueado) = maoAlvo.Possui<BauArmadilha>() ?
-                (maoAlvo, maoRealizador) : (maoRealizador, maoAlvo);
+            var (maoSaqueador, maoSaqueado) =
+                maoAlvo.Possui<BauArmadilha>() ? (maoAlvo, maoRealizador) : (maoRealizador, maoAlvo);
 
             var cartaSaqueada = maoSaqueado.ObterQualquer();
 

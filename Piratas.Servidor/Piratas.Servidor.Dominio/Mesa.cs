@@ -1,12 +1,13 @@
 namespace Piratas.Servidor.Dominio
 {
-    using Acoes.Passiva;
-    using Acoes.Tipos;
-    using Acoes;
-    using Baralhos.Tipos;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System;
+    using Acoes;
+    using Acoes.Passiva;
+    using Acoes.Tipos;
+    using Baralhos.Tipos;
+    using Excecoes.Mesa;
 
     public class Mesa
     {
@@ -101,7 +102,7 @@ namespace Piratas.Servidor.Dominio
         public Tuple<Jogador, IEnumerable<Resultante>> MoverParaProximoTurno()
         {
             if (JogadorAtual.AcoesDisponiveis > 0)
-                throw new Exception("O jogador atual ainda possui ações disponíveis.");
+                throw new PossuiAcoesDisponiveisException(JogadorAtual);
 
             _turnoAtual++;
 
@@ -125,7 +126,7 @@ namespace Piratas.Servidor.Dominio
         public void EntrarModoDuelo(Jogador realizador, Jogador alvo)
         {
             if (EmDuelo)
-                throw new Exception("Mesa já em duelo.");
+                throw new EmDueloException();
 
             EmDuelo = true;
             Duelistas = new Tuple<Jogador, Jogador>(realizador, alvo);
@@ -134,7 +135,7 @@ namespace Piratas.Servidor.Dominio
         public void SairModoDuelo()
         {
             if (!EmDuelo)
-                throw new Exception("Mesa não está em duelo.");
+                throw new SemDueloException();
 
             // TODO: Verificar se todas as ações resposta de duelo foram realizadas?
 
@@ -147,7 +148,7 @@ namespace Piratas.Servidor.Dominio
         public void RegistrarImediataAposResultantes(Imediata imediata)
         {
             if (_imediataAposResultantes != null)
-                throw new Exception("Já existe uma imediata registrada");
+                throw new ImediataRegistradaException();
 
             _imediataAposResultantes = imediata;
         }
@@ -183,16 +184,16 @@ namespace Piratas.Servidor.Dominio
             if (acao is Primaria)
             {
                 if (realizador != JogadorAtual)
-                    throw new Exception($"Não é a vez do jogador \"{realizador}\" jogar.");
+                    throw new TurnoDeOutroJogadorException(realizador);
             }
         }
 
         private void _verificarResultantePendente(Acao acao)
         {
-            if (acao is Resultante)
+            if (acao is Resultante resultante)
             {
-                if (!_resultantesPendentes.Contains(acao))
-                    throw new Exception($"Resultante \"{acao}\" não esperada.");
+                if (!_resultantesPendentes.Contains(resultante))
+                    throw new ResultanteNaoEsperadaException(resultante);
             }
         }
     }

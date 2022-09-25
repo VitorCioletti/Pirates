@@ -25,7 +25,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
                 if (!possuiEmbarcacao && !possuiTripulacao)
                     continue;
 
-                else if (possuiEmbarcacao && possuiTripulacao)
+                if (possuiEmbarcacao && possuiTripulacao)
                 {
                     yield return new EscolherResultante(
                         acao, jogador, resultanteAfogarTripulacao, resultanteDanificarEmbarcacao);
@@ -38,7 +38,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
                     if (afogaveis.Count == 0)
                         continue;
 
-                    else if (afogaveis.Count == 1)
+                    if (afogaveis.Count == 1)
                         jogador.Campo.AfogarTripulacao();
 
                     else
@@ -47,8 +47,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
                 else
                 {
                     jogador.Campo.DanificarEmbarcacao();
-
-                    continue;
                 }
             }
         }

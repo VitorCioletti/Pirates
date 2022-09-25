@@ -1,10 +1,9 @@
 namespace Piratas.Servidor.Dominio.Acoes.Imediata
 {
-    using Acoes.Resultante;
-    using Acoes.Tipos;
-    using Cartas.Tipos;
-    using Dominio;
     using System.Collections.Generic;
+    using Cartas.Tipos;
+    using Resultante;
+    using Tipos;
 
     public class CalcularResultadoDuelo : Imediata
     {
@@ -16,7 +15,6 @@ namespace Piratas.Servidor.Dominio.Acoes.Imediata
 
         public CalcularResultadoDuelo(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo)
         {
-
         }
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)

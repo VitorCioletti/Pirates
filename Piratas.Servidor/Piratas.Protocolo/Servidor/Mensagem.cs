@@ -13,17 +13,24 @@ namespace Piratas.Protocolo.Servidor
 
         public Dictionary<Guid, List<Evento>> Eventos { get; private set; }
 
+        public string IdErro { get; private set; }
+
+        public bool PossuiErro => !string.IsNullOrWhiteSpace(IdErro);
+
         public Mensagem(
             Guid idJogador,
             int acoesRestantes,
             int tesouros,
             Dictionary<Guid, List<Evento>> eventos,
-            Escolha escolha) : base(idJogador)
+            Escolha escolha,
+            string idErro
+        ) : base(idJogador)
         {
             Escolha = escolha;
             AcoesRestantes = acoesRestantes;
             Eventos = eventos;
             Tesouros = tesouros;
+            IdErro = idErro;
         }
     }
 }

@@ -1,9 +1,10 @@
 namespace Piratas.Servidor.Dominio
 {
-    using Cartas;
-    using System.Collections.Generic;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using Cartas;
+    using Excecoes.Mao;
 
     public class Mao
     {
@@ -16,7 +17,7 @@ namespace Piratas.Servidor.Dominio
         public void Adicionar(Carta carta)
         {
             if (_cartas.Count == _limiteCartas)
-                throw new Exception("Limite de cartas atingido.");
+                throw new LimiteCartasMaoAtingidoException();
 
             _cartas.Add(carta);
         }
@@ -28,10 +29,10 @@ namespace Piratas.Servidor.Dominio
         public void Remover(Carta carta)
         {
             if (!Possui(carta))
-                throw new Exception($"Carta \"{carta}\" não existe na mão.");
+                throw new CartaNaoExisteNaMaoException(carta);
 
             if (_cartas.Count == 0)
-                throw new Exception("Mão está vazia.");
+                throw new MaoVaziaException();
 
             _cartas.Remove(carta);
         }

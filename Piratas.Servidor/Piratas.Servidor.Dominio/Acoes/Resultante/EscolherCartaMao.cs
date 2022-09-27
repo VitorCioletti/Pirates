@@ -1,8 +1,9 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
-    using Cartas;
-    using System.Collections.Generic;
     using System;
+    using System.Collections.Generic;
+    using Cartas;
+    using Excecoes.Acoes;
     using Tipos;
 
     public class EscolherCartaMao : Resultante
@@ -28,7 +29,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             if (!CartasOpcao.Contains(CartaEscolhida))
-                throw new ArgumentException($"Carta \"{CartaEscolhida.Id}\" não é uma opção.");
+                throw new CartaNaoEUmaOpcaoException(this, CartaEscolhida);
 
             _aposEscolha(CartaEscolhida);
 

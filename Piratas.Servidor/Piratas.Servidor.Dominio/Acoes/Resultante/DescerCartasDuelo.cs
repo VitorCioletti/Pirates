@@ -1,9 +1,8 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
-    using Acoes.Imediata;
-    using Cartas.Tipos;
-    using Dominio;
     using System.Collections.Generic;
+    using Cartas.Tipos;
+    using Imediata;
     using Tipos;
 
     public class DescerCartasDuelo : Resultante
@@ -12,7 +11,6 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
         public DescerCartasDuelo(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo)
         {
-
         }
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)

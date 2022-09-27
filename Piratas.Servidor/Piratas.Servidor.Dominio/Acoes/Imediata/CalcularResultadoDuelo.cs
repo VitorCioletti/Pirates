@@ -1,7 +1,6 @@
 namespace Piratas.Servidor.Dominio.Acoes.Imediata
 {
     using System.Collections.Generic;
-    using Cartas.Tipos;
     using Resultante;
     using Tipos;
 
@@ -10,8 +9,6 @@ namespace Piratas.Servidor.Dominio.Acoes.Imediata
         public Jogador Vitorioso { get; private set; }
 
         public Jogador Perdedor { get; private set; }
-
-        public Embarcacao Embarcacao { get; private set; }
 
         public CalcularResultadoDuelo(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo)
         {

@@ -1,8 +1,8 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
-    using Dominio;
-    using System.Collections.Generic;
     using System;
+    using System.Collections.Generic;
+    using Excecoes.Acoes;
     using Tipos;
 
     public class EscolherJogador : Resultante
@@ -26,7 +26,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             if (!JogadoresOpcao.Contains(JogadorEscolhido))
-                throw new Exception($"Jogador \"{JogadorEscolhido.Id}\" não é uma opção.");
+                throw new JogadorNaoEUmaOpcaoException(this, JogadorEscolhido);
 
             return ResultanteAposEscolha(this, JogadorEscolhido);
         }

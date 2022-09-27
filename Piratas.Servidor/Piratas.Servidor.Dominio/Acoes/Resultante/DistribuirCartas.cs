@@ -1,9 +1,9 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
-    using Cartas;
-    using Dominio;
-    using System.Collections.Generic;
     using System;
+    using System.Collections.Generic;
+    using Cartas;
+    using Excecoes.Acoes;
     using Tipos;
 
     public class DistribuirCartas : Resultante
@@ -13,7 +13,10 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         public Dictionary<Jogador, Carta> CartasPorJogador { get; private set; }
 
         public DistribuirCartas(
-            Acao origem, Jogador realizador, List<Jogador> jogadores, List<Carta> cartas) : base(origem, realizador)
+            Acao origem,
+            Jogador realizador,
+            List<Jogador> jogadores,
+            List<Carta> cartas) : base(origem, realizador)
         {
             CartasPorJogador = new Dictionary<Jogador, Carta>();
 
@@ -29,10 +32,10 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             foreach ((var jogador, var carta) in CartasPorJogador)
             {
                 if (carta == null)
-                    throw new Exception($"Jogador \"{jogador}\" não possui carta escolhida");
+                    throw new NaoHaCartaAtribudaException(this, jogador);
 
                 if (!CartasOpcoes.Contains(carta))
-                    throw new Exception($"Carta \"{carta}\" do jogador \"{jogador}\" não é uma opção.");
+                    throw new CartaNaoEUmaOpcaoException(this, carta);
 
                 jogador.Mao.Adicionar(carta);
             }

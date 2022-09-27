@@ -1,9 +1,8 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
-    using Dominio;
     using System.Collections.Generic;
     using System.Linq;
-    using System;
+    using Excecoes.Acoes;
     using Tipos;
 
     public class EscolherResultante : Resultante
@@ -19,7 +18,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
             if (!ResultantesOpcao.Contains(ResultanteEscolhida))
-                throw new Exception($"Resultante \"{ResultanteEscolhida}\" não é uma opção.");
+                throw new ResultanteNaoEUmaOpcaoException(this, ResultanteEscolhida);
 
             return ResultanteEscolhida.AplicarRegra(mesa);
         }

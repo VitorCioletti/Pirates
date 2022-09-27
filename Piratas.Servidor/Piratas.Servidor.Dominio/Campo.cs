@@ -42,8 +42,8 @@ namespace Piratas.Servidor.Dominio
 
             pontosDuelo += _calcularTirosCanhoes();
             pontosDuelo += _calcularTirosDueloSurpresa();
-            pontosDuelo += _calcularTirosEmbarcacao();
             pontosDuelo += _calcularTirosTripulacao();
+            pontosDuelo += _calcularTirosEmbarcacao(pontosDuelo);
 
             return pontosDuelo;
         }
@@ -141,10 +141,8 @@ namespace Piratas.Servidor.Dominio
 
         private int _calcularTirosTripulacao() => Tripulacao.Sum(t => t.Tiros);
 
-        private int _calcularTirosEmbarcacao()
+        private int _calcularTirosEmbarcacao(int tiros)
         {
-            var tiros = 0;
-
             if (Embarcacao is GuerrilhaNaval guerrilhaNaval)
                 tiros += guerrilhaNaval.TirosAdicionais * Canhoes.Count;
 

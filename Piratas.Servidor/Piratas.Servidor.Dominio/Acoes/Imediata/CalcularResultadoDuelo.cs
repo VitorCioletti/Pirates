@@ -16,8 +16,19 @@ namespace Piratas.Servidor.Dominio.Acoes.Imediata
 
         public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
         {
-            Vitorioso = Realizador.Campo.CalcularPontosDuelo() > Alvo.Campo.CalcularPontosDuelo() ? Realizador : Alvo;
-            Perdedor = Vitorioso == Realizador ? Alvo : Realizador;
+            var pontosDueloRealizador = Realizador.Campo.CalcularPontosDuelo();
+            var pontosDueloAlvo = Alvo.Campo.CalcularPontosDuelo();
+
+            if (pontosDueloRealizador > pontosDueloAlvo)
+            {
+                Vitorioso = Realizador;
+                Perdedor = Alvo;
+            }
+            else
+            {
+                Vitorioso = Alvo;
+                Perdedor = Realizador;
+            }
 
             Vitorioso.Campo.RemoverCartasDuelo();
             Perdedor.Campo.RemoverCartasDuelo();

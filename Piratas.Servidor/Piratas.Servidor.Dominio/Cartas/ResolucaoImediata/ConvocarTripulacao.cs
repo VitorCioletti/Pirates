@@ -26,7 +26,11 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             if (tripulantesDescartados.Count == 0)
                 throw new SemTripulacaoPilhaDescarteException(this);
 
-            yield return new EscolherCartaBaralho(acao, realizador, pilhaDescarte, tripulantesDescartados);
+            yield return new EscolherCartaBaralho(
+                acao,
+                realizador,
+                pilhaDescarte,
+                tripulantesDescartados);
         }
     }
 }

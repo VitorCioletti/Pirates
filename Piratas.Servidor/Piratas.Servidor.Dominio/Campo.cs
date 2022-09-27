@@ -1,12 +1,13 @@
 namespace Piratas.Servidor.Dominio
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Cartas;
     using Cartas.Duelo;
     using Cartas.Embarcacao;
     using Cartas.Tipos;
-    using Cartas;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System;
+    using Excecoes.Campo;
 
     public class Campo
     {
@@ -14,17 +15,15 @@ namespace Piratas.Servidor.Dominio
 
         private readonly int _tripulacaoMaxima = 2;
 
-        public List<Canhao> Canhoes { get; private set; } // TODO: Privado?
+        public List<Canhao> Canhoes { get; private set; }
 
-        public List<DueloSurpresa> DuelosSurpresa { get; private set; } // TODO: Privado?
+        public List<DueloSurpresa> DuelosSurpresa { get; private set; }
 
-        public List<Carta> Protegidas { get; private set; } // TODO: Privado?
+        public List<Carta> Protegidas { get; private set; }
 
-        public List<Tripulante> Tripulacao { get; private set; } // TODO: Privado?
+        public List<Tripulante> Tripulacao { get; private set; }
 
-        public Embarcacao Embarcacao { get; private set; } // TODO: Privado?
-
-
+        public Embarcacao Embarcacao { get; private set; }
         public event Action<List<Carta>> AoRemoverProtegidas;
 
         public Campo()
@@ -63,7 +62,7 @@ namespace Piratas.Servidor.Dominio
         public void Adicionar(Tripulante tripulante)
         {
             if (Tripulacao.Count >= _tripulacaoMaxima)
-                throw new Exception("Tripulação do jogador está cheia.");
+                throw new TripulacaoCheiaException();
 
             Tripulacao.Add(tripulante);
         }
@@ -71,26 +70,26 @@ namespace Piratas.Servidor.Dominio
         public void Adicionar(Embarcacao embarcacao)
         {
             if (Embarcacao != null)
-                throw new Exception("Jogador já possui uma embarcação.");
+                throw new ExisteEmbarcacaoException();
 
             Embarcacao = embarcacao;
         }
 
-        public void Adicionar(List<Canhao> canhoes) => canhoes.ForEach(c => Adicionar(c));
+        public void Adicionar(List<Canhao> canhoes) => canhoes.ForEach(Adicionar);
 
         public void Adicionar(Canhao canhao) => Canhoes.Add(canhao);
 
-        public void Adicionar(List<DueloSurpresa> duelosSurpresa) => duelosSurpresa.ForEach(d => Adicionar(d));
+        public void Adicionar(List<DueloSurpresa> duelosSurpresa) => duelosSurpresa.ForEach(Adicionar);
 
         public void Adicionar(DueloSurpresa dueloSurpresa) => DuelosSurpresa.Add(dueloSurpresa);
 
         public void Remover(Tripulante tripulante)
         {
             if (Tripulacao.Count == 0)
-                throw new Exception("Tripulação vazia.");
+                throw new TripulacaoVaziaException();
 
             if (Tripulacao.FirstOrDefault(t => t == tripulante) == null)
-                throw new Exception("Tripulante não encontrada.");
+                throw new TripulanteNaoEncontradoException();
 
             Tripulacao.Remove(tripulante);
         }
@@ -118,7 +117,7 @@ namespace Piratas.Servidor.Dominio
         private void _removerEmbarcacao()
         {
             if (Embarcacao == null)
-                throw new Exception("Não há embarcação no campo.");
+                throw new SemEmbarcacaoException();
 
             Embarcacao = null;
 
@@ -131,7 +130,7 @@ namespace Piratas.Servidor.Dominio
 
             Protegidas = null;
 
-            AoRemoverProtegidas(protegidas);
+            AoRemoverProtegidas?.Invoke(protegidas);
 
             return protegidas;
         }
@@ -151,7 +150,7 @@ namespace Piratas.Servidor.Dominio
 
             else if (Embarcacao is OuricoInfernal ouricoInfernal)
             {
-                if (tiros > 0)
+                if (tiros != 0)
                     tiros += ouricoInfernal.Tiros;
             }
 

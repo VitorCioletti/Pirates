@@ -1,9 +1,8 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
+    using System.Collections.Generic;
     using Baralhos;
     using Cartas;
-    using Dominio;
-    using System.Collections.Generic;
     using Tipos;
 
     public class EscolherCartaBaralho : Resultante
@@ -14,8 +13,11 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
         public Baralho Baralho { get; private set; }
 
-        public EscolherCartaBaralho(Acao origem, Jogador realizador, Baralho baralho, List<Carta> cartasOpcoes) :
-            base(origem, realizador)
+        public EscolherCartaBaralho(
+            Acao origem,
+            Jogador realizador,
+            Baralho baralho,
+            List<Carta> cartasOpcoes) : base(origem, realizador)
         {
             Baralho = baralho;
             CartasOpcoes = cartasOpcoes;

@@ -1,12 +1,12 @@
 namespace Piratas.Servidor.Dominio
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Acoes.Primaria;
+    using Cartas;
     using Cartas.Tesouro;
     using Cartas.Tipos;
     using Cartas.Tripulacao;
-    using Cartas;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public class Jogador
     {

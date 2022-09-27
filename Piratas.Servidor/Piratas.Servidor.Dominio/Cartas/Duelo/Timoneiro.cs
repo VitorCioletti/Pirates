@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Duelo
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, Mesa mesa)
         {
             if (!(acao is DescerCartasDuelo))
-                throw new CartaRespostaDueloException(this);
+                throw new ApenasCartaRespostaDueloException(this);
 
             mesa.SairModoDuelo();
 

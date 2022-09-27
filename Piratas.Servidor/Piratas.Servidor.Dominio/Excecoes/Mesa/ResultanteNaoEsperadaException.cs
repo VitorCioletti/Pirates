@@ -2,7 +2,7 @@ namespace Piratas.Servidor.Dominio.Excecoes.Mesa
 {
     using Dominio.Acoes.Tipos;
 
-    public class ResultanteNaoEsperadaException : MesaException
+    public class ResultanteNaoEsperadaException : BaseMesaException
     {
         public Resultante Resultante { get; private set; }
 

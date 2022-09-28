@@ -12,13 +12,13 @@ namespace Piratas.Servidor.Dominio
 
         private readonly List<Carta> _cartas;
 
-        public event Action<bool, Carta> AoAdicionarOuRemoverCarta;
+        public event Action<Carta> AoAdicionar;
+
+        public event Action<Carta> AoRemover;
 
         public Mao(List<Carta> cartas)
         {
             _cartas = cartas;
-
-            AoAdicionarOuRemoverCarta = (_, __) => { };
         }
 
         public void Adicionar(Carta carta)
@@ -28,7 +28,7 @@ namespace Piratas.Servidor.Dominio
 
             _cartas.Add(carta);
 
-            AoAdicionarOuRemoverCarta?.Invoke(true, carta);
+            AoAdicionar?.Invoke(carta);
         }
 
         public List<Carta> ObterTodas() => _cartas.ToList();
@@ -45,7 +45,7 @@ namespace Piratas.Servidor.Dominio
 
             _cartas.Remove(carta);
 
-            AoAdicionarOuRemoverCarta?.Invoke(false, carta);
+            AoRemover?.Invoke(carta);
         }
 
         public Carta ObterQualquer()

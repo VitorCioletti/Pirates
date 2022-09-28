@@ -20,21 +20,31 @@ namespace Piratas.Servidor.Dominio
         public Campo Campo { get; }
 
         public Jogador(
-            Action<Jogador, bool, Carta> aoAdicionarOuRemoverCartaNaMao,
-            Action<Jogador, bool, Carta> aoAdicionarOuRemoverCartaNoCampo)
+            Action<Guid, Carta> aoAdicionarCartaNaMao,
+            Action<Guid, Carta> aoRemoverCartaNaMao,
+            Action<Guid, Carta> aoAdicionarCartaNoCampo,
+            Action<Guid, Carta> aoRemoverCartaNoCampo)
         {
             Id = Guid.NewGuid();
             Mao = new Mao(new List<Carta>());
             Campo = new Campo();
 
-            Mao.AoAdicionarOuRemoverCarta += AoAdicionarOuRemoverCartaNaMao;
-            Campo.AoAdicionarOuRemoverCarta += AoAdicionarOuRemoverCartaNoCampo;
+            Mao.AoAdicionar += AoAdicionarCartaNaMao;
+            Mao.AoRemover += AoRemoverCartaNaMao;
+            Campo.AoAdicionar += AoAdicionarCartaNoCampo;
+            Campo.AoRemover += AoRemoverCartaNoCampo;
 
-            void AoAdicionarOuRemoverCartaNaMao(bool adicionado, Carta carta) =>
-                aoAdicionarOuRemoverCartaNaMao(this, adicionado, carta);
+            void AoAdicionarCartaNaMao(Carta carta) =>
+                aoAdicionarCartaNaMao(Id, carta);
 
-            void AoAdicionarOuRemoverCartaNoCampo(bool adicionado, Carta carta) =>
-                aoAdicionarOuRemoverCartaNoCampo(this, adicionado, carta);
+            void AoRemoverCartaNaMao(Carta carta) =>
+                aoRemoverCartaNaMao(Id, carta);
+
+            void AoAdicionarCartaNoCampo(Carta carta) =>
+                aoAdicionarCartaNoCampo(Id, carta);
+
+            void AoRemoverCartaNoCampo(Carta carta) =>
+                aoRemoverCartaNoCampo(Id, carta);
         }
 
         public DescerCarta DescerCarta(Carta carta) => new DescerCarta(this, carta);

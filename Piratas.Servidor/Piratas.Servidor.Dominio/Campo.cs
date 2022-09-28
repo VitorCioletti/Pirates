@@ -25,7 +25,9 @@ namespace Piratas.Servidor.Dominio
 
         public Embarcacao Embarcacao { get; private set; }
 
-        public event Action<bool, Carta> AoAdicionarOuRemoverCarta;
+        public event Action<Carta> AoAdicionar;
+
+        public event Action<Carta> AoRemover;
 
         public Campo()
         {
@@ -33,8 +35,6 @@ namespace Piratas.Servidor.Dominio
             DuelosSurpresa = new List<DueloSurpresa>();
             Protegidas = new List<Carta>();
             Tripulacao = new List<Tripulante>();
-
-            AoAdicionarOuRemoverCarta = (_, __) => { };
 
             Embarcacao = null;
         }
@@ -69,7 +69,7 @@ namespace Piratas.Servidor.Dominio
 
             Tripulacao.Add(tripulante);
 
-            AoAdicionarOuRemoverCarta?.Invoke(true, tripulante);
+            AoAdicionar?.Invoke(tripulante);
         }
 
         public void Adicionar(Embarcacao embarcacao)
@@ -79,7 +79,7 @@ namespace Piratas.Servidor.Dominio
 
             Embarcacao = embarcacao;
 
-            AoAdicionarOuRemoverCarta?.Invoke(true, embarcacao);
+            AoAdicionar?.Invoke(embarcacao);
         }
 
         public void Adicionar(List<Canhao> canhoes) => canhoes.ForEach(Adicionar);
@@ -88,7 +88,14 @@ namespace Piratas.Servidor.Dominio
         {
             Canhoes.Add(canhao);
 
-            AoAdicionarOuRemoverCarta?.Invoke(true, canhao);
+            AoAdicionar?.Invoke(canhao);
+        }
+
+        public void Remover(Canhao canhao)
+        {
+            Canhoes.Remove(canhao);
+
+            AoRemover?.Invoke(canhao);
         }
 
         public void Adicionar(List<DueloSurpresa> duelosSurpresa) => duelosSurpresa.ForEach(Adicionar);
@@ -97,7 +104,7 @@ namespace Piratas.Servidor.Dominio
         {
             DuelosSurpresa.Add(dueloSurpresa);
 
-            AoAdicionarOuRemoverCarta?.Invoke(true, dueloSurpresa);
+            AoAdicionar?.Invoke(dueloSurpresa);
         }
 
         public void Remover(Tripulante tripulante)
@@ -110,7 +117,7 @@ namespace Piratas.Servidor.Dominio
 
             Tripulacao.Remove(tripulante);
 
-            AoAdicionarOuRemoverCarta?.Invoke(false, tripulante);
+            AoRemover?.Invoke(tripulante);
         }
 
         public void AfogarTripulacao()
@@ -147,7 +154,7 @@ namespace Piratas.Servidor.Dominio
 
             _removerTodasProtegidas();
 
-            AoAdicionarOuRemoverCarta?.Invoke(false, Embarcacao);
+            AoRemover?.Invoke(Embarcacao);
 
             Embarcacao = null;
         }
@@ -159,7 +166,7 @@ namespace Piratas.Servidor.Dominio
             Protegidas = null;
 
             foreach (Carta protegida in protegidas)
-                AoAdicionarOuRemoverCarta?.Invoke(false, protegida);
+                AoRemover?.Invoke(protegida);
         }
 
         private int _calcularTirosCanhoes() => Canhoes.Sum(c => c.Tiros);

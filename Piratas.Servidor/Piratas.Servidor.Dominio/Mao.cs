@@ -12,7 +12,14 @@ namespace Piratas.Servidor.Dominio
 
         private readonly List<Carta> _cartas;
 
-        public Mao(List<Carta> cartas) => _cartas = cartas;
+        public event Action<bool, Carta> AoAdicionarOuRemoverCarta;
+
+        public Mao(List<Carta> cartas)
+        {
+            _cartas = cartas;
+
+            AoAdicionarOuRemoverCarta = (_, __) => { };
+        }
 
         public void Adicionar(Carta carta)
         {
@@ -20,11 +27,13 @@ namespace Piratas.Servidor.Dominio
                 throw new LimiteCartasMaoAtingidoException();
 
             _cartas.Add(carta);
+
+            AoAdicionarOuRemoverCarta?.Invoke(true, carta);
         }
 
         public List<Carta> ObterTodas() => _cartas.ToList();
 
-        public void Adicionar(List<Carta> cartas) => cartas.ForEach(c => Adicionar(c));
+        public void Adicionar(List<Carta> cartas) => cartas.ForEach(Adicionar);
 
         public void Remover(Carta carta)
         {
@@ -35,6 +44,8 @@ namespace Piratas.Servidor.Dominio
                 throw new MaoVaziaException();
 
             _cartas.Remove(carta);
+
+            AoAdicionarOuRemoverCarta?.Invoke(false, carta);
         }
 
         public Carta ObterQualquer()

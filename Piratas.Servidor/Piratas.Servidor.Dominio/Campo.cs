@@ -24,7 +24,8 @@ namespace Piratas.Servidor.Dominio
         public List<Tripulante> Tripulacao { get; private set; }
 
         public Embarcacao Embarcacao { get; private set; }
-        public event Action<List<Carta>> AoRemoverProtegidas;
+
+        public event Action<bool, Carta> AoAdicionarOuRemoverCarta;
 
         public Campo()
         {
@@ -32,6 +33,8 @@ namespace Piratas.Servidor.Dominio
             DuelosSurpresa = new List<DueloSurpresa>();
             Protegidas = new List<Carta>();
             Tripulacao = new List<Tripulante>();
+
+            AoAdicionarOuRemoverCarta = (_, __) => { };
 
             Embarcacao = null;
         }
@@ -65,6 +68,8 @@ namespace Piratas.Servidor.Dominio
                 throw new TripulacaoCheiaException();
 
             Tripulacao.Add(tripulante);
+
+            AoAdicionarOuRemoverCarta?.Invoke(true, tripulante);
         }
 
         public void Adicionar(Embarcacao embarcacao)
@@ -73,15 +78,27 @@ namespace Piratas.Servidor.Dominio
                 throw new ExisteEmbarcacaoException();
 
             Embarcacao = embarcacao;
+
+            AoAdicionarOuRemoverCarta?.Invoke(true, embarcacao);
         }
 
         public void Adicionar(List<Canhao> canhoes) => canhoes.ForEach(Adicionar);
 
-        public void Adicionar(Canhao canhao) => Canhoes.Add(canhao);
+        public void Adicionar(Canhao canhao)
+        {
+            Canhoes.Add(canhao);
+
+            AoAdicionarOuRemoverCarta?.Invoke(true, canhao);
+        }
 
         public void Adicionar(List<DueloSurpresa> duelosSurpresa) => duelosSurpresa.ForEach(Adicionar);
 
-        public void Adicionar(DueloSurpresa dueloSurpresa) => DuelosSurpresa.Add(dueloSurpresa);
+        public void Adicionar(DueloSurpresa dueloSurpresa)
+        {
+            DuelosSurpresa.Add(dueloSurpresa);
+
+            AoAdicionarOuRemoverCarta?.Invoke(true, dueloSurpresa);
+        }
 
         public void Remover(Tripulante tripulante)
         {
@@ -92,9 +109,18 @@ namespace Piratas.Servidor.Dominio
                 throw new TripulanteNaoEncontradoException();
 
             Tripulacao.Remove(tripulante);
+
+            AoAdicionarOuRemoverCarta?.Invoke(false, tripulante);
         }
 
-        public void AfogarTripulacao() => Tripulacao.RemoveAll(t => t.Afogavel);
+        public void AfogarTripulacao()
+        {
+            foreach (Tripulante tripulante in Tripulacao)
+            {
+                if (tripulante.Afogavel)
+                    Remover(tripulante);
+            }
+        }
 
         public void RemoverCartasDuelo()
         {
@@ -119,20 +145,21 @@ namespace Piratas.Servidor.Dominio
             if (Embarcacao == null)
                 throw new SemEmbarcacaoException();
 
-            Embarcacao = null;
-
             _removerTodasProtegidas();
+
+            AoAdicionarOuRemoverCarta?.Invoke(false, Embarcacao);
+
+            Embarcacao = null;
         }
 
-        private List<Carta> _removerTodasProtegidas()
+        private void _removerTodasProtegidas()
         {
             var protegidas = ObterTodasProtegidas();
 
             Protegidas = null;
 
-            AoRemoverProtegidas?.Invoke(protegidas);
-
-            return protegidas;
+            foreach (Carta protegida in protegidas)
+                AoAdicionarOuRemoverCarta?.Invoke(false, protegida);
         }
 
         private int _calcularTirosCanhoes() => Canhoes.Sum(c => c.Tiros);

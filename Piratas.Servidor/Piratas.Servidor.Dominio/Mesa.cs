@@ -11,11 +11,11 @@ namespace Piratas.Servidor.Dominio
 
     public class Mesa
     {
-        public string Id { get; private set; }
+        public Guid Id { get; }
 
-        public List<Jogador> Jogadores { get; set; }
+        public List<Jogador> Jogadores { get; }
 
-        public DateTime DataHoraInicio { get; set; }
+        public DateTime DataHoraInicio { get; }
 
         public DateTime DataHoraFim { get; set; }
 
@@ -25,11 +25,11 @@ namespace Piratas.Servidor.Dominio
 
         public Tuple<Jogador, Jogador> Duelistas { get; private set; }
 
-        public Queue<Jogador> OrdemDeJogadores { get; private set; }
+        public Queue<Jogador> OrdemDeJogadores { get; }
 
-        public BaralhoCentral BaralhoCentral { get; private set; }
+        public BaralhoCentral BaralhoCentral { get; }
 
-        public PilhaDescarte PilhaDescarte { get; set; }
+        public PilhaDescarte PilhaDescarte { get; }
 
         public Stack<Acao> HistoricoAcao { get; private set; }
 
@@ -41,6 +41,8 @@ namespace Piratas.Servidor.Dominio
 
         private readonly int _tesourosParaVitoria;
 
+        private readonly int _acoesPorTurno;
+
         private int _turnoAtual;
 
         public Mesa(List<Jogador> jogadores)
@@ -48,11 +50,12 @@ namespace Piratas.Servidor.Dominio
             _cartasIniciaisPorJogador = 5;
             _tesourosParaVitoria = 5;
             _turnoAtual = 1;
+            _acoesPorTurno = 3;
 
             _resultantesPendentes = new List<Resultante>();
             _imediataAposResultantes = null;
 
-            Id = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid();
             DataHoraInicio = DateTime.UtcNow;
 
             BaralhoCentral = new BaralhoCentral();
@@ -82,7 +85,7 @@ namespace Piratas.Servidor.Dominio
             }
 
             if (acao is Primaria)
-                realizador.AcoesDisponiveis--;
+                realizador.SubtrairAcoesDisponiveis();
 
             else if (acao is Resultante resultante)
             {
@@ -119,6 +122,8 @@ namespace Piratas.Servidor.Dominio
                 var aplicarEfeitoEmbarcacao = new AplicarEfeitoEmbarcacao(proximoJogador, embarcacao);
                 resultantesEmbarcacao = ProcessarAcao(aplicarEfeitoEmbarcacao);
             }
+
+            proximoJogador.ResetarAcoesDisponiveis(_acoesPorTurno);
 
             return new Tuple<Jogador, IEnumerable<Resultante>>(proximoJogador, resultantesEmbarcacao);
         }

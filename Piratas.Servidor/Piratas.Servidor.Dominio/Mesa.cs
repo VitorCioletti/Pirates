@@ -37,21 +37,16 @@ namespace Piratas.Servidor.Dominio
 
         private readonly List<Resultante> _resultantesPendentes;
 
-        private readonly int _cartasIniciaisPorJogador;
+        private readonly int _cartasIniciaisPorJogador = 5;
 
-        private readonly int _tesourosParaVitoria;
+        private readonly int _tesourosParaVitoria = 5;
 
-        private readonly int _acoesPorTurno;
+        private readonly int _acoesPorTurno = 3;
 
-        private int _turnoAtual;
+        private int _turnoAtual = 1;
 
         public Mesa(List<Jogador> jogadores)
         {
-            _cartasIniciaisPorJogador = 5;
-            _tesourosParaVitoria = 5;
-            _turnoAtual = 1;
-            _acoesPorTurno = 3;
-
             _resultantesPendentes = new List<Resultante>();
             _imediataAposResultantes = null;
 

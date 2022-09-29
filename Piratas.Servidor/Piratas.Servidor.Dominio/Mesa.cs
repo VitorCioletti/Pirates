@@ -37,11 +37,11 @@ namespace Piratas.Servidor.Dominio
 
         private readonly List<Resultante> _resultantesPendentes;
 
-        private readonly int _cartasIniciaisPorJogador = 5;
+        private const int _cartasIniciaisPorJogador = 5;
 
-        private readonly int _tesourosParaVitoria = 5;
+        private const int _tesourosParaVitoria = 5;
 
-        private readonly int _acoesPorTurno = 3;
+        private const int _acoesPorTurno = 3;
 
         private int _turnoAtual = 1;
 

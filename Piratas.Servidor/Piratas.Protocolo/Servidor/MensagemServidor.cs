@@ -3,7 +3,7 @@ namespace Piratas.Protocolo.Servidor
     using System;
     using System.Collections.Generic;
 
-    public class Mensagem : Pacote
+    public class MensagemServidor : Mensagem
     {
         public int AcoesRestantes { get; private set; }
 
@@ -17,20 +17,32 @@ namespace Piratas.Protocolo.Servidor
 
         public bool PossuiErro => !string.IsNullOrWhiteSpace(IdErro);
 
-        public Mensagem(
+        public MensagemServidor(
             Guid idJogador,
+            Guid idMesa,
             int acoesRestantes,
             int tesouros,
             Dictionary<Guid, List<Evento>> eventos,
             Escolha escolha,
             string idErro
-        ) : base(idJogador)
+        ) : base(idJogador, idMesa)
         {
             Escolha = escolha;
             AcoesRestantes = acoesRestantes;
             Eventos = eventos;
             Tesouros = tesouros;
             IdErro = idErro;
+        }
+
+        public MensagemServidor(string idErro) : this(
+            Guid.Empty,
+            Guid.Empty,
+            0,
+            0,
+            null,
+            null,
+            idErro)
+        {
         }
     }
 }

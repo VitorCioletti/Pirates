@@ -1,15 +1,20 @@
 namespace Piratas.Protocolo
 {
-    using Piratas.Servidor;
+    using System;
 
-    public class Parser
+    public static class Parser
     {
-        public Pacote Deserializa(string json)
+        public static T Deserializa<T>(string json)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static Mensagem Deserializa(string json)
         {
             return null;
         }
 
-        public string Serializa(Pacote pacote)
+        public static string Serializa(Mensagem mensagem)
         {
             return null;
         }

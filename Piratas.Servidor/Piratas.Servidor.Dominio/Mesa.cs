@@ -11,15 +11,15 @@ namespace Piratas.Servidor.Dominio
 
     public class Mesa
     {
-        public Guid Id { get; }
+        public Guid Id { get; private set; }
 
-        public List<Jogador> Jogadores { get; }
+        public List<Jogador> Jogadores { get; private set; }
 
-        public DateTime DataHoraInicio { get; }
+        public DateTime DataHoraInicio { get; private set; }
 
-        public DateTime DataHoraFim { get; set; }
+        public DateTime DataHoraFim { get; private set; }
 
-        public Jogador JogadorAtual { get; set; }
+        public Jogador JogadorAtual { get; private set; }
 
         public bool EmDuelo { get; private set; }
 
@@ -43,7 +43,7 @@ namespace Piratas.Servidor.Dominio
 
         private const int _acoesPorTurno = 3;
 
-        private int _turnoAtual = 1;
+        private int _turnoAtual = 0;
 
         public Mesa(List<Jogador> jogadores)
         {
@@ -62,7 +62,8 @@ namespace Piratas.Servidor.Dominio
             _distribuirCartas();
         }
 
-        public IList<Resultante> ProcessarAcao(Acao acao)
+        // TODO: Refatorar toda a lógica de múltiplas ações resultantes gerada pela introdução do Kraken.
+        public List<Acao> ProcessarAcao(Acao acao)
         {
             var realizador = acao.Realizador;
 
@@ -75,8 +76,8 @@ namespace Piratas.Servidor.Dominio
 
             foreach (var acaoResultante in acoesResultantes)
             {
-                if (acaoResultante is Imediata)
-                    acoesResultantes.AddRange(ProcessarAcao(acaoResultante));
+                //if (acaoResultante is Imediata)
+                //   acoesResultantes.AddRange(ProcessarAcao(acaoResultante));
             }
 
             if (acao is Primaria)
@@ -86,18 +87,18 @@ namespace Piratas.Servidor.Dominio
             {
                 _resultantesPendentes.Remove(resultante);
 
-                if (_resultantesPendentes.Count == 0 && _imediataAposResultantes != null)
-                    acoesResultantes.AddRange(ProcessarAcao(_imediataAposResultantes));
+                //if (_resultantesPendentes.Count == 0 && _imediataAposResultantes != null)
+                //    acoesResultantes.AddRange(ProcessarAcao(_imediataAposResultantes));
             }
 
             acao.Turno = _turnoAtual;
 
             _resultantesPendentes.AddRange(acoesResultantes);
 
-            return acoesResultantes;
+            return null;
         }
 
-        public Tuple<Jogador, IEnumerable<Resultante>> MoverParaProximoTurno()
+        public Tuple<Jogador, Resultante> MoverParaProximoTurno()
         {
             if (JogadorAtual.AcoesDisponiveis > 0)
                 throw new PossuiAcoesDisponiveisException(JogadorAtual);
@@ -110,17 +111,17 @@ namespace Piratas.Servidor.Dominio
                 Finalizar(proximoJogador);
 
             var embarcacao = proximoJogador.Campo.Embarcacao;
-            IEnumerable<Resultante> resultantesEmbarcacao = null;
+            Resultante resultanteEmbarcacao = null;
 
             if (embarcacao != null)
             {
                 var aplicarEfeitoEmbarcacao = new AplicarEfeitoEmbarcacao(proximoJogador, embarcacao);
-                resultantesEmbarcacao = ProcessarAcao(aplicarEfeitoEmbarcacao);
+                resultanteEmbarcacao = (Resultante)ProcessarAcao(aplicarEfeitoEmbarcacao).First();
             }
 
             proximoJogador.ResetarAcoesDisponiveis(_acoesPorTurno);
 
-            return new Tuple<Jogador, IEnumerable<Resultante>>(proximoJogador, resultantesEmbarcacao);
+            return new Tuple<Jogador, Resultante>(proximoJogador, resultanteEmbarcacao);
         }
 
         public void EntrarModoDuelo(Jogador realizador, Jogador alvo)

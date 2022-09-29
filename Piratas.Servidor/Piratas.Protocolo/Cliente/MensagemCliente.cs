@@ -2,11 +2,11 @@ namespace Piratas.Protocolo.Cliente
 {
     using System;
 
-    public class Resposta : Pacote
+    public class MensagemCliente : Mensagem
     {
         public Escolha Escolha { get; private set; }
 
-        public Resposta(Guid idJogador, Escolha escolha) : base(idJogador)
+        public MensagemCliente(Guid idJogador, Guid idMesa, Escolha escolha) : base(idJogador, idMesa)
         {
             Escolha = escolha;
         }

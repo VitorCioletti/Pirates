@@ -2,7 +2,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Tipos
 {
     public abstract class Resultante : Acao
     {
-        public Acao Origem { get; set; }
+        public Acao Origem { get; private set; }
 
         public Resultante(
             Acao origem,

@@ -20,7 +20,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             Acao acao,
             List<Jogador> jogadores,
             Stack<Acao> historicoAcao,
-            Func<Acao, IEnumerable<Resultante>> processarAcao)
+            Func<Acao, IEnumerable<Acao>> processarAcao)
         {
             var ultimaAcao = historicoAcao.FirstOrDefault(
                 a => a.Turno == acao.Turno && (a is DescerCarta || a is Duelar));
@@ -39,7 +39,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                         throw new ImpossivelCopiarException(this, cartaACopiar);
 
                     foreach (var resultante in processarAcao(ultimaAcao))
-                        yield return resultante;
+                        yield return (Resultante)resultante;
 
                     break;
 

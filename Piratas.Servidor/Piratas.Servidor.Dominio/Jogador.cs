@@ -20,12 +20,13 @@ namespace Piratas.Servidor.Dominio
         public Campo Campo { get; }
 
         public Jogador(
+            Guid id,
             Action<Guid, Carta> aoAdicionarCartaNaMao,
             Action<Guid, Carta> aoRemoverCartaNaMao,
             Action<Guid, Carta> aoAdicionarCartaNoCampo,
             Action<Guid, Carta> aoRemoverCartaNoCampo)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             Mao = new Mao(new List<Carta>());
             Campo = new Campo();
 

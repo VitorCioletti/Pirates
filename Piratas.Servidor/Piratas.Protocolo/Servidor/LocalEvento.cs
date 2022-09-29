@@ -6,6 +6,7 @@ namespace Piratas.Protocolo.Servidor
         DueloSurpresa,
         Embarcacao,
         Mao,
+        Campo,
         Protegida,
         Tripulacao,
     }

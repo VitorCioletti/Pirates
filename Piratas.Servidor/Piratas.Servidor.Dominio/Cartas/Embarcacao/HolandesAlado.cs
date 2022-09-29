@@ -1,11 +1,11 @@
 namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 {
-    using Acoes.Tipos;
-    using Acoes;
-    using Cartas.Tipos;
     using System.Collections.Generic;
+    using Acoes;
+    using Acoes.Tipos;
+    using Tipos;
 
-    public class HolanderAlado : Embarcacao
+    public class HolandesAlado : Embarcacao
     {
         private readonly int _tesourosParaVitoria = 4;
 

@@ -10,6 +10,6 @@ namespace Piratas.Servidor.Dominio.Cartas
 
         public Carta() => Id = this.GetType().ToString();
 
-        public abstract IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa);
+        public abstract IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa);
     }
 }

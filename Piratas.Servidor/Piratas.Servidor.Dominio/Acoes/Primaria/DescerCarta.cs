@@ -12,7 +12,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
 
         public DescerCarta(Jogador jogador, Carta carta, Jogador alvo = null) : base(jogador, alvo) => Carta = carta;
 
-        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
+        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
         {
             if (Carta is Tesouro || Carta is Passivo)
                 throw new ProibidoDescerCartaException(this, Carta);

@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 
     public class OlhoCiclope : Embarcacao
     {
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, mesa);
+        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, mesa);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, Mesa mesa)
         {

@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
 
     public class Kraken : Evento
     {
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
+        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao, mesa.Jogadores);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, List<Jogador> jogadores)

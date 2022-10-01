@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
         public Duelar(Jogador realizador, Jogador alvo, Duelo cartaIniciadora) : base(realizador, alvo) =>
             CartaIniciadora = cartaIniciadora;
 
-        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
+        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
         {
             if (CartaIniciadora is Timoneiro)
                 throw new CartaProibidaIniciarDuelo(this, CartaIniciadora);

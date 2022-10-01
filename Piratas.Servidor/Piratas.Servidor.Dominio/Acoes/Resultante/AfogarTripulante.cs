@@ -25,7 +25,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 throw new Exception($"Nenhum tripulante de \"{alvo}\" pode ser afogado.");
         }
 
-        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
+        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
         {
             if (Origem is DescerCarta descerCarta)
             {

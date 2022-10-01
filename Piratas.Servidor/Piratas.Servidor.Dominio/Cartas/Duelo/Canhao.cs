@@ -11,7 +11,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Duelo
 
         public Canhao(int tiros) => Tiros = tiros;
 
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
+        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao.Realizador.Campo);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Campo campoRealizador)

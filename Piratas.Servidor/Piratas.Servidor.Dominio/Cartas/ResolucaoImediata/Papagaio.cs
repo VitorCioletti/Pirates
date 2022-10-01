@@ -13,14 +13,14 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class Papagaio : ResolucaoImediata
     {
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
+        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao, mesa.Jogadores, mesa.HistoricoAcao, mesa.ProcessarAcao);
 
-        internal IEnumerable<Resultante> _aplicarEfeito(
+        internal IEnumerable<Acao> _aplicarEfeito(
             Acao acao,
             List<Jogador> jogadores,
             Stack<Acao> historicoAcao,
-            Func<Acao, IEnumerable<Acao>> processarAcao)
+            Func<Acao, Dictionary<Jogador, List<Acao>>> processarAcao)
         {
             var ultimaAcao = historicoAcao.FirstOrDefault(
                 a => a.Turno == acao.Turno && (a is DescerCarta || a is Duelar));
@@ -38,8 +38,13 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                     if (tipoNaoPermitido)
                         throw new ImpossivelCopiarException(this, cartaACopiar);
 
-                    foreach (var resultante in processarAcao(ultimaAcao))
-                        yield return (Resultante)resultante;
+                    foreach (List<Acao> acoesPorJogador in processarAcao(ultimaAcao).Values)
+                    {
+                        foreach (Acao acaoDisponivel in acoesPorJogador)
+                        {
+                            yield return acaoDisponivel;
+                        }
+                    }
 
                     break;
 

@@ -13,7 +13,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
         }
 
-        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
+        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
         {
             DuelosSurpresa.ForEach(c => c.AplicarEfeito(this, mesa));
 

@@ -8,7 +8,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class HomemAoMar : ResolucaoImediata
     {
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, acao.Alvo);
+        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, acao.Alvo);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, Jogador alvo)
         {

@@ -8,7 +8,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
     {
         public ComprarCarta(Jogador jogador) : base(jogador) { }
 
-        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
+        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
         {
             var cartaComprada = mesa.BaralhoCentral.ObterTopo();
 

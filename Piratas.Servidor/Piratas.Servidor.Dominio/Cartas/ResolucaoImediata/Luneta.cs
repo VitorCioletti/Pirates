@@ -8,7 +8,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class Luneta : ResolucaoImediata
     {
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa _) => _aplicarEfeito(acao);
+        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa _) => _aplicarEfeito(acao);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao)
         {

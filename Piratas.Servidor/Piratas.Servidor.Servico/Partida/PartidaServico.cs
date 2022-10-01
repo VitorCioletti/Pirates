@@ -10,7 +10,6 @@ namespace Piratas.Servidor.Servico
     using Excecoes;
     using Protocolo.Cliente;
     using Protocolo.Servidor;
-    using Escolha = Protocolo.Servidor.Escolha;
 
     // TODO: Talvez configurar injeção de dependência?
     public class PartidaServico
@@ -19,9 +18,11 @@ namespace Piratas.Servidor.Servico
 
         private Mesa _mesa { get; set; }
 
-        private List<Acao> _possiveisAcoesEnviadasAoJogadorAtual { get; set; }
+        private Dictionary<Jogador, List<Acao>> _possiveisAcoesEnviadasAosJogadores { get; set; }
 
         private Dictionary<Guid, List<Evento>> _eventosAcaoAtual { get; set; }
+
+        private object _lockObject { get; set; }
 
         public PartidaServico(List<Guid> idsJogadores)
         {
@@ -39,62 +40,105 @@ namespace Piratas.Servidor.Servico
                 jogadores.Add(jogador);
             }
 
+            _lockObject = new Object();
+
             _mesa = new Mesa(jogadores);
+
             IdMesa = _mesa.Id;
 
-            _possiveisAcoesEnviadasAoJogadorAtual = new List<Acao>();
+            _possiveisAcoesEnviadasAosJogadores = new Dictionary<Jogador, List<Acao>>();
         }
 
-        public MensagemServidor ProcessaResposta(MensagemCliente mensagemClienteCliente)
+        public List<MensagemServidor> ProcessarMensagemCliente(MensagemCliente mensagemCliente)
         {
-            string idAcao = mensagemClienteCliente.Escolha.Escolhido;
-            Acao acao = _possiveisAcoesEnviadasAoJogadorAtual.FirstOrDefault(a => a.Id == idAcao);
+            lock (_lockObject)
+                return _processarMensagemCliente(mensagemCliente);
+        }
 
-            MensagemServidor mensagemServidor;
+
+        private List<MensagemServidor> _processarMensagemCliente(MensagemCliente mensagemCliente)
+        {
+            List<MensagemServidor> mensagensServidor = new List<MensagemServidor>();
 
             try
             {
-                if (acao == null)
-                    throw new AcaoNaoDisponivelException(idAcao);
+                Jogador jogadorComAcaoPendente = _obterJogadorComAcaoPendente(mensagemCliente);
+                Acao acaoPendente = _obterAcaoPendente(jogadorComAcaoPendente, mensagemCliente);
 
-                List<Acao> acoesDisponiveis = _mesa.ProcessarAcao(acao);
+                Dictionary<Jogador, List<Acao>> acoesPosProcessamentoAcao = _mesa.ProcessarAcao(acaoPendente);
 
-                Jogador jogadorAtual = _mesa.JogadorAtual;
+                foreach ((Jogador jogador, List<Acao> acoesDisponiveis) in acoesPosProcessamentoAcao)
+                {
+                    MensagemServidor mensagemServidor = _criarMensagemServidor(jogador, acoesDisponiveis);
 
-                int quantidadeAcoesDisponiveis = jogadorAtual.AcoesDisponiveis;
+                    mensagensServidor.Add(mensagemServidor);
 
-                Escolha escolha = null;
+                    _eventosAcaoAtual.Clear();
+                    _possiveisAcoesEnviadasAosJogadores.Add(jogador, acoesDisponiveis);
+                }
 
-                if (quantidadeAcoesDisponiveis >= 1)
-                    escolha = _criaEscolha(acoesDisponiveis);
-
-                mensagemServidor = new MensagemServidor(
-                    mensagemClienteCliente.IdJogadorRealizador,
-                    IdMesa,
-                    quantidadeAcoesDisponiveis,
-                    jogadorAtual.CalcularTesouros(),
-                    _eventosAcaoAtual,
-                    escolha,
-                    string.Empty
-                );
-
-                _eventosAcaoAtual.Clear();
-                _possiveisAcoesEnviadasAoJogadorAtual = acoesDisponiveis;
+                _possiveisAcoesEnviadasAosJogadores[jogadorComAcaoPendente].Remove(acaoPendente);
             }
             catch (BaseServicoException servicoException)
             {
-                mensagemServidor = new MensagemServidor(servicoException.Id);
+                mensagensServidor.Add(new MensagemServidor(servicoException.Id));
             }
             catch (BaseRegraException regraException)
             {
-                mensagemServidor = new MensagemServidor(regraException.Id);
+                mensagensServidor.Add(new MensagemServidor(regraException.Id));
             }
+
+            return mensagensServidor;
+        }
+
+        private Acao _obterAcaoPendente(Jogador jogador, MensagemCliente mensagemCliente)
+        {
+            string idAcaoExecutada = mensagemCliente.IdAcaoExecutada;
+
+            List<Acao> acoesPendentes = _possiveisAcoesEnviadasAosJogadores[jogador];
+
+            Acao acaoPendente = acoesPendentes.FirstOrDefault(a => a.Id == idAcaoExecutada);
+
+            if (acaoPendente == null)
+                throw new AcaoNaoDisponivelException(idAcaoExecutada);
+
+            return acaoPendente;
+        }
+
+        private Jogador _obterJogadorComAcaoPendente(MensagemCliente mensagemCliente)
+        {
+            Guid idJogadorRealizador = mensagemCliente.IdJogadorRealizador;
+
+            (Jogador jogadorComAcaoPendente, List<Acao> _) =
+                _possiveisAcoesEnviadasAosJogadores.FirstOrDefault(a => a.Key.Id == idJogadorRealizador);
+
+            if (jogadorComAcaoPendente == null)
+                throw new JogadorSemAcaoPendenteException(idJogadorRealizador);
+
+            return jogadorComAcaoPendente;
+        }
+
+        private MensagemServidor _criarMensagemServidor(Jogador jogador, List<Acao> acoesDisponiveis)
+        {
+            EscolhaServidor escolhaServidor = _criarEscolha(acoesDisponiveis);
+
+            var mensagemServidor = new MensagemServidor(
+                jogador.Id,
+                IdMesa,
+                jogador.AcoesDisponiveis,
+                jogador.CalcularTesouros(),
+                _eventosAcaoAtual,
+                escolhaServidor,
+                string.Empty);
 
             return mensagemServidor;
         }
 
-        private Escolha _criaEscolha(List<Acao> acoesDisponiveis)
+        private EscolhaServidor _criarEscolha(List<Acao> acoesDisponiveis)
         {
+            if (acoesDisponiveis.Count == 0)
+                return null;
+
             throw new NotImplementedException();
         }
 

@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Imediata
         {
         }
 
-        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
+        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
         {
             var pontosDueloRealizador = Realizador.Campo.CalcularPontosDuelo();
             var pontosDueloAlvo = Alvo.Campo.CalcularPontosDuelo();

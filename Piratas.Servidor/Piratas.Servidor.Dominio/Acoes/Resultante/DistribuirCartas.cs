@@ -27,7 +27,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             CartasOpcoes = cartas;
         }
 
-        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
+        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
         {
             foreach ((var jogador, var carta) in CartasPorJogador)
             {

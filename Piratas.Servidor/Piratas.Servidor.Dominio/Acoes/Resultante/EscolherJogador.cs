@@ -23,7 +23,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             JogadoresOpcao = jogadoresOpcao;
         }
 
-        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
+        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
         {
             if (!JogadoresOpcao.Contains(JogadorEscolhido))
                 throw new JogadorNaoEUmaOpcaoException(this, JogadorEscolhido);

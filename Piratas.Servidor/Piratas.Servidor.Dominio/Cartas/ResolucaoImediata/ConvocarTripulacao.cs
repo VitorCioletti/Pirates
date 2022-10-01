@@ -11,7 +11,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class ConvocarTripulacao : ResolucaoImediata
     {
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa mesa) =>
+        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) =>
             _aplicarEfeito(acao, mesa.PilhaDescarte);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, PilhaDescarte pilhaDescarte)

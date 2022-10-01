@@ -7,6 +7,7 @@ namespace Piratas.Protocolo
         public Guid Id { get; private set; }
 
         public Guid IdMesa { get; private set; }
+
         public Guid IdJogadorRealizador { get; private set; }
 
         public DateTime DataHora { get; private set; }

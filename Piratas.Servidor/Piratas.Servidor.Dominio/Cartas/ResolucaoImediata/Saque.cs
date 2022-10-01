@@ -8,7 +8,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class Saque : ResolucaoImediata
     {
-        public override IEnumerable<Resultante> AplicarEfeito(Acao acao, Mesa _) =>
+        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa _) =>
             _aplicarEfeito(acao.Realizador.Mao, acao.Alvo.Mao);
 
         internal IEnumerable<Resultante> _aplicarEfeito(Mao maoRealizador, Mao maoAlvo)

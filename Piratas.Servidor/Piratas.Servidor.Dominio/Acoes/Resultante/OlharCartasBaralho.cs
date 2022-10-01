@@ -15,7 +15,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             Acao origem, Jogador realizador, List<Carta> cartasOpcoes) : base(origem, realizador) =>
             CartasOpcoes = cartasOpcoes;
 
-        public override IEnumerable<Resultante> AplicarRegra(Mesa mesa)
+        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
         {
             var baralhoCentral = mesa.BaralhoCentral;
 

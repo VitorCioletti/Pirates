@@ -4,11 +4,19 @@ namespace Piratas.Protocolo.Cliente
 
     public class MensagemCliente : Mensagem
     {
-        public Escolha Escolha { get; private set; }
+        public EscolhaCliente EscolhaCliente { get; private set; }
 
-        public MensagemCliente(Guid idJogador, Guid idMesa, Escolha escolha) : base(idJogador, idMesa)
+        public string IdAcaoExecutada { get; private set; }
+
+        public MensagemCliente(
+            Guid idJogador,
+            Guid idMesa,
+            string idAcaoExecutada,
+            EscolhaCliente escolhaCliente)
+            : base(idJogador, idMesa)
         {
-            Escolha = escolha;
+            IdAcaoExecutada = idAcaoExecutada;
+            EscolhaCliente = escolhaCliente;
         }
     }
 }

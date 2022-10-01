@@ -9,7 +9,7 @@ namespace Piratas.Protocolo.Servidor
 
         public int Tesouros { get; private set; }
 
-        public Escolha Escolha { get; private set; }
+        public EscolhaServidor EscolhaServidor { get; private set; }
 
         public Dictionary<Guid, List<Evento>> Eventos { get; private set; }
 
@@ -23,11 +23,11 @@ namespace Piratas.Protocolo.Servidor
             int acoesRestantes,
             int tesouros,
             Dictionary<Guid, List<Evento>> eventos,
-            Escolha escolha,
+            EscolhaServidor escolhaServidor,
             string idErro
         ) : base(idJogador, idMesa)
         {
-            Escolha = escolha;
+            EscolhaServidor = escolhaServidor;
             AcoesRestantes = acoesRestantes;
             Eventos = eventos;
             Tesouros = tesouros;

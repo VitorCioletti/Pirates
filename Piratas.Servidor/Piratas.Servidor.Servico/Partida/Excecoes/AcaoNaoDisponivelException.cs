@@ -1,4 +1,4 @@
-namespace Piratas.Servidor.Servico.Excecoes
+namespace Piratas.Servidor.Servico.Partida.Excecoes
 {
     public class AcaoNaoDisponivelException : BaseServicoException
     {

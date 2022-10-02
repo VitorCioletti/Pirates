@@ -1,4 +1,4 @@
-namespace Piratas.Servidor.Servico
+namespace Piratas.Servidor.Servico.Partida
 {
     using System;
     using System.Collections.Generic;
@@ -54,7 +54,6 @@ namespace Piratas.Servidor.Servico
             lock (_lockObject)
                 return _processarMensagemCliente(mensagemCliente);
         }
-
 
         private List<MensagemServidor> _processarMensagemCliente(MensagemCliente mensagemCliente)
         {

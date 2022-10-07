@@ -12,7 +12,7 @@ namespace Piratas.Servidor.Servico.Partida
     using Protocolo.Servidor;
 
     // TODO: Talvez configurar injeção de dependência?
-    public class PartidaServico
+    internal class PartidaServico
     {
         public Guid IdMesa { get; private set; }
 
@@ -46,6 +46,7 @@ namespace Piratas.Servidor.Servico.Partida
 
             IdMesa = _mesa.Id;
 
+            _eventosAcaoAtual = new Dictionary<Guid, List<Evento>>();
             _possiveisAcoesEnviadasAosJogadores = new Dictionary<Jogador, List<Acao>>();
         }
 

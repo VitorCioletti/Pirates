@@ -4,12 +4,7 @@ namespace Piratas.Protocolo
 
     public static class Parser
     {
-        public static T Deserializa<T>(string json)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static Mensagem Deserializa(string json)
+        public static T Deserializa<T>(string json) where T : Mensagem
         {
             return null;
         }

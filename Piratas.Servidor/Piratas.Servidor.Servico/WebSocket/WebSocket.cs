@@ -18,6 +18,7 @@ namespace Piratas.Servidor.Servico.WebSocket
             _conexao = new WebSocketServer($"ws://{_endereco}:{_porta}");
 
             _conexao.AddWebSocketService<PartidaController>("/partida");
+            _conexao.AddWebSocketService<SalaController>("/sala");
         }
 
         public void Conectar() => _conexao.Start();

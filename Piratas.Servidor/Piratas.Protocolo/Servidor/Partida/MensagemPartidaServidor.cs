@@ -1,9 +1,9 @@
-namespace Piratas.Protocolo.Servidor
+namespace Piratas.Protocolo.Servidor.Partida
 {
     using System;
     using System.Collections.Generic;
 
-    public class MensagemServidor : Mensagem
+    public class MensagemPartidaServidor : BaseMensagemPartida
     {
         public int AcoesRestantes { get; private set; }
 
@@ -17,7 +17,7 @@ namespace Piratas.Protocolo.Servidor
 
         public bool PossuiErro => !string.IsNullOrWhiteSpace(IdErro);
 
-        public MensagemServidor(
+        public MensagemPartidaServidor(
             Guid idJogador,
             Guid idMesa,
             int acoesRestantes,
@@ -34,7 +34,7 @@ namespace Piratas.Protocolo.Servidor
             IdErro = idErro;
         }
 
-        public MensagemServidor(string idErro) : this(
+        public MensagemPartidaServidor(string idErro) : this(
             Guid.Empty,
             Guid.Empty,
             0,

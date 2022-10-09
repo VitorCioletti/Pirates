@@ -8,8 +8,8 @@ namespace Piratas.Servidor.Servico.Partida
     using Dominio.Cartas;
     using Dominio.Excecoes;
     using Excecoes;
-    using Protocolo.Cliente;
-    using Protocolo.Servidor;
+    using Protocolo.Cliente.Partida;
+    using Protocolo.Servidor.Partida;
 
     // TODO: Talvez configurar injeção de dependência?
     internal class PartidaServico
@@ -50,28 +50,28 @@ namespace Piratas.Servidor.Servico.Partida
             _possiveisAcoesEnviadasAosJogadores = new Dictionary<Jogador, List<Acao>>();
         }
 
-        public List<MensagemServidor> ProcessarMensagemCliente(MensagemCliente mensagemCliente)
+        public List<MensagemPartidaServidor> ProcessarMensagemCliente(MensagemPartidaCliente mensagemPartidaCliente)
         {
             lock (_lockObject)
-                return _processarMensagemCliente(mensagemCliente);
+                return _processarMensagemCliente(mensagemPartidaCliente);
         }
 
-        private List<MensagemServidor> _processarMensagemCliente(MensagemCliente mensagemCliente)
+        private List<MensagemPartidaServidor> _processarMensagemCliente(MensagemPartidaCliente mensagemPartidaCliente)
         {
-            List<MensagemServidor> mensagensServidor = new List<MensagemServidor>();
+            List<MensagemPartidaServidor> mensagensServidor = new List<MensagemPartidaServidor>();
 
             try
             {
-                Jogador jogadorComAcaoPendente = _obterJogadorComAcaoPendente(mensagemCliente);
-                Acao acaoPendente = _obterAcaoPendente(jogadorComAcaoPendente, mensagemCliente);
+                Jogador jogadorComAcaoPendente = _obterJogadorComAcaoPendente(mensagemPartidaCliente);
+                Acao acaoPendente = _obterAcaoPendente(jogadorComAcaoPendente, mensagemPartidaCliente);
 
                 Dictionary<Jogador, List<Acao>> acoesPosProcessamentoAcao = _mesa.ProcessarAcao(acaoPendente);
 
                 foreach ((Jogador jogador, List<Acao> acoesDisponiveis) in acoesPosProcessamentoAcao)
                 {
-                    MensagemServidor mensagemServidor = _criarMensagemServidor(jogador, acoesDisponiveis);
+                    MensagemPartidaServidor mensagemPartidaServidor = _criarMensagemServidor(jogador, acoesDisponiveis);
 
-                    mensagensServidor.Add(mensagemServidor);
+                    mensagensServidor.Add(mensagemPartidaServidor);
 
                     _eventosAcaoAtual.Clear();
                     _possiveisAcoesEnviadasAosJogadores.Add(jogador, acoesDisponiveis);
@@ -81,19 +81,19 @@ namespace Piratas.Servidor.Servico.Partida
             }
             catch (BaseServicoException servicoException)
             {
-                mensagensServidor.Add(new MensagemServidor(servicoException.Id));
+                mensagensServidor.Add(new MensagemPartidaServidor(servicoException.Id));
             }
             catch (BaseRegraException regraException)
             {
-                mensagensServidor.Add(new MensagemServidor(regraException.Id));
+                mensagensServidor.Add(new MensagemPartidaServidor(regraException.Id));
             }
 
             return mensagensServidor;
         }
 
-        private Acao _obterAcaoPendente(Jogador jogador, MensagemCliente mensagemCliente)
+        private Acao _obterAcaoPendente(Jogador jogador, MensagemPartidaCliente mensagemPartidaCliente)
         {
-            string idAcaoExecutada = mensagemCliente.IdAcaoExecutada;
+            string idAcaoExecutada = mensagemPartidaCliente.IdAcaoExecutada;
 
             List<Acao> acoesPendentes = _possiveisAcoesEnviadasAosJogadores[jogador];
 
@@ -105,9 +105,9 @@ namespace Piratas.Servidor.Servico.Partida
             return acaoPendente;
         }
 
-        private Jogador _obterJogadorComAcaoPendente(MensagemCliente mensagemCliente)
+        private Jogador _obterJogadorComAcaoPendente(MensagemPartidaCliente mensagemPartidaCliente)
         {
-            Guid idJogadorRealizador = mensagemCliente.IdJogadorRealizador;
+            Guid idJogadorRealizador = mensagemPartidaCliente.IdJogadorRealizador;
 
             (Jogador jogadorComAcaoPendente, List<Acao> _) =
                 _possiveisAcoesEnviadasAosJogadores.FirstOrDefault(a => a.Key.Id == idJogadorRealizador);
@@ -118,11 +118,11 @@ namespace Piratas.Servidor.Servico.Partida
             return jogadorComAcaoPendente;
         }
 
-        private MensagemServidor _criarMensagemServidor(Jogador jogador, List<Acao> acoesDisponiveis)
+        private MensagemPartidaServidor _criarMensagemServidor(Jogador jogador, List<Acao> acoesDisponiveis)
         {
             EscolhaServidor escolhaServidor = _criarEscolha(acoesDisponiveis);
 
-            var mensagemServidor = new MensagemServidor(
+            var mensagemServidor = new MensagemPartidaServidor(
                 jogador.Id,
                 IdMesa,
                 jogador.AcoesDisponiveis,

@@ -1,12 +1,12 @@
-namespace Piratas.Protocolo.Cliente
+namespace Piratas.Protocolo.Cliente.Partida
 {
-    public class EscolhaCliente
+    public class EscolhaPartidaCliente
     {
         public TipoEscolha Tipo { get; private set; }
 
         public string Escolhido { get; private set; }
 
-        public EscolhaCliente(TipoEscolha tipo, string escolhido)
+        public EscolhaPartidaCliente(TipoEscolha tipo, string escolhido)
         {
             Tipo = tipo;
             Escolhido = escolhido;

@@ -2,8 +2,8 @@ namespace Piratas.Servidor.Servico.Partida
 {
     using System;
     using System.Collections.Generic;
-    using Protocolo.Cliente;
-    using Protocolo.Servidor;
+    using Protocolo.Cliente.Partida;
+    using Protocolo.Servidor.Partida;
 
     // TODO: Injeção de dependência.
     public static class GerenciadorPartidaServico
@@ -15,12 +15,13 @@ namespace Piratas.Servidor.Servico.Partida
             _partidasEmAndamento = new Dictionary<Guid, PartidaServico>();
         }
 
-        public static List<MensagemServidor> ProcessarMensagemCliente(MensagemCliente mensagemCliente)
+        public static List<MensagemPartidaServidor> ProcessarMensagemCliente(
+            MensagemPartidaCliente mensagemPartidaCliente)
         {
             // TODO: Tratar erro caso partida não exista.
-            PartidaServico partida = _partidasEmAndamento[mensagemCliente.IdMesa];
+            PartidaServico partida = _partidasEmAndamento[mensagemPartidaCliente.IdMesa];
 
-            return partida.ProcessarMensagemCliente(mensagemCliente);
+            return partida.ProcessarMensagemCliente(mensagemPartidaCliente);
         }
 
         public static void CriarPartida(List<Guid> idsJogadores)

@@ -3,8 +3,8 @@ namespace Piratas.Servidor.Servico.WebSocket
     using System.Collections.Generic;
     using Partida;
     using Protocolo;
-    using Protocolo.Cliente;
-    using Protocolo.Servidor;
+    using Protocolo.Cliente.Partida;
+    using Protocolo.Servidor.Partida;
     using WebSocketSharp;
     using WebSocketSharp.Server;
 
@@ -14,12 +14,12 @@ namespace Piratas.Servidor.Servico.WebSocket
         {
             try
             {
-                MensagemCliente mensagemCliente = Parser.Deserializa<MensagemCliente>(e.Data);
+                MensagemPartidaCliente mensagemCliente = Parser.Deserializa<MensagemPartidaCliente>(e.Data);
 
-                List<MensagemServidor> mensagensServidor =
+                List<MensagemPartidaServidor> mensagensServidor =
                     GerenciadorPartidaServico.ProcessarMensagemCliente(mensagemCliente);
 
-                foreach (MensagemServidor mensagemServidor in mensagensServidor)
+                foreach (MensagemPartidaServidor mensagemServidor in mensagensServidor)
                 {
                     string mensagemServidorDeserializada = Parser.Serializa(mensagemServidor);
 
@@ -29,7 +29,7 @@ namespace Piratas.Servidor.Servico.WebSocket
             }
             catch (ParserException parserException)
             {
-                var mensagem = new MensagemServidor(parserException.Id);
+                var mensagem = new MensagemPartidaServidor(parserException.Id);
                 var mensagemSerializada = Parser.Serializa(mensagem);
 
                 Send(mensagemSerializada);

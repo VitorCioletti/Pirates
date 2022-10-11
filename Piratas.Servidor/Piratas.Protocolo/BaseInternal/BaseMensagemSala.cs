@@ -1,7 +1,5 @@
-namespace Piratas.Protocolo
+namespace Piratas.Protocolo.BaseInternal
 {
-    using System;
-
     public abstract class BaseMensagemSala
     {
     }

@@ -1,6 +1,7 @@
-namespace Piratas.Protocolo.Cliente.Partida
+namespace Piratas.Protocolo.Partida.Cliente
 {
     using System;
+    using Piratas.Protocolo.BaseInternal;
 
     public class MensagemPartidaCliente : BaseMensagemPartida
     {

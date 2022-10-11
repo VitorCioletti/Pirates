@@ -1,4 +1,4 @@
-namespace Piratas.Protocolo.Cliente.Partida
+namespace Piratas.Protocolo.Partida.Cliente
 {
     public class EscolhaPartidaCliente
     {

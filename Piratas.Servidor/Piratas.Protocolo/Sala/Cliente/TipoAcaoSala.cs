@@ -1,4 +1,4 @@
-namespace Piratas.Protocolo.Cliente.Sala
+namespace Piratas.Protocolo.Sala.Cliente
 {
     public enum TipoAcaoSala
     {

@@ -1,17 +1,34 @@
 namespace Piratas.Protocolo
 {
     using System;
+    using BaseInternal;
+    using Excecoes;
+    using Newtonsoft.Json;
 
     public static class Parser
     {
-        public static T Deserializar<T>(string json) where T : BaseMensagemPartida
+        public static T Deserializar<T>(string json) where T : BaseMensagem
         {
-            return null;
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(json);
+            }
+            catch (Exception exception)
+            {
+                throw new DeserializacaoException(exception);
+            }
         }
 
-        public static string Serializar(BaseMensagemPartida baseMensagemPartida)
+        public static string Serializar(BaseMensagem baseMensagem)
         {
-            return null;
+            try
+            {
+                return JsonConvert.SerializeObject(baseMensagem);
+            }
+            catch (Exception exception)
+            {
+                throw new SerializacaoException(exception);
+            }
         }
     }
 }

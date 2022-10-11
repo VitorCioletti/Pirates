@@ -1,8 +1,8 @@
-namespace Piratas.Protocolo
+namespace Piratas.Protocolo.BaseInternal
 {
     using System;
 
-    public abstract class BaseMensagemPartida : BaseMensagem
+    public abstract class BaseMensagemPartida : BaseMensagemServidor
     {
         public Guid IdMesa { get; private set; }
 
@@ -10,7 +10,7 @@ namespace Piratas.Protocolo
 
         public DateTime DataHora { get; private set; }
 
-        public BaseMensagemPartida(Guid idJogador, Guid idMesa)
+        public BaseMensagemPartida(Guid idJogador, Guid idMesa, string idErro = null) : base(idErro)
         {
             IdJogadorRealizador = idJogador;
             IdMesa = idMesa;

@@ -1,7 +1,8 @@
-namespace Piratas.Protocolo.Servidor.Partida
+namespace Piratas.Protocolo.Partida.Servidor
 {
     using System;
     using System.Collections.Generic;
+    using BaseInternal;
 
     public class MensagemPartidaServidor : BaseMensagemPartida
     {
@@ -13,10 +14,6 @@ namespace Piratas.Protocolo.Servidor.Partida
 
         public Dictionary<Guid, List<Evento>> Eventos { get; private set; }
 
-        public string IdErro { get; private set; }
-
-        public bool PossuiErro => !string.IsNullOrWhiteSpace(IdErro);
-
         public MensagemPartidaServidor(
             Guid idJogador,
             Guid idMesa,
@@ -24,14 +21,13 @@ namespace Piratas.Protocolo.Servidor.Partida
             int tesouros,
             Dictionary<Guid, List<Evento>> eventos,
             EscolhaServidor escolhaServidor,
-            string idErro
-        ) : base(idJogador, idMesa)
+            string idErro = null
+        ) : base(idJogador, idMesa, idErro)
         {
             EscolhaServidor = escolhaServidor;
             AcoesRestantes = acoesRestantes;
             Eventos = eventos;
             Tesouros = tesouros;
-            IdErro = idErro;
         }
 
         public MensagemPartidaServidor(string idErro) : this(

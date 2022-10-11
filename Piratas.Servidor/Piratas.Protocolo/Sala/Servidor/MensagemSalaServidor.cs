@@ -1,6 +1,7 @@
-namespace Piratas.Protocolo.Servidor.Sala
+namespace Piratas.Protocolo.Sala.Servidor
 {
     using System;
+    using Piratas.Protocolo.BaseInternal;
 
     public class MensagemSalaServidor : BaseMensagemSala
     {

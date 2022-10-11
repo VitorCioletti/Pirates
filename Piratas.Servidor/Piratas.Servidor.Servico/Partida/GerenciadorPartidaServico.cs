@@ -3,8 +3,8 @@ namespace Piratas.Servidor.Servico.Partida
     using System;
     using System.Collections.Generic;
     using Excecoes;
-    using Protocolo.Cliente.Partida;
-    using Protocolo.Servidor.Partida;
+    using Protocolo.Partida.Cliente;
+    using Protocolo.Partida.Servidor;
 
     public static class GerenciadorPartidaServico
     {

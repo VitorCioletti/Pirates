@@ -1,4 +1,4 @@
-namespace Piratas.Protocolo.Servidor.Partida
+namespace Piratas.Protocolo.Partida.Servidor
 {
     using System.Collections.Generic;
 

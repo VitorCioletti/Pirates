@@ -4,8 +4,8 @@ namespace Piratas.Servidor.Servico.WebSocket
     using System.Collections.Generic;
     using Partida;
     using Protocolo;
-    using Protocolo.Cliente.Partida;
-    using Protocolo.Servidor.Partida;
+    using Protocolo.Partida.Cliente;
+    using Protocolo.Partida.Servidor;
     using WebSocketSharp;
     using WebSocketSharp.Server;
 
@@ -28,7 +28,7 @@ namespace Piratas.Servidor.Servico.WebSocket
                     Send(mensagemServidorDeserializada);
                 }
             }
-            catch (ParserException parserException)
+            catch (BaseParserException parserException)
             {
                 var mensagem = new MensagemPartidaServidor(parserException.Id);
                 var mensagemSerializada = Parser.Serializar(mensagem);

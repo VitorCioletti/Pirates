@@ -1,8 +1,8 @@
 namespace Piratas.Servidor.Servico.WebSocket
 {
     using Protocolo;
-    using Protocolo.Cliente.Partida;
-    using Protocolo.Servidor.Partida;
+    using Protocolo.Partida.Cliente;
+    using Protocolo.Partida.Servidor;
     using WebSocketSharp;
     using WebSocketSharp.Server;
 
@@ -15,7 +15,7 @@ namespace Piratas.Servidor.Servico.WebSocket
             {
                 MensagemPartidaCliente mensagemCliente = Parser.Deserializar<MensagemPartidaCliente>(e.Data);
             }
-            catch (ParserException parserException)
+            catch (BaseParserException parserException)
             {
                 var mensagem = new MensagemPartidaServidor(parserException.Id);
                 var mensagemSerializada = Parser.Serializar(mensagem);

@@ -11,7 +11,6 @@ namespace Piratas.Servidor.Servico.Partida
     using Protocolo.Cliente.Partida;
     using Protocolo.Servidor.Partida;
 
-    // TODO: Talvez configurar injeção de dependência?
     internal class PartidaServico
     {
         public Guid IdMesa { get; private set; }
@@ -144,25 +143,25 @@ namespace Piratas.Servidor.Servico.Partida
 
         private void _aoAdicionarCartaNaMao(Guid idJogador, Carta carta)
         {
-            _adicionaEvento(idJogador, LocalEvento.Mao, carta.Id, true);
+            _adicionarEvento(idJogador, LocalEvento.Mao, carta.Id, true);
         }
 
         private void _aoRemoverCartaNaMao(Guid idJogador, Carta carta)
         {
-            _adicionaEvento(idJogador, LocalEvento.Mao, carta.Id, false);
+            _adicionarEvento(idJogador, LocalEvento.Mao, carta.Id, false);
         }
 
         private void _aoAdicionarCartaNoCampo(Guid idJogador, Carta carta)
         {
-            _adicionaEvento(idJogador, LocalEvento.Campo, carta.Id, true);
+            _adicionarEvento(idJogador, LocalEvento.Campo, carta.Id, true);
         }
 
         private void _aoRemoverCartaNoCampo(Guid idJogador, Carta carta)
         {
-            _adicionaEvento(idJogador, LocalEvento.Campo, carta.Id, false);
+            _adicionarEvento(idJogador, LocalEvento.Campo, carta.Id, false);
         }
 
-        private void _adicionaEvento(
+        private void _adicionarEvento(
             Guid idJogador,
             LocalEvento localEvento,
             string idCarta,

@@ -4,12 +4,12 @@ namespace Piratas.Protocolo
 
     public static class Parser
     {
-        public static T Deserializa<T>(string json) where T : BaseMensagemPartida
+        public static T Deserializar<T>(string json) where T : BaseMensagemPartida
         {
             return null;
         }
 
-        public static string Serializa(BaseMensagemPartida baseMensagemPartida)
+        public static string Serializar(BaseMensagemPartida baseMensagemPartida)
         {
             return null;
         }

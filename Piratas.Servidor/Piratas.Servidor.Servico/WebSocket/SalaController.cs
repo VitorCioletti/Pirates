@@ -13,12 +13,12 @@ namespace Piratas.Servidor.Servico.WebSocket
         {
             try
             {
-                MensagemPartidaCliente mensagemCliente = Parser.Deserializa<MensagemPartidaCliente>(e.Data);
+                MensagemPartidaCliente mensagemCliente = Parser.Deserializar<MensagemPartidaCliente>(e.Data);
             }
             catch (ParserException parserException)
             {
                 var mensagem = new MensagemPartidaServidor(parserException.Id);
-                var mensagemSerializada = Parser.Serializa(mensagem);
+                var mensagemSerializada = Parser.Serializar(mensagem);
 
                 Send(mensagemSerializada);
             }

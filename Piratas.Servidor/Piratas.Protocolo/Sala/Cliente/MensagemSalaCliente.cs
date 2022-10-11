@@ -1,9 +1,9 @@
 namespace Piratas.Protocolo.Sala.Cliente
 {
     using System;
-    using Piratas.Protocolo.BaseInternal;
+    using BaseInternal;
 
-    public class MensagemSalaCliente : BaseMensagemSala
+    public class MensagemSalaCliente : BaseMensagem
     {
         public Guid IdJogadorRealizouAcao { get; private set; }
 

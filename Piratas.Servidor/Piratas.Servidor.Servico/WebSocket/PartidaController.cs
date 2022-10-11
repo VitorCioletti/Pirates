@@ -30,14 +30,14 @@ namespace Piratas.Servidor.Servico.WebSocket
             }
             catch (BaseParserException parserException)
             {
-                var mensagem = new MensagemPartidaServidor(parserException.Id);
+                var mensagem = new MensagemPartidaServidor(parserException.Id, parserException.Message);
                 var mensagemSerializada = Parser.Serializar(mensagem);
 
                 Send(mensagemSerializada);
             }
-            catch (Exception _)
+            catch (Exception exception)
             {
-                var mensagem = new MensagemPartidaServidor("erro-desconhecido");
+                var mensagem = new MensagemPartidaServidor("erro-desconhecido", exception.Message);
                 var mensagemSerializada = Parser.Serializar(mensagem);
 
                 Send(mensagemSerializada);

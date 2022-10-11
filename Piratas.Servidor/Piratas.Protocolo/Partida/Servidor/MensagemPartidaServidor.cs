@@ -21,8 +21,13 @@ namespace Piratas.Protocolo.Partida.Servidor
             int tesouros,
             Dictionary<Guid, List<Evento>> eventos,
             EscolhaServidor escolhaServidor,
-            string idErro = null
-        ) : base(idJogador, idMesa, idErro)
+            string idErro = null,
+            string descricaoErro = null
+        ) : base(
+            idJogador,
+            idMesa,
+            idErro,
+            descricaoErro)
         {
             EscolhaServidor = escolhaServidor;
             AcoesRestantes = acoesRestantes;
@@ -30,14 +35,15 @@ namespace Piratas.Protocolo.Partida.Servidor
             Tesouros = tesouros;
         }
 
-        public MensagemPartidaServidor(string idErro) : this(
+        public MensagemPartidaServidor(string idErro, string descricaoErro) : this(
             Guid.Empty,
             Guid.Empty,
             0,
             0,
             null,
             null,
-            idErro)
+            idErro,
+            descricaoErro)
         {
         }
     }

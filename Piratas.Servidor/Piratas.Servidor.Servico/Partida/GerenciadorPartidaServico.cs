@@ -2,13 +2,13 @@ namespace Piratas.Servidor.Servico.Partida
 {
     using System;
     using System.Collections.Generic;
+    using Excecoes;
     using Protocolo.Cliente.Partida;
     using Protocolo.Servidor.Partida;
 
-    // TODO: Injeção de dependência.
     public static class GerenciadorPartidaServico
     {
-        private static Dictionary<Guid, PartidaServico> _partidasEmAndamento { get; set; }
+        private static Dictionary<Guid, PartidaServico> _partidasEmAndamento { get; }
 
         static GerenciadorPartidaServico()
         {
@@ -18,8 +18,11 @@ namespace Piratas.Servidor.Servico.Partida
         public static List<MensagemPartidaServidor> ProcessarMensagemCliente(
             MensagemPartidaCliente mensagemPartidaCliente)
         {
-            // TODO: Tratar erro caso partida não exista.
-            PartidaServico partida = _partidasEmAndamento[mensagemPartidaCliente.IdMesa];
+            Guid idPartida = mensagemPartidaCliente.IdMesa;
+
+            _verificarPartidaExistente(idPartida);
+
+            PartidaServico partida = _partidasEmAndamento[idPartida];
 
             return partida.ProcessarMensagemCliente(mensagemPartidaCliente);
         }
@@ -33,8 +36,15 @@ namespace Piratas.Servidor.Servico.Partida
 
         public static void RemoverPartida(Guid idPartida)
         {
-            // TODO: Tratar erro caso partida não exista.
+            _verificarPartidaExistente(idPartida);
+
             _partidasEmAndamento.Remove(idPartida);
+        }
+
+        private static void _verificarPartidaExistente(Guid idPartida)
+        {
+            if (!_partidasEmAndamento.ContainsKey(idPartida))
+                throw new PartidaNaoEncontradaException(idPartida);
         }
     }
 }

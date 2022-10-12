@@ -1,27 +1,47 @@
 namespace Piratas.Servidor.Servico.WebSocket
 {
+    using System.Collections.Generic;
+    using Excecoes;
     using Protocolo;
-    using Protocolo.Partida.Cliente;
-    using Protocolo.Partida.Servidor;
+    using Protocolo.Sala.Cliente;
+    using Protocolo.Sala.Servidor;
     using WebSocketSharp;
     using WebSocketSharp.Server;
 
-    // TODO: Responsável por obter mensagens de criação, entrada e saída de sala.
     public class SalaController : WebSocketBehavior
     {
         protected override void OnMessage(MessageEventArgs e)
         {
             try
             {
-                MensagemPartidaCliente mensagemCliente = Parser.Deserializar<MensagemPartidaCliente>(e.Data);
+                MensagemSalaCliente mensagemSalaCliente = Parser.Deserializar<MensagemSalaCliente>(e.Data);
+
+                List<MensagemSalaServidor> mensagensSalaServidor =
+                    SalaServico.ProcessarMensagemCliente(mensagemSalaCliente);
+
+                foreach (MensagemSalaServidor mensagemSalaServidor in mensagensSalaServidor)
+                {
+                    string mensagemSalaServidorSerializada = Parser.Serializar(mensagemSalaServidor);
+
+                    Send(mensagemSalaServidorSerializada);
+                }
+            }
+            catch (BaseSalaException baseSalaException)
+            {
+                _enviaMensagemErro(baseSalaException.Id, baseSalaException.Message);
             }
             catch (BaseParserException parserException)
             {
-                var mensagem = new MensagemPartidaServidor(parserException.Id, parserException.Message);
-                var mensagemSerializada = Parser.Serializar(mensagem);
-
-                Send(mensagemSerializada);
+                _enviaMensagemErro(parserException.Id, parserException.Message);
             }
+        }
+
+        private void _enviaMensagemErro(string idErro, string descricaoErro)
+        {
+            var mensagem = new MensagemSalaServidor(idErro, descricaoErro);
+            var mensagemSerializada = Parser.Serializar(mensagem);
+
+            Send(mensagemSerializada);
         }
     }
 }

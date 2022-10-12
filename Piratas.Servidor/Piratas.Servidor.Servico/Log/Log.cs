@@ -16,19 +16,19 @@ namespace Piratas.Servidor.Servico.Log
         }
 
         private ILogger _obterLogger(IConfiguration configuracao) =>
-           new LoggerConfiguration().ReadFrom.Configuration(configuracao).CreateLogger();
+            new LoggerConfiguration().ReadFrom.Configuration(configuracao).CreateLogger();
 
         private void _configuraExcecaoNaoTratada()
         {
-            void excecaoNaoTratada(object _, UnhandledExceptionEventArgs args)
+            AppDomain.CurrentDomain.UnhandledException += ExcecaoNaoTratada;
+
+            void ExcecaoNaoTratada(object _, UnhandledExceptionEventArgs args)
             {
                 Logger.Error($"Ocorreu um não tratado:\n\"{args.ExceptionObject}\".");
                 Logger.Information("Servidor finalizado com erro.");
 
                 Environment.Exit(1);
             }
-
-            AppDomain.CurrentDomain.UnhandledException += excecaoNaoTratada;
         }
     }
 }

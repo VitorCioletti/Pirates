@@ -6,12 +6,15 @@ namespace Piratas.Protocolo.Sala.Servidor
     {
         public Guid IdSala { get; private set; }
 
+        public Guid IdJogador { get; private set; }
+
         public Guid IdJogadorRealizouAcao { get; private set; }
 
         public TipoAcaoSalaServidor TipoAcaoSala { get; private set; }
 
         public MensagemSalaServidor(
             Guid idSala,
+            Guid idJogador,
             Guid idJogadorRealizouAcao,
             TipoAcaoSalaServidor tipoAcaoSala,
             string idErro = null,
@@ -20,6 +23,15 @@ namespace Piratas.Protocolo.Sala.Servidor
             IdSala = idSala;
             IdJogadorRealizouAcao = idJogadorRealizouAcao;
             TipoAcaoSala = tipoAcaoSala;
+            IdJogador = idJogador;
+        }
+
+        public MensagemSalaServidor(string idErro = null, string descricaoErro = null) : base(idErro, descricaoErro)
+        {
+            IdJogador = Guid.Empty;
+            IdSala = Guid.Empty;
+            IdJogadorRealizouAcao = Guid.Empty;
+            TipoAcaoSala = TipoAcaoSalaServidor.Desconhecido;
         }
     }
 }

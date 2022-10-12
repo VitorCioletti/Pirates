@@ -2,7 +2,6 @@ namespace Piratas.Protocolo.Partida.Servidor
 {
     using System;
     using System.Collections.Generic;
-    using BaseInternal;
 
     public class MensagemPartidaServidor : BaseMensagemPartida
     {

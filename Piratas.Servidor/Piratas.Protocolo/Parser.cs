@@ -1,7 +1,6 @@
 namespace Piratas.Protocolo
 {
     using System;
-    using BaseInternal;
     using Excecoes;
     using Newtonsoft.Json;
 

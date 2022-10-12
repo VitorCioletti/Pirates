@@ -1,7 +1,6 @@
 namespace Piratas.Protocolo.Sala.Cliente
 {
     using System;
-    using BaseInternal;
 
     public class MensagemSalaCliente : BaseMensagem
     {

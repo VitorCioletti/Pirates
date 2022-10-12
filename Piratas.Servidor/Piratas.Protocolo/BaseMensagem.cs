@@ -1,4 +1,4 @@
-namespace Piratas.Protocolo.BaseInternal
+namespace Piratas.Protocolo
 {
     using System;
 

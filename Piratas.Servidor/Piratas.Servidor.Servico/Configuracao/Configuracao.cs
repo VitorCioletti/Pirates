@@ -1,16 +1,20 @@
 namespace Piratas.Servidor.Servico.Configuracao
 {
-    using Microsoft.Extensions.Configuration;
     using System.IO;
     using System.Reflection;
+    using Microsoft.Extensions.Configuration;
 
-    public class Configuracao
+    // TODO: Melhorar chamada dessa classe pois está Configuracao.Configuracao.
+    public static class Configuracao
     {
-        public IConfigurationRoot Dados { get; set; }
+        public static IConfigurationRoot Dados { get; set; }
 
-        public Configuracao() => Dados = _obterDados();
+        public static void Inicializar()
+        {
+            Dados = _obterDados();
+        }
 
-        private IConfigurationRoot _obterDados()
+        private static IConfigurationRoot _obterDados()
         {
             var caminhoBinario = Assembly.GetExecutingAssembly().Location;
             var pastaBinario = Path.GetDirectoryName(caminhoBinario);

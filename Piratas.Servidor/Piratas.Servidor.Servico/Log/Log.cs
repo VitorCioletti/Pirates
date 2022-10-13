@@ -3,29 +3,33 @@ namespace Piratas.Servidor.Servico.Log
     using Microsoft.Extensions.Configuration;
     using Serilog;
     using System;
+    using Configuracao = Configuracao.Configuracao;
 
-    public class Log
+    // TODO: Melhorar chamada dessa classe pois está Log.Log.
+    public static class Log
     {
-        public ILogger Logger { get; private set; }
+        private static ILogger _logger { get; set; }
 
-        public Log(IConfiguration configuracao)
+        public static void Inicializar()
         {
-            Logger = _obterLogger(configuracao);
+            _logger = _obterLogger(Configuracao.Dados);
 
             _configuraExcecaoNaoTratada();
         }
 
-        private ILogger _obterLogger(IConfiguration configuracao) =>
+        public static void Info(string mensagem) => _logger.Information(mensagem);
+
+        private static ILogger _obterLogger(IConfiguration configuracao) =>
             new LoggerConfiguration().ReadFrom.Configuration(configuracao).CreateLogger();
 
-        private void _configuraExcecaoNaoTratada()
+        private static void _configuraExcecaoNaoTratada()
         {
             AppDomain.CurrentDomain.UnhandledException += ExcecaoNaoTratada;
 
             void ExcecaoNaoTratada(object _, UnhandledExceptionEventArgs args)
             {
-                Logger.Error($"Ocorreu um não tratado:\n\"{args.ExceptionObject}\".");
-                Logger.Information("Servidor finalizado com erro.");
+                _logger.Error($"Ocorreu um não tratado:\n\"{args.ExceptionObject}\".");
+                _logger.Information("Servidor finalizado com erro.");
 
                 Environment.Exit(1);
             }

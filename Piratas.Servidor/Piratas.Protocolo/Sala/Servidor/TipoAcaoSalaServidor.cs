@@ -6,5 +6,6 @@ namespace Piratas.Protocolo.Sala.Servidor
         Criou,
         JogadorEntrou,
         JogadorSaiu,
+        IniciouPartida
     }
 }

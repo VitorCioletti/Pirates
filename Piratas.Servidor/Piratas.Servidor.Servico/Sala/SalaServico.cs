@@ -4,11 +4,13 @@ namespace Piratas.Servidor.Servico.Sala
     using System.Collections.Generic;
     using System.Linq;
     using Excecoes;
+    using Partida;
     using Protocolo.Sala.Cliente;
     using Protocolo.Sala.Servidor;
 
     public static class SalaServico
     {
+        // TODO: Implementar líder da sala que pode iniciar a partida.
         private static Dictionary<Guid, List<Guid>> _salasAbertas { get; }
 
         private static object _lockSala { get; }
@@ -38,8 +40,8 @@ namespace Piratas.Servidor.Servico.Sala
                     break;
 
                 case TipoAcaoSala.Sair:
-                    List<MensagemSalaServidor> mensagensSaidaSala = _sairSala(
-                        mensagemSalaCliente.IdJogadorRealizouAcao);
+                    List<MensagemSalaServidor> mensagensSaidaSala =
+                        _sairSala(mensagemSalaCliente.IdJogadorRealizouAcao);
 
                     mensagensSalaServidor.AddRange(mensagensSaidaSala);
                     break;
@@ -53,12 +55,15 @@ namespace Piratas.Servidor.Servico.Sala
                     break;
 
                 case TipoAcaoSala.IniciarPartida:
+                    List<MensagemSalaServidor> mensagensInicioPartida =
+                        _iniciarPartida(mensagemSalaCliente.IdJogadorRealizouAcao);
+
+                    mensagensSalaServidor.AddRange(mensagensInicioPartida);
                     break;
 
                 default:
                     throw new TipoAcaoSalaNaoEncontrado((int)mensagemSalaCliente.TipoAcaoSala);
             }
-
 
             return mensagensSalaServidor;
         }
@@ -78,6 +83,7 @@ namespace Piratas.Servidor.Servico.Sala
                 idNovaSala,
                 idJogadorCriador,
                 idJogadorCriador,
+                Guid.Empty,
                 TipoAcaoSalaServidor.Criou);
         }
 
@@ -90,7 +96,11 @@ namespace Piratas.Servidor.Servico.Sala
 
             List<Guid> sala = _salasAbertas[idSala];
 
-            var mensagensSaidaSala = _criarMensagensServidor(idJogador, idSala, TipoAcaoSalaServidor.JogadorSaiu);
+            var mensagensSaidaSala = _criarMensagensServidor(
+                idJogador,
+                idSala,
+                Guid.Empty,
+                TipoAcaoSalaServidor.JogadorSaiu);
 
             sala.Remove(idJogador);
 
@@ -109,16 +119,43 @@ namespace Piratas.Servidor.Servico.Sala
             if (salaNaoExiste)
                 throw new SalaNaoEncontradaException(idSala);
 
-            var mensagensEntradaSala = _criarMensagensServidor(idJogador, idSala, TipoAcaoSalaServidor.JogadorEntrou);
+            var mensagensEntradaSala = _criarMensagensServidor(
+                idJogador,
+                idSala,
+                Guid.Empty,
+                TipoAcaoSalaServidor.JogadorEntrou);
 
             _salasAbertas[idSala].Add(idJogador);
 
             return mensagensEntradaSala;
         }
 
+        private static List<MensagemSalaServidor> _iniciarPartida(Guid idJogador)
+        {
+            Guid idSala = _salasAbertas.FirstOrDefault(s => s.Value.Contains(idJogador)).Key;
+
+            if (idSala == Guid.Empty)
+                throw new JogadorNaoEstaEmNenhumaSala(idJogador);
+
+            List<Guid> idsJogadores = _salasAbertas[idSala];
+
+            Guid idPartida = GerenciadorPartidaServico.CriarPartida(idsJogadores);
+
+            var mensagensCriacaoPartida = _criarMensagensServidor(
+                idJogador,
+                Guid.Empty,
+                idPartida,
+                TipoAcaoSalaServidor.IniciouPartida);
+
+            _salasAbertas.Remove(idSala);
+
+            return mensagensCriacaoPartida;
+        }
+
         private static List<MensagemSalaServidor> _criarMensagensServidor(
             Guid idJogador,
             Guid idSala,
+            Guid idPartida,
             TipoAcaoSalaServidor tipoAcaoSalaServidor)
         {
             var mensagensSalaServidor = new List<MensagemSalaServidor>();
@@ -127,7 +164,12 @@ namespace Piratas.Servidor.Servico.Sala
 
             foreach (Guid id in jogadoresSala)
             {
-                var mensagemSaidaSala = new MensagemSalaServidor(idSala, id, idJogador, tipoAcaoSalaServidor);
+                var mensagemSaidaSala = new MensagemSalaServidor(
+                    idSala,
+                    id,
+                    idJogador,
+                    idPartida,
+                    tipoAcaoSalaServidor);
 
                 mensagensSalaServidor.Add(mensagemSaidaSala);
             }

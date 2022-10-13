@@ -13,7 +13,7 @@ namespace Piratas.Servidor.Servico.Partida
 
     internal class PartidaServico
     {
-        public Guid IdMesa { get; private set; }
+        public Guid Id { get; private set; }
 
         private Mesa _mesa { get; set; }
 
@@ -43,7 +43,7 @@ namespace Piratas.Servidor.Servico.Partida
 
             _mesa = new Mesa(jogadores);
 
-            IdMesa = _mesa.Id;
+            Id = _mesa.Id;
 
             _eventosAcaoAtual = new Dictionary<Guid, List<Evento>>();
             _possiveisAcoesEnviadasAosJogadores = new Dictionary<Jogador, List<Acao>>();
@@ -123,7 +123,7 @@ namespace Piratas.Servidor.Servico.Partida
 
             var mensagemServidor = new MensagemPartidaServidor(
                 jogador.Id,
-                IdMesa,
+                Id,
                 jogador.AcoesDisponiveis,
                 jogador.CalcularTesouros(),
                 _eventosAcaoAtual,

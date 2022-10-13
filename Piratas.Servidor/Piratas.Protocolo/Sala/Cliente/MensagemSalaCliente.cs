@@ -8,9 +8,20 @@ namespace Piratas.Protocolo.Sala.Cliente
 
         public TipoAcaoSala TipoAcaoSala { get; private set; }
 
-        public MensagemSalaCliente(Guid idJogadorRealizouAcao, TipoAcaoSala tipoAcaoSala)
+        public Guid IdSala { get; private set; }
+
+        public Guid IdPartida { get; private set; }
+
+        public MensagemSalaCliente(
+            Guid idJogadorRealizouAcao,
+            Guid idSala,
+            Guid idPartida,
+            TipoAcaoSala tipoAcaoSala)
         {
+            IdSala = idSala;
+            IdPartida = idPartida;
             IdJogadorRealizouAcao = idJogadorRealizouAcao;
+
             TipoAcaoSala = tipoAcaoSala;
         }
     }

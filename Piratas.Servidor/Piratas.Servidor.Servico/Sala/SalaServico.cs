@@ -1,12 +1,12 @@
-namespace Piratas.Servidor.Servico
+namespace Piratas.Servidor.Servico.Sala
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Excecoes;
     using Protocolo.Sala.Cliente;
     using Protocolo.Sala.Servidor;
 
-    // TODO: Responsável por criar partidas. As salas abertas e seus jogadores devem ficar aqui.
     public static class SalaServico
     {
         private static Dictionary<Guid, List<Guid>> _salasAbertas { get; }
@@ -45,13 +45,18 @@ namespace Piratas.Servidor.Servico
                     break;
 
                 case TipoAcaoSala.Entrar:
+                    List<MensagemSalaServidor> mensagensEntradaSala = _entrarSala(
+                        mensagemSalaCliente.IdJogadorRealizouAcao,
+                        mensagemSalaCliente.IdSala);
+
+                    mensagensSalaServidor.AddRange(mensagensEntradaSala);
                     break;
 
                 case TipoAcaoSala.IniciarPartida:
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new TipoAcaoSalaNaoEncontrado((int)mensagemSalaCliente.TipoAcaoSala);
             }
 
 
@@ -63,11 +68,11 @@ namespace Piratas.Servidor.Servico
             bool estaNumaSala = _estaNumaSala(idJogadorCriador);
 
             if (estaNumaSala)
-                throw new Exception();
+                throw new JogadorJaEstaNumaSalaException(idJogadorCriador);
 
             Guid idNovaSala = Guid.NewGuid();
 
-            _salasAbertas[idNovaSala] = new List<Guid> {idJogadorCriador};
+            _salasAbertas[idNovaSala] = new List<Guid> { idJogadorCriador };
 
             return new MensagemSalaServidor(
                 idNovaSala,
@@ -80,32 +85,54 @@ namespace Piratas.Servidor.Servico
         {
             Guid idSala = _salasAbertas.FirstOrDefault(s => s.Value.Contains(idJogador)).Key;
 
-            if (idJogador == null)
-                throw new Exception();
+            if (idSala == Guid.Empty)
+                throw new JogadorNaoEstaEmNenhumaSala(idJogador);
 
             List<Guid> sala = _salasAbertas[idSala];
 
-            bool naoEstaNaSala = sala.All(i => i != idJogador);
-
-            if (naoEstaNaSala)
-                throw new Exception();
-
-            var mensagensSaidaSala = new List<MensagemSalaServidor>();
-
-            foreach (Guid id in sala)
-            {
-                var mensagemSaidaSala = new MensagemSalaServidor(
-                    idSala,
-                    id,
-                    idJogador,
-                    TipoAcaoSalaServidor.JogadorSaiu);
-
-                mensagensSaidaSala.Add(mensagemSaidaSala);
-            }
+            var mensagensSaidaSala = _criarMensagensServidor(idJogador, idSala, TipoAcaoSalaServidor.JogadorSaiu);
 
             sala.Remove(idJogador);
 
             return mensagensSaidaSala;
+        }
+
+        private static List<MensagemSalaServidor> _entrarSala(Guid idJogador, Guid idSala)
+        {
+            bool estaNumaSala = _estaNumaSala(idJogador);
+
+            if (estaNumaSala)
+                throw new JogadorJaEstaNumaSalaException(idJogador);
+
+            bool salaNaoExiste = !_salasAbertas.ContainsKey(idSala);
+
+            if (salaNaoExiste)
+                throw new SalaNaoEncontradaException(idSala);
+
+            var mensagensEntradaSala = _criarMensagensServidor(idJogador, idSala, TipoAcaoSalaServidor.JogadorEntrou);
+
+            _salasAbertas[idSala].Add(idJogador);
+
+            return mensagensEntradaSala;
+        }
+
+        private static List<MensagemSalaServidor> _criarMensagensServidor(
+            Guid idJogador,
+            Guid idSala,
+            TipoAcaoSalaServidor tipoAcaoSalaServidor)
+        {
+            var mensagensSalaServidor = new List<MensagemSalaServidor>();
+
+            List<Guid> jogadoresSala = _salasAbertas[idSala];
+
+            foreach (Guid id in jogadoresSala)
+            {
+                var mensagemSaidaSala = new MensagemSalaServidor(idSala, id, idJogador, tipoAcaoSalaServidor);
+
+                mensagensSalaServidor.Add(mensagemSaidaSala);
+            }
+
+            return mensagensSalaServidor;
         }
 
         private static bool _estaNumaSala(Guid idJogador) => _salasAbertas.Values.Any(s => s.Contains(idJogador));

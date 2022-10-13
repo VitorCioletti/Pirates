@@ -5,6 +5,7 @@ namespace Piratas.Servidor.Servico.WebSocket
     using Protocolo;
     using Protocolo.Sala.Cliente;
     using Protocolo.Sala.Servidor;
+    using Sala;
     using WebSocketSharp;
     using WebSocketSharp.Server;
 

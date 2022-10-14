@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Imediata
         {
         }
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             var pontosDueloRealizador = Realizador.Campo.CalcularPontosDuelo();
             var pontosDueloAlvo = Alvo.Campo.CalcularPontosDuelo();
@@ -38,7 +38,10 @@ namespace Piratas.Servidor.Dominio.Acoes.Imediata
 
             mesa.SairModoDuelo();
 
-            yield return new RoubarCarta(this, Vitorioso, Perdedor);
+            var roubarCarta = new RoubarCarta(this, Vitorioso, Perdedor);
+            var acoesResultantes = new List<Acao> { roubarCarta };
+
+            return acoesResultantes;
         }
     }
 }

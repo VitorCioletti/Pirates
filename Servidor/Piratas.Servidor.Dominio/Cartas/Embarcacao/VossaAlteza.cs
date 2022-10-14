@@ -1,35 +1,37 @@
 namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 {
-    using Acoes.Resultante;
-    using Acoes.Tipos;
-    using Acoes;
-    using Cartas.Tipos;
     using System.Collections.Generic;
     using System.Linq;
+    using Acoes;
+    using Acoes.Resultante;
+    using Tipos;
 
     public class VossaAlteza : Embarcacao
     {
         private readonly int _cartasMinimasNaMao = 5;
 
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) =>
-            _aplicarEfeito(acao, mesa.Jogadores);
-
-        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, List<Jogador> jogadoresNaMesa)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
-            var realizador = acao.Realizador;
+            Jogador realizador = acao.Realizador;
+            List<Jogador> jogadoresNaMesa = mesa.Jogadores;
 
-            var jogadoresOpcao =
+            List<Jogador> jogadoresOpcao =
                 jogadoresNaMesa.Where(j => j.Mao.QuantidadeCartas() >= _cartasMinimasNaMao && j != realizador).ToList();
 
+            var escolherJogador = new EscolherJogador(acao, realizador, jogadoresOpcao, RoubarCarta);
+            var acoesResultantes = new List<Acao> { escolherJogador };
+
+            return acoesResultantes;
+
             // TODO: Randômico ou permite escolha?
-            IEnumerable<Resultante> roubarCarta(Acao acao, Jogador alvo)
+            List<Acao> RoubarCarta(Acao acaoEscolhida, Jogador alvo)
             {
-                var roubarCarta = new RoubarCarta(acao, realizador, alvo) as IEnumerable<Resultante>;
+                var roubarCarta = new RoubarCarta(acaoEscolhida, realizador, alvo);
 
-                return roubarCarta;
+                var acoesResultantesRoubarCarta = new List<Acao> { roubarCarta };
+
+                return acoesResultantesRoubarCarta;
             }
-
-            yield return new EscolherJogador(acao, realizador, jogadoresOpcao, roubarCarta);
         }
     }
 }

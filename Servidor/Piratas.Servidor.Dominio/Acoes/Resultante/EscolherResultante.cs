@@ -15,7 +15,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             Acao origem, Jogador realizador, params Resultante[] resultantesOpcao) : base(origem, realizador) =>
             ResultantesOpcao = resultantesOpcao.ToList();
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             if (!ResultantesOpcao.Contains(ResultanteEscolhida))
                 throw new ResultanteNaoEUmaOpcaoException(this, ResultanteEscolhida);

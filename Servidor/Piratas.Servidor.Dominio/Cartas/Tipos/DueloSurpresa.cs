@@ -2,7 +2,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
 {
     using System.Collections.Generic;
     using Acoes;
-    using Acoes.Tipos;
 
     public abstract class DueloSurpresa : Duelo
     {
@@ -10,14 +9,13 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
 
         public DueloSurpresa() => Tiros = 1;
 
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) =>
-            _aplicarEfeito(acao.Realizador.Campo);
-
-        internal IEnumerable<Resultante> _aplicarEfeito(Campo campoRealizador)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
+            Campo campoRealizador = acao.Realizador.Campo;
+
             campoRealizador.Adicionar(this);
 
-            yield return null;
+            return null;
         }
     }
 }

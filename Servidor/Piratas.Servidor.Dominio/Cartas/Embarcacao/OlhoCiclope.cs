@@ -1,31 +1,34 @@
 namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 {
-    using Acoes.Resultante;
-    using Acoes.Tipos;
-    using Acoes;
-    using Cartas.Tipos;
     using System.Collections.Generic;
     using System.Linq;
+    using Acoes;
+    using Acoes.Resultante;
+    using Acoes.Tipos;
+    using Tipos;
 
     public class OlhoCiclope : Embarcacao
     {
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao, mesa);
-
-        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, Mesa mesa)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
-            var realizador = acao.Realizador;
+            Jogador realizador = acao.Realizador;
 
-            IEnumerable<Resultante> olharCartas(Acao acao, Jogador jogador)
+            List<Jogador> outrosJogadoresMesa = mesa.Jogadores.Where(j => j != realizador).ToList();
+
+            var escolherJogador = new EscolherJogador(acao, realizador, outrosJogadoresMesa, OlharCartas);
+            var acoesResultantes = new List<Acao> { escolherJogador };
+
+            return acoesResultantes;
+
+            List<Acao> OlharCartas(Acao acaoEscolhida, Jogador jogador)
             {
                 var olharCartasJogador =
-                    new OlharCartasJogador(acao, realizador, jogador.Mao.ObterTodas()) as IEnumerable<Resultante>;
+                    new OlharCartasJogador(acaoEscolhida, realizador, jogador.Mao.ObterTodas());
 
-                return olharCartasJogador;
+                var acoesResultantesOlharCartas = new List<Acao> { olharCartasJogador };
+
+                return acoesResultantesOlharCartas;
             }
-
-            var outrosJogadoresMesa = mesa.Jogadores.Where(j => j != realizador).ToList();
-
-            yield return new EscolherJogador(acao, realizador, outrosJogadoresMesa, olharCartas);
         }
     }
 }

@@ -36,16 +36,16 @@ namespace Piratas.Servidor.Dominio
             Campo.AoRemover += AoRemoverCartaNoCampo;
 
             void AoAdicionarCartaNaMao(Carta carta) =>
-                aoAdicionarCartaNaMao(Id, carta);
+                aoAdicionarCartaNaMao?.Invoke(Id, carta);
 
             void AoRemoverCartaNaMao(Carta carta) =>
-                aoRemoverCartaNaMao(Id, carta);
+                aoRemoverCartaNaMao?.Invoke(Id, carta);
 
             void AoAdicionarCartaNoCampo(Carta carta) =>
-                aoAdicionarCartaNoCampo(Id, carta);
+                aoAdicionarCartaNoCampo?.Invoke(Id, carta);
 
             void AoRemoverCartaNoCampo(Carta carta) =>
-                aoRemoverCartaNoCampo(Id, carta);
+                aoRemoverCartaNoCampo?.Invoke(Id, carta);
         }
 
         public DescerCarta DescerCarta(Carta carta) => new DescerCarta(this, carta);

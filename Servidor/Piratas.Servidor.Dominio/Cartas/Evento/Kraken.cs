@@ -1,23 +1,23 @@
 namespace Piratas.Servidor.Dominio.Cartas.Evento
 {
-    using Acoes.Resultante;
-    using Acoes.Tipos;
-    using Acoes;
-    using Cartas.Tipos;
     using System.Collections.Generic;
     using System.Linq;
+    using Acoes;
+    using Acoes.Resultante;
+    using Tipos;
 
     public class Kraken : Evento
     {
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) =>
-            _aplicarEfeito(acao, mesa.Jogadores);
-
-        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, List<Jogador> jogadores)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
-            foreach (var jogador in jogadores)
+            List<Jogador> jogadoresNaMesa = mesa.Jogadores;
+
+            var acoesResultantes = new List<Acao>();
+
+            foreach (var jogador in jogadoresNaMesa)
             {
-                var possuiEmbarcacao = jogador.Campo.Embarcacao != null;
-                var possuiTripulacao = jogador.Campo.Tripulacao.Count == 0;
+                bool possuiEmbarcacao = jogador.Campo.Embarcacao != null;
+                bool possuiTripulacao = jogador.Campo.Tripulacao.Count == 0;
 
                 var resultanteAfogarTripulacao = new AfogarTripulante(acao, jogador, jogador);
                 var resultanteDanificarEmbarcacao = new DanificarEmbarcacao(acao, jogador);
@@ -27,11 +27,12 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
 
                 if (possuiEmbarcacao && possuiTripulacao)
                 {
-                    yield return new EscolherResultante(
+                    var escolherResultante = new EscolherResultante(
                         acao, jogador, resultanteAfogarTripulacao, resultanteDanificarEmbarcacao);
-                }
 
-                else if (!possuiEmbarcacao && possuiTripulacao)
+                    acoesResultantes.Add(escolherResultante);
+                }
+                else if (!possuiEmbarcacao)
                 {
                     var afogaveis = jogador.Campo.Tripulacao.Where(t => t.Afogavel).ToList();
 
@@ -42,13 +43,15 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
                         jogador.Campo.AfogarTripulacao();
 
                     else
-                        yield return resultanteAfogarTripulacao;
+                        acoesResultantes.Add(resultanteAfogarTripulacao);
                 }
                 else
                 {
                     jogador.Campo.DanificarEmbarcacao();
                 }
             }
+
+            return acoesResultantes;
         }
     }
 }

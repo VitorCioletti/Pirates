@@ -12,7 +12,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Passiva
         public AplicarEfeitoEmbarcacao(Jogador realizador, Embarcacao embarcacao) : base(realizador) =>
             Embarcacao = embarcacao;
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             if (Embarcacao == null)
                 throw new ArgumentNullException(nameof(Embarcacao));

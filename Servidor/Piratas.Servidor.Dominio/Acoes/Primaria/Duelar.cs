@@ -14,14 +14,17 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
         public Duelar(Jogador realizador, Jogador alvo, Duelo cartaIniciadora) : base(realizador, alvo) =>
             CartaIniciadora = cartaIniciadora;
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             if (CartaIniciadora is Timoneiro)
                 throw new CartaProibidaIniciarDuelo(this, CartaIniciadora);
 
             mesa.EntrarModoDuelo(Realizador, Alvo);
 
-            yield return new DescerCartasDuelo(this, Alvo, Realizador);
+            var descerCartasDuelo = new DescerCartasDuelo(this, Alvo, Realizador);
+            var acoesResultantes = new List<Acao> { descerCartasDuelo };
+
+            return acoesResultantes;
         }
     }
 }

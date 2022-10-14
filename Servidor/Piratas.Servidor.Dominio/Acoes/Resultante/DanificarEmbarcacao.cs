@@ -8,14 +8,13 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     {
         public DanificarEmbarcacao(Acao origem, Jogador realizador) : base(origem, realizador)
         {
-
         }
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             Realizador.Campo.DanificarEmbarcacao();
 
-            yield return null;
+            return null;
         }
     }
 }

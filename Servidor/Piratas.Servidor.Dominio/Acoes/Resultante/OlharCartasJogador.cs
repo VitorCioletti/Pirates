@@ -12,6 +12,6 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         public OlharCartasJogador(Acao origem, Jogador realizador, List<Carta> cartas)
             : base(origem, realizador) => Cartas = cartas;
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa) => null;
+        public override List<Acao> AplicarRegra(Mesa mesa) => null;
     }
 }

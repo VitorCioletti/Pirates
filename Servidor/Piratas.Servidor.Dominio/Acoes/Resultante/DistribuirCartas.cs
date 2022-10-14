@@ -1,6 +1,5 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
-    using System;
     using System.Collections.Generic;
     using Cartas;
     using Excecoes.Acoes;
@@ -27,7 +26,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             CartasOpcoes = cartas;
         }
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             foreach ((var jogador, var carta) in CartasPorJogador)
             {
@@ -40,7 +39,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 jogador.Mao.Adicionar(carta);
             }
 
-            yield return null;
+            return null;
         }
     }
 }

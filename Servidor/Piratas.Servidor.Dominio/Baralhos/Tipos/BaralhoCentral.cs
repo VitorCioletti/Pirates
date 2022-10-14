@@ -10,6 +10,10 @@ namespace Piratas.Servidor.Dominio.Baralhos.Tipos
         public Carta ObterTopo()
         {
             var ultimoNodo = Cartas.Last;
+
+            if (ultimoNodo == null)
+                return null;
+
             Cartas.RemoveLast();
 
             return ultimoNodo.Value;
@@ -19,12 +23,12 @@ namespace Piratas.Servidor.Dominio.Baralhos.Tipos
         {
             var cartas = new List<Carta>();
 
-            for (var i = 0; i >= quantidade; i++)
+            for (var i = 0; i < quantidade; i++)
                 cartas.Add(ObterTopo());
 
             return cartas;
         }
 
-        private LinkedList<Carta> _gerarCartas() => new LinkedList<Carta>();
+        private LinkedList<Carta> _gerarCartas() => new();
     }
 }

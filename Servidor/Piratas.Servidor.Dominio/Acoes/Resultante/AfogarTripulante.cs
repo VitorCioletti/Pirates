@@ -1,13 +1,12 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
-    using Acoes.Primaria;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Cartas.ResolucaoImediata;
     using Cartas.Tipos;
     using Cartas.Tripulacao;
-    using Dominio;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System;
+    using Primaria;
     using Tipos;
 
     public class AfogarTripulante : Resultante
@@ -25,7 +24,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 throw new Exception($"Nenhum tripulante de \"{alvo}\" pode ser afogado.");
         }
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             if (Origem is DescerCarta descerCarta)
             {
@@ -45,7 +44,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             Alvo.Campo.Remover(TripulanteAfogado);
             mesa.PilhaDescarte.InserirTopo(TripulanteAfogado);
 
-            yield return null;
+            return null;
         }
     }
 }

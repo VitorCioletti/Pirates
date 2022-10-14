@@ -35,6 +35,6 @@ namespace Piratas.Servidor.Dominio.Acoes
             Alvo = alvo;
         }
 
-        public abstract IEnumerable<Acao> AplicarRegra(Mesa mesa);
+        public abstract List<Acao> AplicarRegra(Mesa mesa);
     }
 }

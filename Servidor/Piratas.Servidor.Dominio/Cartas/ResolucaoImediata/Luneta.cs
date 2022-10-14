@@ -1,18 +1,18 @@
 namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 {
-    using Acoes.Resultante;
-    using Acoes.Tipos;
-    using Acoes;
     using System.Collections.Generic;
+    using Acoes;
+    using Acoes.Resultante;
     using Tipos;
 
     public class Luneta : ResolucaoImediata
     {
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa _) => _aplicarEfeito(acao);
-
-        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa _)
         {
-            yield return new DescartarCarta(acao, acao.Realizador, acao.Alvo);
+            var descartarCarta = new DescartarCarta(acao, acao.Realizador, acao.Alvo);
+            var acoesResultantes = new List<Acao> { descartarCarta };
+
+            return acoesResultantes;
         }
     }
 }

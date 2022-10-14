@@ -23,14 +23,14 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             CartasOpcoes = cartasOpcoes;
         }
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             Realizador.Mao.Adicionar(CartaEscolhida);
 
             CartasOpcoes.Remove(CartaEscolhida);
             Baralho.InserirFundo(CartasOpcoes);
 
-            yield return null;
+            return null;
         }
     }
 }

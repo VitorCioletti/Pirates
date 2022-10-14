@@ -13,8 +13,10 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         {
         }
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
+            var acoesResultantes = new List<Acao> { };
+
             CartasRespostaDuelo.ForEach(c => c.AplicarEfeito(this, mesa));
 
             var realizadorPossuiDueloSurpresa = Realizador.Mao.Possui<DueloSurpresa>();
@@ -23,18 +25,28 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             var calcularResultadoDuelo = new CalcularResultadoDuelo(this, Realizador, Alvo);
 
             if (!realizadorPossuiDueloSurpresa && !alvoPossuiDueloSurpresa)
-                yield return calcularResultadoDuelo;
+                acoesResultantes.Add(calcularResultadoDuelo);
 
             else
             {
                 mesa.RegistrarImediataAposResultantes(calcularResultadoDuelo);
 
                 if (realizadorPossuiDueloSurpresa)
-                    yield return new DescerCartasDueloSurpresa(this, Realizador);
+                {
+                    var descerCartasDueloSurpresa = new DescerCartasDueloSurpresa(this, Realizador);
+
+                    acoesResultantes.Add(descerCartasDueloSurpresa);
+                }
 
                 if (alvoPossuiDueloSurpresa)
-                    yield return new DescerCartasDueloSurpresa(this, Alvo);
+                {
+                    var descerCartasDueloSurpresa = new DescerCartasDueloSurpresa(this, Alvo);
+
+                    acoesResultantes.Add(descerCartasDueloSurpresa);
+                }
             }
+
+            return acoesResultantes;
         }
     }
 }

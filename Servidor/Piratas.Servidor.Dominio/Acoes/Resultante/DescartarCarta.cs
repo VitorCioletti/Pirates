@@ -14,10 +14,10 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         {
         }
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             if (CartaDescartada == null)
-                yield return null;
+                return null;
 
             if (CartaDescartada.GetType() == typeof(Tesouro))
                 throw new ProibidoDescerCartaException(this, CartaDescartada);
@@ -25,7 +25,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             Alvo.Mao.Remover(CartaDescartada);
             mesa.PilhaDescarte.InserirTopo(CartaDescartada);
 
-            yield return null;
+            return null;
         }
     }
 }

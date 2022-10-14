@@ -4,19 +4,16 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using System.Linq;
     using Acoes;
     using Acoes.Resultante;
-    using Acoes.Tipos;
     using Baralhos.Tipos;
     using Excecoes.Cartas;
     using Tipos;
 
     public class ConvocarTripulacao : ResolucaoImediata
     {
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) =>
-            _aplicarEfeito(acao, mesa.PilhaDescarte);
-
-        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, PilhaDescarte pilhaDescarte)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
-            var realizador = acao.Realizador;
+            PilhaDescarte pilhaDescarte = mesa.PilhaDescarte;
+            Jogador realizador = acao.Realizador;
 
             if (realizador.Campo.TripulacaoCheia())
                 throw new TripulacaoCheiaException(this, realizador);
@@ -26,11 +23,15 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             if (tripulantesDescartados.Count == 0)
                 throw new SemTripulacaoPilhaDescarteException(this);
 
-            yield return new EscolherCartaBaralho(
+            var escolherCartaBaralho = new EscolherCartaBaralho(
                 acao,
                 realizador,
                 pilhaDescarte,
                 tripulantesDescartados);
+
+            var acoesResultantes = new List<Acao> { escolherCartaBaralho };
+
+            return acoesResultantes;
         }
     }
 }

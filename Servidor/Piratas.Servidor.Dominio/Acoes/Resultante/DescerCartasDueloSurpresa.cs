@@ -1,7 +1,7 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
-    using Cartas.Tipos;
     using System.Collections.Generic;
+    using Cartas.Tipos;
     using Tipos;
 
     public class DescerCartasDueloSurpresa : Resultante
@@ -10,14 +10,13 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
         public DescerCartasDueloSurpresa(Acao origem, Jogador realizador) : base(origem, realizador, null)
         {
-
         }
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             DuelosSurpresa.ForEach(c => c.AplicarEfeito(this, mesa));
 
-            yield return null;
+            return null;
         }
     }
 }

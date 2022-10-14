@@ -1,24 +1,25 @@
 namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 {
-    using Acoes.Resultante;
-    using Acoes.Tipos;
-    using Acoes;
-    using Baralhos.Tipos;
-    using Cartas.Tipos;
     using System.Collections.Generic;
+    using Acoes;
+    using Acoes.Resultante;
+    using Baralhos.Tipos;
+    using Tipos;
 
     public class RodaFortuna : Embarcacao
     {
         private readonly int _cartasAOlhar = 2;
 
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) =>
-            _aplicarEfeito(acao, mesa.BaralhoCentral);
-
-        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, BaralhoCentral baralhoCentral)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
+            BaralhoCentral baralhoCentral = mesa.BaralhoCentral;
+
             var cartasOpcoes = baralhoCentral.ObterTopo(_cartasAOlhar);
 
-            yield return new OlharCartasBaralho(acao, acao.Realizador, cartasOpcoes);
+            var olharCartasBaralho = new OlharCartasBaralho(acao, acao.Realizador, cartasOpcoes);
+            var acoesResultantes = new List<Acao> { olharCartasBaralho };
+
+            return acoesResultantes;
         }
     }
 }

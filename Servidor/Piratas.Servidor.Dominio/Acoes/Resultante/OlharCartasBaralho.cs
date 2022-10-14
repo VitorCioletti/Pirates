@@ -1,8 +1,7 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
-    using Cartas;
-    using Dominio;
     using System.Collections.Generic;
+    using Cartas;
     using Tipos;
 
     public class OlharCartasBaralho : Resultante
@@ -12,10 +11,12 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         public List<Carta> CartasOpcoes { get; private set; }
 
         public OlharCartasBaralho(
-            Acao origem, Jogador realizador, List<Carta> cartasOpcoes) : base(origem, realizador) =>
+            Acao origem,
+            Jogador realizador,
+            List<Carta> cartasOpcoes) : base(origem, realizador) =>
             CartasOpcoes = cartasOpcoes;
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             var baralhoCentral = mesa.BaralhoCentral;
 
@@ -24,7 +25,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             else
                 baralhoCentral.InserirFundo(CartasOpcoes);
 
-            yield return null;
+            return null;
         }
     }
 }

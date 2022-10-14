@@ -7,6 +7,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Passivo
 
     public class BauArmadilha : ResolucaoImediata
     {
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) => null;
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa) => null;
     }
 }

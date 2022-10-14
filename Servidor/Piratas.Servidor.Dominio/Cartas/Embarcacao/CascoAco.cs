@@ -1,29 +1,29 @@
 namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 {
-    using Acoes.Resultante;
-    using Acoes.Tipos;
-    using Acoes;
-    using Cartas.Tipos;
     using System.Collections.Generic;
     using System.Linq;
+    using Acoes;
+    using Acoes.Resultante;
+    using Tipos;
 
     public class CascoAco : Embarcacao
     {
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao);
-
-        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa _)
         {
             var realizador = acao.Realizador;
 
             var tesourosMao = realizador.Mao.ObterTodas<Tesouro>().OfType<Carta>().ToList();
 
-            void aposEscolha(Carta carta)
+            var escolherCartaMao = new EscolherCartaMao(acao, realizador, tesourosMao, AposEscolha);
+            var acoesResultantes = new List<Acao> { escolherCartaMao };
+
+            return acoesResultantes;
+
+            void AposEscolha(Carta carta)
             {
                 realizador.Mao.Remover(carta);
                 realizador.Campo.AdicionarProtegida(carta);
             }
-
-            yield return new EscolherCartaMao(acao, realizador, tesourosMao, aposEscolha);
         }
     }
 }

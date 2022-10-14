@@ -1,21 +1,25 @@
 namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 {
-    using Acoes.Resultante;
-    using Acoes.Tipos;
-    using Acoes;
-    using Baralhos.Tipos;
-    using Cartas.Tipos;
     using System.Collections.Generic;
+    using Acoes;
+    using Acoes.Resultante;
+    using Baralhos.Tipos;
+    using Tipos;
 
     public class ServoPoseidon : Embarcacao
     {
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) =>
-            _aplicarEfeito(acao, mesa.PilhaDescarte);
-
-        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao, PilhaDescarte pilhaDescarte)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
-            yield return
-                new EscolherCartaBaralho(acao, acao.Realizador, pilhaDescarte, pilhaDescarte.ObterTodas<Carta>());
+            PilhaDescarte pilhaDescarte = mesa.PilhaDescarte;
+
+            var escolherCartaBaralho = new EscolherCartaBaralho(
+                acao,
+                acao.Realizador,
+                pilhaDescarte,
+                pilhaDescarte.ObterTodas<Carta>());
+            var acoesResultantes = new List<Acao> { escolherCartaBaralho };
+
+            return acoesResultantes;
         }
     }
 }

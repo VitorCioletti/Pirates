@@ -1,8 +1,7 @@
 namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
 {
-    using Acoes.Tipos;
-    using Acoes;
     using System.Collections.Generic;
+    using Acoes;
     using Tipos;
 
     public class PirataFantasma : Tripulante
@@ -13,6 +12,14 @@ namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
             Afogavel = false;
         }
 
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao.Alvo.Campo);
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
+        {
+            Campo campoAlvo = acao.Alvo.Campo;
+
+            campoAlvo.Adicionar(this);
+
+            return null;
+        }
+
     }
 }

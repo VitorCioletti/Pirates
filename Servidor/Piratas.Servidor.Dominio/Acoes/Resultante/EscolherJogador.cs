@@ -11,19 +11,19 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
         public List<Jogador> JogadoresOpcao { get; private set; }
 
-        public Func<Acao, Jogador, IEnumerable<Resultante>> ResultanteAposEscolha { get; private set; }
+        public Func<Acao, Jogador, List<Acao>> ResultanteAposEscolha { get; private set; }
 
         public EscolherJogador(
             Acao origem,
             Jogador realizador,
             List<Jogador> jogadoresOpcao,
-            Func<Acao, Jogador, IEnumerable<Resultante>> resultanteAposEscolha) : base(origem, realizador)
+            Func<Acao, Jogador, List<Acao>> resultanteAposEscolha) : base(origem, realizador)
         {
             ResultanteAposEscolha = resultanteAposEscolha;
             JogadoresOpcao = jogadoresOpcao;
         }
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             if (!JogadoresOpcao.Contains(JogadorEscolhido))
                 throw new JogadorNaoEUmaOpcaoException(this, JogadorEscolhido);

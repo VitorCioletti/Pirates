@@ -2,7 +2,6 @@ namespace Piratas.Servidor.Dominio
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Acoes;
     using Acoes.Passiva;
     using Acoes.Tipos;
@@ -71,18 +70,23 @@ namespace Piratas.Servidor.Dominio
 
             Dictionary<Jogador, List<Acao>> acoesPorJogador = new Dictionary<Jogador, List<Acao>>();
 
-            List<Acao> acoesDisponiveis = acao.AplicarRegra(this).ToList();
+            List<Acao> acoesDisponiveis = acao.AplicarRegra(this);
 
             HistoricoAcao.Push(acao);
 
-            foreach (var acaoResultante in acoesDisponiveis)
+            if (acoesDisponiveis != null)
             {
-                if (acaoResultante is Imediata)
-                {
-                    Dictionary<Jogador, List<Acao>> acoesPosImediata = ProcessarAcao(acaoResultante);
+                _acoesPendentes.AddRange(acoesDisponiveis);
 
-                    foreach ((Jogador jogador, List<Acao> acoes) in acoesPosImediata)
-                        acoesPorJogador[jogador] = acoes;
+                foreach (var acaoResultante in acoesDisponiveis)
+                {
+                    if (acaoResultante is Imediata)
+                    {
+                        Dictionary<Jogador, List<Acao>> acoesPosImediata = ProcessarAcao(acaoResultante);
+
+                        foreach ((Jogador jogador, List<Acao> acoes) in acoesPosImediata)
+                            acoesPorJogador[jogador] = acoes;
+                    }
                 }
             }
 
@@ -103,8 +107,6 @@ namespace Piratas.Servidor.Dominio
             }
 
             acao.Turno = _turnoAtual;
-
-            _acoesPendentes.AddRange(acoesDisponiveis);
 
             return acoesPorJogador;
         }

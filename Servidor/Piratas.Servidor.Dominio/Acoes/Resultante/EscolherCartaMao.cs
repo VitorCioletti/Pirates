@@ -26,14 +26,14 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
         public Func<Jogador, Resultante> ResultanteAposEscolha { get; private set; }
 
-        public override IEnumerable<Acao> AplicarRegra(Mesa mesa)
+        public override List<Acao> AplicarRegra(Mesa mesa)
         {
             if (!CartasOpcao.Contains(CartaEscolhida))
                 throw new CartaNaoEUmaOpcaoException(this, CartaEscolhida);
 
             _aposEscolha(CartaEscolhida);
 
-            yield return null;
+            return null;
         }
     }
 }

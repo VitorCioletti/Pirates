@@ -2,7 +2,6 @@ namespace Piratas.Servidor.Dominio.Cartas
 {
     using System.Collections.Generic;
     using Acoes;
-    using Acoes.Tipos;
 
     public abstract class Carta
     {
@@ -10,6 +9,6 @@ namespace Piratas.Servidor.Dominio.Cartas
 
         public Carta() => Id = this.GetType().ToString();
 
-        public abstract IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa);
+        public abstract List<Acao> AplicarEfeito(Acao acao, Mesa mesa);
     }
 }

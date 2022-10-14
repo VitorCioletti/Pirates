@@ -1,21 +1,21 @@
 namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 {
+    using System.Collections.Generic;
+    using Acoes;
     using Acoes.Primaria;
     using Acoes.Resultante;
-    using Acoes.Tipos;
-    using Acoes;
-    using Cartas.Tipos;
-    using System.Collections.Generic;
+    using Tipos;
 
     public class MercadorTortuga : Embarcacao
     {
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) => _aplicarEfeito(acao);
-
-        internal IEnumerable<Resultante> _aplicarEfeito(Acao acao)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
             var comprarCarta = new ComprarCarta(acao.Realizador);
 
-            yield return new CopiarPrimaria(acao, acao.Realizador, comprarCarta);
+            var copiarPrimaria = new CopiarPrimaria(acao, acao.Realizador, comprarCarta);
+            var acoesResultantes = new List<Acao> { copiarPrimaria };
+
+            return acoesResultantes;
         }
     }
 }

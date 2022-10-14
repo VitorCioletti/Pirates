@@ -11,14 +11,13 @@ namespace Piratas.Servidor.Dominio.Cartas.Duelo
 
         public Canhao(int tiros) => Tiros = tiros;
 
-        public override IEnumerable<Acao> AplicarEfeito(Acao acao, Mesa mesa) =>
-            _aplicarEfeito(acao.Realizador.Campo);
-
-        internal IEnumerable<Resultante> _aplicarEfeito(Campo campoRealizador)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
+            Campo campoRealizador = acao.Realizador.Campo;
+
             campoRealizador.Adicionar(this);
 
-            yield return null;
+            return null;
         }
     }
 }

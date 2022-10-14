@@ -37,7 +37,7 @@ namespace Piratas.Servidor.Testes.Cartas.ResolucaoImediata
 
             var rum = new Rum();
 
-            rum.AplicarEfeito(acao, mesa).ToList();
+            rum.AplicarEfeito(acao, mesa);
 
             Assert.IsTrue(jogadorRealizador.Mao.Possui(cartasNoBaralhoCentral[0]));
         }

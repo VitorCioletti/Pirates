@@ -10,14 +10,23 @@ namespace Piratas.Servidor.Dominio.Acoes
         public DateTime DataHora { get; private set; }
 
         // TODO: melhorar nome
-        public Jogador Realizador { get; private set; }
+        public virtual Jogador Realizador { get; private set; }
 
         public Jogador Alvo { get; private set; }
 
         // TODO: init only setter? Qualquer um pode setar :(
         public int Turno { get; set; }
 
-        public Acao(Jogador realizador, Jogador alvo = null)
+        public Acao()
+        {
+            Id = string.Empty;
+            DataHora = DateTime.MinValue;
+
+            Realizador = null;
+            Alvo = null;
+        }
+
+        public Acao(Jogador realizador, Jogador alvo = null) : this()
         {
             Id = Guid.NewGuid().ToString();
             DataHora = DateTime.UtcNow;

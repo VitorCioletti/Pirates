@@ -1,11 +1,12 @@
 namespace Piratas.Servidor.Servico.WebSocket
 {
     using Configuracao;
+    using Controllers;
     using Log;
     using Microsoft.Extensions.Configuration;
     using WebSocketSharp.Server;
 
-    public static class WebSocket
+    public static class WebSocketServico
     {
         private static string _endereco;
 
@@ -17,7 +18,7 @@ namespace Piratas.Servidor.Servico.WebSocket
         {
             LogServico.Info("Servidor inicializado.");
 
-            IConfigurationSection configuracaoWebSocket = ConfiguracaoServico.Dados.GetSection("WebSocket");
+            IConfigurationSection configuracaoWebSocket = ConfiguracaoServico.Dados.GetSection("WebSocketServico");
 
             string endereco = configuracaoWebSocket.GetSection("Endereco").Value;
             string porta = configuracaoWebSocket.GetSection("Porta").Value;

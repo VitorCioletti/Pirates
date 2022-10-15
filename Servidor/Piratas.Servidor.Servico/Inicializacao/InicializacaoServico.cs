@@ -10,7 +10,7 @@ namespace Piratas.Servidor.Servico.Inicializacao
         {
             ConfiguracaoServico.Inicializar();
             LogServico.Inicializar();
-            WebSocket.Inicializar();
+            WebSocketServico.Inicializar();
         }
     }
 }

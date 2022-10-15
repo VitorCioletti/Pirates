@@ -1,6 +1,6 @@
 namespace Piratas.Servidor.Servico.Partida.Excecoes
 {
-    public class AcaoNaoDisponivelException : BaseServicoException
+    public class AcaoNaoDisponivelException : BasePartidaException
     {
         public string IdAcao { get; private set; }
 

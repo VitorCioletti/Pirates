@@ -2,8 +2,7 @@ namespace Piratas.Protocolo
 {
     public enum TipoEscolha
     {
-        AcaoPrimaria,
-        AcaoResultante,
+        Acao,
         Carta,
         Jogador,
     }

@@ -5,9 +5,11 @@ namespace Piratas.Servidor.Servico.Partida
     using System.Linq;
     using Dominio;
     using Dominio.Acoes;
+    using Dominio.Acoes.Tipos;
     using Dominio.Cartas;
     using Dominio.Excecoes;
     using Excecoes;
+    using Protocolo;
     using Protocolo.Partida.Cliente;
     using Protocolo.Partida.Servidor;
 
@@ -101,6 +103,9 @@ namespace Piratas.Servidor.Servico.Partida
             if (acaoPendente == null)
                 throw new AcaoNaoDisponivelException(idAcaoExecutada);
 
+            if (acaoPendente is Resultante acaoResultante)
+                _preencherResultanteComEscolha(acaoResultante, mensagemPartidaCliente.EscolhaPartidaCliente);
+
             return acaoPendente;
         }
 
@@ -115,6 +120,31 @@ namespace Piratas.Servidor.Servico.Partida
                 throw new JogadorSemAcaoPendenteException(idJogadorRealizador);
 
             return jogadorComAcaoPendente;
+        }
+
+        private void _preencherResultanteComEscolha(
+            Resultante acaoResultante,
+            EscolhaPartidaCliente escolhaPartidaCliente)
+        {
+            string idEscolhido = escolhaPartidaCliente.Escolhido;
+
+            switch (escolhaPartidaCliente.Tipo)
+            {
+                case TipoEscolha.Acao:
+                    acaoResultante.PreencherAcaoEscolhida(idEscolhido);
+                    break;
+
+                case TipoEscolha.Carta:
+                    acaoResultante.PreencherCartaEscolhida(idEscolhido);
+                    break;
+
+                case TipoEscolha.Jogador:
+                    acaoResultante.PreencherJogadorEscolhido(idEscolhido);
+                    break;
+
+                default:
+                    throw new TipoEscolhaNaoEncontrada((int)escolhaPartidaCliente.Tipo);
+            }
         }
 
         private MensagemPartidaServidor _criarMensagemServidor(Jogador jogador, List<Acao> acoesDisponiveis)

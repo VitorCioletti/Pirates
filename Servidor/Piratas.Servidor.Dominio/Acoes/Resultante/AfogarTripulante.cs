@@ -46,5 +46,12 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
             return null;
         }
+
+        public override void PreencherCartaEscolhida(string idCartaEscolhida)
+        {
+            Tripulante tripulacaoEscolhida = Alvo.Campo.Tripulacao.First(c => c.Id == idCartaEscolhida);
+
+            TripulanteAfogado = tripulacaoEscolhida;
+        }
     }
 }

@@ -1,6 +1,7 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Cartas;
     using Cartas.Tipos;
     using Excecoes.Acoes;
@@ -26,6 +27,13 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             mesa.PilhaDescarte.InserirTopo(CartaDescartada);
 
             return null;
+        }
+
+        public override void PreencherCartaEscolhida(string idCartaEscolhida)
+        {
+            Carta cartaEscolhida = Alvo.Mao.ObterPorId(idCartaEscolhida);
+
+            CartaDescartada = cartaEscolhida;
         }
     }
 }

@@ -3,6 +3,7 @@ namespace Piratas.Servidor.Servico.WebSocket
     using System;
     using System.Collections.Generic;
     using Partida;
+    using Partida.Excecoes;
     using Protocolo;
     using Protocolo.Partida.Cliente;
     using Protocolo.Partida.Servidor;
@@ -27,6 +28,13 @@ namespace Piratas.Servidor.Servico.WebSocket
                     // TODO: Enviar resposta para as diferentes sessões dos jogadores. Pesquisar propriedade Sessions.
                     Send(mensagemServidorDeserializada);
                 }
+            }
+            catch (BasePartidaException partidaException)
+            {
+                var mensagem = new MensagemPartidaServidor(partidaException.Id, partidaException.Message);
+                var mensagemSerializada = Parser.Serializar(mensagem);
+
+                Send(mensagemSerializada);
             }
             // TODO: Tentar fazer captura de exceções em controller em outro lugar pois será necessário repetir em
             // todos

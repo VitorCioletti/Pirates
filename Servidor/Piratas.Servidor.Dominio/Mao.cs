@@ -35,6 +35,8 @@ namespace Piratas.Servidor.Dominio
 
         public void Adicionar(List<Carta> cartas) => cartas.ForEach(Adicionar);
 
+        public Carta ObterPorId(string idCarta) => _cartas.FirstOrDefault(c => c.Id == idCarta);
+
         public void Remover(Carta carta)
         {
             if (!Possui(carta))

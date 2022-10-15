@@ -1,9 +1,9 @@
 namespace Piratas.Servidor.Servico.WebSocket
 {
+    using Configuracao;
+    using Log;
     using Microsoft.Extensions.Configuration;
     using WebSocketSharp.Server;
-    using Configuracao = Configuracao.Configuracao;
-    using Log = Log.Log;
 
     public static class WebSocket
     {
@@ -15,9 +15,9 @@ namespace Piratas.Servidor.Servico.WebSocket
 
         public static void Inicializar()
         {
-            Log.Info("Servidor inicializado.");
+            LogServico.Info("Servidor inicializado.");
 
-            IConfigurationSection configuracaoWebSocket = Configuracao.Dados.GetSection("WebSocket");
+            IConfigurationSection configuracaoWebSocket = ConfiguracaoServico.Dados.GetSection("WebSocket");
 
             string endereco = configuracaoWebSocket.GetSection("Endereco").Value;
             string porta = configuracaoWebSocket.GetSection("Porta").Value;
@@ -32,7 +32,7 @@ namespace Piratas.Servidor.Servico.WebSocket
 
             Conectar();
 
-            Log.Info($"Escutando no endereço: \"{endereco}:{porta}\".");
+            LogServico.Info($"Escutando no endereço: \"{endereco}:{porta}\".");
         }
 
         public static void Conectar() => _conexao.Start();

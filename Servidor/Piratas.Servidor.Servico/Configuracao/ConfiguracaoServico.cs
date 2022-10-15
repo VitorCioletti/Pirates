@@ -4,10 +4,9 @@ namespace Piratas.Servidor.Servico.Configuracao
     using System.Reflection;
     using Microsoft.Extensions.Configuration;
 
-    // TODO: Melhorar chamada dessa classe pois está Configuracao.Configuracao.
-    public static class Configuracao
+    public static class ConfiguracaoServico
     {
-        public static IConfigurationRoot Dados { get; set; }
+        public static IConfigurationRoot Dados { get; private set; }
 
         public static void Inicializar()
         {

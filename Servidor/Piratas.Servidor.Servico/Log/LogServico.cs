@@ -1,18 +1,17 @@
 namespace Piratas.Servidor.Servico.Log
 {
+    using System;
+    using Configuracao;
     using Microsoft.Extensions.Configuration;
     using Serilog;
-    using System;
-    using Configuracao = Configuracao.Configuracao;
 
-    // TODO: Melhorar chamada dessa classe pois está Log.Log.
-    public static class Log
+    public static class LogServico
     {
         private static ILogger _logger { get; set; }
 
         public static void Inicializar()
         {
-            _logger = _obterLogger(Configuracao.Dados);
+            _logger = _obterLogger(ConfiguracaoServico.Dados);
 
             _configuraExcecaoNaoTratada();
         }

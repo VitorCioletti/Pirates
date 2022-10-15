@@ -1,15 +1,15 @@
 namespace Piratas.Servidor.Servico.Inicializacao
 {
+    using Configuracao;
+    using Log;
     using WebSocket;
-    using Configuracao = Configuracao.Configuracao;
-    using Log = Log.Log;
 
     public static class InicializacaoServico
     {
         public static void Inicializar()
         {
-            Configuracao.Inicializar();
-            Log.Inicializar();
+            ConfiguracaoServico.Inicializar();
+            LogServico.Inicializar();
             WebSocket.Inicializar();
         }
     }

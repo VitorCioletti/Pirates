@@ -1,6 +1,6 @@
 namespace Piratas.Protocolo.Sala.Cliente
 {
-    public enum TipoAcaoSala
+    public enum TipoOperacaoSala
     {
         Criar,
         Sair,

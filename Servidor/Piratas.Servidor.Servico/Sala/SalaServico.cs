@@ -31,22 +31,22 @@ namespace Piratas.Servidor.Servico.Sala
         {
             var mensagensSalaServidor = new List<MensagemSalaServidor>();
 
-            switch (mensagemSalaCliente.TipoAcaoSala)
+            switch (mensagemSalaCliente.TipoOperacaoSala)
             {
-                case TipoAcaoSala.Criar:
+                case TipoOperacaoSala.Criar:
                     MensagemSalaServidor mensagemCriacaoSala = _criarSala(mensagemSalaCliente.IdJogadorRealizouAcao);
 
                     mensagensSalaServidor.Add(mensagemCriacaoSala);
                     break;
 
-                case TipoAcaoSala.Sair:
+                case TipoOperacaoSala.Sair:
                     List<MensagemSalaServidor> mensagensSaidaSala =
                         _sairSala(mensagemSalaCliente.IdJogadorRealizouAcao);
 
                     mensagensSalaServidor.AddRange(mensagensSaidaSala);
                     break;
 
-                case TipoAcaoSala.Entrar:
+                case TipoOperacaoSala.Entrar:
                     List<MensagemSalaServidor> mensagensEntradaSala = _entrarSala(
                         mensagemSalaCliente.IdJogadorRealizouAcao,
                         mensagemSalaCliente.IdSala);
@@ -54,7 +54,7 @@ namespace Piratas.Servidor.Servico.Sala
                     mensagensSalaServidor.AddRange(mensagensEntradaSala);
                     break;
 
-                case TipoAcaoSala.IniciarPartida:
+                case TipoOperacaoSala.IniciarPartida:
                     List<MensagemSalaServidor> mensagensInicioPartida =
                         _iniciarPartida(mensagemSalaCliente.IdJogadorRealizouAcao);
 
@@ -62,7 +62,7 @@ namespace Piratas.Servidor.Servico.Sala
                     break;
 
                 default:
-                    throw new TipoAcaoSalaNaoEncontrado((int)mensagemSalaCliente.TipoAcaoSala);
+                    throw new TipoOperacaoSalaNaoEncontrado((int)mensagemSalaCliente.TipoOperacaoSala);
             }
 
             return mensagensSalaServidor;
@@ -84,7 +84,7 @@ namespace Piratas.Servidor.Servico.Sala
                 idJogadorCriador,
                 idJogadorCriador,
                 Guid.Empty,
-                TipoAcaoSalaServidor.Criou);
+                TipoOperacaoSalaServidor.Criou);
         }
 
         private static List<MensagemSalaServidor> _sairSala(Guid idJogador)
@@ -100,7 +100,7 @@ namespace Piratas.Servidor.Servico.Sala
                 idJogador,
                 idSala,
                 Guid.Empty,
-                TipoAcaoSalaServidor.JogadorSaiu);
+                TipoOperacaoSalaServidor.JogadorSaiu);
 
             sala.Remove(idJogador);
 
@@ -123,7 +123,7 @@ namespace Piratas.Servidor.Servico.Sala
                 idJogador,
                 idSala,
                 Guid.Empty,
-                TipoAcaoSalaServidor.JogadorEntrou);
+                TipoOperacaoSalaServidor.JogadorEntrou);
 
             _salasAbertas[idSala].Add(idJogador);
 
@@ -145,7 +145,7 @@ namespace Piratas.Servidor.Servico.Sala
                 idJogador,
                 Guid.Empty,
                 idPartida,
-                TipoAcaoSalaServidor.IniciouPartida);
+                TipoOperacaoSalaServidor.IniciouPartida);
 
             _salasAbertas.Remove(idSala);
 
@@ -156,7 +156,7 @@ namespace Piratas.Servidor.Servico.Sala
             Guid idJogador,
             Guid idSala,
             Guid idPartida,
-            TipoAcaoSalaServidor tipoAcaoSalaServidor)
+            TipoOperacaoSalaServidor tipoOperacaoSalaServidor)
         {
             var mensagensSalaServidor = new List<MensagemSalaServidor>();
 
@@ -169,7 +169,7 @@ namespace Piratas.Servidor.Servico.Sala
                     id,
                     idJogador,
                     idPartida,
-                    tipoAcaoSalaServidor);
+                    tipoOperacaoSalaServidor);
 
                 mensagensSalaServidor.Add(mensagemSaidaSala);
             }

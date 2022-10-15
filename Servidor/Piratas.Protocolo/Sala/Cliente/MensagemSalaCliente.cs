@@ -6,7 +6,7 @@ namespace Piratas.Protocolo.Sala.Cliente
     {
         public Guid IdJogadorRealizouAcao { get; private set; }
 
-        public TipoAcaoSala TipoAcaoSala { get; private set; }
+        public TipoOperacaoSala TipoOperacaoSala { get; private set; }
 
         public Guid IdSala { get; private set; }
 
@@ -16,13 +16,13 @@ namespace Piratas.Protocolo.Sala.Cliente
             Guid idJogadorRealizouAcao,
             Guid idSala,
             Guid idPartida,
-            TipoAcaoSala tipoAcaoSala)
+            TipoOperacaoSala tipoOperacaoSala)
         {
             IdSala = idSala;
             IdPartida = idPartida;
             IdJogadorRealizouAcao = idJogadorRealizouAcao;
 
-            TipoAcaoSala = tipoAcaoSala;
+            TipoOperacaoSala = tipoOperacaoSala;
         }
     }
 }

@@ -1,9 +1,10 @@
-namespace Piratas.Servidor.Dominio.Baralhos.Excecoes;
-
-public class CartaNaoEncontradaNaPilhaDescarteExcecao : BaseBaralhoExcecao
+namespace Piratas.Servidor.Dominio.Baralhos.Excecoes
 {
-    public CartaNaoEncontradaNaPilhaDescarteExcecao(string idCarta) :
-        base("carta-nao-encontrada-na-pilha-descarte", $"Carta \"{idCarta}\" não encontrada na pilha de descarte.")
+    public class CartaNaoEncontradaNaPilhaDescarteExcecao : BaseBaralhoExcecao
     {
+        public CartaNaoEncontradaNaPilhaDescarteExcecao(string idCarta) :
+            base("carta-nao-encontrada-na-pilha-descarte", $"Carta \"{idCarta}\" não encontrada na pilha de descarte.")
+        {
+        }
     }
 }

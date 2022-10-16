@@ -6,9 +6,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Piratas.Servidor.Dominio\Piratas.Servidor.Dominio.csproj"/>
-	<ProjectReference Include="..\Piratas.Servidor.Aplicacao\Piratas.Servidor.Aplicacao.csproj"/>
-	<ProjectReference Include="..\Piratas.Servidor.Servico\Piratas.Servidor.Servico.csproj"/>
-	<ProjectReference Include="..\Piratas.Protocolo\Piratas.Protocolo.csproj"/>
+        <ProjectReference Include="..\Piratas.Servidor.Servico\Piratas.Servidor.Servico.csproj"/>
+        <ProjectReference Include="..\Piratas.Protocolo\Piratas.Protocolo.csproj"/>
     </ItemGroup>
 
 </Project>

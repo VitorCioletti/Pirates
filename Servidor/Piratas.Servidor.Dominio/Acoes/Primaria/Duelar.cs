@@ -17,7 +17,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
             if (CartaIniciadora is Timoneiro)
-                throw new CartaProibidaIniciarDuelo(this, CartaIniciadora);
+                throw new CartaProibidaIniciarDueloExcecao(this, CartaIniciadora);
 
             mesa.EntrarModoDuelo(Realizador, Alvo);
 

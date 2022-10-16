@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
         public void Danificar(int dano)
         {
             if (Vida == 0)
-                throw new EmbarcacaoSemVidaException(this);
+                throw new EmbarcacaoSemVidaExcecao(this);
 
             Vida -= dano;
         }

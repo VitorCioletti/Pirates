@@ -5,7 +5,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     using Cartas.ResolucaoImediata;
     using Cartas.Tipos;
     using Cartas.Tripulacao;
-    using Excecoes;
+    using Dominio.Excecoes.Acoes;
     using Primaria;
     using Tipos;
 
@@ -18,10 +18,10 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             var tripulacao = alvo.Campo.Tripulacao;
 
             if (tripulacao.Count == 0)
-                throw new NaoPossuiTripulacaoException(alvo.Id);
+                throw new NaoPossuiTripulacaoExcecao(this, alvo.Id);
 
             if (tripulacao.All(t => !t.Afogavel))
-                throw new NenhumTripulantePodeSerAfogadoException(alvo.Id);
+                throw new NenhumTripulantePodeSerAfogadoExcecao(this, alvo.Id);
         }
 
         public override List<Acao> AplicarRegra(Mesa mesa)
@@ -32,13 +32,13 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 {
                     if (TripulanteAfogado is PirataNobre)
                     {
-                        throw new TripulanteNaoPodeSerAfogadoException(TripulanteAfogado.Id, homemAoMar.Id);
+                        throw new TripulanteNaoPodeSerAfogadoExcecao(this, TripulanteAfogado.Id, homemAoMar.Id);
                     }
                 }
             }
 
             if (!TripulanteAfogado.Afogavel)
-                throw new TripulanteNaoPodeSerAfogadoException(TripulanteAfogado.Id);
+                throw new TripulanteNaoPodeSerAfogadoExcecao(this, TripulanteAfogado.Id);
 
             Alvo.Campo.Remover(TripulanteAfogado);
             mesa.PilhaDescarte.InserirTopo(TripulanteAfogado);

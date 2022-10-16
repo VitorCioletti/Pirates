@@ -19,7 +19,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                 a => a.Turno == acao.Turno && (a is DescerCarta || a is Duelar));
 
             if (ultimaAcao == null)
-                throw new SemAcaoValidaException(this);
+                throw new SemAcaoValidaExcecao(this);
 
             var acoesResultantes = new List<Acao>();
 
@@ -31,7 +31,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                     var tipoNaoPermitido = !(cartaACopiar is ResolucaoImediata || cartaACopiar is Canhao);
 
                     if (tipoNaoPermitido)
-                        throw new ImpossivelCopiarException(this, cartaACopiar);
+                        throw new ImpossivelCopiarExcecao(this, cartaACopiar);
 
                     foreach (List<Acao> acoesPorJogador in mesa.ProcessarAcao(ultimaAcao).Values)
                     {
@@ -66,7 +66,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                     break;
 
                 default:
-                    throw new SemAcaoValidaException(this);
+                    throw new SemAcaoValidaExcecao(this);
             }
 
             return acoesResultantes;

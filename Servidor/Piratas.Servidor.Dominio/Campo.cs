@@ -65,7 +65,7 @@ namespace Piratas.Servidor.Dominio
         public void Adicionar(Tripulante tripulante)
         {
             if (Tripulacao.Count >= _tripulacaoMaxima)
-                throw new TripulacaoCheiaException();
+                throw new TripulacaoCheiaExcecao();
 
             Tripulacao.Add(tripulante);
 
@@ -75,7 +75,7 @@ namespace Piratas.Servidor.Dominio
         public void Adicionar(Embarcacao embarcacao)
         {
             if (Embarcacao != null)
-                throw new ExisteEmbarcacaoException();
+                throw new ExisteEmbarcacaoExcecao();
 
             Embarcacao = embarcacao;
 
@@ -110,10 +110,10 @@ namespace Piratas.Servidor.Dominio
         public void Remover(Tripulante tripulante)
         {
             if (Tripulacao.Count == 0)
-                throw new TripulacaoVaziaException();
+                throw new TripulacaoVaziaExcecao();
 
             if (Tripulacao.FirstOrDefault(t => t == tripulante) == null)
-                throw new TripulanteNaoEncontradoException();
+                throw new TripulanteNaoEncontradoExcecao();
 
             Tripulacao.Remove(tripulante);
 
@@ -150,7 +150,7 @@ namespace Piratas.Servidor.Dominio
         private void _removerEmbarcacao()
         {
             if (Embarcacao == null)
-                throw new SemEmbarcacaoException();
+                throw new SemEmbarcacaoExcecao();
 
             _removerTodasProtegidas();
 

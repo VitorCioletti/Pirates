@@ -47,7 +47,7 @@ namespace Piratas.Servidor.Servico.Partida
         private static void _verificarPartidaExistente(Guid idPartida)
         {
             if (!_partidasEmAndamento.ContainsKey(idPartida))
-                throw new PartidaNaoEncontradaException(idPartida);
+                throw new PartidaNaoEncontradaExcecao(idPartida);
         }
     }
 }

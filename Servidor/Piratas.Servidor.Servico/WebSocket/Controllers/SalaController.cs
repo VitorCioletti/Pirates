@@ -1,11 +1,12 @@
 namespace Piratas.Servidor.Servico.WebSocket.Controllers
 {
     using System.Collections.Generic;
-    using Excecoes;
     using Protocolo;
+    using Protocolo.Excecoes;
     using Protocolo.Sala.Cliente;
     using Protocolo.Sala.Servidor;
     using Sala;
+    using Sala.Excecoes;
     using WebSocketSharp;
     using WebSocketSharp.Server;
 
@@ -27,11 +28,11 @@ namespace Piratas.Servidor.Servico.WebSocket.Controllers
                     Send(mensagemSalaServidorSerializada);
                 }
             }
-            catch (BaseSalaException baseSalaException)
+            catch (BaseSalaExcecao baseSalaException)
             {
                 _enviaMensagemErro(baseSalaException.Id, baseSalaException.Message);
             }
-            catch (BaseParserException parserException)
+            catch (BaseParserExcecao parserException)
             {
                 _enviaMensagemErro(parserException.Id, parserException.Message);
             }

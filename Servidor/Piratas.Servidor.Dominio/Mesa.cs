@@ -114,7 +114,7 @@ namespace Piratas.Servidor.Dominio
         public Dictionary<Jogador, List<Acao>> MoverParaProximoTurno()
         {
             if (JogadorAtual.AcoesDisponiveis > 0)
-                throw new PossuiAcoesDisponiveisException(JogadorAtual);
+                throw new PossuiAcoesDisponiveisExcecao(JogadorAtual);
 
             _turnoAtual++;
 
@@ -140,7 +140,7 @@ namespace Piratas.Servidor.Dominio
         public void EntrarModoDuelo(Jogador realizador, Jogador alvo)
         {
             if (EmDuelo)
-                throw new EmDueloException();
+                throw new EmDueloExcecao();
 
             EmDuelo = true;
             Duelistas = new Tuple<Jogador, Jogador>(realizador, alvo);
@@ -149,7 +149,7 @@ namespace Piratas.Servidor.Dominio
         public void SairModoDuelo()
         {
             if (!EmDuelo)
-                throw new SemDueloException();
+                throw new SemDueloExcecao();
 
             // TODO: Verificar se todas as ações resposta de duelo foram realizadas?
 
@@ -162,7 +162,7 @@ namespace Piratas.Servidor.Dominio
         public void RegistrarImediataAposResultantes(Imediata imediata)
         {
             if (_imediataAposResultantes != null)
-                throw new ImediataRegistradaException();
+                throw new ImediataRegistradaExcecao();
 
             _imediataAposResultantes = imediata;
         }
@@ -198,7 +198,7 @@ namespace Piratas.Servidor.Dominio
             if (acao is Primaria)
             {
                 if (realizador != JogadorAtual)
-                    throw new TurnoDeOutroJogadorException(realizador);
+                    throw new TurnoDeOutroJogadorExcecao(realizador);
             }
         }
 
@@ -207,7 +207,7 @@ namespace Piratas.Servidor.Dominio
             if (acao is Resultante resultante)
             {
                 if (!_acoesPendentes.Contains(resultante))
-                    throw new ResultanteNaoEsperadaException(resultante);
+                    throw new ResultanteNaoEsperadaExcecao(resultante);
             }
         }
     }

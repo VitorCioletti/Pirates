@@ -26,7 +26,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
             if (!JogadoresOpcao.Contains(JogadorEscolhido))
-                throw new JogadorNaoEUmaOpcaoException(this, JogadorEscolhido);
+                throw new JogadorNaoEUmaOpcaoExcecao(this, JogadorEscolhido);
 
             return ResultanteAposEscolha(this, JogadorEscolhido);
         }

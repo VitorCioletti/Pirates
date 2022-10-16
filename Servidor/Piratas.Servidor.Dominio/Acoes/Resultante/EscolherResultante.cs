@@ -11,14 +11,13 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
         public List<Resultante> ResultantesOpcao { get; private set; }
 
-        public EscolherResultante(
-            Acao origem, Jogador realizador, params Resultante[] resultantesOpcao) : base(origem, realizador) =>
-            ResultantesOpcao = resultantesOpcao.ToList();
+        public EscolherResultante(Acao origem, Jogador realizador, params Resultante[] resultantesOpcao)
+            : base(origem, realizador) => ResultantesOpcao = resultantesOpcao.ToList();
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
             if (!ResultantesOpcao.Contains(ResultanteEscolhida))
-                throw new ResultanteNaoEUmaOpcaoException(this, ResultanteEscolhida);
+                throw new ResultanteNaoEUmaOpcaoExcecao(this, ResultanteEscolhida);
 
             return ResultanteEscolhida.AplicarRegra(mesa);
         }

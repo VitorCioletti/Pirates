@@ -73,7 +73,7 @@ namespace Piratas.Servidor.Servico.Sala
             bool estaNumaSala = _estaNumaSala(idJogadorCriador);
 
             if (estaNumaSala)
-                throw new JogadorJaEstaNumaSalaException(idJogadorCriador);
+                throw new JogadorJaEstaNumaSalaExcecao(idJogadorCriador);
 
             Guid idNovaSala = Guid.NewGuid();
 
@@ -112,12 +112,12 @@ namespace Piratas.Servidor.Servico.Sala
             bool estaNumaSala = _estaNumaSala(idJogador);
 
             if (estaNumaSala)
-                throw new JogadorJaEstaNumaSalaException(idJogador);
+                throw new JogadorJaEstaNumaSalaExcecao(idJogador);
 
             bool salaNaoExiste = !_salasAbertas.ContainsKey(idSala);
 
             if (salaNaoExiste)
-                throw new SalaNaoEncontradaException(idSala);
+                throw new SalaNaoEncontradaExcecao(idSala);
 
             var mensagensEntradaSala = _criarMensagensServidor(
                 idJogador,

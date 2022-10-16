@@ -15,7 +15,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
             if (Carta is Tesouro || Carta is Passivo)
-                throw new ProibidoDescerCartaException(this, Carta);
+                throw new ProibidoDescerCartaExcecao(this, Carta);
 
             var resultanteEfeitoCarta = Carta.AplicarEfeito(this, mesa);
 

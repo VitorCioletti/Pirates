@@ -84,7 +84,7 @@ namespace Piratas.Servidor.Servico.Partida
             {
                 mensagensServidor.Add(new MensagemPartidaServidor(servicoException.Id, servicoException.Message));
             }
-            catch (BaseRegraException regraException)
+            catch (BaseRegraExcecao regraException)
             {
                 mensagensServidor.Add(new MensagemPartidaServidor(regraException.Id, regraException.Message));
             }
@@ -101,7 +101,7 @@ namespace Piratas.Servidor.Servico.Partida
             Acao acaoPendente = acoesPendentes.FirstOrDefault(a => a.Id == idAcaoExecutada);
 
             if (acaoPendente == null)
-                throw new AcaoNaoDisponivelException(idAcaoExecutada);
+                throw new AcaoNaoDisponivelExcecao(idAcaoExecutada);
 
             if (acaoPendente is Resultante acaoResultante)
                 _preencherResultanteComEscolha(acaoResultante, mensagemPartidaCliente.EscolhaPartidaCliente);
@@ -117,7 +117,7 @@ namespace Piratas.Servidor.Servico.Partida
                 _possiveisAcoesEnviadasAosJogadores.FirstOrDefault(a => a.Key.Id == idJogadorRealizador);
 
             if (jogadorComAcaoPendente == null)
-                throw new JogadorSemAcaoPendenteException(idJogadorRealizador);
+                throw new JogadorSemAcaoPendenteExcecao(idJogadorRealizador);
 
             return jogadorComAcaoPendente;
         }

@@ -14,7 +14,7 @@ namespace Piratas.Protocolo
             }
             catch (Exception exception)
             {
-                throw new DeserializacaoException(exception);
+                throw new DeserializacaoExcecao(exception);
             }
         }
 
@@ -26,7 +26,7 @@ namespace Piratas.Protocolo
             }
             catch (Exception exception)
             {
-                throw new SerializacaoException(exception);
+                throw new SerializacaoExcecao(exception);
             }
         }
     }

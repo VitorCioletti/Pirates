@@ -11,7 +11,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Duelo
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
             if (!(acao is DescerCartasDuelo))
-                throw new ApenasCartaRespostaDueloException(this);
+                throw new ApenasCartaRespostaDueloExcecao(this);
 
             mesa.SairModoDuelo();
 

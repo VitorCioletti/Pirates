@@ -31,10 +31,10 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             foreach ((var jogador, var carta) in CartasPorJogador)
             {
                 if (carta == null)
-                    throw new NaoHaCartaAtribudaException(this, jogador);
+                    throw new NaoHaCartaAtribudaExcecao(this, jogador);
 
                 if (!CartasOpcoes.Contains(carta))
-                    throw new CartaNaoEUmaOpcaoException(this, carta);
+                    throw new CartaNaoEUmaOpcaoExcecao(this, carta);
 
                 jogador.Mao.Adicionar(carta);
             }

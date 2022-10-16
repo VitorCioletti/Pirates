@@ -21,7 +21,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 return null;
 
             if (CartaDescartada.GetType() == typeof(Tesouro))
-                throw new ProibidoDescerCartaException(this, CartaDescartada);
+                throw new ProibidoDescerCartaExcecao(this, CartaDescartada);
 
             Alvo.Mao.Remover(CartaDescartada);
             mesa.PilhaDescarte.InserirTopo(CartaDescartada);

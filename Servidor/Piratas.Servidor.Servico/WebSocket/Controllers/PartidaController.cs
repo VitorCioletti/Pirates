@@ -5,6 +5,7 @@ namespace Piratas.Servidor.Servico.WebSocket.Controllers
     using Partida;
     using Partida.Excecoes;
     using Protocolo;
+    using Protocolo.Excecoes;
     using Protocolo.Partida.Cliente;
     using Protocolo.Partida.Servidor;
     using WebSocketSharp;
@@ -29,7 +30,7 @@ namespace Piratas.Servidor.Servico.WebSocket.Controllers
                     Send(mensagemServidorDeserializada);
                 }
             }
-            catch (BasePartidaException partidaException)
+            catch (BasePartidaExcecao partidaException)
             {
                 var mensagem = new MensagemPartidaServidor(partidaException.Id, partidaException.Message);
                 var mensagemSerializada = Parser.Serializar(mensagem);
@@ -38,7 +39,7 @@ namespace Piratas.Servidor.Servico.WebSocket.Controllers
             }
             // TODO: Tentar fazer captura de exceções em controller em outro lugar pois será necessário repetir em
             // todos
-            catch (BaseParserException parserException)
+            catch (BaseParserExcecao parserException)
             {
                 var mensagem = new MensagemPartidaServidor(parserException.Id, parserException.Message);
                 var mensagemSerializada = Parser.Serializar(mensagem);

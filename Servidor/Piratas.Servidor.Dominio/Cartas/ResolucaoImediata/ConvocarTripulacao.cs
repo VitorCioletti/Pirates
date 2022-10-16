@@ -16,12 +16,12 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             Jogador realizador = acao.Realizador;
 
             if (realizador.Campo.TripulacaoCheia())
-                throw new TripulacaoCheiaException(this, realizador);
+                throw new TripulacaoCheiaExcecao(this, realizador);
 
             var tripulantesDescartados = pilhaDescarte.ObterTodas<Tripulante>().OfType<Carta>().ToList();
 
             if (tripulantesDescartados.Count == 0)
-                throw new SemTripulacaoPilhaDescarteException(this);
+                throw new SemTripulacaoPilhaDescarteExcecao(this);
 
             var escolherCartaBaralho = new EscolherCartaBaralho(
                 acao,

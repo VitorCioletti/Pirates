@@ -29,7 +29,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
             if (!CartasOpcao.Contains(CartaEscolhida))
-                throw new CartaNaoEUmaOpcaoException(this, CartaEscolhida);
+                throw new CartaNaoEUmaOpcaoExcecao(this, CartaEscolhida);
 
             _aposEscolha(CartaEscolhida);
 

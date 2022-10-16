@@ -24,7 +24,7 @@ namespace Piratas.Servidor.Dominio
         public void Adicionar(Carta carta)
         {
             if (_cartas.Count == _limiteCartas)
-                throw new LimiteCartasMaoAtingidoException();
+                throw new LimiteCartasMaoAtingidoExcecao();
 
             _cartas.Add(carta);
 
@@ -40,10 +40,10 @@ namespace Piratas.Servidor.Dominio
         public void Remover(Carta carta)
         {
             if (!Possui(carta))
-                throw new CartaNaoExisteNaMaoException(carta);
+                throw new CartaNaoExisteNaMaoExcecao(carta);
 
             if (_cartas.Count == 0)
-                throw new MaoVaziaException();
+                throw new MaoVaziaExcecao();
 
             _cartas.Remove(carta);
 

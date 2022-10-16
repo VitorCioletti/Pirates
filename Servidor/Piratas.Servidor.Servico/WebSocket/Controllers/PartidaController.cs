@@ -2,8 +2,8 @@ namespace Piratas.Servidor.Servico.WebSocket.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using Excecoes.Partida;
     using Partida;
-    using Partida.Excecoes;
     using Protocolo;
     using Protocolo.Excecoes;
     using Protocolo.Partida.Cliente;

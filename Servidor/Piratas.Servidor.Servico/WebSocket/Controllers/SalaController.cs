@@ -1,12 +1,12 @@
 namespace Piratas.Servidor.Servico.WebSocket.Controllers
 {
     using System.Collections.Generic;
+    using Excecoes.Sala;
     using Protocolo;
     using Protocolo.Excecoes;
     using Protocolo.Sala.Cliente;
     using Protocolo.Sala.Servidor;
     using Sala;
-    using Sala.Excecoes;
     using WebSocketSharp;
     using WebSocketSharp.Server;
 

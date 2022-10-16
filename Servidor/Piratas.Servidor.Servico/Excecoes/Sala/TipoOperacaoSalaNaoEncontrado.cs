@@ -1,4 +1,4 @@
-namespace Piratas.Servidor.Servico.Sala.Excecoes
+namespace Piratas.Servidor.Servico.Excecoes.Sala
 {
     public class TipoOperacaoSalaNaoEncontrado : BaseServicoException
     {

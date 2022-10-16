@@ -3,10 +3,10 @@ namespace Piratas.Servidor.Servico.Sala
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Excecoes;
     using Partida;
     using Protocolo.Sala.Cliente;
     using Protocolo.Sala.Servidor;
+    using Servico.Excecoes.Sala;
 
     public static class SalaServico
     {

@@ -8,10 +8,10 @@ namespace Piratas.Servidor.Servico.Partida
     using Dominio.Acoes.Tipos;
     using Dominio.Cartas;
     using Dominio.Excecoes;
-    using Excecoes;
     using Protocolo;
     using Protocolo.Partida.Cliente;
     using Protocolo.Partida.Servidor;
+    using Servico.Excecoes.Partida;
 
     internal class PartidaServico
     {

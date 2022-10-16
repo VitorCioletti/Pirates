@@ -40,14 +40,14 @@ namespace Piratas.Servidor.Servico.Sala
                     break;
 
                 case TipoOperacaoSala.Sair:
-                    List<MensagemSalaServidor> mensagensSaidaSala =
+                    IEnumerable<MensagemSalaServidor> mensagensSaidaSala =
                         _sairSala(mensagemSalaCliente.IdJogadorRealizouAcao);
 
                     mensagensSalaServidor.AddRange(mensagensSaidaSala);
                     break;
 
                 case TipoOperacaoSala.Entrar:
-                    List<MensagemSalaServidor> mensagensEntradaSala = _entrarSala(
+                    IEnumerable<MensagemSalaServidor> mensagensEntradaSala = _entrarSala(
                         mensagemSalaCliente.IdJogadorRealizouAcao,
                         mensagemSalaCliente.IdSala);
 
@@ -55,7 +55,7 @@ namespace Piratas.Servidor.Servico.Sala
                     break;
 
                 case TipoOperacaoSala.IniciarPartida:
-                    List<MensagemSalaServidor> mensagensInicioPartida =
+                    IEnumerable<MensagemSalaServidor> mensagensInicioPartida =
                         _iniciarPartida(mensagemSalaCliente.IdJogadorRealizouAcao);
 
                     mensagensSalaServidor.AddRange(mensagensInicioPartida);
@@ -75,7 +75,7 @@ namespace Piratas.Servidor.Servico.Sala
             if (estaNumaSala)
                 throw new JogadorJaEstaNumaSalaExcecao(idJogadorCriador);
 
-            Guid idNovaSala = Guid.NewGuid();
+            var idNovaSala = Guid.NewGuid();
 
             _salasAbertas[idNovaSala] = new List<Guid> { idJogadorCriador };
 
@@ -87,7 +87,7 @@ namespace Piratas.Servidor.Servico.Sala
                 TipoOperacaoSalaServidor.Criou);
         }
 
-        private static List<MensagemSalaServidor> _sairSala(Guid idJogador)
+        private static IEnumerable<MensagemSalaServidor> _sairSala(Guid idJogador)
         {
             Guid idSala = _salasAbertas.FirstOrDefault(s => s.Value.Contains(idJogador)).Key;
 
@@ -96,7 +96,7 @@ namespace Piratas.Servidor.Servico.Sala
 
             List<Guid> sala = _salasAbertas[idSala];
 
-            List<MensagemSalaServidor> mensagensSaidaSala = _criarMensagensServidor(
+            IEnumerable<MensagemSalaServidor> mensagensSaidaSala = _criarMensagensServidor(
                 idJogador,
                 idSala,
                 Guid.Empty,
@@ -107,7 +107,7 @@ namespace Piratas.Servidor.Servico.Sala
             return mensagensSaidaSala;
         }
 
-        private static List<MensagemSalaServidor> _entrarSala(Guid idJogador, Guid idSala)
+        private static IEnumerable<MensagemSalaServidor> _entrarSala(Guid idJogador, Guid idSala)
         {
             bool estaNumaSala = _estaNumaSala(idJogador);
 
@@ -119,7 +119,7 @@ namespace Piratas.Servidor.Servico.Sala
             if (salaNaoExiste)
                 throw new SalaNaoEncontradaExcecao(idSala);
 
-            var mensagensEntradaSala = _criarMensagensServidor(
+            IEnumerable<MensagemSalaServidor> mensagensEntradaSala = _criarMensagensServidor(
                 idJogador,
                 idSala,
                 Guid.Empty,
@@ -130,7 +130,7 @@ namespace Piratas.Servidor.Servico.Sala
             return mensagensEntradaSala;
         }
 
-        private static List<MensagemSalaServidor> _iniciarPartida(Guid idJogador)
+        private static IEnumerable<MensagemSalaServidor> _iniciarPartida(Guid idJogador)
         {
             Guid idSala = _salasAbertas.FirstOrDefault(s => s.Value.Contains(idJogador)).Key;
 
@@ -141,7 +141,7 @@ namespace Piratas.Servidor.Servico.Sala
 
             Guid idPartida = GerenciadorPartidaServico.CriarPartida(idsJogadores);
 
-            List<MensagemSalaServidor> mensagensCriacaoPartida = _criarMensagensServidor(
+            IEnumerable<MensagemSalaServidor> mensagensCriacaoPartida = _criarMensagensServidor(
                 idJogador,
                 Guid.Empty,
                 idPartida,
@@ -152,7 +152,7 @@ namespace Piratas.Servidor.Servico.Sala
             return mensagensCriacaoPartida;
         }
 
-        private static List<MensagemSalaServidor> _criarMensagensServidor(
+        private static IEnumerable<MensagemSalaServidor> _criarMensagensServidor(
             Guid idJogador,
             Guid idSala,
             Guid idPartida,

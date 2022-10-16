@@ -8,13 +8,13 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class MapaDoTesouro : ResolucaoImediata
     {
-        private readonly int _cartasObtidas = 4;
+        private const int _cartasObtidas = 4;
 
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
             BaralhoCentral baralhoCentral = mesa.BaralhoCentral;
 
-            var cartasOpcoes = baralhoCentral.ObterTopo(_cartasObtidas);
+            List<Carta> cartasOpcoes = baralhoCentral.ObterTopo(_cartasObtidas);
 
             var escolherCartaBaralho = new EscolherCartaBaralho(
                 acao,

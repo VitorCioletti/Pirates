@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             Mao maoRealizador = acao.Realizador.Mao;
             BaralhoCentral baralhoCentral = mesa.BaralhoCentral;
 
-            var cartasCompradas = baralhoCentral.ObterTopo(_cartasCompradas);
+            List<Carta> cartasCompradas = baralhoCentral.ObterTopo(_cartasCompradas);
             maoRealizador.Adicionar(cartasCompradas);
 
             return null;

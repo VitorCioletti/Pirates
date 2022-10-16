@@ -15,7 +15,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
         {
             List<Jogador> jogadoresNaMesa = mesa.Jogadores;
 
-            var ultimaAcao = mesa.HistoricoAcao.FirstOrDefault(
+            Acao ultimaAcao = mesa.HistoricoAcao.FirstOrDefault(
                 a => a.Turno == acao.Turno && (a is DescerCarta || a is Duelar));
 
             if (ultimaAcao == null)
@@ -26,9 +26,9 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             switch (ultimaAcao)
             {
                 case DescerCarta descerCarta:
-                    var cartaACopiar = descerCarta.Carta;
+                    Carta cartaACopiar = descerCarta.Carta;
 
-                    var tipoNaoPermitido = !(cartaACopiar is ResolucaoImediata || cartaACopiar is Canhao);
+                    bool tipoNaoPermitido = !(cartaACopiar is ResolucaoImediata || cartaACopiar is Canhao);
 
                     if (tipoNaoPermitido)
                         throw new ImpossivelCopiarExcecao(this, cartaACopiar);
@@ -44,11 +44,11 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                     break;
 
                 case Duelar duelar:
-                    var realizador = duelar.Realizador;
+                    Jogador realizador = duelar.Realizador;
 
-                    var cartaIniciadora = duelar.CartaIniciadora;
+                    Duelo cartaIniciadora = duelar.CartaIniciadora;
 
-                    var outrosJogadores = jogadoresNaMesa.Where(j => j != realizador).ToList();
+                    List<Jogador> outrosJogadores = jogadoresNaMesa.Where(j => j != realizador).ToList();
                     var escolherJogador = new EscolherJogador(acao, realizador, outrosJogadores, DuelarResultante);
 
                     acoesResultantes.Add(escolherJogador);

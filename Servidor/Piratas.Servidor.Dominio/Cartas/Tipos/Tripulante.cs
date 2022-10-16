@@ -6,7 +6,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
 
         public bool Afogavel { get; protected set; }
 
-        public Tripulante()
+        protected Tripulante()
         {
             Afogavel = true;
         }

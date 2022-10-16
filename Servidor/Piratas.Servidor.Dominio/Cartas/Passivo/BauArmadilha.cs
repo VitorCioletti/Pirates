@@ -1,9 +1,8 @@
 namespace Piratas.Servidor.Dominio.Cartas.Passivo
 {
-    using Acoes.Tipos;
-    using Acoes;
-    using Cartas.Tipos;
     using System.Collections.Generic;
+    using Acoes;
+    using Tipos;
 
     public class BauArmadilha : ResolucaoImediata
     {

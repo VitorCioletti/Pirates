@@ -16,7 +16,7 @@ namespace Piratas.Servidor.Servico.WebSocket.Controllers
         {
             try
             {
-                MensagemSalaCliente mensagemSalaCliente = Parser.Deserializar<MensagemSalaCliente>(e.Data);
+                var mensagemSalaCliente = Parser.Deserializar<MensagemSalaCliente>(e.Data);
 
                 List<MensagemSalaServidor> mensagensSalaServidor =
                     SalaServico.ProcessarMensagemCliente(mensagemSalaCliente);

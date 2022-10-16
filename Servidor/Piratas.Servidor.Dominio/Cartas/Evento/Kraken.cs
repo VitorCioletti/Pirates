@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
 
             var acoesResultantes = new List<Acao>();
 
-            foreach (var jogador in jogadoresNaMesa)
+            foreach (Jogador jogador in jogadoresNaMesa)
             {
                 bool possuiEmbarcacao = jogador.Campo.Embarcacao != null;
                 bool possuiTripulacao = jogador.Campo.Tripulacao.Count == 0;
@@ -34,7 +34,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
                 }
                 else if (!possuiEmbarcacao)
                 {
-                    var afogaveis = jogador.Campo.Tripulacao.Where(t => t.Afogavel).ToList();
+                    List<Tripulante> afogaveis = jogador.Campo.Tripulacao.Where(t => t.Afogavel).ToList();
 
                     if (afogaveis.Count == 0)
                         continue;

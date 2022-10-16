@@ -4,7 +4,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using System.Linq;
     using Acoes;
     using Acoes.Resultante;
-    using Acoes.Tipos;
     using Tipos;
 
     public class OlhoCiclope : Embarcacao

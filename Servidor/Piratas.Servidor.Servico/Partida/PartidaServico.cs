@@ -41,7 +41,7 @@ namespace Piratas.Servidor.Servico.Partida
                 jogadores.Add(jogador);
             }
 
-            _lockObject = new Object();
+            _lockObject = new object();
 
             _mesa = new Mesa(jogadores);
 

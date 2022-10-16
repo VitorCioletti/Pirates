@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
         {
             BaralhoCentral baralhoCentral = mesa.BaralhoCentral;
 
-            var cartasOpcoes = baralhoCentral.ObterTopo(_cartasAOlhar);
+            List<Carta> cartasOpcoes = baralhoCentral.ObterTopo(_cartasAOlhar);
 
             var olharCartasBaralho = new OlharCartasBaralho(acao, acao.Realizador, cartasOpcoes);
             var acoesResultantes = new List<Acao> { olharCartasBaralho };

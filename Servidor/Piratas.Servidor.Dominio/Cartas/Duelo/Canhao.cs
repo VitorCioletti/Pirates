@@ -1,8 +1,7 @@
 namespace Piratas.Servidor.Dominio.Cartas.Duelo
 {
-    using Acoes.Tipos;
-    using Acoes;
     using System.Collections.Generic;
+    using Acoes;
     using Tipos;
 
     public abstract class Canhao : Duelo

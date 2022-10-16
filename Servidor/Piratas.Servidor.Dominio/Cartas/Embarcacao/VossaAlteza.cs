@@ -8,7 +8,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 
     public class VossaAlteza : Embarcacao
     {
-        private readonly int _cartasMinimasNaMao = 5;
+        private const int _cartasMinimasNaMao = 5;
 
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {

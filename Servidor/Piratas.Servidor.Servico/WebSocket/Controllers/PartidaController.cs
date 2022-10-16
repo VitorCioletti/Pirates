@@ -17,7 +17,7 @@ namespace Piratas.Servidor.Servico.WebSocket.Controllers
         {
             try
             {
-                MensagemPartidaCliente mensagemCliente = Parser.Deserializar<MensagemPartidaCliente>(e.Data);
+                var mensagemCliente = Parser.Deserializar<MensagemPartidaCliente>(e.Data);
 
                 List<MensagemPartidaServidor> mensagensServidor =
                     GerenciadorPartidaServico.ProcessarMensagemCliente(mensagemCliente);
@@ -33,7 +33,7 @@ namespace Piratas.Servidor.Servico.WebSocket.Controllers
             catch (BasePartidaExcecao partidaException)
             {
                 var mensagem = new MensagemPartidaServidor(partidaException.Id, partidaException.Message);
-                var mensagemSerializada = Parser.Serializar(mensagem);
+                string mensagemSerializada = Parser.Serializar(mensagem);
 
                 Send(mensagemSerializada);
             }
@@ -42,7 +42,7 @@ namespace Piratas.Servidor.Servico.WebSocket.Controllers
             catch (BaseParserExcecao parserException)
             {
                 var mensagem = new MensagemPartidaServidor(parserException.Id, parserException.Message);
-                var mensagemSerializada = Parser.Serializar(mensagem);
+                string mensagemSerializada = Parser.Serializar(mensagem);
 
                 Send(mensagemSerializada);
             }
@@ -51,7 +51,7 @@ namespace Piratas.Servidor.Servico.WebSocket.Controllers
             catch (Exception exception)
             {
                 var mensagem = new MensagemPartidaServidor("erro-desconhecido", exception.Message);
-                var mensagemSerializada = Parser.Serializar(mensagem);
+                string mensagemSerializada = Parser.Serializar(mensagem);
 
                 Send(mensagemSerializada);
             }

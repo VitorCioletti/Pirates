@@ -18,7 +18,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             if (realizador.Campo.TripulacaoCheia())
                 throw new TripulacaoCheiaExcecao(this, realizador);
 
-            var tripulantesDescartados = pilhaDescarte.ObterTodas<Tripulante>().OfType<Carta>().ToList();
+            List<Carta> tripulantesDescartados = pilhaDescarte.ObterTodas<Tripulante>().OfType<Carta>().ToList();
 
             if (tripulantesDescartados.Count == 0)
                 throw new SemTripulacaoPilhaDescarteExcecao(this);

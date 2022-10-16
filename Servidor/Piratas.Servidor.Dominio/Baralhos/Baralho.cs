@@ -18,7 +18,7 @@ namespace Piratas.Servidor.Dominio.Baralhos
 
         private void _inserir(List<Carta> cartas, bool topo)
         {
-            foreach (var carta in cartas)
+            foreach (Carta carta in cartas)
             {
                 if (topo)
                     Cartas.AddFirst(carta);

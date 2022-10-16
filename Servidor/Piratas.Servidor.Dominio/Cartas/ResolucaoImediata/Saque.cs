@@ -13,10 +13,10 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             Mao maoRealizador = acao.Realizador.Mao;
 
             // TODO: Como avisar o cliente que foi um Bau Armadilha?
-            var (maoSaqueador, maoSaqueado) =
+            (Mao maoSaqueador, Mao maoSaqueado) =
                 maoAlvo.Possui<BauArmadilha>() ? (maoAlvo, maoRealizador) : (maoRealizador, maoAlvo);
 
-            var cartaSaqueada = maoSaqueado.ObterQualquer();
+            Carta cartaSaqueada = maoSaqueado.ObterQualquer();
 
             maoSaqueado.Remover(cartaSaqueada);
             maoSaqueador.Adicionar(cartaSaqueada);

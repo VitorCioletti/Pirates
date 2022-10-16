@@ -18,7 +18,7 @@ namespace Piratas.Servidor.Servico.Sala
         static SalaServico()
         {
             _salasAbertas = new Dictionary<Guid, List<Guid>>();
-            _lockSala = new Object();
+            _lockSala = new object();
         }
 
         public static List<MensagemSalaServidor> ProcessarMensagemCliente(MensagemSalaCliente mensagemSalaCliente)
@@ -96,7 +96,7 @@ namespace Piratas.Servidor.Servico.Sala
 
             List<Guid> sala = _salasAbertas[idSala];
 
-            var mensagensSaidaSala = _criarMensagensServidor(
+            List<MensagemSalaServidor> mensagensSaidaSala = _criarMensagensServidor(
                 idJogador,
                 idSala,
                 Guid.Empty,
@@ -141,7 +141,7 @@ namespace Piratas.Servidor.Servico.Sala
 
             Guid idPartida = GerenciadorPartidaServico.CriarPartida(idsJogadores);
 
-            var mensagensCriacaoPartida = _criarMensagensServidor(
+            List<MensagemSalaServidor> mensagensCriacaoPartida = _criarMensagensServidor(
                 idJogador,
                 Guid.Empty,
                 idPartida,

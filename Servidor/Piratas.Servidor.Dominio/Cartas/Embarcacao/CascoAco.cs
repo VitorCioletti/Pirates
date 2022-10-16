@@ -10,9 +10,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     {
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
-            var realizador = acao.Realizador;
+            Jogador realizador = acao.Realizador;
 
-            var tesourosMao = realizador.Mao.ObterTodas<Tesouro>().OfType<Carta>().ToList();
+            List<Carta> tesourosMao = realizador.Mao.ObterTodas<Tesouro>().OfType<Carta>().ToList();
 
             var escolherCartaMao = new EscolherCartaMao(acao, realizador, tesourosMao, AposEscolha);
             var acoesResultantes = new List<Acao> { escolherCartaMao };

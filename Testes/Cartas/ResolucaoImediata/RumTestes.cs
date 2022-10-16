@@ -20,15 +20,16 @@ namespace Piratas.Servidor.Testes.Cartas.ResolucaoImediata
 
             var mesa = new Mesa(jogadoresNaMesa);
 
-            Jogador jogadorRealizador = new Jogador(
+            var jogadorRealizador = new Jogador(
                 Guid.NewGuid(),
                 null,
                 null,
                 null,
                 null);
-            Acao acao = Substitute.For<Acao>();
 
-            var cartasNoBaralhoCentral = new List<Carta> { Substitute.For<Carta>(), Substitute.For<Carta>(), };
+            var acao = Substitute.For<Acao>();
+
+            var cartasNoBaralhoCentral = new List<Carta> {Substitute.For<Carta>(), Substitute.For<Carta>(),};
 
             mesa.BaralhoCentral.InserirTopo(cartasNoBaralhoCentral);
             jogadorRealizador.Mao.Adicionar(cartasNaMao);

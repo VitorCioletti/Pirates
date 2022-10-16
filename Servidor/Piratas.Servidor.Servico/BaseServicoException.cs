@@ -6,7 +6,7 @@ namespace Piratas.Servidor.Servico
     {
         public string Id { get; private set; }
 
-        public BaseServicoException(string id, string mensagem) : base(mensagem)
+        protected BaseServicoException(string id, string mensagem) : base(mensagem)
         {
             Id = id;
         }

@@ -7,7 +7,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
     {
         public int Tiros { get; private set; }
 
-        public DueloSurpresa() => Tiros = 1;
+        protected DueloSurpresa() => Tiros = 1;
 
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {

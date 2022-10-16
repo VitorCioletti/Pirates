@@ -42,7 +42,7 @@ namespace Piratas.Servidor.Dominio
 
         private const int _acoesPorTurno = 3;
 
-        private int _turnoAtual = 0;
+        private int _turnoAtual;
 
         public Mesa(List<Jogador> jogadores)
         {
@@ -56,7 +56,7 @@ namespace Piratas.Servidor.Dominio
             PilhaDescarte = new PilhaDescarte();
 
             Jogadores = jogadores;
-            OrdemDeJogadores = _gerarOrdemDeJogadores(jogadores);
+            OrdemDeJogadores = _gerarOrdemDeJogadores();
 
             _distribuirCartas();
         }
@@ -169,7 +169,7 @@ namespace Piratas.Servidor.Dominio
 
         public void RemoverImediataAposResultantes() => _imediataAposResultantes = null;
 
-        private Queue<Jogador> _gerarOrdemDeJogadores(List<Jogador> jogadores) => new Queue<Jogador>(jogadores);
+        private Queue<Jogador> _gerarOrdemDeJogadores() => new(Jogadores);
 
         private Jogador _obterProximoJogador()
         {

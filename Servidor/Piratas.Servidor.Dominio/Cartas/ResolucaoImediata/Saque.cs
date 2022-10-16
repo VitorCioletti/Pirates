@@ -7,7 +7,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class Saque : ResolucaoImediata
     {
-        public override List<Acao> AplicarEfeito(Acao acao, Mesa _)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
             Mao maoAlvo = acao.Alvo.Mao;
             Mao maoRealizador = acao.Realizador.Mao;

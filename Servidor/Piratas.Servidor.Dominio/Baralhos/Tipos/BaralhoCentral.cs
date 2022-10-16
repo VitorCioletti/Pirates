@@ -5,7 +5,7 @@ namespace Piratas.Servidor.Dominio.Baralhos.Tipos
 
     public class BaralhoCentral : Baralho
     {
-        public BaralhoCentral() => Cartas = _gerarCartas();
+        public BaralhoCentral() => _gerarCartas();
 
         public Carta ObterTopo()
         {
@@ -29,6 +29,6 @@ namespace Piratas.Servidor.Dominio.Baralhos.Tipos
             return cartas;
         }
 
-        private LinkedList<Carta> _gerarCartas() => new();
+        private void _gerarCartas() => Cartas = new LinkedList<Carta>();
     }
 }

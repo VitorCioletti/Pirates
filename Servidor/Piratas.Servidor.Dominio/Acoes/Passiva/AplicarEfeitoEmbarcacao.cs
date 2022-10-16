@@ -1,6 +1,5 @@
 namespace Piratas.Servidor.Dominio.Acoes.Passiva
 {
-    using System;
     using System.Collections.Generic;
     using Cartas.Tipos;
     using Tipos;
@@ -14,9 +13,6 @@ namespace Piratas.Servidor.Dominio.Acoes.Passiva
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            if (Embarcacao == null)
-                throw new ArgumentNullException(nameof(Embarcacao));
-
             return Embarcacao.AplicarEfeito(this, mesa);
         }
     }

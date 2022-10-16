@@ -8,7 +8,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 
     public class CascoAco : Embarcacao
     {
-        public override List<Acao> AplicarEfeito(Acao acao, Mesa _)
+        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
             var realizador = acao.Realizador;
 

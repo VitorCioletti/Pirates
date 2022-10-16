@@ -1,9 +1,9 @@
 namespace Piratas.Servidor.Dominio.Baralhos.Tipos
 {
-    using Cartas;
     using System.Collections.Generic;
     using System.Linq;
-    using System;
+    using Cartas;
+    using Excecoes;
 
     public class PilhaDescarte : Baralho
     {
@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Baralhos.Tipos
             var cartas = (List<T>)Cartas.Select(c => c is T);
 
             if (cartas.Count == 0)
-                throw new Exception("Tipo de carta não existe na pilha de descarte.");
+                throw new CartaNaoEncontradaNaPilhaDescarteExcecao(typeof(T).ToString());
 
             return cartas;
         }

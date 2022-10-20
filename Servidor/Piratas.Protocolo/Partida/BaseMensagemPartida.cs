@@ -10,7 +10,7 @@ namespace Piratas.Protocolo
 
         public DateTime DataHora { get; private set; }
 
-        public BaseMensagemPartida(
+        protected BaseMensagemPartida(
             Guid idJogador,
             Guid idMesa,
             string idErro = null,

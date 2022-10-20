@@ -2,7 +2,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Imediata
 {
     using System.Collections.Generic;
     using Resultante;
-    using Tipos;
+    using Resultante.Base;
 
     public class CalcularResultadoDuelo : Imediata
     {

@@ -18,8 +18,15 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
             List<Jogador> jogadoresOpcao =
                 jogadoresNaMesa.Where(j => j.Mao.QuantidadeCartas() >= _cartasMinimasNaMao && j != realizador).ToList();
 
-            var escolherJogador = new EscolherJogador(acao, realizador, jogadoresOpcao, RoubarCarta);
-            var acoesResultantes = new List<Acao> { escolherJogador };
+            List<string> idsJogadores = jogadoresOpcao.Select(j => j.Id.ToString()).ToList();
+
+            var escolherJogador = new EscolherJogador(
+                acao,
+                realizador,
+                idsJogadores,
+                RoubarCarta);
+
+            var acoesResultantes = new List<Acao> {escolherJogador};
 
             return acoesResultantes;
 
@@ -28,7 +35,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
             {
                 var roubarCarta = new RoubarCarta(acaoEscolhida, realizador, alvo);
 
-                var acoesResultantesRoubarCarta = new List<Acao> { roubarCarta };
+                var acoesResultantesRoubarCarta = new List<Acao> {roubarCarta};
 
                 return acoesResultantesRoubarCarta;
             }

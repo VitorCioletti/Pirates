@@ -1,39 +1,41 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
     using System.Collections.Generic;
-    using System.Linq;
+    using Base;
     using Cartas;
     using Cartas.Tipos;
+    using Enums;
     using Excecoes.Acoes;
-    using Tipos;
 
-    public class DescartarCarta : Resultante
+    public class DescartarCarta : BaseResultanteComListaEscolhas
     {
-        public Carta CartaDescartada { get; private set; }
-
-        public DescartarCarta(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo)
+        public DescartarCarta(
+            Acao origem,
+            Jogador realizador,
+            Jogador alvo,
+            List<string> cartasOpcoes)
+            : base(
+                origem,
+                realizador,
+                TipoEscolha.Carta,
+                cartasOpcoes,
+                alvo: alvo)
         {
         }
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            if (CartaDescartada == null)
-                return null;
+            string escolha = Escolhas[0];
 
-            if (CartaDescartada.GetType() == typeof(Tesouro))
-                throw new ProibidoDescerCartaExcecao(this, CartaDescartada);
+            Carta cartaEscolhida = Alvo.Mao.ObterPorId(escolha);
 
-            Alvo.Mao.Remover(CartaDescartada);
-            mesa.PilhaDescarte.InserirTopo(CartaDescartada);
+            if (cartaEscolhida.GetType() == typeof(Tesouro))
+                throw new ProibidoDescerCartaExcecao(this, cartaEscolhida);
+
+            Alvo.Mao.Remover(cartaEscolhida);
+            mesa.PilhaDescarte.InserirTopo(cartaEscolhida);
 
             return null;
-        }
-
-        public override void PreencherCartaEscolhida(string idCartaEscolhida)
-        {
-            Carta cartaEscolhida = Alvo.Mao.ObterPorId(idCartaEscolhida);
-
-            CartaDescartada = cartaEscolhida;
         }
     }
 }

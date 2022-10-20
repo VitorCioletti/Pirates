@@ -28,7 +28,10 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
                 if (possuiEmbarcacao && possuiTripulacao)
                 {
                     var escolherResultante = new EscolherResultante(
-                        acao, jogador, resultanteAfogarTripulacao, resultanteDanificarEmbarcacao);
+                        acao,
+                        jogador,
+                        resultanteAfogarTripulacao,
+                        resultanteDanificarEmbarcacao);
 
                     acoesResultantes.Add(escolherResultante);
                 }

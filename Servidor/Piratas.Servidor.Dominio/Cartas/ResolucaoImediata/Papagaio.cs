@@ -49,7 +49,13 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                     Duelo cartaIniciadora = duelar.CartaIniciadora;
 
                     List<Jogador> outrosJogadores = jogadoresNaMesa.Where(j => j != realizador).ToList();
-                    var escolherJogador = new EscolherJogador(acao, realizador, outrosJogadores, DuelarResultante);
+                    List<string> idsOutrosJogadores = outrosJogadores.Select(j => j.Id.ToString()).ToList();
+
+                    var escolherJogador = new EscolherJogador(
+                        acao,
+                        realizador,
+                        idsOutrosJogadores,
+                        DuelarResultante);
 
                     acoesResultantes.Add(escolherJogador);
 
@@ -58,7 +64,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                         var duelarCopia = new Duelar(realizador, escolhido, cartaIniciadora);
                         var copiarPrimaria = new CopiarPrimaria(acaoEscolhida, realizador, duelarCopia);
 
-                        var acoesResultantesDuelar = new List<Acao> { copiarPrimaria };
+                        var acoesResultantesDuelar = new List<Acao> {copiarPrimaria};
 
                         return acoesResultantesDuelar;
                     }

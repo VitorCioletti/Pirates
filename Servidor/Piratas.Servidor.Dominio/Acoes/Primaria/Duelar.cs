@@ -5,7 +5,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
     using Cartas.Tipos;
     using Excecoes.Acoes;
     using Resultante;
-    using Tipos;
+    using Resultante.Base;
 
     public class Duelar : Primaria
     {
@@ -21,8 +21,11 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
 
             mesa.EntrarModoDuelo(Realizador, Alvo);
 
+            if (!Alvo.Mao.Possui<Duelo>())
+                return null;
+
             var descerCartasDuelo = new DescerCartasDuelo(this, Alvo, Realizador);
-            var acoesResultantes = new List<Acao> { descerCartasDuelo };
+            var acoesResultantes = new List<Acao> {descerCartasDuelo};
 
             return acoesResultantes;
         }

@@ -2,24 +2,30 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Excecoes.Acoes;
-    using Tipos;
+    using Base;
+    using Enums;
 
-    public class EscolherResultante : Resultante
+    public class EscolherResultante : BaseResultanteComListaEscolhas
     {
-        public Resultante ResultanteEscolhida { get; private set; }
+        private List<BaseResultante> _resultantesOpcao { get; set; }
 
-        public List<Resultante> ResultantesOpcao { get; private set; }
-
-        public EscolherResultante(Acao origem, Jogador realizador, params Resultante[] resultantesOpcao)
-            : base(origem, realizador) => ResultantesOpcao = resultantesOpcao.ToList();
+        public EscolherResultante(Acao origem, Jogador realizador, params BaseResultante[] resultantesOpcao)
+            : base(
+                origem,
+                realizador,
+                TipoEscolha.Acao,
+                resultantesOpcao.Select(r => r.Id).ToList())
+        {
+            _resultantesOpcao = resultantesOpcao.ToList();
+        }
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            if (!ResultantesOpcao.Contains(ResultanteEscolhida))
-                throw new ResultanteNaoEUmaOpcaoExcecao(this, ResultanteEscolhida);
+            string escolha = Escolhas.First();
 
-            return ResultanteEscolhida.AplicarRegra(mesa);
+            BaseResultante resultanteEscolhida = _resultantesOpcao.First(r => r.Id == escolha);
+
+            return resultanteEscolhida.AplicarRegra(mesa);
         }
     }
 }

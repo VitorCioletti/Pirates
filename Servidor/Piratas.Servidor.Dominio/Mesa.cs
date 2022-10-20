@@ -4,8 +4,10 @@ namespace Piratas.Servidor.Dominio
     using System.Collections.Generic;
     using Acoes;
     using Acoes.Passiva;
-    using Acoes.Tipos;
+    using Acoes.Resultante.Base;
     using Baralhos.Tipos;
+    using Cartas;
+    using Cartas.Tipos;
     using Excecoes.Mesa;
 
     public class Mesa
@@ -24,11 +26,11 @@ namespace Piratas.Servidor.Dominio
 
         public Tuple<Jogador, Jogador> Duelistas { get; private set; }
 
-        public Queue<Jogador> OrdemDeJogadores { get; }
+        public Queue<Jogador> OrdemDeJogadores { get; private set; }
 
-        public BaralhoCentral BaralhoCentral { get; }
+        public BaralhoCentral BaralhoCentral { get; private set; }
 
-        public PilhaDescarte PilhaDescarte { get; }
+        public PilhaDescarte PilhaDescarte { get; private set; }
 
         public Stack<Acao> HistoricoAcao { get; private set; }
 
@@ -52,6 +54,8 @@ namespace Piratas.Servidor.Dominio
             Id = Guid.NewGuid();
             DataHoraInicio = DateTime.UtcNow;
 
+            HistoricoAcao = new Stack<Acao>();
+
             BaralhoCentral = new BaralhoCentral();
             PilhaDescarte = new PilhaDescarte();
 
@@ -61,14 +65,15 @@ namespace Piratas.Servidor.Dominio
             _distribuirCartas();
         }
 
+        // TODO: Talvez separar o processamento de resultantes de primárias para facilitar o retorno
         public Dictionary<Jogador, List<Acao>> ProcessarAcao(Acao acao)
         {
-            var realizador = acao.Realizador;
+            Jogador realizador = acao.Realizador;
 
             _verificarPrimariaJogadorAtual(acao);
             _verificarResultantePendente(acao);
 
-            Dictionary<Jogador, List<Acao>> acoesPorJogador = new Dictionary<Jogador, List<Acao>>();
+            var acoesPorJogador = new Dictionary<Jogador, List<Acao>>();
 
             List<Acao> acoesDisponiveis = acao.AplicarRegra(this);
 
@@ -78,7 +83,7 @@ namespace Piratas.Servidor.Dominio
             {
                 _acoesPendentes.AddRange(acoesDisponiveis);
 
-                foreach (var acaoResultante in acoesDisponiveis)
+                foreach (Acao acaoResultante in acoesDisponiveis)
                 {
                     if (acaoResultante is Imediata)
                     {
@@ -93,7 +98,7 @@ namespace Piratas.Servidor.Dominio
             if (acao is Primaria)
                 realizador.SubtrairAcoesDisponiveis();
 
-            else if (acao is Resultante resultante)
+            else if (acao is BaseResultante resultante)
             {
                 _acoesPendentes.Remove(resultante);
 
@@ -118,12 +123,12 @@ namespace Piratas.Servidor.Dominio
 
             _turnoAtual++;
 
-            var proximoJogador = _obterProximoJogador();
+            Jogador proximoJogador = _obterProximoJogador();
 
             if (proximoJogador.CalcularTesouros() >= _tesourosParaVitoria)
                 Finalizar(proximoJogador);
 
-            var embarcacao = proximoJogador.Campo.Embarcacao;
+            Embarcacao embarcacao = proximoJogador.Campo.Embarcacao;
             Dictionary<Jogador, List<Acao>> acoesPosEfeitoEmbarcacao = null;
 
             if (embarcacao != null)
@@ -173,7 +178,7 @@ namespace Piratas.Servidor.Dominio
 
         private Jogador _obterProximoJogador()
         {
-            var proximoJogador = OrdemDeJogadores.Dequeue();
+            Jogador proximoJogador = OrdemDeJogadores.Dequeue();
             OrdemDeJogadores.Enqueue(proximoJogador);
 
             JogadorAtual = proximoJogador;
@@ -183,9 +188,9 @@ namespace Piratas.Servidor.Dominio
 
         private void _distribuirCartas()
         {
-            foreach (var jogador in Jogadores)
+            foreach (Jogador jogador in Jogadores)
             {
-                var cartas = BaralhoCentral.ObterTopo(_cartasIniciaisPorJogador);
+                List<Carta> cartas = BaralhoCentral.ObterTopo(_cartasIniciaisPorJogador);
 
                 jogador.Mao.Adicionar(cartas);
             }
@@ -193,7 +198,7 @@ namespace Piratas.Servidor.Dominio
 
         private void _verificarPrimariaJogadorAtual(Acao acao)
         {
-            var realizador = acao.Realizador;
+            Jogador realizador = acao.Realizador;
 
             if (acao is Primaria)
             {
@@ -204,7 +209,7 @@ namespace Piratas.Servidor.Dominio
 
         private void _verificarResultantePendente(Acao acao)
         {
-            if (acao is Resultante resultante)
+            if (acao is BaseResultante resultante)
             {
                 if (!_acoesPendentes.Contains(resultante))
                     throw new ResultanteNaoEsperadaExcecao(resultante);

@@ -5,25 +5,28 @@ namespace Piratas.Servidor.Servico.Partida
     using System.Linq;
     using Dominio;
     using Dominio.Acoes;
-    using Dominio.Acoes.Tipos;
+    using Dominio.Acoes.Resultante.Base;
     using Dominio.Cartas;
     using Dominio.Excecoes;
+    using Excecoes.Partida;
     using Protocolo;
+    using Protocolo.Partida;
     using Protocolo.Partida.Cliente;
+    using Protocolo.Partida.Cliente.Escolha;
     using Protocolo.Partida.Servidor;
-    using Servico.Excecoes.Partida;
+    using Protocolo.Partida.Servidor.Escolha;
 
     internal class PartidaServico
     {
         public Guid Id { get; private set; }
 
-        private Mesa _mesa { get; set; }
+        private readonly Mesa _mesa;
 
-        private Dictionary<Jogador, List<Acao>> _possiveisAcoesEnviadasAosJogadores { get; set; }
+        private readonly Dictionary<Jogador, List<Acao>> _possiveisAcoesEnviadasAosJogadores;
 
-        private Dictionary<Guid, List<Evento>> _eventosAcaoAtual { get; set; }
+        private readonly Dictionary<Guid, List<Evento>> _eventosAcaoAtual;
 
-        private object _lockObject { get; set; }
+        private readonly object _lockObject;
 
         public PartidaServico(List<Guid> idsJogadores)
         {
@@ -59,7 +62,7 @@ namespace Piratas.Servidor.Servico.Partida
 
         private List<MensagemPartidaServidor> _processarMensagemCliente(MensagemPartidaCliente mensagemPartidaCliente)
         {
-            List<MensagemPartidaServidor> mensagensServidor = new List<MensagemPartidaServidor>();
+            var mensagensServidor = new List<MensagemPartidaServidor>();
 
             try
             {
@@ -103,8 +106,27 @@ namespace Piratas.Servidor.Servico.Partida
             if (acaoPendente == null)
                 throw new AcaoNaoDisponivelExcecao(idAcaoExecutada);
 
-            if (acaoPendente is Resultante acaoResultante)
-                _preencherResultanteComEscolha(acaoResultante, mensagemPartidaCliente.EscolhaPartidaCliente);
+            switch (acaoPendente)
+            {
+                case BaseResultanteComDicionarioEscolhas resultanteComDicionarioEscolhas:
+                    Dictionary<string, string> dicionarioEscolhas =
+                        ((DicionarioEscolhasCliente)mensagemPartidaCliente.Escolha).Escolhas;
+
+                    resultanteComDicionarioEscolhas.PreencherEscolhas(dicionarioEscolhas);
+                    break;
+
+                case BaseResultanteComEscolhaBooleana resultanteComEscolhaBooleana:
+                    bool escolha = ((UmaEscolhaBooleanaCliente)mensagemPartidaCliente.Escolha).Escolha;
+
+                    resultanteComEscolhaBooleana.PreencherEscolha(escolha);
+                    break;
+
+                case BaseResultanteComListaEscolhas resultanteComListaEscolhas:
+                    List<string> escolhas = ((ListaEscolhasCliente)mensagemPartidaCliente.Escolha).Escolhas;
+
+                    resultanteComListaEscolhas.PreencherEscolhas(escolhas);
+                    break;
+            }
 
             return acaoPendente;
         }
@@ -122,34 +144,9 @@ namespace Piratas.Servidor.Servico.Partida
             return jogadorComAcaoPendente;
         }
 
-        private void _preencherResultanteComEscolha(
-            Resultante acaoResultante,
-            EscolhaPartidaCliente escolhaPartidaCliente)
-        {
-            string idEscolhido = escolhaPartidaCliente.Escolhido;
-
-            switch (escolhaPartidaCliente.Tipo)
-            {
-                case TipoEscolha.Acao:
-                    acaoResultante.PreencherAcaoEscolhida(idEscolhido);
-                    break;
-
-                case TipoEscolha.Carta:
-                    acaoResultante.PreencherCartaEscolhida(idEscolhido);
-                    break;
-
-                case TipoEscolha.Jogador:
-                    acaoResultante.PreencherJogadorEscolhido(idEscolhido);
-                    break;
-
-                default:
-                    throw new TipoEscolhaNaoEncontrada((int)escolhaPartidaCliente.Tipo);
-            }
-        }
-
         private MensagemPartidaServidor _criarMensagemServidor(Jogador jogador, List<Acao> acoesDisponiveis)
         {
-            EscolhaServidor escolhaServidor = _criarEscolha(acoesDisponiveis);
+            BaseEscolha escolha = _criarEscolha(acoesDisponiveis);
 
             var mensagemServidor = new MensagemPartidaServidor(
                 jogador.Id,
@@ -157,18 +154,78 @@ namespace Piratas.Servidor.Servico.Partida
                 jogador.AcoesDisponiveis,
                 jogador.CalcularTesouros(),
                 _eventosAcaoAtual,
-                escolhaServidor,
+                escolha,
                 string.Empty);
 
             return mensagemServidor;
         }
 
-        private EscolhaServidor _criarEscolha(List<Acao> acoesDisponiveis)
+        private BaseEscolha _criarEscolha(List<Acao> acoesDisponiveis)
         {
             if (acoesDisponiveis.Count == 0)
                 return null;
 
-            throw new NotImplementedException();
+            if (acoesDisponiveis.All(a => a is Primaria))
+            {
+                List<string> idsAcoes = acoesDisponiveis.Select(a => Id.ToString()).ToList();
+
+                var umaEscolha = new ListaEscolhasServidor(TipoEscolha.Acao, idsAcoes);
+
+                return umaEscolha;
+            }
+
+            var resultante = (BaseResultante)acoesDisponiveis[0];
+
+            BaseEscolha escolhaResultante = _criarEscolhaDeResultante(resultante);
+
+            return escolhaResultante;
+        }
+
+        private BaseEscolha _criarEscolhaDeResultante(BaseResultante resultante)
+        {
+            BaseEscolha escolhaResultante;
+
+            switch (resultante)
+            {
+                case BaseResultanteComDicionarioEscolhas resultanteComDicionarioEscolhas:
+                    escolhaResultante = new DicionarioEscolhasServidor(
+                        _obterTipoEscolhaProtocolo(resultanteComDicionarioEscolhas.TipoEscolha),
+                        _obterTipoEscolhaProtocolo(resultanteComDicionarioEscolhas.TipoEscolhaChaves),
+                        _obterTipoEscolhaProtocolo(resultanteComDicionarioEscolhas.TipoEscolhaOpcoes),
+                        resultanteComDicionarioEscolhas.LimiteValoresPorChave,
+                        resultanteComDicionarioEscolhas.OpcoesChaves,
+                        resultanteComDicionarioEscolhas.OpcoesValores);
+
+                    break;
+
+                case BaseResultanteComEscolhaBooleana resultanteComEscolhaBooleana:
+                    escolhaResultante = new UmaEscolhaBooleanaServidor(
+                        _obterTipoEscolhaProtocolo(resultanteComEscolhaBooleana.TipoEscolha));
+                    break;
+
+                case BaseResultanteComListaEscolhas resultanteComListaEscolhas:
+                    escolhaResultante = new ListaEscolhasServidor(
+                        _obterTipoEscolhaProtocolo(resultanteComListaEscolhas.TipoEscolha),
+                        resultanteComListaEscolhas.Opcoes,
+                        resultanteComListaEscolhas.LimiteEscolhas);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(resultante));
+            }
+
+            return escolhaResultante;
+        }
+
+        private TipoEscolha _obterTipoEscolhaProtocolo(Dominio.Acoes.Resultante.Enums.TipoEscolha tipoEscolha)
+        {
+            return tipoEscolha switch
+            {
+                Dominio.Acoes.Resultante.Enums.TipoEscolha.Acao => TipoEscolha.Acao,
+                Dominio.Acoes.Resultante.Enums.TipoEscolha.Jogador => TipoEscolha.Jogador,
+                Dominio.Acoes.Resultante.Enums.TipoEscolha.Carta => TipoEscolha.Carta,
+                _ => throw new ArgumentOutOfRangeException(nameof(tipoEscolha), tipoEscolha, null)
+            };
         }
 
         private void _aoAdicionarCartaNaMao(Guid idJogador, Carta carta)

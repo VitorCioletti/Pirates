@@ -1,29 +1,29 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
     using System.Collections.Generic;
+    using Baralhos.Tipos;
+    using Base;
     using Cartas;
-    using Tipos;
+    using Enums;
 
-    public class OlharCartasBaralho : Resultante
+    public class OlharCartasBaralho : BaseResultanteComEscolhaBooleana
     {
-        public bool DevolverNoTopo { get; private set; }
+        private List<Carta> _cartasOpcoes { get; set; }
 
-        public List<Carta> CartasOpcoes { get; private set; }
-
-        public OlharCartasBaralho(
-            Acao origem,
-            Jogador realizador,
-            List<Carta> cartasOpcoes) : base(origem, realizador) =>
-            CartasOpcoes = cartasOpcoes;
+        public OlharCartasBaralho(Acao origem, Jogador realizador, List<Carta> cartasOpcoes)
+            : base(origem, realizador, TipoEscolha.Carta)
+        {
+            _cartasOpcoes = cartasOpcoes;
+        }
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            var baralhoCentral = mesa.BaralhoCentral;
+            BaralhoCentral baralhoCentral = mesa.BaralhoCentral;
 
-            if (DevolverNoTopo)
-                baralhoCentral.InserirTopo(CartasOpcoes);
+            if (EscolhaBooleana)
+                baralhoCentral.InserirTopo(_cartasOpcoes);
             else
-                baralhoCentral.InserirFundo(CartasOpcoes);
+                baralhoCentral.InserirFundo(_cartasOpcoes);
 
             return null;
         }

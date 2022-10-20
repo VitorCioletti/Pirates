@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
     using Cartas;
     using Cartas.Tipos;
     using Excecoes.Acoes;
-    using Tipos;
+    using Resultante.Base;
 
     public class DescerCarta : Primaria
     {

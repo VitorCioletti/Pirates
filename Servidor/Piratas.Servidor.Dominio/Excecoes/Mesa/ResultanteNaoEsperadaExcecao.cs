@@ -1,16 +1,16 @@
 namespace Piratas.Servidor.Dominio.Excecoes.Mesa
 {
-    using Dominio.Acoes.Tipos;
+    using Dominio.Acoes.Resultante.Base;
 
     public class ResultanteNaoEsperadaExcecao : BaseMesaExcecao
     {
-        public Resultante Resultante { get; private set; }
+        public BaseResultante BaseResultante { get; private set; }
 
-        public ResultanteNaoEsperadaExcecao(Resultante resultante)
-            : base("resultante-nao-esperada", $"Resultante \"{resultante.Id}\" não esperada.")
+        public ResultanteNaoEsperadaExcecao(BaseResultante baseResultante)
+            : base("resultante-nao-esperada", $"Resultante \"{baseResultante.Id}\" não esperada.")
 
         {
-            Resultante = resultante;
+            BaseResultante = baseResultante;
         }
     }
 }

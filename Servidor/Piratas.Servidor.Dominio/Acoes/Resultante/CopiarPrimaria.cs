@@ -2,9 +2,9 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
     using Dominio;
     using System.Collections.Generic;
-    using Tipos;
+    using Base;
 
-    public class CopiarPrimaria : Resultante
+    public class CopiarPrimaria : BaseResultante
     {
         public Primaria Copiada { get; private set; }
 

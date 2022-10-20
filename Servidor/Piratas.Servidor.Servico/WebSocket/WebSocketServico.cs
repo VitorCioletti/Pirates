@@ -36,8 +36,8 @@ namespace Piratas.Servidor.Servico.WebSocket
             LogServico.Info($"Escutando no endereço: \"{endereco}:{porta}\".");
         }
 
-        public static void Conectar() => _conexao.Start();
+        private static void Conectar() => _conexao.Start();
 
-        public static void Desconectar() => _conexao.Stop();
+        private static void Desconectar() => _conexao.Stop();
     }
 }

@@ -12,10 +12,14 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
         {
             Jogador realizador = acao.Realizador;
 
-            List<Carta> tesourosMao = realizador.Mao.ObterTodas<Tesouro>().OfType<Carta>().ToList();
+            List<string> tesourosMao = realizador.Mao
+                .ObterTodas<Tesouro>()
+                .OfType<Carta>()
+                .Select(c => c.Id)
+                .ToList();
 
             var escolherCartaMao = new EscolherCartaMao(acao, realizador, tesourosMao, AposEscolha);
-            var acoesResultantes = new List<Acao> { escolherCartaMao };
+            var acoesResultantes = new List<Acao> {escolherCartaMao};
 
             return acoesResultantes;
 

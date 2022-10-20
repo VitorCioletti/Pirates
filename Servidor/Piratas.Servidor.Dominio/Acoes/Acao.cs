@@ -1,7 +1,7 @@
 namespace Piratas.Servidor.Dominio.Acoes
 {
-    using System.Collections.Generic;
     using System;
+    using System.Collections.Generic;
 
     public abstract class Acao
     {
@@ -10,25 +10,24 @@ namespace Piratas.Servidor.Dominio.Acoes
         public DateTime DataHora { get; private set; }
 
         // TODO: melhorar nome
-        public virtual Jogador Realizador { get; private set; }
+        public Jogador Realizador { get; private set; }
 
         public Jogador Alvo { get; private set; }
 
         // TODO: init only setter? Qualquer um pode setar :(
         public int Turno { get; set; }
 
-        public Acao()
+        protected Acao()
         {
             Id = string.Empty;
             DataHora = DateTime.MinValue;
-
             Realizador = null;
             Alvo = null;
         }
 
-        public Acao(Jogador realizador, Jogador alvo = null) : this()
+        protected Acao(Jogador realizador, Jogador alvo = null) : this()
         {
-            Id = Guid.NewGuid().ToString();
+            Id = GetType().ToString();
             DataHora = DateTime.UtcNow;
 
             Realizador = realizador;

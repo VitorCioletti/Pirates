@@ -7,7 +7,7 @@ namespace Piratas.Servidor.Dominio.Cartas
     {
         public string Id { get; protected set; }
 
-        protected Carta() => Id = this.GetType().ToString();
+        protected Carta() => Id = GetType().ToString();
 
         public abstract List<Acao> AplicarEfeito(Acao acao, Mesa mesa);
     }

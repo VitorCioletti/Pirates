@@ -14,8 +14,15 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 
             List<Jogador> outrosJogadoresMesa = mesa.Jogadores.Where(j => j != realizador).ToList();
 
-            var escolherJogador = new EscolherJogador(acao, realizador, outrosJogadoresMesa, OlharCartas);
-            var acoesResultantes = new List<Acao> { escolherJogador };
+            List<string> idsJogadores = outrosJogadoresMesa.Select(j => j.Id.ToString()).ToList();
+
+            var escolherJogador = new EscolherJogador(
+                acao,
+                realizador,
+                idsJogadores,
+                OlharCartas);
+
+            var acoesResultantes = new List<Acao> {escolherJogador};
 
             return acoesResultantes;
 
@@ -24,7 +31,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
                 var olharCartasJogador =
                     new OlharCartasJogador(acaoEscolhida, realizador, jogador.Mao.ObterTodas());
 
-                var acoesResultantesOlharCartas = new List<Acao> { olharCartasJogador };
+                var acoesResultantesOlharCartas = new List<Acao> {olharCartasJogador};
 
                 return acoesResultantesOlharCartas;
             }

@@ -2,7 +2,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
 {
     using System.Collections.Generic;
     using Cartas.Tipos;
-    using Tipos;
+    using Resultante.Base;
 
     public class ComprarCarta : Primaria
     {

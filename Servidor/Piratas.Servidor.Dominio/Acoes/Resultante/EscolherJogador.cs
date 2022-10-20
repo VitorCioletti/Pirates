@@ -2,33 +2,35 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
     using System;
     using System.Collections.Generic;
-    using Excecoes.Acoes;
-    using Tipos;
+    using System.Linq;
+    using Base;
+    using Enums;
 
-    public class EscolherJogador : Resultante
+    public class EscolherJogador : BaseResultanteComListaEscolhas
     {
-        public Jogador JogadorEscolhido { get; private set; }
-
-        public List<Jogador> JogadoresOpcao { get; private set; }
-
-        public Func<Acao, Jogador, List<Acao>> ResultanteAposEscolha { get; private set; }
+        private Func<Acao, Jogador, List<Acao>> _resultanteAposEscolha { get; set; }
 
         public EscolherJogador(
             Acao origem,
             Jogador realizador,
-            List<Jogador> jogadoresOpcao,
-            Func<Acao, Jogador, List<Acao>> resultanteAposEscolha) : base(origem, realizador)
+            List<string> jogadoresOpcao,
+            Func<Acao, Jogador, List<Acao>> resultanteAposEscolha)
+            : base(
+                origem,
+                realizador,
+                TipoEscolha.Jogador,
+                jogadoresOpcao)
         {
-            ResultanteAposEscolha = resultanteAposEscolha;
-            JogadoresOpcao = jogadoresOpcao;
+            _resultanteAposEscolha = resultanteAposEscolha;
         }
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            if (!JogadoresOpcao.Contains(JogadorEscolhido))
-                throw new JogadorNaoEUmaOpcaoExcecao(this, JogadorEscolhido);
+            string escolha = Escolhas.First();
 
-            return ResultanteAposEscolha(this, JogadorEscolhido);
+            Jogador jogadorEscolhido = mesa.Jogadores.First(j => j.Id.ToString() == escolha);
+
+            return _resultanteAposEscolha(this, jogadorEscolhido);
         }
     }
 }

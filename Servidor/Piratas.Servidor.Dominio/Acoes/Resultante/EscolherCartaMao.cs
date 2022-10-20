@@ -2,36 +2,36 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Cartas;
-    using Excecoes.Acoes;
-    using Tipos;
+    using Base;
+    using Enums;
 
-    public class EscolherCartaMao : Resultante
+    public class EscolherCartaMao : BaseResultanteComListaEscolhas
     {
-        public Carta CartaEscolhida { get; private set; }
-
-        public List<Carta> CartasOpcao { get; private set; }
-
         private readonly Action<Carta> _aposEscolha;
 
         public EscolherCartaMao(
             Acao origem,
             Jogador realizador,
-            List<Carta> cartasOpcao,
-            Action<Carta> aposEscolha) : base(origem, realizador)
+            List<string> cartasOpcao,
+            Action<Carta> aposEscolha)
+            : base(
+                origem,
+                realizador,
+                TipoEscolha.Carta,
+                cartasOpcao)
         {
-            CartasOpcao = cartasOpcao;
             _aposEscolha = aposEscolha;
         }
 
-        public Func<Jogador, Resultante> ResultanteAposEscolha { get; private set; }
-
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            if (!CartasOpcao.Contains(CartaEscolhida))
-                throw new CartaNaoEUmaOpcaoExcecao(this, CartaEscolhida);
+            string escolha = Escolhas.First();
 
-            _aposEscolha(CartaEscolhida);
+            Carta cartaEscolhida = Realizador.Mao.ObterPorId(escolha);
+
+            _aposEscolha(cartaEscolhida);
 
             return null;
         }

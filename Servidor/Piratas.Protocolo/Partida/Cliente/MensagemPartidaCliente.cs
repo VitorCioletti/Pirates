@@ -4,7 +4,7 @@ namespace Piratas.Protocolo.Partida.Cliente
 
     public class MensagemPartidaCliente : BaseMensagemPartida
     {
-        public EscolhaPartidaCliente EscolhaPartidaCliente { get; private set; }
+        public BaseEscolha Escolha { get; private set; }
 
         public string IdAcaoExecutada { get; private set; }
 
@@ -12,11 +12,11 @@ namespace Piratas.Protocolo.Partida.Cliente
             Guid idJogador,
             Guid idMesa,
             string idAcaoExecutada,
-            EscolhaPartidaCliente escolhaPartidaCliente)
+            BaseEscolha escolha)
             : base(idJogador, idMesa)
         {
             IdAcaoExecutada = idAcaoExecutada;
-            EscolhaPartidaCliente = escolhaPartidaCliente;
+            Escolha = escolha;
         }
     }
 }

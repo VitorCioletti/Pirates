@@ -1,21 +1,30 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
     using System.Collections.Generic;
+    using System.Linq;
+    using Base;
     using Cartas;
-    using Tipos;
+    using Enums;
 
-    public class RoubarCarta : Resultante
+    public class RoubarCarta : BaseResultanteComListaEscolhas
     {
-        public Carta CartaRoubada { get; private set; }
-
-        public RoubarCarta(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo)
+        public RoubarCarta(Acao origem, Jogador realizador, Jogador alvo)
+            : base(
+                origem,
+                realizador,
+                TipoEscolha.Carta,
+                alvo.Mao.ObterTodas<Carta>().Select(c => c.Id).ToList())
         {
         }
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            Realizador.Mao.Adicionar(CartaRoubada);
-            Alvo.Mao.Remover(CartaRoubada);
+            string escolha = Escolhas.First();
+
+            Carta cartaRoubada = Alvo.Mao.ObterPorId(escolha);
+
+            Realizador.Mao.Adicionar(cartaRoubada);
+            Alvo.Mao.Remover(cartaRoubada);
 
             return null;
         }

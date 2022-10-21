@@ -87,7 +87,7 @@ namespace Piratas.Servidor.Servico.Partida
             {
                 mensagensServidor.Add(new MensagemPartidaServidor(servicoException.Id, servicoException.Message));
             }
-            catch (BaseRegraExcecao regraException)
+            catch (BaseDominioExcecao regraException)
             {
                 mensagensServidor.Add(new MensagemPartidaServidor(regraException.Id, regraException.Message));
             }

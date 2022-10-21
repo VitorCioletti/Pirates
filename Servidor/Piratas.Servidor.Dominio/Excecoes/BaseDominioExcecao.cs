@@ -2,11 +2,11 @@ namespace Piratas.Servidor.Dominio.Excecoes
 {
     using System;
 
-    public abstract class BaseRegraExcecao : Exception
+    public abstract class BaseDominioExcecao : Exception
     {
         public string Id { get; private set; }
 
-        protected BaseRegraExcecao(string id, string mensagem) : base(mensagem)
+        protected BaseDominioExcecao(string id, string mensagem) : base(mensagem)
         {
             Id = id;
         }

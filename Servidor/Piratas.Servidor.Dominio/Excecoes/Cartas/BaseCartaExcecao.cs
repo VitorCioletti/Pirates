@@ -2,7 +2,7 @@ namespace Piratas.Servidor.Dominio.Excecoes.Cartas
 {
     using Dominio.Cartas;
 
-    public abstract class BaseCartaExcecao : BaseRegraExcecao
+    public abstract class BaseCartaExcecao : BaseDominioExcecao
     {
         public Carta Carta { get; private set; }
 

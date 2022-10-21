@@ -2,7 +2,7 @@ namespace Piratas.Servidor.Dominio.Excecoes.Acoes
 {
     using Dominio.Acoes;
 
-    public abstract class BaseAcoesExcecao : BaseRegraExcecao
+    public abstract class BaseAcoesExcecao : BaseDominioExcecao
     {
         public Acao Acao { get; private set; }
 

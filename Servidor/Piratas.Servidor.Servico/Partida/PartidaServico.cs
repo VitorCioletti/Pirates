@@ -167,7 +167,7 @@ namespace Piratas.Servidor.Servico.Partida
 
             if (acoesDisponiveis.All(a => a is Primaria))
             {
-                List<string> idsAcoes = acoesDisponiveis.Select(a => Id.ToString()).ToList();
+                List<string> idsAcoes = acoesDisponiveis.Select(a => a.Id.ToString()).ToList();
 
                 var umaEscolha = new ListaEscolhasServidor(TipoEscolha.Acao, idsAcoes);
 

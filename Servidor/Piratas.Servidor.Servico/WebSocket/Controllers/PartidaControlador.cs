@@ -11,7 +11,7 @@ namespace Piratas.Servidor.Servico.WebSocket.Controllers
     using WebSocketSharp;
     using WebSocketSharp.Server;
 
-    public class PartidaController : WebSocketBehavior
+    public class PartidaControlador : WebSocketBehavior
     {
         protected override void OnMessage(MessageEventArgs e)
         {

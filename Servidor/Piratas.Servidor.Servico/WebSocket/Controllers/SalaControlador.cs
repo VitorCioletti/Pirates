@@ -10,7 +10,7 @@ namespace Piratas.Servidor.Servico.WebSocket.Controllers
     using WebSocketSharp;
     using WebSocketSharp.Server;
 
-    public class SalaController : WebSocketBehavior
+    public class SalaControlador : WebSocketBehavior
     {
         protected override void OnMessage(MessageEventArgs e)
         {

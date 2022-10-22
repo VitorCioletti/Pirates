@@ -25,7 +25,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            var acoesResultantes = new List<Acao> { };
+            var acoesResultantes = new List<Acao>();
 
             foreach (string cartaDueloEscolhida in Escolhas)
             {

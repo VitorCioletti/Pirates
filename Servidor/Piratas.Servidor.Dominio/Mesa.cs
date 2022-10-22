@@ -2,6 +2,7 @@ namespace Piratas.Servidor.Dominio
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Acoes;
     using Acoes.Passiva;
     using Acoes.Resultante.Base;
@@ -65,60 +66,57 @@ namespace Piratas.Servidor.Dominio
             _distribuirCartas();
         }
 
-        // TODO: Talvez separar o processamento de resultantes de primárias para facilitar o retorno
-        public Dictionary<Jogador, List<Acao>> ProcessarAcao(Acao acao)
+        public Dictionary<Jogador, List<Acao>> ProcessarAcao(Acao acaoAProcessar)
         {
-            Jogador realizador = acao.Realizador;
-
-            _verificarPrimariaJogadorAtual(acao);
-            _verificarResultantePendente(acao);
+            acaoAProcessar.Turno = _turnoAtual;
+            Jogador realizador = acaoAProcessar.Realizador;
 
             var acoesPorJogador = new Dictionary<Jogador, List<Acao>>();
 
-            List<Acao> acoesDisponiveis = acao.AplicarRegra(this);
+            _verificarPrimariaJogadorAtual(acaoAProcessar);
+            _verificarResultantePendente(acaoAProcessar);
 
-            HistoricoAcao.Push(acao);
+            List<Acao> acoesResultadoAcaoProcessada = acaoAProcessar.AplicarRegra(this);
 
-            if (acoesDisponiveis != null)
-            {
-                _acoesPendentes.AddRange(acoesDisponiveis);
+            HistoricoAcao.Push(acaoAProcessar);
 
-                foreach (Acao acaoResultante in acoesDisponiveis)
-                {
-                    if (acaoResultante is Imediata)
-                    {
-                        Dictionary<Jogador, List<Acao>> acoesPosImediata = ProcessarAcao(acaoResultante);
+            _processarAcoesImediatas(acoesResultadoAcaoProcessada, acoesPorJogador);
 
-                        foreach ((Jogador jogador, List<Acao> acoes) in acoesPosImediata)
-                            acoesPorJogador[jogador] = acoes;
-                    }
-                }
-            }
-
-            if (acao is Primaria)
+            if (acaoAProcessar is Primaria)
                 realizador.SubtrairAcoesDisponiveis();
 
-            else if (acao is BaseResultante resultante)
+            if (_acoesPendentes.Count == 0 && _imediataAposResultantes != null)
             {
-                _acoesPendentes.Remove(resultante);
-
-                if (_acoesPendentes.Count == 0 && _imediataAposResultantes != null)
-                {
-                    Dictionary<Jogador, List<Acao>> acoesPosResultante = ProcessarAcao(_imediataAposResultantes);
-
-                    foreach ((Jogador jogador, List<Acao> acoes) in acoesPosResultante)
-                        acoesPorJogador[jogador] = acoes;
-                }
+                _processarAcaoImediata(_imediataAposResultantes, acoesPorJogador);
+                _imediataAposResultantes = null;
             }
 
-            acao.Turno = _turnoAtual;
-
-            if (acoesDisponiveis?.Count == 0 && JogadorAtual.AcoesDisponiveis == 0)
-            {
+            if (acoesResultadoAcaoProcessada?.Count == 0 && JogadorAtual.AcoesDisponiveis == 0)
                 acoesPorJogador = _moverParaProximoTurno();
-            }
 
             return acoesPorJogador;
+        }
+
+        private void _processarAcaoImediata(
+            Imediata acaoImediata,
+            IReadOnlyDictionary<Jogador, List<Acao>> acoesPorJogador)
+        {
+            _processarAcoesImediatas(new List<Imediata> {acaoImediata}, acoesPorJogador);
+        }
+
+        private void _processarAcoesImediatas(
+            IEnumerable<Acao> acoesResultadoAcaoProcessada,
+            IReadOnlyDictionary<Jogador, List<Acao>> acoesPorJogador)
+        {
+            IEnumerable<Imediata> acoesImediatas = acoesResultadoAcaoProcessada.OfType<Imediata>();
+
+            foreach (Imediata imediataAProcessarPosAcao in acoesImediatas)
+            {
+                Dictionary<Jogador, List<Acao>> acoesPosImediata = ProcessarAcao(imediataAProcessarPosAcao);
+
+                foreach ((Jogador jogador, List<Acao> acoes) in acoesPosImediata)
+                    acoesPorJogador[jogador].AddRange(acoes);
+            }
         }
 
         private Dictionary<Jogador, List<Acao>> _moverParaProximoTurno()
@@ -176,8 +174,6 @@ namespace Piratas.Servidor.Dominio
 
             _imediataAposResultantes = imediata;
         }
-
-        public void RemoverImediataAposResultantes() => _imediataAposResultantes = null;
 
         private Queue<Jogador> _gerarOrdemDeJogadores() => new(Jogadores);
 

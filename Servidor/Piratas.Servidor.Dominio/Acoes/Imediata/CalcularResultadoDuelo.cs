@@ -16,8 +16,8 @@ namespace Piratas.Servidor.Dominio.Acoes.Imediata
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            var pontosDueloRealizador = Realizador.Campo.CalcularPontosDuelo();
-            var pontosDueloAlvo = Alvo.Campo.CalcularPontosDuelo();
+            int pontosDueloRealizador = Realizador.Campo.CalcularPontosDuelo();
+            int pontosDueloAlvo = Alvo.Campo.CalcularPontosDuelo();
 
             if (pontosDueloRealizador > pontosDueloAlvo)
             {

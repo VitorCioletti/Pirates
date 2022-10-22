@@ -18,7 +18,7 @@ namespace Piratas.Servidor.Servico.Partida
 
     internal class PartidaServico
     {
-        public Guid Id { get; private set; }
+        public Guid Id { get; }
 
         private readonly Mesa _mesa;
 

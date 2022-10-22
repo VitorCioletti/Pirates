@@ -5,6 +5,7 @@ namespace Piratas.Servidor.Dominio
     using System.Linq;
     using Acoes;
     using Acoes.Passiva;
+    using Acoes.Primaria;
     using Acoes.Resultante.Base;
     using Baralhos.Tipos;
     using Cartas;
@@ -17,17 +18,17 @@ namespace Piratas.Servidor.Dominio
 
         public List<Jogador> Jogadores { get; private set; }
 
-        public DateTime DataHoraInicio { get; private set; }
+        private DateTime _dataHoraInicio { get; set; }
 
-        public DateTime DataHoraFim { get; private set; }
+        private DateTime _dataHoraFim { get; set; }
 
-        public Jogador JogadorAtual { get; private set; }
+        private Jogador _jogadorAtual { get; set; }
 
-        public bool EmDuelo { get; private set; }
+        private bool _emDuelo { get; set; }
 
-        public Tuple<Jogador, Jogador> Duelistas { get; private set; }
+        private Tuple<Jogador, Jogador> _duelistas { get; set; }
 
-        public Queue<Jogador> OrdemDeJogadores { get; private set; }
+        private Queue<Jogador> _ordemDeJogadores { get; set; }
 
         public BaralhoCentral BaralhoCentral { get; private set; }
 
@@ -53,7 +54,7 @@ namespace Piratas.Servidor.Dominio
             _imediataAposResultantes = null;
 
             Id = Guid.NewGuid();
-            DataHoraInicio = DateTime.UtcNow;
+            _dataHoraInicio = DateTime.UtcNow;
 
             HistoricoAcao = new Stack<Acao>();
 
@@ -61,7 +62,7 @@ namespace Piratas.Servidor.Dominio
             PilhaDescarte = new PilhaDescarte();
 
             Jogadores = jogadores;
-            OrdemDeJogadores = _gerarOrdemDeJogadores();
+            _ordemDeJogadores = _gerarOrdemDeJogadores();
 
             _distribuirCartas();
         }
@@ -91,8 +92,11 @@ namespace Piratas.Servidor.Dominio
                 _imediataAposResultantes = null;
             }
 
-            if (acoesResultadoAcaoProcessada?.Count == 0 && JogadorAtual.AcoesDisponiveis == 0)
+            if (acoesResultadoAcaoProcessada?.Count == 0 && _jogadorAtual.AcoesDisponiveis == 0)
                 acoesPorJogador = _moverParaProximoTurno();
+
+            foreach (List<Acao> acoesPendentes in acoesPorJogador.Values)
+                _acoesPendentes.AddRange(acoesPendentes);
 
             return acoesPorJogador;
         }
@@ -121,8 +125,8 @@ namespace Piratas.Servidor.Dominio
 
         private Dictionary<Jogador, List<Acao>> _moverParaProximoTurno()
         {
-            if (JogadorAtual.AcoesDisponiveis > 0)
-                throw new PossuiAcoesDisponiveisExcecao(JogadorAtual);
+            if (_jogadorAtual?.AcoesDisponiveis > 0)
+                throw new PossuiAcoesDisponiveisExcecao(_jogadorAtual);
 
             _turnoAtual++;
 
@@ -147,25 +151,25 @@ namespace Piratas.Servidor.Dominio
 
         public void EntrarModoDuelo(Jogador realizador, Jogador alvo)
         {
-            if (EmDuelo)
+            if (_emDuelo)
                 throw new EmDueloExcecao();
 
-            EmDuelo = true;
-            Duelistas = new Tuple<Jogador, Jogador>(realizador, alvo);
+            _emDuelo = true;
+            _duelistas = new Tuple<Jogador, Jogador>(realizador, alvo);
         }
 
         public void SairModoDuelo()
         {
-            if (!EmDuelo)
+            if (!_emDuelo)
                 throw new SemDueloExcecao();
 
             // TODO: Verificar se todas as ações resposta de duelo foram realizadas?
 
-            EmDuelo = false;
-            Duelistas = null;
+            _emDuelo = false;
+            _duelistas = null;
         }
 
-        public void Finalizar(Jogador _) => DataHoraFim = DateTime.UtcNow;
+        public void Finalizar(Jogador _) => _dataHoraFim = DateTime.UtcNow;
 
         public void RegistrarImediataAposResultantes(Imediata imediata)
         {
@@ -179,10 +183,10 @@ namespace Piratas.Servidor.Dominio
 
         private Jogador _obterProximoJogador()
         {
-            Jogador proximoJogador = OrdemDeJogadores.Dequeue();
-            OrdemDeJogadores.Enqueue(proximoJogador);
+            Jogador proximoJogador = _ordemDeJogadores.Dequeue();
+            _ordemDeJogadores.Enqueue(proximoJogador);
 
-            JogadorAtual = proximoJogador;
+            _jogadorAtual = proximoJogador;
 
             return proximoJogador;
         }
@@ -203,7 +207,7 @@ namespace Piratas.Servidor.Dominio
 
             if (acao is Primaria)
             {
-                if (realizador != JogadorAtual)
+                if (realizador != _jogadorAtual)
                     throw new TurnoDeOutroJogadorExcecao(realizador);
             }
         }

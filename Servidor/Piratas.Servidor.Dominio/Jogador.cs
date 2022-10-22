@@ -48,13 +48,6 @@ namespace Piratas.Servidor.Dominio
                 aoRemoverCartaNoCampo?.Invoke(Id, carta);
         }
 
-        public DescerCarta DescerCarta(Carta carta) => new DescerCarta(this, carta);
-
-        public ComprarCarta ComprarCarta() => new ComprarCarta(this);
-
-        public Duelar Duelar(Jogador jogadorAtacado, Duelo cartaIniciadora) =>
-            new Duelar(this, jogadorAtacado, cartaIniciadora);
-
         public void ResetarAcoesDisponiveis(int acoes)
         {
             AcoesDisponiveis = acoes;

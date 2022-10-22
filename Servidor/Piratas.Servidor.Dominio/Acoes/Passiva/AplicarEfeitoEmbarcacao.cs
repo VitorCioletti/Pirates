@@ -6,14 +6,14 @@ namespace Piratas.Servidor.Dominio.Acoes.Passiva
 
     public class AplicarEfeitoEmbarcacao : Passiva
     {
-        public Embarcacao Embarcacao { get; private set; }
+        private Embarcacao _embarcacao { get; set; }
 
         public AplicarEfeitoEmbarcacao(Jogador realizador, Embarcacao embarcacao) : base(realizador) =>
-            Embarcacao = embarcacao;
+            _embarcacao = embarcacao;
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            return Embarcacao.AplicarEfeito(this, mesa);
+            return _embarcacao.AplicarEfeito(this, mesa);
         }
     }
 }

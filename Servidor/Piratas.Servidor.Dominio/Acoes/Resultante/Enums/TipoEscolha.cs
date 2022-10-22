@@ -1,8 +1,10 @@
-namespace Piratas.Servidor.Dominio.Acoes.Resultante.Enums;
-
-public enum TipoEscolha
+namespace Piratas.Servidor.Dominio.Acoes.Resultante.Enums
 {
-    Acao,
-    Jogador,
-    Carta
+    public enum TipoEscolha
+    {
+        Acao,
+        Jogador,
+        Carta
+    }
 }
+

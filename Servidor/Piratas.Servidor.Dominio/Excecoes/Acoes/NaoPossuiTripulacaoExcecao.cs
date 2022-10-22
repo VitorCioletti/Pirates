@@ -1,5 +1,4 @@
 namespace Piratas.Servidor.Dominio.Excecoes.Acoes
-
 {
     using System;
     using Dominio.Acoes;

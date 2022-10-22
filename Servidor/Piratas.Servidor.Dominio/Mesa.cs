@@ -113,10 +113,15 @@ namespace Piratas.Servidor.Dominio
 
             acao.Turno = _turnoAtual;
 
+            if (acoesDisponiveis?.Count == 0 && JogadorAtual.AcoesDisponiveis == 0)
+            {
+                acoesPorJogador = _moverParaProximoTurno();
+            }
+
             return acoesPorJogador;
         }
 
-        public Dictionary<Jogador, List<Acao>> MoverParaProximoTurno()
+        private Dictionary<Jogador, List<Acao>> _moverParaProximoTurno()
         {
             if (JogadorAtual.AcoesDisponiveis > 0)
                 throw new PossuiAcoesDisponiveisExcecao(JogadorAtual);

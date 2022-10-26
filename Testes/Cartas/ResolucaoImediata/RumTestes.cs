@@ -27,14 +27,12 @@ namespace Piratas.Servidor.Testes.Cartas.ResolucaoImediata
                 null,
                 null);
 
-            var acao = Substitute.For<Acao>();
-
-            var cartasNoBaralhoCentral = new List<Carta> {Substitute.For<Carta>(), Substitute.For<Carta>(),};
+            var cartasNoBaralhoCentral = new List<Carta> { Substitute.For<Carta>(), Substitute.For<Carta>(), };
 
             mesa.BaralhoCentral.InserirTopo(cartasNoBaralhoCentral);
             jogadorRealizador.Mao.Adicionar(cartasNaMao);
 
-            acao.Realizador.Returns(jogadorRealizador);
+            var acao = Substitute.For<Acao>(jogadorRealizador, null);
 
             var rum = new Rum();
 

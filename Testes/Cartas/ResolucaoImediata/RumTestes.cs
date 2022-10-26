@@ -38,7 +38,9 @@ namespace Piratas.Servidor.Testes.Cartas.ResolucaoImediata
 
             rum.AplicarEfeito(acao, mesa);
 
-            Assert.IsTrue(jogadorRealizador.Mao.Possui(cartasNoBaralhoCentral[0]));
+            foreach (Carta carta in cartasNoBaralhoCentral)
+                Assert.IsTrue(jogadorRealizador.Mao.Possui(carta));
+
             Assert.IsNull(mesa.BaralhoCentral.ObterTopo());
         }
     }

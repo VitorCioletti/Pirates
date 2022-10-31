@@ -9,7 +9,6 @@ namespace Piratas.Servidor.Testes.Cartas.ResolucaoImediata
     using NSubstitute;
     using NUnit.Framework;
 
-    [TestFixture]
     public class RumTestes
     {
         [Test]

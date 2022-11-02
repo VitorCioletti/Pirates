@@ -6,7 +6,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
     using Excecoes.Acoes;
     using Resultante.Base;
 
-    public class DescerCarta : Primaria
+    public class DescerCarta : BasePrimaria
     {
         public Carta Carta { get; private set; }
 

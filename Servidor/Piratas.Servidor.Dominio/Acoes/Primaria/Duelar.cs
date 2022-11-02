@@ -7,7 +7,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
     using Resultante;
     using Resultante.Base;
 
-    public class Duelar : Primaria
+    public class Duelar : BasePrimaria
     {
         public Duelo CartaIniciadora { get; private set; }
 

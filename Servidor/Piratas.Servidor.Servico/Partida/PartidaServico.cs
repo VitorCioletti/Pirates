@@ -5,6 +5,7 @@ namespace Piratas.Servidor.Servico.Partida
     using System.Linq;
     using Dominio;
     using Dominio.Acoes;
+    using Dominio.Acoes.Primaria;
     using Dominio.Acoes.Resultante.Base;
     using Dominio.Cartas;
     using Dominio.Excecoes;
@@ -165,7 +166,7 @@ namespace Piratas.Servidor.Servico.Partida
             if (acoesDisponiveis.Count == 0)
                 return null;
 
-            if (acoesDisponiveis.All(a => a is Primaria))
+            if (acoesDisponiveis.All(a => a is BasePrimaria))
             {
                 List<string> idsAcoes = acoesDisponiveis.Select(a => a.Id.ToString()).ToList();
 

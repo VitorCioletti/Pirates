@@ -4,6 +4,7 @@ namespace Piratas.Servidor.Dominio
     using System.Collections.Generic;
     using System.Linq;
     using Acoes;
+    using Acoes.Imediata;
     using Acoes.Passiva;
     using Acoes.Primaria;
     using Acoes.Resultante.Base;
@@ -36,7 +37,7 @@ namespace Piratas.Servidor.Dominio
 
         public Stack<Acao> HistoricoAcao { get; private set; }
 
-        private Imediata _imediataAposResultantes;
+        private BaseImediata _baseImediataAposResultantes;
 
         private readonly List<Acao> _acoesPendentes;
 
@@ -51,7 +52,7 @@ namespace Piratas.Servidor.Dominio
         public Mesa(List<Jogador> jogadores)
         {
             _acoesPendentes = new List<Acao>();
-            _imediataAposResultantes = null;
+            _baseImediataAposResultantes = null;
 
             Id = Guid.NewGuid();
             _dataHoraInicio = DateTime.UtcNow;
@@ -83,13 +84,13 @@ namespace Piratas.Servidor.Dominio
 
             _processarAcoesImediatas(acoesResultadoAcaoProcessada, acoesPorJogador);
 
-            if (acaoAProcessar is Primaria)
+            if (acaoAProcessar is BasePrimaria)
                 realizador.SubtrairAcoesDisponiveis();
 
-            if (_acoesPendentes.Count == 0 && _imediataAposResultantes != null)
+            if (_acoesPendentes.Count == 0 && _baseImediataAposResultantes != null)
             {
-                _processarAcaoImediata(_imediataAposResultantes, acoesPorJogador);
-                _imediataAposResultantes = null;
+                _processarAcaoImediata(_baseImediataAposResultantes, acoesPorJogador);
+                _baseImediataAposResultantes = null;
             }
 
             if (acoesResultadoAcaoProcessada?.Count == 0 && _jogadorAtual.AcoesDisponiveis == 0)
@@ -102,19 +103,19 @@ namespace Piratas.Servidor.Dominio
         }
 
         private void _processarAcaoImediata(
-            Imediata acaoImediata,
+            BaseImediata acaoBaseImediata,
             IReadOnlyDictionary<Jogador, List<Acao>> acoesPorJogador)
         {
-            _processarAcoesImediatas(new List<Imediata> {acaoImediata}, acoesPorJogador);
+            _processarAcoesImediatas(new List<BaseImediata> {acaoBaseImediata}, acoesPorJogador);
         }
 
         private void _processarAcoesImediatas(
             IEnumerable<Acao> acoesResultadoAcaoProcessada,
             IReadOnlyDictionary<Jogador, List<Acao>> acoesPorJogador)
         {
-            IEnumerable<Imediata> acoesImediatas = acoesResultadoAcaoProcessada.OfType<Imediata>();
+            IEnumerable<BaseImediata> acoesImediatas = acoesResultadoAcaoProcessada.OfType<BaseImediata>();
 
-            foreach (Imediata imediataAProcessarPosAcao in acoesImediatas)
+            foreach (BaseImediata imediataAProcessarPosAcao in acoesImediatas)
             {
                 Dictionary<Jogador, List<Acao>> acoesPosImediata = ProcessarAcao(imediataAProcessarPosAcao);
 
@@ -171,12 +172,12 @@ namespace Piratas.Servidor.Dominio
 
         public void Finalizar(Jogador _) => _dataHoraFim = DateTime.UtcNow;
 
-        public void RegistrarImediataAposResultantes(Imediata imediata)
+        public void RegistrarImediataAposResultantes(BaseImediata baseImediata)
         {
-            if (_imediataAposResultantes != null)
+            if (_baseImediataAposResultantes != null)
                 throw new ImediataRegistradaExcecao();
 
-            _imediataAposResultantes = imediata;
+            _baseImediataAposResultantes = baseImediata;
         }
 
         private Queue<Jogador> _gerarOrdemDeJogadores() => new(Jogadores);
@@ -205,7 +206,7 @@ namespace Piratas.Servidor.Dominio
         {
             Jogador realizador = acao.Realizador;
 
-            if (acao is Primaria)
+            if (acao is BasePrimaria)
             {
                 if (realizador != _jogadorAtual)
                     throw new TurnoDeOutroJogadorExcecao(realizador);

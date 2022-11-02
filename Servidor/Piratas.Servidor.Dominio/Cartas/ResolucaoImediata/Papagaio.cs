@@ -62,7 +62,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                     List<Acao> DuelarResultante(Acao acaoEscolhida, Jogador escolhido)
                     {
                         var duelarCopia = new Duelar(realizador, escolhido, cartaIniciadora);
-                        var copiarPrimaria = new CopiarPrimaria(acaoEscolhida, realizador, duelarCopia);
+                        var copiarPrimaria = new CopiarPrimaria(realizador, duelarCopia);
 
                         var acoesResultantesDuelar = new List<Acao> {copiarPrimaria};
 

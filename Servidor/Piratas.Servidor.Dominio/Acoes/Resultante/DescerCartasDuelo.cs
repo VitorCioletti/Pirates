@@ -37,7 +37,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             bool realizadorPossuiDueloSurpresa = Realizador.Mao.Possui<DueloSurpresa>();
             bool alvoPossuiDueloSurpresa = Alvo.Mao.Possui<DueloSurpresa>();
 
-            var calcularResultadoDuelo = new CalcularResultadoDuelo(this, Realizador, Alvo);
+            var calcularResultadoDuelo = new CalcularResultadoDuelo(Realizador);
 
             if (!realizadorPossuiDueloSurpresa && !alvoPossuiDueloSurpresa)
                 acoesResultantes.Add(calcularResultadoDuelo);

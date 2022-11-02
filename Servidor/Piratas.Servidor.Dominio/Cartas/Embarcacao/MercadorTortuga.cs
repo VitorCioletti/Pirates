@@ -12,8 +12,8 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
         {
             var comprarCarta = new ComprarCarta(acao.Realizador);
 
-            var copiarPrimaria = new CopiarPrimaria(acao, acao.Realizador, comprarCarta);
-            var acoesResultantes = new List<Acao> { copiarPrimaria };
+            var copiarPrimaria = new CopiarPrimaria(acao.Realizador, comprarCarta);
+            var acoesResultantes = new List<Acao> {copiarPrimaria};
 
             return acoesResultantes;
         }

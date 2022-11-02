@@ -2,15 +2,14 @@ namespace Piratas.Servidor.Dominio.Acoes.Imediata
 {
     using System.Collections.Generic;
     using Resultante;
-    using Resultante.Base;
 
-    public class CalcularResultadoDuelo : Imediata
+    public class CalcularResultadoDuelo : BaseImediata
     {
         public Jogador Vitorioso { get; private set; }
 
         public Jogador Perdedor { get; private set; }
 
-        public CalcularResultadoDuelo(Acao origem, Jogador realizador, Jogador alvo) : base(origem, realizador, alvo)
+        public CalcularResultadoDuelo(Jogador realizador) : base(realizador)
         {
         }
 
@@ -39,7 +38,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Imediata
             mesa.SairModoDuelo();
 
             var roubarCarta = new RoubarCarta(this, Vitorioso, Perdedor);
-            var acoesResultantes = new List<Acao> { roubarCarta };
+            var acoesResultantes = new List<Acao> {roubarCarta};
 
             return acoesResultantes;
         }

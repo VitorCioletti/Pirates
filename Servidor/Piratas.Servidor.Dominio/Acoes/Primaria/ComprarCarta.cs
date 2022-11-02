@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
     using Cartas.Tipos;
     using Resultante.Base;
 
-    public class ComprarCarta : Primaria
+    public class ComprarCarta : BasePrimaria
     {
         public ComprarCarta(Jogador jogador) : base(jogador) { }
 

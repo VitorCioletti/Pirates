@@ -1,7 +1,7 @@
 namespace Piratas.Servidor.Servico.WebSocket
 {
     using Configuracao;
-    using Controllers;
+    using Controladores;
     using Log;
     using Microsoft.Extensions.Configuration;
     using WebSocketSharp.Server;

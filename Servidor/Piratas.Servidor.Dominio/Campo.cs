@@ -42,7 +42,7 @@ namespace Piratas.Servidor.Dominio
 
         public int CalcularPontosDuelo()
         {
-            var pontosDuelo = 0;
+            int pontosDuelo = 0;
 
             pontosDuelo += _calcularTirosCanhoes();
             pontosDuelo += _calcularTirosDueloSurpresa();

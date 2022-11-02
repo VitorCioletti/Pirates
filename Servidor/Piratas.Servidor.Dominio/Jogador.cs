@@ -3,10 +3,8 @@ namespace Piratas.Servidor.Dominio
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Acoes.Primaria;
     using Cartas;
     using Cartas.Tesouro;
-    using Cartas.Tipos;
     using Cartas.Tripulacao;
 
     public class Jogador
@@ -60,16 +58,16 @@ namespace Piratas.Servidor.Dominio
 
         public int CalcularTesouros()
         {
-            var meiosAmuletos = Mao.ObterTodas<MeioAmuleto>();
-            var somaMeiosAmuletos = MeioAmuleto.CalcularPontosTesouro(meiosAmuletos);
+            List<MeioAmuleto> meiosAmuletos = Mao.ObterTodas<MeioAmuleto>();
+            int somaMeiosAmuletos = MeioAmuleto.CalcularPontosTesouro(meiosAmuletos);
 
-            var tesourosMao = Mao.ObterTodas<Tesouro>();
-            var somaTesourosMao = tesourosMao.Sum(c => c.Valor);
+            List<Tesouro> tesourosMao = Mao.ObterTodas<Tesouro>();
+            int somaTesourosMao = tesourosMao.Sum(c => c.Valor);
 
-            var tesourosProtegidos = Campo.ObterTodasProtegidas().OfType<Tesouro>();
-            var somaTesourosProtegidos = tesourosProtegidos.Sum(c => c.Valor);
+            IEnumerable<Tesouro> tesourosProtegidos = Campo.ObterTodasProtegidas().OfType<Tesouro>();
+            int somaTesourosProtegidos = tesourosProtegidos.Sum(c => c.Valor);
 
-            var tesourosPiratasNobres =
+            int tesourosPiratasNobres =
                 Campo.Tripulacao.Where(t => t is PirataNobre).Sum(t => ((PirataNobre)t).Tesouros);
 
             return somaTesourosMao + somaTesourosProtegidos + somaMeiosAmuletos + tesourosPiratasNobres;

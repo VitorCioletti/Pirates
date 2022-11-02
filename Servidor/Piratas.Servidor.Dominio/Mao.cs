@@ -52,7 +52,7 @@ namespace Piratas.Servidor.Dominio
 
         public Carta ObterQualquer()
         {
-            var posicaoCarta = new Random().Next(0, QuantidadeCartas());
+            int posicaoCarta = new Random().Next(0, QuantidadeCartas());
 
             return _cartas[posicaoCarta];
         }
@@ -60,8 +60,6 @@ namespace Piratas.Servidor.Dominio
         public int QuantidadeCartas() => _cartas.Count;
 
         public List<T> ObterTodas<T>() where T : Carta => _cartas.OfType<T>().ToList();
-
-        public void Remover(int posicao) => _cartas.RemoveAt(posicao);
 
         public bool Possui(Carta carta) => _cartas.Contains(carta);
 

@@ -1,4 +1,4 @@
-namespace Piratas.Servidor.Servico.WebSocket.Controllers
+namespace Piratas.Servidor.Servico.WebSocket.Controladores
 {
     using System.Collections.Generic;
     using Excecoes.Sala;

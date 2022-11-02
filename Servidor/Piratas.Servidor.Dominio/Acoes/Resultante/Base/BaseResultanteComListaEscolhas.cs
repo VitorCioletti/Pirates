@@ -4,10 +4,8 @@
     using Enums;
     using Excecoes.Acoes;
 
-    public abstract class BaseResultanteComListaEscolhas : BaseResultante
+    public abstract class BaseResultanteComListaEscolhas : BaseResultanteComEscolha
     {
-        public TipoEscolha TipoEscolha { get; private set; }
-
         protected List<string> Escolhas { get; private set; }
 
         public List<string> Opcoes { get; private set; }
@@ -20,11 +18,15 @@
             TipoEscolha tipoEscolha,
             List<string> opcoes,
             int limiteEscolhas = 1,
-            Jogador alvo = null) : base(origem, realizador, alvo)
+            Jogador alvo = null)
+            : base(
+                origem,
+                realizador,
+                tipoEscolha,
+                alvo)
         {
             LimiteEscolhas = limiteEscolhas;
             Opcoes = opcoes;
-            TipoEscolha = tipoEscolha;
         }
 
         public void PreencherEscolhas(List<string> idsEscolhas)

@@ -2,10 +2,8 @@
 {
     using Enums;
 
-    public abstract class BaseResultanteComEscolhaBooleana : BaseResultante
+    public abstract class BaseResultanteComEscolhaBooleana : BaseResultanteComEscolha
     {
-        public TipoEscolha TipoEscolha { get; private set; }
-
         protected bool EscolhaBooleana { get; private set; }
 
         protected BaseResultanteComEscolhaBooleana(
@@ -13,9 +11,12 @@
             Jogador realizador,
             TipoEscolha tipoEscolha,
             Jogador alvo = null)
-            : base(origem, realizador, alvo)
+            : base(
+                origem,
+                realizador,
+                tipoEscolha,
+                alvo)
         {
-            TipoEscolha = tipoEscolha;
             EscolhaBooleana = false;
         }
 

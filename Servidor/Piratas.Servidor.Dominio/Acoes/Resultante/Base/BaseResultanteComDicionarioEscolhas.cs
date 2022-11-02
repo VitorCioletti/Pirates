@@ -4,11 +4,9 @@
     using Enums;
     using Excecoes.Acoes;
 
-    public abstract class BaseResultanteComDicionarioEscolhas : BaseResultante
+    public abstract class BaseResultanteComDicionarioEscolhas : BaseResultanteComEscolha
     {
         protected Dictionary<string, string> Escolhas { get; private set; }
-
-        public TipoEscolha TipoEscolha { get; private set; }
 
         public TipoEscolha TipoEscolhaChaves { get; private set; }
 
@@ -29,9 +27,13 @@
             int limiteValoresPorChave,
             List<string> opcoesValores,
             List<string> opcoesChaves,
-            Jogador alvo = null) : base(origem, realizador, alvo)
+            Jogador alvo = null)
+            : base(
+                origem,
+                realizador,
+                tipoEscolha,
+                alvo)
         {
-            TipoEscolha = tipoEscolha;
             OpcoesChaves = opcoesChaves;
             OpcoesValores = opcoesValores;
 

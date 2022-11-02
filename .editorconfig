@@ -49,6 +49,9 @@ csharp_style_prefer_null_check_over_type_check = true
 dotnet_style_namespace_match_folder = true:suggestion
 dotnet_diagnostic.IDE0130.severity = suggestion
 
+# Exception como sufixo de exceção.
+dotnet_diagnostic.CA1710.severity = none
+
 # 'var'
 csharp_style_var_when_type_is_apparent = true
 csharp_style_var_for_built_in_types = false

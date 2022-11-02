@@ -3,14 +3,21 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     using Cartas;
     using Dominio;
     using System.Collections.Generic;
+    using System.Linq;
     using Base;
+    using Enums;
 
-    public class OlharCartasJogador : BaseResultante
+    public class OlharCartasJogador : BaseResultanteComListaEscolhaBooleana
     {
-        private List<Carta> _cartas { get; set; }
-
-        public OlharCartasJogador(Acao origem, Jogador realizador, List<Carta> cartas)
-            : base(origem, realizador) => _cartas = cartas;
+        public OlharCartasJogador(
+            Acao origem,
+            Jogador realizador,
+            List<Carta> cartas)
+            : base(
+                origem,
+                realizador,
+                TipoEscolha.Carta,
+                cartas.Select(c => c.Id).ToList()) {}
 
         public override List<Acao> AplicarRegra(Mesa mesa) => null;
     }

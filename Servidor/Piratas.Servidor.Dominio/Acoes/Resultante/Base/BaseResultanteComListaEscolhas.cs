@@ -13,7 +13,7 @@
         public int LimiteEscolhas { get; private set; }
 
         protected BaseResultanteComListaEscolhas(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             TipoEscolha tipoEscolha,
             List<string> opcoes,

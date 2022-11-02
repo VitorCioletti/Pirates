@@ -10,10 +10,10 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class ConvocarTripulacao : BaseResolucaoImediata
     {
-        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
         {
             PilhaDescarte pilhaDescarte = mesa.PilhaDescarte;
-            Jogador realizador = acao.Realizador;
+            Jogador realizador = baseAcao.Realizador;
 
             if (realizador.Campo.TripulacaoCheia())
                 throw new TripulacaoCheiaExcecao(this, realizador);
@@ -24,12 +24,12 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                 throw new SemTripulacaoPilhaDescarteExcecao(this);
 
             var escolherCartaBaralho = new EscolherCartaBaralho(
-                acao,
+                baseAcao,
                 realizador,
                 pilhaDescarte,
                 tripulantesDescartados);
 
-            var acoesResultantes = new List<Acao> { escolherCartaBaralho };
+            var acoesResultantes = new List<BaseAcao> { escolherCartaBaralho };
 
             return acoesResultantes;
         }

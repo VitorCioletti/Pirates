@@ -10,7 +10,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     public class DistribuirCartas : BaseResultanteComDicionarioEscolhas
     {
         public DistribuirCartas(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             IEnumerable<Jogador> jogadores,
             IEnumerable<Carta> cartas)
@@ -26,7 +26,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         {
         }
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             foreach ((string idJogador, string idCarta) in Escolhas)
             {

@@ -5,8 +5,8 @@ namespace Piratas.Servidor.Dominio.Excecoes.Acoes
 
     public class CartaProibidaIniciarDueloExcecao : BaseAcoesExcecao
     {
-        public CartaProibidaIniciarDueloExcecao(Acao acao, Carta carta)
-            : base(acao, "carta-proibida-iniciar-duelo", $"Carta \"{carta.Id}\" não pode inicar duelo.")
+        public CartaProibidaIniciarDueloExcecao(BaseAcao baseAcao, Carta carta)
+            : base(baseAcao, "carta-proibida-iniciar-duelo", $"Carta \"{carta.Id}\" não pode inicar duelo.")
         {
         }
     }

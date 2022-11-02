@@ -11,6 +11,6 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         public CopiarPrimaria(Jogador realizador, BasePrimaria copiada) : base(realizador) =>
             _copiada = copiada;
 
-        public override List<Acao> AplicarRegra(Mesa mesa) => _copiada.AplicarRegra(mesa);
+        public override List<BaseAcao> AplicarRegra(Mesa mesa) => _copiada.AplicarRegra(mesa);
     }
 }

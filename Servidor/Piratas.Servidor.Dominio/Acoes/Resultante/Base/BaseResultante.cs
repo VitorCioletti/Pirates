@@ -1,11 +1,11 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante.Base
 {
-    public abstract class BaseResultante : Acao
+    public abstract class BaseResultante : BaseAcao
     {
-        protected Acao Origem { get; private set; }
+        protected BaseAcao Origem { get; private set; }
 
         protected BaseResultante(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             Jogador alvo = null)
             : base(realizador, alvo) => Origem = origem;

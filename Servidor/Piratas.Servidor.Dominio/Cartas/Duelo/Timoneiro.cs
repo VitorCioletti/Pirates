@@ -8,9 +8,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Duelo
 
     public class Timoneiro : Duelo
     {
-        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
         {
-            if (acao is not DescerCartasDuelo)
+            if (baseAcao is not DescerCartasDuelo)
                 throw new ApenasCartaRespostaDueloExcecao(this);
 
             mesa.SairModoDuelo();

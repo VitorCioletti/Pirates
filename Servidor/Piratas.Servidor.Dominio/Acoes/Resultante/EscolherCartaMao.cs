@@ -12,7 +12,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         private readonly Action<Carta> _aposEscolha;
 
         public EscolherCartaMao(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             List<string> cartasOpcao,
             Action<Carta> aposEscolha)
@@ -25,7 +25,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             _aposEscolha = aposEscolha;
         }
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             string escolha = Escolhas.First();
 

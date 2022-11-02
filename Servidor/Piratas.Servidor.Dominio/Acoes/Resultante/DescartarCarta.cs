@@ -10,7 +10,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     public class DescartarCarta : BaseResultanteComListaEscolhas
     {
         public DescartarCarta(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             Jogador alvo,
             List<string> cartasOpcoes)
@@ -23,7 +23,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         {
         }
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             string escolha = Escolhas[0];
 

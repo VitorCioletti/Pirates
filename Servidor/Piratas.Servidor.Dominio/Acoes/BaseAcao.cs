@@ -3,7 +3,7 @@ namespace Piratas.Servidor.Dominio.Acoes
     using System;
     using System.Collections.Generic;
 
-    public abstract class Acao
+    public abstract class BaseAcao
     {
         public string Id { get; private set; }
 
@@ -16,7 +16,7 @@ namespace Piratas.Servidor.Dominio.Acoes
         // TODO: init only setter? Qualquer um pode setar :(
         public int Turno { get; set; }
 
-        protected Acao(Jogador realizador, Jogador alvo = null)
+        protected BaseAcao(Jogador realizador, Jogador alvo = null)
         {
             Id = GetType().ToString();
             DataHora = DateTime.UtcNow;
@@ -25,6 +25,6 @@ namespace Piratas.Servidor.Dominio.Acoes
             Alvo = alvo;
         }
 
-        public abstract List<Acao> AplicarRegra(Mesa mesa);
+        public abstract List<BaseAcao> AplicarRegra(Mesa mesa);
     }
 }

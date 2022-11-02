@@ -7,9 +7,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
     {
         public PirataAmaldicoado() => Tiros = -1;
 
-        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
         {
-            Campo campoAlvo = acao.Alvo.Campo;
+            Campo campoAlvo = baseAcao.Alvo.Campo;
 
             campoAlvo.Adicionar(this);
 

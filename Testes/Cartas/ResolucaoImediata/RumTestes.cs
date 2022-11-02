@@ -31,7 +31,7 @@ namespace Piratas.Servidor.Testes.Cartas.ResolucaoImediata
             mesa.BaralhoCentral.InserirTopo(cartasNoBaralhoCentral);
             jogadorRealizador.Mao.Adicionar(cartasNaMao);
 
-            var acao = Substitute.For<Acao>(jogadorRealizador, null);
+            var acao = Substitute.For<BaseAcao>(jogadorRealizador, null);
 
             var rum = new Rum();
 

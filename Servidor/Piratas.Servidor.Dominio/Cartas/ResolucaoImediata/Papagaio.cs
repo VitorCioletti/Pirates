@@ -11,19 +11,19 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class Papagaio : BaseResolucaoImediata
     {
-        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
         {
             List<Jogador> jogadoresNaMesa = mesa.Jogadores;
 
-            Acao ultimaAcao = mesa.HistoricoAcao.FirstOrDefault(
-                a => a.Turno == acao.Turno && (a is DescerCarta || a is Duelar));
+            BaseAcao ultimaBaseAcao = mesa.HistoricoAcao.FirstOrDefault(
+                a => a.Turno == baseAcao.Turno && (a is DescerCarta || a is Duelar));
 
-            if (ultimaAcao == null)
+            if (ultimaBaseAcao == null)
                 throw new SemAcaoValidaExcecao(this);
 
-            var acoesResultantes = new List<Acao>();
+            var acoesResultantes = new List<BaseAcao>();
 
-            switch (ultimaAcao)
+            switch (ultimaBaseAcao)
             {
                 case DescerCarta descerCarta:
                     Carta cartaACopiar = descerCarta.Carta;
@@ -33,9 +33,9 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                     if (tipoNaoPermitido)
                         throw new ImpossivelCopiarExcecao(this, cartaACopiar);
 
-                    foreach (List<Acao> acoesPorJogador in mesa.ProcessarAcao(ultimaAcao).Values)
+                    foreach (List<BaseAcao> acoesPorJogador in mesa.ProcessarAcao(ultimaBaseAcao).Values)
                     {
-                        foreach (Acao acaoDisponivel in acoesPorJogador)
+                        foreach (BaseAcao acaoDisponivel in acoesPorJogador)
                         {
                             acoesResultantes.Add(acaoDisponivel);
                         }
@@ -52,19 +52,19 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                     List<string> idsOutrosJogadores = outrosJogadores.Select(j => j.Id.ToString()).ToList();
 
                     var escolherJogador = new EscolherJogador(
-                        acao,
+                        baseAcao,
                         realizador,
                         idsOutrosJogadores,
                         DuelarResultante);
 
                     acoesResultantes.Add(escolherJogador);
 
-                    List<Acao> DuelarResultante(Acao acaoEscolhida, Jogador escolhido)
+                    List<BaseAcao> DuelarResultante(BaseAcao acaoEscolhida, Jogador escolhido)
                     {
                         var duelarCopia = new Duelar(realizador, escolhido, cartaIniciadora);
                         var copiarPrimaria = new CopiarPrimaria(realizador, duelarCopia);
 
-                        var acoesResultantesDuelar = new List<Acao> {copiarPrimaria};
+                        var acoesResultantesDuelar = new List<BaseAcao> {copiarPrimaria};
 
                         return acoesResultantesDuelar;
                     }

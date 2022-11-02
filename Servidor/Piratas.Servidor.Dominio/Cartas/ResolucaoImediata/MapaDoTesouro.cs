@@ -9,19 +9,19 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     {
         private const int _cartasObtidas = 4;
 
-        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
         {
             BaralhoCentral baralhoCentral = mesa.BaralhoCentral;
 
             List<Carta> cartasOpcoes = baralhoCentral.ObterTopo(_cartasObtidas);
 
             var escolherCartaBaralho = new EscolherCartaBaralho(
-                acao,
-                acao.Realizador,
+                baseAcao,
+                baseAcao.Realizador,
                 baralhoCentral,
                 cartasOpcoes);
 
-            var acoesResultantes = new List<Acao> { escolherCartaBaralho };
+            var acoesResultantes = new List<BaseAcao> { escolherCartaBaralho };
 
             return acoesResultantes;
         }

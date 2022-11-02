@@ -7,7 +7,7 @@
         protected bool EscolhaBooleana { get; private set; }
 
         protected BaseResultanteComEscolhaBooleana(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             TipoEscolha tipoEscolha,
             Jogador alvo = null)

@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
     public class DescerCartasDueloSurpresa : BaseResultanteComListaEscolhas
     {
-        public DescerCartasDueloSurpresa(Acao origem, Jogador realizador)
+        public DescerCartasDueloSurpresa(BaseAcao origem, Jogador realizador)
             : base(
                 origem,
                 realizador,
@@ -19,7 +19,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         {
         }
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             foreach (string dueloSurpresaEscolhido in Escolhas)
             {

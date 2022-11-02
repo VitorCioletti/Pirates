@@ -10,9 +10,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     {
         private const int _cartasMinimasNaMao = 5;
 
-        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
         {
-            Jogador realizador = acao.Realizador;
+            Jogador realizador = baseAcao.Realizador;
             List<Jogador> jogadoresNaMesa = mesa.Jogadores;
 
             List<Jogador> jogadoresOpcao =
@@ -21,21 +21,21 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
             List<string> idsJogadores = jogadoresOpcao.Select(j => j.Id.ToString()).ToList();
 
             var escolherJogador = new EscolherJogador(
-                acao,
+                baseAcao,
                 realizador,
                 idsJogadores,
                 RoubarCarta);
 
-            var acoesResultantes = new List<Acao> {escolherJogador};
+            var acoesResultantes = new List<BaseAcao> {escolherJogador};
 
             return acoesResultantes;
 
             // TODO: Randômico ou permite escolha?
-            List<Acao> RoubarCarta(Acao acaoEscolhida, Jogador alvo)
+            List<BaseAcao> RoubarCarta(BaseAcao acaoEscolhida, Jogador alvo)
             {
                 var roubarCarta = new RoubarCarta(acaoEscolhida, realizador, alvo);
 
-                var acoesResultantesRoubarCarta = new List<Acao> {roubarCarta};
+                var acoesResultantesRoubarCarta = new List<BaseAcao> {roubarCarta};
 
                 return acoesResultantesRoubarCarta;
             }

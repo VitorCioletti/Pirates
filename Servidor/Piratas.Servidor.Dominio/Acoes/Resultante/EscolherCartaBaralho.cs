@@ -15,7 +15,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         private readonly List<Carta> _cartasOpcoes;
 
         public EscolherCartaBaralho(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             BaseBaralho baseBaralho,
             List<Carta> cartasOpcoes)
@@ -29,7 +29,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             _cartasOpcoes = cartasOpcoes;
         }
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             string escolha = Escolhas.First();
 

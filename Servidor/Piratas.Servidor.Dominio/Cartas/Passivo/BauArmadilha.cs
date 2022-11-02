@@ -5,6 +5,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Passivo
 
     public class BauArmadilha : BasePassivo
     {
-        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa) => null;
+        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa) => null;
     }
 }

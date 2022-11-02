@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     public class OlharCartasJogador : BaseResultanteComListaEscolhaBooleana
     {
         public OlharCartasJogador(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             List<Carta> cartas)
             : base(
@@ -18,6 +18,6 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 TipoEscolha.Carta,
                 cartas.ObterIds()) {}
 
-        public override List<Acao> AplicarRegra(Mesa mesa) => null;
+        public override List<BaseAcao> AplicarRegra(Mesa mesa) => null;
     }
 }

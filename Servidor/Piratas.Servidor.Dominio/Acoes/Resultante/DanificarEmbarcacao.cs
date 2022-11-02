@@ -6,11 +6,11 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
     public class DanificarEmbarcacao : BaseResultante
     {
-        public DanificarEmbarcacao(Acao origem, Jogador realizador) : base(origem, realizador)
+        public DanificarEmbarcacao(BaseAcao origem, Jogador realizador) : base(origem, realizador)
         {
         }
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             Realizador.Campo.DanificarEmbarcacao();
 

@@ -10,7 +10,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Passiva
         public AplicarEfeitoEmbarcacao(Jogador realizador, BaseEmbarcacao baseEmbarcacao) : base(realizador) =>
             BaseEmbarcacao = baseEmbarcacao;
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             return BaseEmbarcacao.AplicarEfeito(this, mesa);
         }

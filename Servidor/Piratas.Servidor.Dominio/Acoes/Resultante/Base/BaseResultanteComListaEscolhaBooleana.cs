@@ -10,7 +10,7 @@
         protected bool EscolhaBooleana { get; private set; }
 
         protected BaseResultanteComListaEscolhaBooleana(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             TipoEscolha tipoEscolha,
             List<string> itens,

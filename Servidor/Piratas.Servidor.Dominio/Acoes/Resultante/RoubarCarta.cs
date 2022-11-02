@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
     public class RoubarCarta : BaseResultanteComListaEscolhas
     {
-        public RoubarCarta(Acao origem, Jogador realizador, Jogador alvo)
+        public RoubarCarta(BaseAcao origem, Jogador realizador, Jogador alvo)
             : base(
                 origem,
                 realizador,
@@ -18,7 +18,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         {
         }
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             string escolha = Escolhas.First();
 

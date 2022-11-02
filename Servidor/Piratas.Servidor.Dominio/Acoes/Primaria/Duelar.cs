@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
         public Duelar(Jogador realizador, Jogador alvo, Duelo cartaIniciadora) : base(realizador, alvo) =>
             CartaIniciadora = cartaIniciadora;
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             if (CartaIniciadora is Timoneiro)
                 throw new CartaProibidaIniciarDueloExcecao(this, CartaIniciadora);
@@ -25,7 +25,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
                 return null;
 
             var descerCartasDuelo = new DescerCartasDuelo(this, Alvo, Realizador);
-            var acoesResultantes = new List<Acao> {descerCartasDuelo};
+            var acoesResultantes = new List<BaseAcao> {descerCartasDuelo};
 
             return acoesResultantes;
         }

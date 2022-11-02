@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     {
         private List<BaseResultante> _resultantesOpcao { get; set; }
 
-        public EscolherResultante(Acao origem, Jogador realizador, params BaseResultante[] resultantesOpcao)
+        public EscolherResultante(BaseAcao origem, Jogador realizador, params BaseResultante[] resultantesOpcao)
             : base(
                 origem,
                 realizador,
@@ -19,7 +19,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             _resultantesOpcao = resultantesOpcao.ToList();
         }
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             string escolha = Escolhas.First();
 

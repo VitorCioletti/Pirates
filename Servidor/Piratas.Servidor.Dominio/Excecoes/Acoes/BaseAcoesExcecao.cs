@@ -4,11 +4,11 @@ namespace Piratas.Servidor.Dominio.Excecoes.Acoes
 
     public abstract class BaseAcoesExcecao : BaseDominioExcecao
     {
-        public Acao Acao { get; private set; }
+        public BaseAcao BaseAcao { get; private set; }
 
-        protected BaseAcoesExcecao(Acao acao, string id, string mensagem) : base(id, mensagem)
+        protected BaseAcoesExcecao(BaseAcao baseAcao, string id, string mensagem) : base(id, mensagem)
         {
-            Acao = acao;
+            BaseAcao = baseAcao;
         }
     }
 }

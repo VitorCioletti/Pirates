@@ -19,7 +19,7 @@
         public int LimiteValoresPorChave { get; private set; }
 
         protected BaseResultanteComDicionarioEscolhas(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             TipoEscolha tipoEscolha,
             TipoEscolha tipoEscolhaChaves,

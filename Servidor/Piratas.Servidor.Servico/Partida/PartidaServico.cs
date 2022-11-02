@@ -23,7 +23,7 @@ namespace Piratas.Servidor.Servico.Partida
 
         private readonly Mesa _mesa;
 
-        private readonly Dictionary<Jogador, List<Acao>> _possiveisAcoesEnviadasAosJogadores;
+        private readonly Dictionary<Jogador, List<BaseAcao>> _possiveisAcoesEnviadasAosJogadores;
 
         private readonly Dictionary<Guid, List<Evento>> _eventosAcaoAtual;
 
@@ -52,7 +52,7 @@ namespace Piratas.Servidor.Servico.Partida
             Id = _mesa.Id;
 
             _eventosAcaoAtual = new Dictionary<Guid, List<Evento>>();
-            _possiveisAcoesEnviadasAosJogadores = new Dictionary<Jogador, List<Acao>>();
+            _possiveisAcoesEnviadasAosJogadores = new Dictionary<Jogador, List<BaseAcao>>();
         }
 
         public List<MensagemPartidaServidor> ProcessarMensagemCliente(MensagemPartidaCliente mensagemPartidaCliente)
@@ -68,11 +68,11 @@ namespace Piratas.Servidor.Servico.Partida
             try
             {
                 Jogador jogadorComAcaoPendente = _obterJogadorComAcaoPendente(mensagemPartidaCliente);
-                Acao acaoPendente = _obterAcaoPendente(jogadorComAcaoPendente, mensagemPartidaCliente);
+                BaseAcao baseAcaoPendente = _obterAcaoPendente(jogadorComAcaoPendente, mensagemPartidaCliente);
 
-                Dictionary<Jogador, List<Acao>> acoesPosProcessamentoAcao = _mesa.ProcessarAcao(acaoPendente);
+                Dictionary<Jogador, List<BaseAcao>> acoesPosProcessamentoAcao = _mesa.ProcessarAcao(baseAcaoPendente);
 
-                foreach ((Jogador jogador, List<Acao> acoesDisponiveis) in acoesPosProcessamentoAcao)
+                foreach ((Jogador jogador, List<BaseAcao> acoesDisponiveis) in acoesPosProcessamentoAcao)
                 {
                     MensagemPartidaServidor mensagemPartidaServidor = _criarMensagemServidor(jogador, acoesDisponiveis);
 
@@ -82,7 +82,7 @@ namespace Piratas.Servidor.Servico.Partida
                     _possiveisAcoesEnviadasAosJogadores.Add(jogador, acoesDisponiveis);
                 }
 
-                _possiveisAcoesEnviadasAosJogadores[jogadorComAcaoPendente].Remove(acaoPendente);
+                _possiveisAcoesEnviadasAosJogadores[jogadorComAcaoPendente].Remove(baseAcaoPendente);
             }
             catch (BaseServicoException servicoException)
             {
@@ -96,18 +96,18 @@ namespace Piratas.Servidor.Servico.Partida
             return mensagensServidor;
         }
 
-        private Acao _obterAcaoPendente(Jogador jogador, MensagemPartidaCliente mensagemPartidaCliente)
+        private BaseAcao _obterAcaoPendente(Jogador jogador, MensagemPartidaCliente mensagemPartidaCliente)
         {
             string idAcaoExecutada = mensagemPartidaCliente.IdAcaoExecutada;
 
-            List<Acao> acoesPendentes = _possiveisAcoesEnviadasAosJogadores[jogador];
+            List<BaseAcao> acoesPendentes = _possiveisAcoesEnviadasAosJogadores[jogador];
 
-            Acao acaoPendente = acoesPendentes.FirstOrDefault(a => a.Id == idAcaoExecutada);
+            BaseAcao baseAcaoPendente = acoesPendentes.FirstOrDefault(a => a.Id == idAcaoExecutada);
 
-            if (acaoPendente == null)
+            if (baseAcaoPendente == null)
                 throw new AcaoNaoDisponivelExcecao(idAcaoExecutada);
 
-            switch (acaoPendente)
+            switch (baseAcaoPendente)
             {
                 case BaseResultanteComDicionarioEscolhas resultanteComDicionarioEscolhas:
                     Dictionary<string, string> dicionarioEscolhas =
@@ -129,14 +129,14 @@ namespace Piratas.Servidor.Servico.Partida
                     break;
             }
 
-            return acaoPendente;
+            return baseAcaoPendente;
         }
 
         private Jogador _obterJogadorComAcaoPendente(MensagemPartidaCliente mensagemPartidaCliente)
         {
             Guid idJogadorRealizador = mensagemPartidaCliente.IdJogadorRealizador;
 
-            (Jogador jogadorComAcaoPendente, List<Acao> _) =
+            (Jogador jogadorComAcaoPendente, List<BaseAcao> _) =
                 _possiveisAcoesEnviadasAosJogadores.FirstOrDefault(a => a.Key.Id == idJogadorRealizador);
 
             if (jogadorComAcaoPendente == null)
@@ -145,7 +145,7 @@ namespace Piratas.Servidor.Servico.Partida
             return jogadorComAcaoPendente;
         }
 
-        private MensagemPartidaServidor _criarMensagemServidor(Jogador jogador, List<Acao> acoesDisponiveis)
+        private MensagemPartidaServidor _criarMensagemServidor(Jogador jogador, List<BaseAcao> acoesDisponiveis)
         {
             BaseEscolha escolha = _criarEscolha(acoesDisponiveis);
 
@@ -161,7 +161,7 @@ namespace Piratas.Servidor.Servico.Partida
             return mensagemServidor;
         }
 
-        private BaseEscolha _criarEscolha(List<Acao> acoesDisponiveis)
+        private BaseEscolha _criarEscolha(List<BaseAcao> acoesDisponiveis)
         {
             if (acoesDisponiveis.Count == 0)
                 return null;

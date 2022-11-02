@@ -9,15 +9,15 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     {
         private const int _cartasObtidas = 3;
 
-        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
         {
             List<Jogador> jogadoresNaMesa = mesa.Jogadores;
             BaralhoCentral baralhoCentral = mesa.BaralhoCentral;
 
             List<Carta> cartas = baralhoCentral.ObterTopo(_cartasObtidas);
 
-            var distribuirCartas = new DistribuirCartas(acao, acao.Realizador, jogadoresNaMesa, cartas);
-            var acoesResultantes = new List<Acao> { distribuirCartas };
+            var distribuirCartas = new DistribuirCartas(baseAcao, baseAcao.Realizador, jogadoresNaMesa, cartas);
+            var acoesResultantes = new List<BaseAcao> { distribuirCartas };
 
             return acoesResultantes;
         }

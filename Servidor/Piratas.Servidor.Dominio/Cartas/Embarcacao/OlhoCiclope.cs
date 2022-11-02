@@ -8,30 +8,30 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 
     public class OlhoCiclope : BaseEmbarcacao
     {
-        public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
         {
-            Jogador realizador = acao.Realizador;
+            Jogador realizador = baseAcao.Realizador;
 
             List<Jogador> outrosJogadoresMesa = mesa.Jogadores.Where(j => j != realizador).ToList();
 
             List<string> idsJogadores = outrosJogadoresMesa.Select(j => j.Id.ToString()).ToList();
 
             var escolherJogador = new EscolherJogador(
-                acao,
+                baseAcao,
                 realizador,
                 idsJogadores,
                 OlharCartas);
 
-            var acoesResultantes = new List<Acao> {escolherJogador};
+            var acoesResultantes = new List<BaseAcao> {escolherJogador};
 
             return acoesResultantes;
 
-            List<Acao> OlharCartas(Acao acaoEscolhida, Jogador jogador)
+            List<BaseAcao> OlharCartas(BaseAcao acaoEscolhida, Jogador jogador)
             {
                 var olharCartasJogador =
                     new OlharCartasJogador(acaoEscolhida, realizador, jogador.Mao.ObterTodas());
 
-                var acoesResultantesOlharCartas = new List<Acao> {olharCartasJogador};
+                var acoesResultantesOlharCartas = new List<BaseAcao> {olharCartasJogador};
 
                 return acoesResultantesOlharCartas;
             }

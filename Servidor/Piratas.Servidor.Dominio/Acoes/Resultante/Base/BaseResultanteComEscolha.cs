@@ -7,7 +7,7 @@
         public TipoEscolha TipoEscolha { get; private set; }
 
         protected BaseResultanteComEscolha(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             TipoEscolha tipoEscolha,
             Jogador alvo = null)

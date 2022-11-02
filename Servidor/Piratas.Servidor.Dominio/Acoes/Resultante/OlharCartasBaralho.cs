@@ -10,13 +10,13 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     {
         private List<Carta> _cartasOpcoes { get; set; }
 
-        public OlharCartasBaralho(Acao origem, Jogador realizador, List<Carta> cartasOpcoes)
+        public OlharCartasBaralho(BaseAcao origem, Jogador realizador, List<Carta> cartasOpcoes)
             : base(origem, realizador, TipoEscolha.Carta)
         {
             _cartasOpcoes = cartasOpcoes;
         }
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             BaralhoCentral baralhoCentral = mesa.BaralhoCentral;
 

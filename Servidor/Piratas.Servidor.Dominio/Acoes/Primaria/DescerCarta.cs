@@ -12,12 +12,12 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
 
         public DescerCarta(Jogador jogador, Carta carta, Jogador alvo = null) : base(jogador, alvo) => Carta = carta;
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             if (Carta is Tesouro || Carta is BasePassivo)
                 throw new ProibidoDescerCartaExcecao(this, Carta);
 
-            List<Acao> resultanteEfeitoCarta = Carta.AplicarEfeito(this, mesa);
+            List<BaseAcao> resultanteEfeitoCarta = Carta.AplicarEfeito(this, mesa);
 
             Realizador.Mao.Remover(Carta);
             mesa.PilhaDescarte.InserirTopo(Carta);

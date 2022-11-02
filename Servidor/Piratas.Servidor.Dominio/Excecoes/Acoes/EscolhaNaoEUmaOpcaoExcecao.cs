@@ -4,8 +4,8 @@
 
     public class EscolhaNaoEUmaOpcaoExcecao : BaseAcoesExcecao
     {
-        public EscolhaNaoEUmaOpcaoExcecao(Acao acao, string idEscolha) :
-            base(acao, "escolha-nao-e-uma-opcao", $"Escolha \"{idEscolha}\" não é uma opção.")
+        public EscolhaNaoEUmaOpcaoExcecao(BaseAcao baseAcao, string idEscolha) :
+            base(baseAcao, "escolha-nao-e-uma-opcao", $"Escolha \"{idEscolha}\" não é uma opção.")
         {
         }
     }

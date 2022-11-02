@@ -35,11 +35,11 @@ namespace Piratas.Servidor.Dominio
 
         public PilhaDescarte PilhaDescarte { get; private set; }
 
-        public Stack<Acao> HistoricoAcao { get; private set; }
+        public Stack<BaseAcao> HistoricoAcao { get; private set; }
 
         private BaseImediata _baseImediataAposResultantes;
 
-        private readonly List<Acao> _acoesPendentes;
+        private readonly List<BaseAcao> _acoesPendentes;
 
         private const int _cartasIniciaisPorJogador = 5;
 
@@ -51,13 +51,13 @@ namespace Piratas.Servidor.Dominio
 
         public Mesa(List<Jogador> jogadores)
         {
-            _acoesPendentes = new List<Acao>();
+            _acoesPendentes = new List<BaseAcao>();
             _baseImediataAposResultantes = null;
 
             Id = Guid.NewGuid();
             _dataHoraInicio = DateTime.UtcNow;
 
-            HistoricoAcao = new Stack<Acao>();
+            HistoricoAcao = new Stack<BaseAcao>();
 
             BaralhoCentral = new BaralhoCentral();
             PilhaDescarte = new PilhaDescarte();
@@ -68,23 +68,23 @@ namespace Piratas.Servidor.Dominio
             _distribuirCartas();
         }
 
-        public Dictionary<Jogador, List<Acao>> ProcessarAcao(Acao acaoAProcessar)
+        public Dictionary<Jogador, List<BaseAcao>> ProcessarAcao(BaseAcao baseAcaoAProcessar)
         {
-            acaoAProcessar.Turno = _turnoAtual;
-            Jogador realizador = acaoAProcessar.Realizador;
+            baseAcaoAProcessar.Turno = _turnoAtual;
+            Jogador realizador = baseAcaoAProcessar.Realizador;
 
-            var acoesPorJogador = new Dictionary<Jogador, List<Acao>>();
+            var acoesPorJogador = new Dictionary<Jogador, List<BaseAcao>>();
 
-            _verificarPrimariaJogadorAtual(acaoAProcessar);
-            _verificarResultantePendente(acaoAProcessar);
+            _verificarPrimariaJogadorAtual(baseAcaoAProcessar);
+            _verificarResultantePendente(baseAcaoAProcessar);
 
-            List<Acao> acoesResultadoAcaoProcessada = acaoAProcessar.AplicarRegra(this);
+            List<BaseAcao> acoesResultadoAcaoProcessada = baseAcaoAProcessar.AplicarRegra(this);
 
-            HistoricoAcao.Push(acaoAProcessar);
+            HistoricoAcao.Push(baseAcaoAProcessar);
 
             _processarAcoesImediatas(acoesResultadoAcaoProcessada, acoesPorJogador);
 
-            if (acaoAProcessar is BasePrimaria)
+            if (baseAcaoAProcessar is BasePrimaria)
                 realizador.SubtrairAcoesDisponiveis();
 
             if (_acoesPendentes.Count == 0 && _baseImediataAposResultantes != null)
@@ -96,7 +96,7 @@ namespace Piratas.Servidor.Dominio
             if (acoesResultadoAcaoProcessada?.Count == 0 && _jogadorAtual.AcoesDisponiveis == 0)
                 acoesPorJogador = _moverParaProximoTurno();
 
-            foreach (List<Acao> acoesPendentes in acoesPorJogador.Values)
+            foreach (List<BaseAcao> acoesPendentes in acoesPorJogador.Values)
                 _acoesPendentes.AddRange(acoesPendentes);
 
             return acoesPorJogador;
@@ -104,27 +104,27 @@ namespace Piratas.Servidor.Dominio
 
         private void _processarAcaoImediata(
             BaseImediata acaoBaseImediata,
-            IReadOnlyDictionary<Jogador, List<Acao>> acoesPorJogador)
+            IReadOnlyDictionary<Jogador, List<BaseAcao>> acoesPorJogador)
         {
             _processarAcoesImediatas(new List<BaseImediata> {acaoBaseImediata}, acoesPorJogador);
         }
 
         private void _processarAcoesImediatas(
-            IEnumerable<Acao> acoesResultadoAcaoProcessada,
-            IReadOnlyDictionary<Jogador, List<Acao>> acoesPorJogador)
+            IEnumerable<BaseAcao> acoesResultadoAcaoProcessada,
+            IReadOnlyDictionary<Jogador, List<BaseAcao>> acoesPorJogador)
         {
             IEnumerable<BaseImediata> acoesImediatas = acoesResultadoAcaoProcessada.OfType<BaseImediata>();
 
             foreach (BaseImediata imediataAProcessarPosAcao in acoesImediatas)
             {
-                Dictionary<Jogador, List<Acao>> acoesPosImediata = ProcessarAcao(imediataAProcessarPosAcao);
+                Dictionary<Jogador, List<BaseAcao>> acoesPosImediata = ProcessarAcao(imediataAProcessarPosAcao);
 
-                foreach ((Jogador jogador, List<Acao> acoes) in acoesPosImediata)
+                foreach ((Jogador jogador, List<BaseAcao> acoes) in acoesPosImediata)
                     acoesPorJogador[jogador].AddRange(acoes);
             }
         }
 
-        private Dictionary<Jogador, List<Acao>> _moverParaProximoTurno()
+        private Dictionary<Jogador, List<BaseAcao>> _moverParaProximoTurno()
         {
             if (_jogadorAtual?.AcoesDisponiveis > 0)
                 throw new PossuiAcoesDisponiveisExcecao(_jogadorAtual);
@@ -137,7 +137,7 @@ namespace Piratas.Servidor.Dominio
                 Finalizar(proximoJogador);
 
             BaseEmbarcacao baseEmbarcacao = proximoJogador.Campo.BaseEmbarcacao;
-            Dictionary<Jogador, List<Acao>> acoesPosEfeitoEmbarcacao = null;
+            Dictionary<Jogador, List<BaseAcao>> acoesPosEfeitoEmbarcacao = null;
 
             if (baseEmbarcacao != null)
             {
@@ -202,20 +202,20 @@ namespace Piratas.Servidor.Dominio
             }
         }
 
-        private void _verificarPrimariaJogadorAtual(Acao acao)
+        private void _verificarPrimariaJogadorAtual(BaseAcao baseAcao)
         {
-            Jogador realizador = acao.Realizador;
+            Jogador realizador = baseAcao.Realizador;
 
-            if (acao is BasePrimaria)
+            if (baseAcao is BasePrimaria)
             {
                 if (realizador != _jogadorAtual)
                     throw new TurnoDeOutroJogadorExcecao(realizador);
             }
         }
 
-        private void _verificarResultantePendente(Acao acao)
+        private void _verificarResultantePendente(BaseAcao baseAcao)
         {
-            if (acao is BaseResultante resultante)
+            if (baseAcao is BaseResultante resultante)
             {
                 if (!_acoesPendentes.Contains(resultante))
                     throw new ResultanteNaoEsperadaExcecao(resultante);

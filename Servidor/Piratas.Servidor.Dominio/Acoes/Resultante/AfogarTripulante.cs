@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     public class AfogarTripulante : BaseResultanteComListaEscolhas
     {
         public AfogarTripulante(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             Jogador alvo)
             : base(
@@ -33,7 +33,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 throw new NenhumTripulantePodeSerAfogadoExcecao(this, alvo.Id);
         }
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
             string escolha = Escolhas.First();
 

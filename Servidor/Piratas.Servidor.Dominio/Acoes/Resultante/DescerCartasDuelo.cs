@@ -11,7 +11,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     public class DescerCartasDuelo : BaseResultanteComListaEscolhas
     {
         public DescerCartasDuelo(
-            Acao origem,
+            BaseAcao origem,
             Jogador realizador,
             Jogador alvo)
             : base(
@@ -23,9 +23,9 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         {
         }
 
-        public override List<Acao> AplicarRegra(Mesa mesa)
+        public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
-            var acoesResultantes = new List<Acao>();
+            var acoesResultantes = new List<BaseAcao>();
 
             foreach (string cartaDueloEscolhida in Escolhas)
             {

@@ -5,9 +5,9 @@ namespace Piratas.Servidor.Dominio.Excecoes.Acoes
 
     public class NenhumTripulantePodeSerAfogadoExcecao : BaseAcoesExcecao
     {
-        public NenhumTripulantePodeSerAfogadoExcecao(Acao acao, Guid idJogador)
+        public NenhumTripulantePodeSerAfogadoExcecao(BaseAcao baseAcao, Guid idJogador)
             : base(
-                acao,
+                baseAcao,
                 "nenhum-tripulante-pode-ser-afogado",
                 $"O jogador \"{idJogador}\" não possui tripulante afogável.")
         {

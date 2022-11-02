@@ -4,9 +4,8 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using Acoes;
     using Acoes.Resultante;
     using Baralhos.Tipos;
-    using Tipos;
 
-    public class Explosivos : ResolucaoImediata
+    public class Explosivos : BaseResolucaoImediata
     {
         private const int _cartasObtidas = 3;
 

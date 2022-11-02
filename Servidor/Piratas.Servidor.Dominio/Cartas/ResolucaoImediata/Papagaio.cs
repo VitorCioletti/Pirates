@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using Excecoes.Cartas;
     using Tipos;
 
-    public class Papagaio : ResolucaoImediata
+    public class Papagaio : BaseResolucaoImediata
     {
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
@@ -28,7 +28,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                 case DescerCarta descerCarta:
                     Carta cartaACopiar = descerCarta.Carta;
 
-                    bool tipoNaoPermitido = !(cartaACopiar is ResolucaoImediata || cartaACopiar is Canhao);
+                    bool tipoNaoPermitido = !(cartaACopiar is BaseResolucaoImediata || cartaACopiar is Canhao);
 
                     if (tipoNaoPermitido)
                         throw new ImpossivelCopiarExcecao(this, cartaACopiar);

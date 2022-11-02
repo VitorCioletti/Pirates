@@ -3,9 +3,8 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using System.Collections.Generic;
     using Acoes;
     using Passivo;
-    using Tipos;
 
-    public class Saque : ResolucaoImediata
+    public class Saque : BaseResolucaoImediata
     {
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {

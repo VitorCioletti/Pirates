@@ -2,9 +2,8 @@ namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
 {
     using System.Collections.Generic;
     using Acoes;
-    using Tipos;
 
-    public class PirataAmaldicoado : Tripulante
+    public class PirataAmaldicoado : BaseTripulante
     {
         public PirataAmaldicoado() => Tiros = -1;
 

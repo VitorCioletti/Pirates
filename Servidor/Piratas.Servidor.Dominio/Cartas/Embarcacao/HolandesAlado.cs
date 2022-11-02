@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using Acoes;
     using Tipos;
 
-    public class HolandesAlado : Embarcacao
+    public class HolandesAlado : BaseEmbarcacao
     {
         private const int _tesourosParaVitoria = 4;
 

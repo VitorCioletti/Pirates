@@ -10,7 +10,7 @@ namespace Piratas.Servidor.Dominio
     using Acoes.Resultante.Base;
     using Baralhos.Tipos;
     using Cartas;
-    using Cartas.Tipos;
+    using Cartas.Embarcacao;
     using Excecoes.Mesa;
 
     public class Mesa
@@ -136,12 +136,12 @@ namespace Piratas.Servidor.Dominio
             if (proximoJogador.CalcularTesouros() >= _tesourosParaVitoria)
                 Finalizar(proximoJogador);
 
-            Embarcacao embarcacao = proximoJogador.Campo.Embarcacao;
+            BaseEmbarcacao baseEmbarcacao = proximoJogador.Campo.BaseEmbarcacao;
             Dictionary<Jogador, List<Acao>> acoesPosEfeitoEmbarcacao = null;
 
-            if (embarcacao != null)
+            if (baseEmbarcacao != null)
             {
-                var aplicarEfeitoEmbarcacao = new AplicarEfeitoEmbarcacao(proximoJogador, embarcacao);
+                var aplicarEfeitoEmbarcacao = new AplicarEfeitoEmbarcacao(proximoJogador, baseEmbarcacao);
                 acoesPosEfeitoEmbarcacao = ProcessarAcao(aplicarEfeitoEmbarcacao);
             }
 

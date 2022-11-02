@@ -7,6 +7,7 @@ namespace Piratas.Servidor.Dominio
     using Cartas.Duelo;
     using Cartas.Embarcacao;
     using Cartas.Tipos;
+    using Cartas.Tripulacao;
     using Excecoes.Campo;
 
     public class Campo
@@ -21,9 +22,9 @@ namespace Piratas.Servidor.Dominio
 
         public List<Carta> Protegidas { get; private set; }
 
-        public List<Tripulante> Tripulacao { get; private set; }
+        public List<BaseTripulante> Tripulacao { get; private set; }
 
-        public Embarcacao Embarcacao { get; private set; }
+        public BaseEmbarcacao BaseEmbarcacao { get; private set; }
 
         public event Action<Carta> AoAdicionar;
 
@@ -34,9 +35,9 @@ namespace Piratas.Servidor.Dominio
             Canhoes = new List<Canhao>();
             DuelosSurpresa = new List<DueloSurpresa>();
             Protegidas = new List<Carta>();
-            Tripulacao = new List<Tripulante>();
+            Tripulacao = new List<BaseTripulante>();
 
-            Embarcacao = null;
+            BaseEmbarcacao = null;
         }
 
         public int CalcularPontosDuelo()
@@ -53,33 +54,33 @@ namespace Piratas.Servidor.Dominio
 
         public void DanificarEmbarcacao()
         {
-            if (Embarcacao == null)
+            if (BaseEmbarcacao == null)
                 return;
 
-            Embarcacao.Danificar(_danoEmbarcacao);
+            BaseEmbarcacao.Danificar(_danoEmbarcacao);
 
-            if (Embarcacao.Vida == 0)
+            if (BaseEmbarcacao.Vida == 0)
                 _removerEmbarcacao();
         }
 
-        public void Adicionar(Tripulante tripulante)
+        public void Adicionar(BaseTripulante baseTripulante)
         {
             if (Tripulacao.Count >= _tripulacaoMaxima)
                 throw new TripulacaoCheiaExcecao();
 
-            Tripulacao.Add(tripulante);
+            Tripulacao.Add(baseTripulante);
 
-            AoAdicionar?.Invoke(tripulante);
+            AoAdicionar?.Invoke(baseTripulante);
         }
 
-        public void Adicionar(Embarcacao embarcacao)
+        public void Adicionar(BaseEmbarcacao baseEmbarcacao)
         {
-            if (Embarcacao != null)
+            if (BaseEmbarcacao != null)
                 throw new ExisteEmbarcacaoExcecao();
 
-            Embarcacao = embarcacao;
+            BaseEmbarcacao = baseEmbarcacao;
 
-            AoAdicionar?.Invoke(embarcacao);
+            AoAdicionar?.Invoke(baseEmbarcacao);
         }
 
         public void Adicionar(List<Canhao> canhoes) => canhoes.ForEach(Adicionar);
@@ -107,22 +108,22 @@ namespace Piratas.Servidor.Dominio
             AoAdicionar?.Invoke(dueloSurpresa);
         }
 
-        public void Remover(Tripulante tripulante)
+        public void Remover(BaseTripulante baseTripulante)
         {
             if (Tripulacao.Count == 0)
                 throw new TripulacaoVaziaExcecao();
 
-            if (Tripulacao.FirstOrDefault(t => t == tripulante) == null)
+            if (Tripulacao.FirstOrDefault(t => t == baseTripulante) == null)
                 throw new TripulanteNaoEncontradoExcecao();
 
-            Tripulacao.Remove(tripulante);
+            Tripulacao.Remove(baseTripulante);
 
-            AoRemover?.Invoke(tripulante);
+            AoRemover?.Invoke(baseTripulante);
         }
 
         public void AfogarTripulacao()
         {
-            foreach (Tripulante tripulante in Tripulacao)
+            foreach (BaseTripulante tripulante in Tripulacao)
             {
                 if (tripulante.Afogavel)
                     Remover(tripulante);
@@ -137,10 +138,10 @@ namespace Piratas.Servidor.Dominio
 
         public bool TripulacaoCheia() => Tripulacao.Count == _tripulacaoMaxima;
 
-        public void TrocarEmbarcacao(Embarcacao embarcacao)
+        public void TrocarEmbarcacao(BaseEmbarcacao baseEmbarcacao)
         {
             _removerEmbarcacao();
-            Adicionar(embarcacao);
+            Adicionar(baseEmbarcacao);
         }
 
         public void AdicionarProtegida(Carta carta) => Protegidas.Add(carta);
@@ -149,14 +150,14 @@ namespace Piratas.Servidor.Dominio
 
         private void _removerEmbarcacao()
         {
-            if (Embarcacao == null)
+            if (BaseEmbarcacao == null)
                 throw new SemEmbarcacaoExcecao();
 
             _removerTodasProtegidas();
 
-            AoRemover?.Invoke(Embarcacao);
+            AoRemover?.Invoke(BaseEmbarcacao);
 
-            Embarcacao = null;
+            BaseEmbarcacao = null;
         }
 
         private void _removerTodasProtegidas()
@@ -177,10 +178,10 @@ namespace Piratas.Servidor.Dominio
 
         private int _calcularTirosEmbarcacao(int tiros)
         {
-            if (Embarcacao is GuerrilhaNaval guerrilhaNaval)
+            if (BaseEmbarcacao is GuerrilhaNaval guerrilhaNaval)
                 tiros += guerrilhaNaval.TirosAdicionais * Canhoes.Count;
 
-            else if (Embarcacao is OuricoInfernal ouricoInfernal)
+            else if (BaseEmbarcacao is OuricoInfernal ouricoInfernal)
             {
                 if (tiros != 0)
                     tiros += ouricoInfernal.Tiros;

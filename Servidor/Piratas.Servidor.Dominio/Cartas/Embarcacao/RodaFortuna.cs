@@ -6,7 +6,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using Baralhos.Tipos;
     using Tipos;
 
-    public class RodaFortuna : Embarcacao
+    public class RodaFortuna : BaseEmbarcacao
     {
         private readonly int _cartasAOlhar = 2;
 

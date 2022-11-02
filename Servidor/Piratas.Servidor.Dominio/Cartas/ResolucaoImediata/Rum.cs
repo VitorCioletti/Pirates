@@ -3,9 +3,8 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using System.Collections.Generic;
     using Acoes;
     using Baralhos.Tipos;
-    using Tipos;
 
-    public class Rum : ResolucaoImediata
+    public class Rum : BaseResolucaoImediata
     {
         private readonly int _cartasCompradas = 2;
 

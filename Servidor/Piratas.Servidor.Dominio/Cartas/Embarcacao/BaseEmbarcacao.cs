@@ -1,8 +1,8 @@
-namespace Piratas.Servidor.Dominio.Cartas.Tipos
+namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 {
     using Excecoes.Cartas;
 
-    public abstract class Embarcacao : Carta
+    public abstract class BaseEmbarcacao : Carta
     {
         public int Vida { get; private set; } = 3;
 

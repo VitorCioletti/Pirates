@@ -6,7 +6,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using Baralhos.Tipos;
     using Tipos;
 
-    public class ServoPoseidon : Embarcacao
+    public class ServoPoseidon : BaseEmbarcacao
     {
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {

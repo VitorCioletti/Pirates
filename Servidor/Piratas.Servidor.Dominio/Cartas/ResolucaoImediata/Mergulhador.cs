@@ -4,9 +4,8 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using Acoes;
     using Acoes.Resultante;
     using Baralhos.Tipos;
-    using Tipos;
 
-    public class Mergulhador : ResolucaoImediata
+    public class Mergulhador : BaseResolucaoImediata
     {
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {

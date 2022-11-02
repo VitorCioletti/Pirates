@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using Acoes;
     using Tipos;
 
-    public class OuricoInfernal : Embarcacao
+    public class OuricoInfernal : BaseEmbarcacao
     {
         public int Tiros { get; private set; } = 3;
 

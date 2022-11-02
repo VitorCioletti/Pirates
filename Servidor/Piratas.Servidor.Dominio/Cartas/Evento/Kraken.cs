@@ -4,9 +4,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
     using System.Linq;
     using Acoes;
     using Acoes.Resultante;
-    using Tipos;
+    using Tripulacao;
 
-    public class Kraken : Evento
+    public class Kraken : BaseEvento
     {
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {
@@ -16,7 +16,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
 
             foreach (Jogador jogador in jogadoresNaMesa)
             {
-                bool possuiEmbarcacao = jogador.Campo.Embarcacao != null;
+                bool possuiEmbarcacao = jogador.Campo.BaseEmbarcacao != null;
                 bool possuiTripulacao = jogador.Campo.Tripulacao.Count == 0;
 
                 var resultanteAfogarTripulacao = new AfogarTripulante(acao, jogador, jogador);
@@ -37,7 +37,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
                 }
                 else if (!possuiEmbarcacao)
                 {
-                    List<Tripulante> afogaveis = jogador.Campo.Tripulacao.Where(t => t.Afogavel).ToList();
+                    List<BaseTripulante> afogaveis = jogador.Campo.Tripulacao.Where(t => t.Afogavel).ToList();
 
                     if (afogaveis.Count == 0)
                         continue;

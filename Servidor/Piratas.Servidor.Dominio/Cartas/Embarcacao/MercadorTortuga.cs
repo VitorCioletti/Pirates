@@ -6,7 +6,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using Acoes.Resultante;
     using Tipos;
 
-    public class MercadorTortuga : Embarcacao
+    public class MercadorTortuga : BaseEmbarcacao
     {
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {

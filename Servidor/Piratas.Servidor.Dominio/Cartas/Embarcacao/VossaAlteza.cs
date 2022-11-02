@@ -6,7 +6,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using Acoes.Resultante;
     using Tipos;
 
-    public class VossaAlteza : Embarcacao
+    public class VossaAlteza : BaseEmbarcacao
     {
         private const int _cartasMinimasNaMao = 5;
 

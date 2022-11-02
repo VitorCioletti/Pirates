@@ -4,9 +4,8 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using System.Linq;
     using Acoes;
     using Acoes.Resultante;
-    using Tipos;
 
-    public class Luneta : ResolucaoImediata
+    public class Luneta : BaseResolucaoImediata
     {
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {

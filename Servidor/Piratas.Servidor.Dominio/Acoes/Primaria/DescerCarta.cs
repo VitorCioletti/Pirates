@@ -2,9 +2,9 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
 {
     using System.Collections.Generic;
     using Cartas;
-    using Cartas.Tipos;
+    using Cartas.Passivo;
+    using Cartas.Tesouro;
     using Excecoes.Acoes;
-    using Resultante.Base;
 
     public class DescerCarta : BasePrimaria
     {
@@ -14,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            if (Carta is Tesouro || Carta is Passivo)
+            if (Carta is Tesouro || Carta is BasePassivo)
                 throw new ProibidoDescerCartaExcecao(this, Carta);
 
             List<Acao> resultanteEfeitoCarta = Carta.AplicarEfeito(this, mesa);

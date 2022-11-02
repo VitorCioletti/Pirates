@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using Acoes;
     using Tipos;
 
-    public class GuerrilhaNaval : Embarcacao
+    public class GuerrilhaNaval : BaseEmbarcacao
     {
         public int TirosAdicionais { get; private set; } = 2;
 

@@ -21,7 +21,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 origem,
                 realizador,
                 TipoEscolha.Carta,
-                alvo.Mao.ObterTodas<Tripulante>().ObterIds(),
+                alvo.Mao.ObterTodas<BaseTripulante>().ObterIds(),
                 alvo: alvo)
         {
             var tripulacao = alvo.Campo.Tripulacao;
@@ -37,7 +37,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         {
             string escolha = Escolhas.First();
 
-            var tripulanteEscolhido = (Tripulante)Alvo.Mao.ObterPorId(escolha);
+            var tripulanteEscolhido = (BaseTripulante)Alvo.Mao.ObterPorId(escolha);
 
             if (Origem is DescerCarta descerCarta)
             {

@@ -1,18 +1,18 @@
 namespace Piratas.Servidor.Dominio.Acoes.Passiva
 {
     using System.Collections.Generic;
-    using Cartas.Tipos;
+    using Cartas.Embarcacao;
 
     public class AplicarEfeitoEmbarcacao : BasePassiva
     {
-        private Embarcacao _embarcacao { get; set; }
+        private BaseEmbarcacao BaseEmbarcacao { get; set; }
 
-        public AplicarEfeitoEmbarcacao(Jogador realizador, Embarcacao embarcacao) : base(realizador) =>
-            _embarcacao = embarcacao;
+        public AplicarEfeitoEmbarcacao(Jogador realizador, BaseEmbarcacao baseEmbarcacao) : base(realizador) =>
+            BaseEmbarcacao = baseEmbarcacao;
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            return _embarcacao.AplicarEfeito(this, mesa);
+            return BaseEmbarcacao.AplicarEfeito(this, mesa);
         }
     }
 }

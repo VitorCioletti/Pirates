@@ -2,8 +2,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
 {
     using System.Collections.Generic;
     using Cartas;
-    using Cartas.Tipos;
-    using Resultante.Base;
+    using Cartas.Evento;
 
     public class ComprarCarta : BasePrimaria
     {
@@ -14,7 +13,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
             Carta cartaComprada = mesa.BaralhoCentral.ObterTopo();
 
             // TODO: Como avisar que foi uma carta evento comprada?
-            if (cartaComprada is Evento)
+            if (cartaComprada is BaseEvento)
                 return cartaComprada.AplicarEfeito(this, mesa);
 
             Realizador.Mao.Adicionar(cartaComprada);

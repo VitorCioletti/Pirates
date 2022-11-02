@@ -6,7 +6,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using Acoes.Resultante;
     using Tipos;
 
-    public class OlhoCiclope : Embarcacao
+    public class OlhoCiclope : BaseEmbarcacao
     {
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {

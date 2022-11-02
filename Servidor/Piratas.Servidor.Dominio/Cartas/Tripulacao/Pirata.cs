@@ -2,9 +2,8 @@ namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
 {
     using System.Collections.Generic;
     using Acoes;
-    using Tipos;
 
-    public class Pirata : Tripulante
+    public class Pirata : BaseTripulante
     {
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {

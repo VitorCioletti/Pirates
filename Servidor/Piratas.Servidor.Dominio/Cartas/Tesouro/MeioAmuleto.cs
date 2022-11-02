@@ -1,7 +1,6 @@
 namespace Piratas.Servidor.Dominio.Cartas.Tesouro
 {
     using System.Collections.Generic;
-    using Tipos;
 
     public class MeioAmuleto : Tesouro
     {

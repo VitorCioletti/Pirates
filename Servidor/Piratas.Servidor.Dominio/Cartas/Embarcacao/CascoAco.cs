@@ -4,9 +4,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using System.Linq;
     using Acoes;
     using Acoes.Resultante;
-    using Tipos;
+    using Tesouro;
 
-    public class CascoAco : Embarcacao
+    public class CascoAco : BaseEmbarcacao
     {
         public override List<Acao> AplicarEfeito(Acao acao, Mesa mesa)
         {

@@ -1,12 +1,12 @@
-namespace Piratas.Servidor.Dominio.Cartas.Tipos
+namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
 {
-    public abstract class Tripulante : Carta
+    public abstract class BaseTripulante : Carta
     {
         public int Tiros { get; protected set; }
 
         public bool Afogavel { get; protected set; }
 
-        protected Tripulante()
+        protected BaseTripulante()
         {
             Afogavel = true;
         }

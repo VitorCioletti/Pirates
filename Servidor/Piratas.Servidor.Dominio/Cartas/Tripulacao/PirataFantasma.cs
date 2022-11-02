@@ -2,9 +2,8 @@ namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
 {
     using System.Collections.Generic;
     using Acoes;
-    using Tipos;
 
-    public class PirataFantasma : Tripulante
+    public class PirataFantasma : BaseTripulante
     {
         public PirataFantasma()
         {

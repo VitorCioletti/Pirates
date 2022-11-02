@@ -3,7 +3,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     using System.Collections.Generic;
     using Base;
     using Cartas;
-    using Cartas.Tipos;
+    using Cartas.Tesouro;
     using Enums;
     using Excecoes.Acoes;
 

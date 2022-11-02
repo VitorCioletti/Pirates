@@ -2,7 +2,6 @@ namespace Piratas.Servidor.Dominio.Acoes.Passiva
 {
     using System.Collections.Generic;
     using Cartas.Tipos;
-    using Resultante.Base;
 
     public class AplicarEfeitoEmbarcacao : BasePassiva
     {

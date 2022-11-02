@@ -3,6 +3,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     using System.Collections.Generic;
     using System.Linq;
     using Base;
+    using Cartas.Extensao;
     using Cartas.ResolucaoImediata;
     using Cartas.Tipos;
     using Cartas.Tripulacao;
@@ -20,7 +21,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 origem,
                 realizador,
                 TipoEscolha.Carta,
-                alvo.Mao.ObterTodas<Tripulante>().Select(t => t.Id).ToList(),
+                alvo.Mao.ObterTodas<Tripulante>().ObterIds(),
                 alvo: alvo)
         {
             var tripulacao = alvo.Campo.Tripulacao;

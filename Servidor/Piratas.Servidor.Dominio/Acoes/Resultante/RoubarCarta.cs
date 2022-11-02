@@ -4,6 +4,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     using System.Linq;
     using Base;
     using Cartas;
+    using Cartas.Extensao;
     using Enums;
 
     public class RoubarCarta : BaseResultanteComListaEscolhas
@@ -13,7 +14,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 origem,
                 realizador,
                 TipoEscolha.Carta,
-                alvo.Mao.ObterTodas<Carta>().Select(c => c.Id).ToList())
+                alvo.Mao.ObterTodas<Carta>().ObterIds())
         {
         }
 

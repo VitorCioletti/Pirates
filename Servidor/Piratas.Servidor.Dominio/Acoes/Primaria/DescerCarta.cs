@@ -17,7 +17,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
             if (Carta is Tesouro || Carta is Passivo)
                 throw new ProibidoDescerCartaExcecao(this, Carta);
 
-            var resultanteEfeitoCarta = Carta.AplicarEfeito(this, mesa);
+            List<Acao> resultanteEfeitoCarta = Carta.AplicarEfeito(this, mesa);
 
             Realizador.Mao.Remover(Carta);
             mesa.PilhaDescarte.InserirTopo(Carta);

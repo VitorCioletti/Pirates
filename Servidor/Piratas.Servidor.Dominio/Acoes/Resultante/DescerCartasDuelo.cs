@@ -1,9 +1,9 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Base;
     using Cartas;
+    using Cartas.Extensao;
     using Cartas.Tipos;
     using Enums;
     using Imediata;
@@ -18,7 +18,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 origem,
                 realizador,
                 TipoEscolha.Carta,
-                alvo.Mao.ObterTodas<Duelo>().Select(c => c.Id).ToList(),
+                alvo.Mao.ObterTodas<Duelo>().ObterIds(),
                 alvo: alvo)
         {
         }

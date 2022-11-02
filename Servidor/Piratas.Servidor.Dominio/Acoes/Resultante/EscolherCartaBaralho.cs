@@ -3,15 +3,16 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     using System.Collections.Generic;
     using System.Linq;
     using Baralhos;
-    using Cartas;
     using Base;
+    using Cartas;
+    using Cartas.Extensao;
     using Enums;
 
     public class EscolherCartaBaralho : BaseResultanteComListaEscolhas
     {
-        private Baralho _baralho;
+        private readonly Baralho _baralho;
 
-        private List<Carta> _cartasOpcoes;
+        private readonly List<Carta> _cartasOpcoes;
 
         public EscolherCartaBaralho(
             Acao origem,
@@ -22,7 +23,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 origem,
                 realizador,
                 TipoEscolha.Carta,
-                cartasOpcoes.Select(c => c.Id).ToList())
+                cartasOpcoes.ObterIds())
         {
             _baralho = baralho;
             _cartasOpcoes = cartasOpcoes;

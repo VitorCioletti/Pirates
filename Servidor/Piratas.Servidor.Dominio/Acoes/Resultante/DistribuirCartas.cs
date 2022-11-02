@@ -4,6 +4,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     using System.Linq;
     using Base;
     using Cartas;
+    using Cartas.Extensao;
     using Enums;
 
     public class DistribuirCartas : BaseResultanteComDicionarioEscolhas
@@ -11,8 +12,8 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
         public DistribuirCartas(
             Acao origem,
             Jogador realizador,
-            List<Jogador> jogadores,
-            List<Carta> cartas)
+            IEnumerable<Jogador> jogadores,
+            IEnumerable<Carta> cartas)
             : base(
                 origem,
                 realizador,
@@ -20,7 +21,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 TipoEscolha.Jogador,
                 TipoEscolha.Carta,
                 2,
-                cartas.Select(c => c.Id).ToList(),
+                cartas.ObterIds(),
                 jogadores.Select(j => j.Id.ToString()).ToList())
         {
         }

@@ -1,6 +1,7 @@
 namespace Piratas.Servidor.Dominio.Acoes.Primaria
 {
     using System.Collections.Generic;
+    using Cartas;
     using Cartas.Tipos;
     using Resultante.Base;
 
@@ -10,7 +11,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
 
         public override List<Acao> AplicarRegra(Mesa mesa)
         {
-            var cartaComprada = mesa.BaralhoCentral.ObterTopo();
+            Carta cartaComprada = mesa.BaralhoCentral.ObterTopo();
 
             // TODO: Como avisar que foi uma carta evento comprada?
             if (cartaComprada is Evento)

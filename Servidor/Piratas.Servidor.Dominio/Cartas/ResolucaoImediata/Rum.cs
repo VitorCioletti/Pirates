@@ -2,7 +2,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 {
     using System.Collections.Generic;
     using Acoes;
-    using Baralhos.Tipos;
+    using Baralhos;
 
     public class Rum : BaseResolucaoImediata
     {

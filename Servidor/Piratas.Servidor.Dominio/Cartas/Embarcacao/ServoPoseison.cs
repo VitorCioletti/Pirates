@@ -3,8 +3,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     using System.Collections.Generic;
     using Acoes;
     using Acoes.Resultante;
-    using Baralhos.Tipos;
-    using Tipos;
+    using Baralhos;
 
     public class ServoPoseidon : BaseEmbarcacao
     {

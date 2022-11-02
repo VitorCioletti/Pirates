@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using System.Linq;
     using Acoes;
     using Acoes.Resultante;
-    using Baralhos.Tipos;
+    using Baralhos;
     using Excecoes.Cartas;
     using Tripulacao;
 

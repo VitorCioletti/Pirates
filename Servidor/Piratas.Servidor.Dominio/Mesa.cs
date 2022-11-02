@@ -8,7 +8,7 @@ namespace Piratas.Servidor.Dominio
     using Acoes.Passiva;
     using Acoes.Primaria;
     using Acoes.Resultante.Base;
-    using Baralhos.Tipos;
+    using Baralhos;
     using Cartas;
     using Cartas.Embarcacao;
     using Excecoes.Mesa;

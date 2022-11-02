@@ -1,7 +1,7 @@
 namespace Piratas.Servidor.Dominio.Acoes.Resultante
 {
     using System.Collections.Generic;
-    using Baralhos.Tipos;
+    using Baralhos;
     using Base;
     using Cartas;
     using Enums;

@@ -1,9 +1,9 @@
-namespace Piratas.Servidor.Dominio.Baralhos.Tipos
+namespace Piratas.Servidor.Dominio.Baralhos
 {
     using Cartas;
     using System.Collections.Generic;
 
-    public class BaralhoCentral : Baralho
+    public class BaralhoCentral : BaseBaralho
     {
         public BaralhoCentral() => _gerarCartas();
 

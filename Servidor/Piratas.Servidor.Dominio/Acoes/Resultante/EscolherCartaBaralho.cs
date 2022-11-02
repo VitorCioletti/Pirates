@@ -10,14 +10,14 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
     public class EscolherCartaBaralho : BaseResultanteComListaEscolhas
     {
-        private readonly Baralho _baralho;
+        private readonly BaseBaralho _baseBaralho;
 
         private readonly List<Carta> _cartasOpcoes;
 
         public EscolherCartaBaralho(
             Acao origem,
             Jogador realizador,
-            Baralho baralho,
+            BaseBaralho baseBaralho,
             List<Carta> cartasOpcoes)
             : base(
                 origem,
@@ -25,7 +25,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 TipoEscolha.Carta,
                 cartasOpcoes.ObterIds())
         {
-            _baralho = baralho;
+            _baseBaralho = baseBaralho;
             _cartasOpcoes = cartasOpcoes;
         }
 
@@ -38,7 +38,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             Realizador.Mao.Adicionar(cartaEscolhida);
 
             _cartasOpcoes.Remove(cartaEscolhida);
-            _baralho.InserirFundo(_cartasOpcoes);
+            _baseBaralho.InserirFundo(_cartasOpcoes);
 
             return null;
         }

@@ -1,11 +1,11 @@
-namespace Piratas.Servidor.Dominio.Baralhos.Tipos
+namespace Piratas.Servidor.Dominio.Baralhos
 {
     using System.Collections.Generic;
     using System.Linq;
     using Cartas;
     using Excecoes;
 
-    public class PilhaDescarte : Baralho
+    public class PilhaDescarte : BaseBaralho
     {
         public PilhaDescarte() => Cartas = new LinkedList<Carta>();
 

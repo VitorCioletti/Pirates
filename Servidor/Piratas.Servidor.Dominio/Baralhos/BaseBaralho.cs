@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Dominio.Baralhos
     using System.Collections.Generic;
     using System;
 
-    public abstract class Baralho
+    public abstract class BaseBaralho
     {
         protected LinkedList<Carta> Cartas { get; set; }
 

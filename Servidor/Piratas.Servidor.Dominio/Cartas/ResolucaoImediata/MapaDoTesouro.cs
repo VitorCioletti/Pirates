@@ -3,7 +3,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using System.Collections.Generic;
     using Acoes;
     using Acoes.Resultante;
-    using Baralhos.Tipos;
+    using Baralhos;
 
     public class MapaDoTesouro : BaseResolucaoImediata
     {

@@ -58,19 +58,14 @@ namespace Piratas.Servidor.Dominio
 
         public int CalcularTesouros()
         {
-            List<MeioAmuleto> meiosAmuletos = Mao.ObterTodas<MeioAmuleto>();
-            int somaMeiosAmuletos = MeioAmuleto.CalcularPontosTesouro(meiosAmuletos);
+            int tesouros = 0;
 
-            List<Tesouro> tesourosMao = Mao.ObterTodas<Tesouro>();
-            int somaTesourosMao = tesourosMao.Sum(c => c.Valor);
+            tesouros += _obterTesourosMeioAmuleto();
+            tesouros += _obterTesourosMao();
+            tesouros += _obterTesourosProtegidos();
+            tesouros += _obterTesourosPiratasNobres();
 
-            IEnumerable<Tesouro> tesourosProtegidos = Campo.ObterTodasProtegidas().OfType<Tesouro>();
-            int somaTesourosProtegidos = tesourosProtegidos.Sum(c => c.Valor);
-
-            int tesourosPiratasNobres =
-                Campo.Tripulacao.Where(t => t is PirataNobre).Sum(t => ((PirataNobre)t).Tesouros);
-
-            return somaTesourosMao + somaTesourosProtegidos + somaMeiosAmuletos + tesourosPiratasNobres;
+            return tesouros;
         }
 
         public override string ToString() => Id.ToString();
@@ -93,6 +88,41 @@ namespace Piratas.Servidor.Dominio
                 return false;
 
             return jogador1.Id != jogador2.Id;
+        }
+
+        private int _obterTesourosPiratasNobres()
+        {
+            int tesourosPiratasNobres =
+                Campo.Tripulacao.Where(t => t is PirataNobre).Sum(t => ((PirataNobre)t).Tesouros);
+
+            return tesourosPiratasNobres;
+        }
+
+        private int _obterTesourosProtegidos()
+        {
+            IEnumerable<Tesouro> tesourosProtegidos = Campo.ObterTodasProtegidas().OfType<Tesouro>();
+
+            int somaTesourosProtegidos = tesourosProtegidos.Sum(c => c.Valor);
+
+            return somaTesourosProtegidos;
+        }
+
+        private int _obterTesourosMao()
+        {
+            List<Tesouro> tesourosMao = Mao.ObterTodas<Tesouro>();
+
+            int somaTesourosMao = tesourosMao.Sum(c => c.Valor);
+
+            return somaTesourosMao;
+        }
+
+        private int _obterTesourosMeioAmuleto()
+        {
+            List<MeioAmuleto> meiosAmuletos = Mao.ObterTodas<MeioAmuleto>();
+
+            int somaMeiosAmuletos = MeioAmuleto.CalcularPontosTesouro(meiosAmuletos);
+
+            return somaMeiosAmuletos;
         }
     }
 }

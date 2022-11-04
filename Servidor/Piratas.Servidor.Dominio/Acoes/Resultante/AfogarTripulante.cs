@@ -5,7 +5,6 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     using Base;
     using Cartas.Extensao;
     using Cartas.ResolucaoImediata;
-    using Cartas.Tipos;
     using Cartas.Tripulacao;
     using Enums;
     using Excecoes.Acoes;
@@ -24,7 +23,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 alvo.Mao.ObterTodas<BaseTripulante>().ObterIds(),
                 alvo: alvo)
         {
-            var tripulacao = alvo.Campo.Tripulacao;
+            List<BaseTripulante> tripulacao = alvo.Campo.Tripulacao;
 
             if (tripulacao.Count == 0)
                 throw new NaoPossuiTripulacaoExcecao(this, alvo.Id);

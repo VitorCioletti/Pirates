@@ -4,7 +4,7 @@
     using Enums;
     using Excecoes.Acoes;
 
-    public abstract class BaseResultanteComDicionarioEscolhas : BaseResultanteComEscolha
+    public abstract class BaseResultanteComDicionarioEscolhas : BaseResultante
     {
         protected Dictionary<string, string> Escolhas { get; private set; }
 

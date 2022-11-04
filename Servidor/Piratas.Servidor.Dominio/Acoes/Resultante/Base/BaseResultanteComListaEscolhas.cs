@@ -4,7 +4,7 @@
     using Enums;
     using Excecoes.Acoes;
 
-    public abstract class BaseResultanteComListaEscolhas : BaseResultanteComEscolha
+    public abstract class BaseResultanteComListaEscolhas : BaseResultante
     {
         protected List<string> Escolhas { get; private set; }
 

@@ -1,12 +1,11 @@
-namespace Piratas.Servidor.Dominio.Acoes.Resultante
+namespace Piratas.Servidor.Dominio.Acoes.Imediata
 {
     using Dominio;
     using System.Collections.Generic;
-    using Base;
 
-    public class DanificarEmbarcacao : BaseResultante
+    public class DanificarEmbarcacao : BaseImediata
     {
-        public DanificarEmbarcacao(BaseAcao origem, Jogador realizador) : base(origem, realizador)
+        public DanificarEmbarcacao(Jogador realizador) : base(realizador)
         {
         }
 

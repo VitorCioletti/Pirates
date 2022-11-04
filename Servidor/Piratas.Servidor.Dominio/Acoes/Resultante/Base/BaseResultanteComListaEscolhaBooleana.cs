@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Enums;
 
-    public abstract class BaseResultanteComListaEscolhaBooleana : BaseResultanteComEscolha
+    public abstract class BaseResultanteComListaEscolhaBooleana : BaseResultante
     {
         public List<string> Itens { get; private set; }
 

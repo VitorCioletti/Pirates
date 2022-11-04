@@ -2,7 +2,7 @@
 {
     using Enums;
 
-    public abstract class BaseResultanteComEscolhaBooleana : BaseResultanteComEscolha
+    public abstract class BaseResultanteComEscolhaBooleana : BaseResultante
     {
         protected bool EscolhaBooleana { get; private set; }
 

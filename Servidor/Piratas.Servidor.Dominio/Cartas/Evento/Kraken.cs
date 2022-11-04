@@ -3,6 +3,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
     using System.Collections.Generic;
     using System.Linq;
     using Acoes;
+    using Acoes.Imediata;
     using Acoes.Resultante;
     using Tripulacao;
 
@@ -20,14 +21,14 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
                 bool possuiTripulacao = jogador.Campo.Tripulacao.Count == 0;
 
                 var resultanteAfogarTripulacao = new AfogarTripulante(baseAcao, jogador, jogador);
-                var resultanteDanificarEmbarcacao = new DanificarEmbarcacao(baseAcao, jogador);
+                var resultanteDanificarEmbarcacao = new DanificarEmbarcacao(jogador);
 
                 if (!possuiEmbarcacao && !possuiTripulacao)
                     continue;
 
                 if (possuiEmbarcacao && possuiTripulacao)
                 {
-                    var escolherResultante = new EscolherResultante(
+                    var escolherResultante = new EscolherAcao(
                         baseAcao,
                         jogador,
                         resultanteAfogarTripulacao,

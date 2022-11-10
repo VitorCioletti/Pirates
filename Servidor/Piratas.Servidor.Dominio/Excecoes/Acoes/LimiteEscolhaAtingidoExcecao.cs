@@ -4,11 +4,11 @@ namespace Piratas.Servidor.Dominio.Excecoes.Acoes
 
     public class LimiteEscolhaAtingidoExcecao : BaseAcoesExcecao
     {
-        public LimiteEscolhaAtingidoExcecao(BaseAcao baseAcao, int quantidadeEscolhas)
+        public LimiteEscolhaAtingidoExcecao(BaseAcao acao, int quantidadeEscolhas)
             : base(
-                baseAcao,
+                acao,
                 "limite-escolha-atingido",
-                $"Limite de escolhas para a ação \"{baseAcao}\" foi atigindo. Valor \"{quantidadeEscolhas}\".")
+                $"Limite de escolhas para a ação \"{acao}\" foi atigindo. Valor \"{quantidadeEscolhas}\".")
         {
         }
     }

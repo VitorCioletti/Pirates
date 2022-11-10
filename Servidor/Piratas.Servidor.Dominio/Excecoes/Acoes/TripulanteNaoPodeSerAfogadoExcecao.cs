@@ -6,14 +6,14 @@ namespace Piratas.Servidor.Dominio.Excecoes.Acoes
     {
         private const string _idExcecao = "tripulante-nao-pode-ser-afogado";
 
-        public TripulanteNaoPodeSerAfogadoExcecao(BaseAcao baseAcao, string idTripulante)
-            : base(baseAcao, _idExcecao, $"O tripulante \"{idTripulante}\" não pode ser afogado.")
+        public TripulanteNaoPodeSerAfogadoExcecao(BaseAcao acao, string idTripulante)
+            : base(acao, _idExcecao, $"O tripulante \"{idTripulante}\" não pode ser afogado.")
         {
         }
 
-        public TripulanteNaoPodeSerAfogadoExcecao(BaseAcao baseAcao, string idTripulante, string idCartaRazaoAfogamento)
+        public TripulanteNaoPodeSerAfogadoExcecao(BaseAcao acao, string idTripulante, string idCartaRazaoAfogamento)
             : base(
-                baseAcao,
+                acao,
                 _idExcecao,
                 $"O tripulante \"{idTripulante}\" não pode ser afogado por \"{idCartaRazaoAfogamento}\".")
         {

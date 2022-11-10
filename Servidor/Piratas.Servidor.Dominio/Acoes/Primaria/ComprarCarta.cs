@@ -12,7 +12,6 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
         {
             Carta cartaComprada = mesa.BaralhoCentral.ObterTopo();
 
-            // TODO: Como avisar que foi uma carta evento comprada?
             if (cartaComprada is BaseEvento)
                 return cartaComprada.AplicarEfeito(this, mesa);
 

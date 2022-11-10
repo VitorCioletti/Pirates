@@ -30,7 +30,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 
             return acoesResultantes;
 
-            // TODO: Randômico ou permite escolha?
             List<BaseAcao> RoubarCarta(BaseAcao acaoEscolhida, Jogador alvo)
             {
                 var roubarCarta = new RoubarCarta(acaoEscolhida, realizador, alvo);

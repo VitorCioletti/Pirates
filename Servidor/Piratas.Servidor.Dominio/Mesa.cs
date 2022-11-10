@@ -106,7 +106,7 @@ namespace Piratas.Servidor.Dominio
             BaseImediata acaoBaseImediata,
             IReadOnlyDictionary<Jogador, List<BaseAcao>> acoesPorJogador)
         {
-            _processarAcoesImediatas(new List<BaseImediata> {acaoBaseImediata}, acoesPorJogador);
+            _processarAcoesImediatas(new List<BaseImediata> { acaoBaseImediata }, acoesPorJogador);
         }
 
         private void _processarAcoesImediatas(
@@ -163,8 +163,6 @@ namespace Piratas.Servidor.Dominio
         {
             if (!_emDuelo)
                 throw new SemDueloExcecao();
-
-            // TODO: Verificar se todas as ações resposta de duelo foram realizadas?
 
             _emDuelo = false;
             _duelistas = null;

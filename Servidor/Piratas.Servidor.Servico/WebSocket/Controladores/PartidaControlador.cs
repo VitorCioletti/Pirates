@@ -26,7 +26,6 @@ namespace Piratas.Servidor.Servico.WebSocket.Controladores
                 {
                     string mensagemServidorDeserializada = Parser.Serializar(mensagemServidor);
 
-                    // TODO: Enviar resposta para as diferentes sessões dos jogadores. Pesquisar propriedade Sessions.
                     Send(mensagemServidorDeserializada);
                 }
             }
@@ -37,8 +36,6 @@ namespace Piratas.Servidor.Servico.WebSocket.Controladores
 
                 Send(mensagemSerializada);
             }
-            // TODO: Tentar fazer captura de exceções em controller em outro lugar pois será necessário repetir em
-            // todos
             catch (BaseParserExcecao parserException)
             {
                 var mensagem = new MensagemPartidaServidor(parserException.Id, parserException.Message);
@@ -46,8 +43,6 @@ namespace Piratas.Servidor.Servico.WebSocket.Controladores
 
                 Send(mensagemSerializada);
             }
-            // TODO: Tentar fazer captura de exceções em controller em outro lugar pois será necessário repetir em
-            // todos
             catch (Exception exception)
             {
                 var mensagem = new MensagemPartidaServidor("erro-desconhecido", exception.Message);

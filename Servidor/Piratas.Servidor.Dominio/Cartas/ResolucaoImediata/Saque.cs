@@ -11,7 +11,6 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
             Mao maoAlvo = baseAcao.Alvo.Mao;
             Mao maoRealizador = baseAcao.Realizador.Mao;
 
-            // TODO: Como avisar o cliente que foi um Bau Armadilha?
             (Mao maoSaqueador, Mao maoSaqueado) =
                 maoAlvo.Possui<BauArmadilha>() ? (maoAlvo, maoRealizador) : (maoRealizador, maoAlvo);
 

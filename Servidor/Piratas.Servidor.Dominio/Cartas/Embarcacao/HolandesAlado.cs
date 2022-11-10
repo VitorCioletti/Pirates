@@ -2,7 +2,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 {
     using System.Collections.Generic;
     using Acoes;
-    using Tipos;
 
     public class HolandesAlado : BaseEmbarcacao
     {

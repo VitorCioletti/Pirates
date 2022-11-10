@@ -13,7 +13,6 @@ namespace Piratas.Servidor.Dominio.Acoes
 
         public Jogador Alvo { get; private set; }
 
-        // TODO: init only setter? Qualquer um pode setar :(
         public int Turno { get; set; }
 
         protected BaseAcao(Jogador realizador, Jogador alvo = null)

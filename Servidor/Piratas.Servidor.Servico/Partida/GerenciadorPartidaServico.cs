@@ -27,7 +27,6 @@ namespace Piratas.Servidor.Servico.Partida
             return partida.ProcessarMensagemCliente(mensagemPartidaCliente);
         }
 
-        // TODO: Verificar se a quantidade mínima de jogadores foi atingida
         public static Guid CriarPartida(List<Guid> idsJogadores)
         {
             var novaPartida = new PartidaServico(idsJogadores);

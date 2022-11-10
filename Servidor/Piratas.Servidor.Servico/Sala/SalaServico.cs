@@ -10,7 +10,6 @@ namespace Piratas.Servidor.Servico.Sala
 
     public static class SalaServico
     {
-        // TODO: Implementar líder da sala que pode iniciar a partida.
         private static Dictionary<Guid, List<Guid>> _salasAbertas { get; }
 
         private static object _lockSala { get; }

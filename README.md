@@ -18,6 +18,7 @@
 - Criar entidade BaseAcaoComAlvo para evitar que ações que não possuam alvo tenham acesso a propriedade Alvo.
 - Verificar se a quantidade mínima de jogadores foi atingida no gerenciador de partida.
 - Implementar líder da sala que pode iniciar a partida.
+- Fechamento gracioso após recebimento de sinal?
 
 ### Futuro bem bem distante
 

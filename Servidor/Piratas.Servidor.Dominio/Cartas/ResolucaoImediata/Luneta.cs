@@ -7,11 +7,11 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class Luneta : BaseResolucaoImediata
     {
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
-            List<string> idsCartasMaoAlvo = baseAcao.Alvo.Mao.ObterTodas().Select(c => c.Id.ToString()).ToList();
+            List<string> idsCartasMaoAlvo = acao.Alvo.Mao.ObterTodas().Select(c => c.Id.ToString()).ToList();
 
-            var descartarCarta = new DescartarCarta(baseAcao, baseAcao.Realizador, baseAcao.Alvo, idsCartasMaoAlvo);
+            var descartarCarta = new DescartarCarta(acao, acao.Realizador, acao.Alvo, idsCartasMaoAlvo);
             var acoesResultantes = new List<BaseAcao> {descartarCarta};
 
             return acoesResultantes;

@@ -8,9 +8,9 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     {
         private readonly int _cartasCompradas = 2;
 
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
-            Mao maoRealizador = baseAcao.Realizador.Mao;
+            Mao maoRealizador = acao.Realizador.Mao;
             BaralhoCentral baralhoCentral = mesa.BaralhoCentral;
 
             List<Carta> cartasCompradas = baralhoCentral.ObterTopo(_cartasCompradas);

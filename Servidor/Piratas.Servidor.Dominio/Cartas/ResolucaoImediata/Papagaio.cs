@@ -12,12 +12,12 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class Papagaio : BaseResolucaoImediata
     {
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
             List<Jogador> jogadoresNaMesa = mesa.Jogadores;
 
             BaseAcao ultimaBaseAcao = mesa.HistoricoAcao.FirstOrDefault(
-                a => a.Turno == baseAcao.Turno && (a is DescerCarta || a is Duelar));
+                a => a.Turno == acao.Turno && (a is DescerCarta || a is Duelar));
 
             if (ultimaBaseAcao == null)
                 throw new SemAcaoValidaExcecao(this);
@@ -53,7 +53,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
                     List<string> idsOutrosJogadores = outrosJogadores.Select(j => j.Id.ToString()).ToList();
 
                     var escolherJogador = new EscolherJogador(
-                        baseAcao,
+                        acao,
                         realizador,
                         idsOutrosJogadores,
                         DuelarResultante);

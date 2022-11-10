@@ -8,16 +8,16 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 
     public class OlhoCiclope : BaseEmbarcacao
     {
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
-            Jogador realizador = baseAcao.Realizador;
+            Jogador realizador = acao.Realizador;
 
             List<Jogador> outrosJogadoresMesa = mesa.Jogadores.Where(j => j != realizador).ToList();
 
             List<string> idsJogadores = outrosJogadoresMesa.Select(j => j.Id.ToString()).ToList();
 
             var escolherJogador = new EscolherJogador(
-                baseAcao,
+                acao,
                 realizador,
                 idsJogadores,
                 OlharCartas);

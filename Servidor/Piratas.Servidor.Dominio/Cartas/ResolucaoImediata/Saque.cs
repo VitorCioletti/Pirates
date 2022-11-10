@@ -6,10 +6,10 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class Saque : BaseResolucaoImediata
     {
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
-            Mao maoAlvo = baseAcao.Alvo.Mao;
-            Mao maoRealizador = baseAcao.Realizador.Mao;
+            Mao maoAlvo = acao.Alvo.Mao;
+            Mao maoRealizador = acao.Realizador.Mao;
 
             (Mao maoSaqueador, Mao maoSaqueado) =
                 maoAlvo.Possui<BauArmadilha>() ? (maoAlvo, maoRealizador) : (maoRealizador, maoAlvo);

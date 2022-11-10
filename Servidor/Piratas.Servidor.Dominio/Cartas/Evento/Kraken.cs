@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
 
     public class Kraken : BaseEvento
     {
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
             List<Jogador> jogadoresNaMesa = mesa.Jogadores;
 
@@ -20,7 +20,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
                 bool possuiEmbarcacao = jogador.Campo.BaseEmbarcacao != null;
                 bool possuiTripulacao = jogador.Campo.Tripulacao.Count == 0;
 
-                var resultanteAfogarTripulacao = new AfogarTripulante(baseAcao, jogador, jogador);
+                var resultanteAfogarTripulacao = new AfogarTripulante(acao, jogador, jogador);
                 var resultanteDanificarEmbarcacao = new DanificarEmbarcacao(jogador);
 
                 if (!possuiEmbarcacao && !possuiTripulacao)
@@ -29,7 +29,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
                 if (possuiEmbarcacao && possuiTripulacao)
                 {
                     var escolherResultante = new EscolherAcao(
-                        baseAcao,
+                        acao,
                         jogador,
                         resultanteAfogarTripulacao,
                         resultanteDanificarEmbarcacao);

@@ -11,9 +11,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Tripulacao
             Afogavel = false;
         }
 
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
-            Campo campoAlvo = baseAcao.Alvo.Campo;
+            Campo campoAlvo = acao.Alvo.Campo;
 
             campoAlvo.Adicionar(this);
 

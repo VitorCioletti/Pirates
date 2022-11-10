@@ -18,6 +18,6 @@ namespace Piratas.Servidor.Dominio.Cartas
             Id = id.ToLower(CultureInfo.InvariantCulture);
         }
 
-        public abstract List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa);
+        public abstract List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa);
     }
 }

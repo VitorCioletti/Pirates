@@ -10,9 +10,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     {
         private const int _cartasMinimasNaMao = 5;
 
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
-            Jogador realizador = baseAcao.Realizador;
+            Jogador realizador = acao.Realizador;
             List<Jogador> jogadoresNaMesa = mesa.Jogadores;
 
             List<Jogador> jogadoresOpcao =
@@ -21,7 +21,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
             List<string> idsJogadores = jogadoresOpcao.Select(j => j.Id.ToString()).ToList();
 
             var escolherJogador = new EscolherJogador(
-                baseAcao,
+                acao,
                 realizador,
                 idsJogadores,
                 RoubarCarta);

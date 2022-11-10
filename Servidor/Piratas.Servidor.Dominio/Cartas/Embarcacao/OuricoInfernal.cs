@@ -8,6 +8,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     {
         public int Tiros { get; private set; } = 3;
 
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa) => null;
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa) => null;
     }
 }

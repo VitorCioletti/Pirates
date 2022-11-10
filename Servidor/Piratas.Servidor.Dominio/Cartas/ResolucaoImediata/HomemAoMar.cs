@@ -6,11 +6,11 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class HomemAoMar : BaseResolucaoImediata
     {
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
-            Jogador alvo = baseAcao.Alvo;
+            Jogador alvo = acao.Alvo;
 
-            var afogarTripulante = new AfogarTripulante(baseAcao, baseAcao.Realizador, alvo);
+            var afogarTripulante = new AfogarTripulante(acao, acao.Realizador, alvo);
             var acoesResultantes = new List<BaseAcao> { afogarTripulante };
 
             return acoesResultantes;

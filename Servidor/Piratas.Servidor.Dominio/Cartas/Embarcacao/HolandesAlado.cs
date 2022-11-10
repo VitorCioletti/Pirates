@@ -7,9 +7,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
     {
         private const int _tesourosParaVitoria = 4;
 
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
-            Jogador realizador = baseAcao.Realizador;
+            Jogador realizador = acao.Realizador;
 
             int somaTodosTesouros = realizador.CalcularTesouros();
 

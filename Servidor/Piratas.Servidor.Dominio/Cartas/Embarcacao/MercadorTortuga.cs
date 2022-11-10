@@ -7,11 +7,11 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 
     public class MercadorTortuga : BaseEmbarcacao
     {
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
-            var comprarCarta = new ComprarCarta(baseAcao.Realizador);
+            var comprarCarta = new ComprarCarta(acao.Realizador);
 
-            var copiarPrimaria = new CopiarPrimaria(baseAcao.Realizador, comprarCarta);
+            var copiarPrimaria = new CopiarPrimaria(acao.Realizador, comprarCarta);
             var acoesResultantes = new List<BaseAcao> {copiarPrimaria};
 
             return acoesResultantes;

@@ -8,9 +8,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 
     public class CascoAco : BaseEmbarcacao
     {
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
-            Jogador realizador = baseAcao.Realizador;
+            Jogador realizador = acao.Realizador;
 
             List<string> tesourosMao = realizador.Mao
                 .ObterTodas<Tesouro>()
@@ -18,7 +18,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
                 .Select(c => c.Id)
                 .ToList();
 
-            var escolherCartaMao = new EscolherCartaMao(baseAcao, realizador, tesourosMao, AposEscolha);
+            var escolherCartaMao = new EscolherCartaMao(acao, realizador, tesourosMao, AposEscolha);
             var acoesResultantes = new List<BaseAcao> {escolherCartaMao};
 
             return acoesResultantes;

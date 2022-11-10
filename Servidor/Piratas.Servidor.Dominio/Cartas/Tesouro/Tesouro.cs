@@ -9,6 +9,6 @@ namespace Piratas.Servidor.Dominio.Cartas.Tesouro
 
         protected Tesouro(int valor) => Valor = valor;
 
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa) => null;
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa) => null;
     }
 }

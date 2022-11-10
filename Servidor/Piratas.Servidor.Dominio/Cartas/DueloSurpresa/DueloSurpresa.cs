@@ -9,9 +9,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Tipos
 
         protected DueloSurpresa() => Tiros = 1;
 
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
-            Campo campoRealizador = baseAcao.Realizador.Campo;
+            Campo campoRealizador = acao.Realizador.Campo;
 
             campoRealizador.Adicionar(this);
 

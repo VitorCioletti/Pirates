@@ -7,13 +7,13 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
 
     public class Mergulhador : BaseResolucaoImediata
     {
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
             PilhaDescarte pilhaDescarte = mesa.PilhaDescarte;
 
             var escolherCartaBaralho = new EscolherCartaBaralho(
-                baseAcao,
-                baseAcao.Realizador,
+                acao,
+                acao.Realizador,
                 pilhaDescarte,
                 pilhaDescarte.ObterTodas<Carta>());
 

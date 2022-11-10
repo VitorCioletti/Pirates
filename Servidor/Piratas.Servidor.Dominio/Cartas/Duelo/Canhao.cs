@@ -10,9 +10,9 @@ namespace Piratas.Servidor.Dominio.Cartas.Duelo
 
         public Canhao(int tiros) => Tiros = tiros;
 
-        public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
+        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
         {
-            Campo campoRealizador = baseAcao.Realizador.Campo;
+            Campo campoRealizador = acao.Realizador.Campo;
 
             campoRealizador.Adicionar(this);
 

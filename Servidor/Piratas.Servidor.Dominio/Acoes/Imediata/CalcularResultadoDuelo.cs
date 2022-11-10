@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Imediata
 
         public Jogador Perdedor { get; private set; }
 
-        public CalcularResultadoDuelo(Jogador realizador) : base(realizador)
+        public CalcularResultadoDuelo(Jogador realizador, Jogador alvo) : base(realizador, alvo)
         {
         }
 

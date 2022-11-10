@@ -10,7 +10,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Duelo
     {
         public override List<BaseAcao> AplicarEfeito(BaseAcao baseAcao, Mesa mesa)
         {
-            if (baseAcao is not DescerCartasDuelo)
+            if (baseAcao is not DescerCartaRespostaDuelo)
                 throw new ApenasCartaRespostaDueloExcecao(this);
 
             mesa.SairModoDuelo();

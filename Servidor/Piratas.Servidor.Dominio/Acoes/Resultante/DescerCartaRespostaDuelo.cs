@@ -3,14 +3,15 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
     using System.Collections.Generic;
     using Base;
     using Cartas;
+    using Cartas.Duelo;
     using Cartas.Extensao;
     using Cartas.Tipos;
     using Enums;
     using Imediata;
 
-    public class DescerCartasDuelo : BaseResultanteComListaEscolhas
+    public class DescerCartaRespostaDuelo : BaseResultanteComListaEscolhas
     {
-        public DescerCartasDuelo(
+        public DescerCartaRespostaDuelo(
             BaseAcao origem,
             Jogador realizador,
             Jogador alvo)
@@ -18,7 +19,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
                 origem,
                 realizador,
                 TipoEscolha.Carta,
-                alvo.Mao.ObterTodas<Duelo>().ObterIds(),
+                alvo.Mao.ObterTodas<Canhao>().ObterIds(),
                 alvo: alvo)
         {
         }
@@ -37,7 +38,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
             bool realizadorPossuiDueloSurpresa = Realizador.Mao.Possui<DueloSurpresa>();
             bool alvoPossuiDueloSurpresa = Alvo.Mao.Possui<DueloSurpresa>();
 
-            var calcularResultadoDuelo = new CalcularResultadoDuelo(Realizador);
+            var calcularResultadoDuelo = new CalcularResultadoDuelo(Realizador, Alvo);
 
             if (!realizadorPossuiDueloSurpresa && !alvoPossuiDueloSurpresa)
                 acoesResultantes.Add(calcularResultadoDuelo);

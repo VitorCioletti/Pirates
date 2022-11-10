@@ -2,10 +2,11 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
 {
     using System.Collections.Generic;
     using Cartas.Duelo;
+    using Cartas.Extensao;
     using Cartas.Tipos;
     using Excecoes.Acoes;
     using Resultante;
-    using Resultante.Base;
+    using Resultante.Enums;
 
     public class Duelar : BasePrimaria
     {
@@ -16,16 +17,21 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
 
         public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {
-            if (CartaIniciadora is Timoneiro)
-                throw new CartaProibidaIniciarDueloExcecao(this, CartaIniciadora);
+            List<Canhao> cartasCanhao = Realizador.Mao.ObterTodas<Canhao>();
+
+            if (cartasCanhao.Count == 0)
+                throw new NaoPossuiCartaDueloExcecao(this);
 
             mesa.EntrarModoDuelo(Realizador, Alvo);
 
-            if (!Alvo.Mao.Possui<Duelo>())
-                return null;
+            var escolherCartaIniciadoraDuelo = new EscolherCanhaoIniciadorDuelo(
+                this,
+                Realizador,
+                TipoEscolha.Carta,
+                cartasCanhao.ObterIds()
+            );
 
-            var descerCartasDuelo = new DescerCartasDuelo(this, Alvo, Realizador);
-            var acoesResultantes = new List<BaseAcao> {descerCartasDuelo};
+            var acoesResultantes = new List<BaseAcao> { escolherCartaIniciadoraDuelo };
 
             return acoesResultantes;
         }

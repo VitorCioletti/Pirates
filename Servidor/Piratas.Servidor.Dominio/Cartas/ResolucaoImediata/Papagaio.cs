@@ -3,6 +3,7 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using System.Collections.Generic;
     using System.Linq;
     using Acoes;
+    using Acoes.Imediata;
     using Acoes.Primaria;
     using Acoes.Resultante;
     using Duelo;

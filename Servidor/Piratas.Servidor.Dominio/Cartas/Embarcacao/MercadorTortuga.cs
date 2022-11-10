@@ -2,9 +2,8 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
 {
     using System.Collections.Generic;
     using Acoes;
+    using Acoes.Imediata;
     using Acoes.Primaria;
-    using Acoes.Resultante;
-    using Tipos;
 
     public class MercadorTortuga : BaseEmbarcacao
     {

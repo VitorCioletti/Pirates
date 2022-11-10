@@ -1,4 +1,4 @@
-namespace Piratas.Servidor.Dominio.Acoes.Resultante
+namespace Piratas.Servidor.Dominio.Acoes.Imediata
 {
     using System.Collections.Generic;
     using Imediata;

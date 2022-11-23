@@ -4,6 +4,8 @@
 
 ### Essenciais
 
+- Fazer ações primárias retornarem uma resultante para que o jogador consiga escolher o que precisa. A classe jogador deve possuir um m
+    método que retorna a lista da ações primárias.
 - Escrever testes de unidade.
 - Enviar resposta para as diferentes sessões dos jogadores. Pesquisar propriedade Sessions nos controladores.
 - Fazer captura de exceções em todos os controladores em um só lugar.

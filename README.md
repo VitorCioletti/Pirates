@@ -4,6 +4,8 @@
 
 ### Essenciais
 
+- Alterar o sistema de ação para retornar uma fila de ações para um jogador. O resultado da última ação é entregue como
+parâmetro da próxima.
 - Fazer ações primárias retornarem uma resultante para que o jogador consiga escolher o que precisa. A classe jogador deve possuir um m
     método que retorna a lista da ações primárias.
 - Escrever testes de unidade.

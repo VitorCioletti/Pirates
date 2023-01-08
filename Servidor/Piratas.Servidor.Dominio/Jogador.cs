@@ -3,6 +3,8 @@ namespace Piratas.Servidor.Dominio
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Acoes;
+    using Acoes.Primaria;
     using Cartas;
     using Cartas.Tesouro;
     using Cartas.Tripulacao;

@@ -4,6 +4,7 @@
 
 ### Essenciais
 
+- A função ObterEstadoAtualMesa só serve para retornar o estado inicial da mesa, alterar para retornar dados do campo e ações pendentes em caso de reconexão.
 - Alterar o sistema de ação para retornar uma fila de ações para um jogador. O resultado da última ação é entregue como
 parâmetro da próxima.
 - Fazer ações primárias retornarem uma resultante para que o jogador consiga escolher o que precisa. A classe jogador deve possuir um m
@@ -26,6 +27,8 @@ parâmetro da próxima.
 
 ### Futuro bem bem distante
 
+- Testar a inserção de uma máquina de estados no sisema de ação.
+- Persistir partidas válidas e rodá-las no servidor novamente para garantir que o servidor continua processando as regras como deveria.
 - Otimizar crição de cartas. Ao invés do jogar possuir uma instância da carta, ele deveria possuir uma string com o id
   da carta. A mesa pode ter uma lista estática com as cartas, toda vez que alguma carta precisa ser executada, a
   entidade pede a instância daquela carta e a executa na mesa.

@@ -19,11 +19,11 @@ namespace Piratas.Servidor.Dominio
 
         public List<Jogador> Jogadores { get; private set; }
 
+        public Jogador JogadorAtual { get; private set; }
+
         private DateTime _dataHoraInicio { get; set; }
 
         private DateTime _dataHoraFim { get; set; }
-
-        private Jogador _jogadorAtual { get; set; }
 
         private bool _emDuelo { get; set; }
 
@@ -93,7 +93,7 @@ namespace Piratas.Servidor.Dominio
                 _baseImediataAposResultantes = null;
             }
 
-            if (acoesResultadoAcaoProcessada?.Count == 0 && _jogadorAtual.AcoesDisponiveis == 0)
+            if (acoesResultadoAcaoProcessada?.Count == 0 && JogadorAtual.AcoesDisponiveis == 0)
                 acoesPorJogador = _moverParaProximoTurno();
 
             foreach (List<BaseAcao> acoesPendentes in acoesPorJogador.Values)
@@ -102,11 +102,22 @@ namespace Piratas.Servidor.Dominio
             return acoesPorJogador;
         }
 
+        public List<BasePrimaria> ObterAcoesPrimarias()
+        {
+            var acoes = new List<BasePrimaria>();
+
+            acoes.Add(new Duelar(null, null, null));
+            acoes.Add(new DescerCarta(null, null));
+            acoes.Add(new ComprarCarta(null));
+
+            return acoes;
+        }
+
         private void _processarAcaoImediata(
             BaseImediata acaoBaseImediata,
             IReadOnlyDictionary<Jogador, List<BaseAcao>> acoesPorJogador)
         {
-            _processarAcoesImediatas(new List<BaseImediata> { acaoBaseImediata }, acoesPorJogador);
+            _processarAcoesImediatas(new List<BaseImediata> {acaoBaseImediata}, acoesPorJogador);
         }
 
         private void _processarAcoesImediatas(
@@ -126,8 +137,8 @@ namespace Piratas.Servidor.Dominio
 
         private Dictionary<Jogador, List<BaseAcao>> _moverParaProximoTurno()
         {
-            if (_jogadorAtual?.AcoesDisponiveis > 0)
-                throw new PossuiAcoesDisponiveisExcecao(_jogadorAtual);
+            if (JogadorAtual?.AcoesDisponiveis > 0)
+                throw new PossuiAcoesDisponiveisExcecao(JogadorAtual);
 
             _turnoAtual++;
 
@@ -185,7 +196,7 @@ namespace Piratas.Servidor.Dominio
             Jogador proximoJogador = _ordemDeJogadores.Dequeue();
             _ordemDeJogadores.Enqueue(proximoJogador);
 
-            _jogadorAtual = proximoJogador;
+            JogadorAtual = proximoJogador;
 
             return proximoJogador;
         }
@@ -206,7 +217,7 @@ namespace Piratas.Servidor.Dominio
 
             if (baseAcao is BasePrimaria)
             {
-                if (realizador != _jogadorAtual)
+                if (realizador != JogadorAtual)
                     throw new TurnoDeOutroJogadorExcecao(realizador);
             }
         }

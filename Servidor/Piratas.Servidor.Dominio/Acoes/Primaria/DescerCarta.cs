@@ -10,7 +10,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
     {
         public Carta Carta { get; private set; }
 
-        public DescerCarta(Jogador jogador, Carta carta, Jogador alvo = null) : base(jogador, alvo) => Carta = carta;
+        public DescerCarta(Jogador jogador, Carta carta) : base(jogador) => Carta = carta;
 
         public override List<BaseAcao> AplicarRegra(Mesa mesa)
         {

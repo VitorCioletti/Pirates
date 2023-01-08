@@ -31,7 +31,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
                 cartasCanhao.ObterIds()
             );
 
-            var acoesResultantes = new List<BaseAcao> { escolherCartaIniciadoraDuelo };
+            var acoesResultantes = new List<BaseAcao> {escolherCartaIniciadoraDuelo};
 
             return acoesResultantes;
         }

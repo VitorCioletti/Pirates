@@ -67,22 +67,35 @@ namespace Piratas.Servidor.Servico.Partida
 
             try
             {
-                Jogador jogadorComAcaoPendente = _obterJogadorComAcaoPendente(mensagemPartidaCliente);
-                BaseAcao baseAcaoPendente = _obterAcaoPendente(jogadorComAcaoPendente, mensagemPartidaCliente);
-
-                Dictionary<Jogador, List<BaseAcao>> acoesPosProcessamentoAcao = _mesa.ProcessarAcao(baseAcaoPendente);
-
-                foreach ((Jogador jogador, List<BaseAcao> acoesDisponiveis) in acoesPosProcessamentoAcao)
+                switch (mensagemPartidaCliente.TipoMensagem)
                 {
-                    MensagemPartidaServidor mensagemPartidaServidor = _criarMensagemServidor(jogador, acoesDisponiveis);
+                    case TipoMensagemCliente.ObterEstadoAtualMesa:
+                        return _obterEstadoAtualMesa();
 
-                    mensagensServidor.Add(mensagemPartidaServidor);
+                    case TipoMensagemCliente.Escolher:
+                        Jogador jogadorComAcaoPendente = _obterJogadorComAcaoPendente(mensagemPartidaCliente);
+                        BaseAcao baseAcaoPendente = _obterAcaoPendente(jogadorComAcaoPendente, mensagemPartidaCliente);
 
-                    _eventosAcaoAtual.Clear();
-                    _possiveisAcoesEnviadasAosJogadores.Add(jogador, acoesDisponiveis);
+                        Dictionary<Jogador, List<BaseAcao>> acoesPosProcessamentoAcao =
+                            _mesa.ProcessarAcao(baseAcaoPendente);
+
+                        foreach ((Jogador jogador, List<BaseAcao> acoesDisponiveis) in acoesPosProcessamentoAcao)
+                        {
+                            MensagemPartidaServidor mensagemPartidaServidor =
+                                _criarMensagemServidor(jogador, acoesDisponiveis);
+
+                            mensagensServidor.Add(mensagemPartidaServidor);
+
+                            _eventosAcaoAtual.Clear();
+                            _possiveisAcoesEnviadasAosJogadores.Add(jogador, acoesDisponiveis);
+                        }
+
+                        _possiveisAcoesEnviadasAosJogadores[jogadorComAcaoPendente].Remove(baseAcaoPendente);
+                        break;
+
+                    default:
+                        throw new TipoMensagemNaoSuportadaExcecao();
                 }
-
-                _possiveisAcoesEnviadasAosJogadores[jogadorComAcaoPendente].Remove(baseAcaoPendente);
             }
             catch (BaseServicoException servicoException)
             {
@@ -258,6 +271,64 @@ namespace Piratas.Servidor.Servico.Partida
             var evento = new Evento(localEvento, idCarta, adicionado);
 
             _eventosAcaoAtual[idJogador].Add(evento);
+        }
+
+        private List<MensagemPartidaServidor> _obterEstadoAtualMesa()
+        {
+            var mensagens = new List<MensagemPartidaServidor>();
+
+            foreach (Jogador jogador in _mesa.Jogadores)
+            {
+                BaseEscolha escolha = null;
+
+                if (jogador == _mesa.JogadorAtual)
+                {
+                    List<BasePrimaria> acoesPrimarias = _mesa.ObterAcoesPrimarias();
+
+                    List<string> idAcoesPrimarias = acoesPrimarias.Select(a => a.Id).ToList();
+
+                    escolha = new ListaEscolhasCliente(TipoEscolha.Acao, idAcoesPrimarias);
+                }
+
+                Dictionary<Guid, List<Evento>> eventos = _obterEventosInicioPartida(jogador);
+
+                var mensagemPartidaServidor = new MensagemPartidaServidor(
+                    jogador.Id,
+                    _mesa.Id,
+                    jogador.AcoesDisponiveis,
+                    jogador.CalcularTesouros(),
+                    eventos,
+                    escolha);
+
+                mensagens.Add(mensagemPartidaServidor);
+            }
+
+            return mensagens;
+        }
+
+        private Dictionary<Guid, List<Evento>> _obterEventosInicioPartida(Jogador receptor)
+        {
+            var eventos = new Dictionary<Guid, List<Evento>>();
+
+            foreach (Jogador jogador in _mesa.Jogadores)
+            {
+                var eventosCartasAdicionadas = new List<Evento>();
+
+                foreach (Carta carta in jogador.Mao.ObterTodas())
+                {
+                    bool deveMostrarIdCarta = jogador.Id == receptor.Id;
+
+                    string idCarta = deveMostrarIdCarta ? carta.Id : string.Empty;
+
+                    var evento = new Evento(LocalEvento.Mao, idCarta, true);
+
+                    eventosCartasAdicionadas.Add(evento);
+                }
+
+                eventos[jogador.Id] = eventosCartasAdicionadas;
+            }
+
+            return eventos;
         }
     }
 }

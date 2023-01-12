@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piratas.Servidor.Servico", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piratas.Servidor.Testes", "..\Testes\Piratas.Servidor.Testes.csproj", "{233B2E58-9862-4407-A267-CCCB1C42F6A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piratas.Cliente", "..\Cliente\Piratas.Cliente.csproj", "{8D67A8F7-E59E-4D06-88C8-24CD256CA9A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{233B2E58-9862-4407-A267-CCCB1C42F6A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{233B2E58-9862-4407-A267-CCCB1C42F6A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{233B2E58-9862-4407-A267-CCCB1C42F6A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D67A8F7-E59E-4D06-88C8-24CD256CA9A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D67A8F7-E59E-4D06-88C8-24CD256CA9A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D67A8F7-E59E-4D06-88C8-24CD256CA9A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D67A8F7-E59E-4D06-88C8-24CD256CA9A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

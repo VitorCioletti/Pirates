@@ -4,6 +4,5 @@ namespace Piratas.Cliente.MaquinaEstados
     {
         EntrarSala = 1,
         CriarSala = 2,
-        Sair = 3,
     }
 }

@@ -19,7 +19,7 @@ namespace Piratas.Cliente.Servicos
 
         public static void Inicializar()
         {
-            string endereco = "ws://localhost";
+            string endereco = "ws://0.0.0.0:8182";
 
             _webSocket = new WebSocket(endereco);
 

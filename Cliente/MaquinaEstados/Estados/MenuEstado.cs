@@ -1,6 +1,7 @@
 namespace Piratas.Cliente.MaquinaEstados.Estados
 {
     using System;
+    using System.Threading;
     using Protocolo.Sala.Servidor;
     using Sala;
     using Sala.CriandoSala;
@@ -19,9 +20,22 @@ namespace Piratas.Cliente.MaquinaEstados.Estados
 
         public override void AoReceberTexto(string texto)
         {
-            var operacao = (OperacaoMenu)int.Parse(texto);
+            if (int.TryParse(texto, out int operacao))
+            {
+                Console.WriteLine("Apenas números são permitidos.");
 
-            switch (operacao)
+                Thread.Sleep(500);
+
+                Console.Clear();
+
+                _imprimirMenu();
+
+                return;
+            }
+
+            var operacaoMenu = (OperacaoMenu)operacao;
+
+            switch (operacaoMenu)
             {
                 case OperacaoMenu.CriarSala:
                     MaquinaEstados.Adicionar(new CriandoSalaEstado(MaquinaEstados));
@@ -79,8 +93,8 @@ namespace Piratas.Cliente.MaquinaEstados.Estados
         {
             Console.WriteLine("Menu");
 
-            Console.WriteLine($"{OperacaoMenu.CriarSala} - Criar Sala");
-            Console.WriteLine($"{OperacaoMenu.EntrarSala} - Entrar Sala");
+            Console.WriteLine($"{(int)OperacaoMenu.EntrarSala} - Entrar Sala");
+            Console.WriteLine($"{(int)OperacaoMenu.CriarSala} - Criar Sala");
         }
     }
 }

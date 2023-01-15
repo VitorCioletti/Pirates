@@ -82,7 +82,7 @@ namespace Piratas.Servidor.Servico.Partida
                         foreach ((Jogador jogador, List<BaseAcao> acoesDisponiveis) in acoesPosProcessamentoAcao)
                         {
                             MensagemPartidaServidor mensagemPartidaServidor =
-                                _criarMensagemServidor(jogador, acoesDisponiveis);
+                                _criarMensagemServidor(mensagemPartidaCliente, jogador, acoesDisponiveis);
 
                             mensagensServidor.Add(mensagemPartidaServidor);
 
@@ -99,11 +99,17 @@ namespace Piratas.Servidor.Servico.Partida
             }
             catch (BaseServicoException servicoException)
             {
-                mensagensServidor.Add(new MensagemPartidaServidor(servicoException.Id, servicoException.Message));
+                mensagensServidor.Add(new MensagemPartidaServidor(
+                    mensagemPartidaCliente.Id,
+                    servicoException.Id,
+                    servicoException.Message));
             }
             catch (BaseDominioExcecao regraException)
             {
-                mensagensServidor.Add(new MensagemPartidaServidor(regraException.Id, regraException.Message));
+                mensagensServidor.Add(new MensagemPartidaServidor(
+                    mensagemPartidaCliente.Id,
+                    regraException.Id,
+                    regraException.Message));
             }
 
             return mensagensServidor;
@@ -158,13 +164,17 @@ namespace Piratas.Servidor.Servico.Partida
             return jogadorComAcaoPendente;
         }
 
-        private MensagemPartidaServidor _criarMensagemServidor(Jogador jogador, List<BaseAcao> acoesDisponiveis)
+        private MensagemPartidaServidor _criarMensagemServidor(
+            BaseMensagem mensagemCliente,
+            Jogador jogador,
+            List<BaseAcao> acoesDisponiveis)
         {
             BaseEscolha escolha = _criarEscolha(acoesDisponiveis);
 
             var mensagemServidor = new MensagemPartidaServidor(
                 jogador.Id,
                 Id,
+                mensagemCliente.Id,
                 jogador.AcoesDisponiveis,
                 jogador.CalcularTesouros(),
                 _eventosAcaoAtual,
@@ -295,6 +305,7 @@ namespace Piratas.Servidor.Servico.Partida
                 var mensagemPartidaServidor = new MensagemPartidaServidor(
                     jogador.Id,
                     _mesa.Id,
+                    Guid.Empty,
                     jogador.AcoesDisponiveis,
                     jogador.CalcularTesouros(),
                     eventos,

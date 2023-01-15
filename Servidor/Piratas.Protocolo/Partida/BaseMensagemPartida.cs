@@ -13,8 +13,9 @@ namespace Piratas.Protocolo
         protected BaseMensagemPartida(
             Guid idJogador,
             Guid idMesa,
+            Guid idMensagemSolicitante,
             string idErro = null,
-            string descricaoErro = null) : base(idErro, descricaoErro)
+            string descricaoErro = null) : base(idMensagemSolicitante, idErro, descricaoErro)
         {
             IdJogadorRealizador = idJogador;
             IdMesa = idMesa;

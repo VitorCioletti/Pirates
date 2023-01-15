@@ -12,9 +12,12 @@ namespace Piratas.Protocolo
 
         public bool PossuiErro => !string.IsNullOrWhiteSpace(IdErro);
 
-        protected BaseMensagem(string idErro = null, string descricaoErro = null)
+        public Guid IdMensagemSolicitante { get; private set; }
+
+        protected BaseMensagem(Guid idMensagemSolicitante, string idErro = null, string descricaoErro = null)
         {
             Id = Guid.NewGuid();
+            IdMensagemSolicitante = idMensagemSolicitante;
             IdErro = idErro;
             DescricaoErro = descricaoErro;
         }

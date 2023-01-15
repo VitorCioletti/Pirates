@@ -19,9 +19,10 @@ namespace Piratas.Protocolo.Sala.Servidor
             Guid idJogador,
             Guid idJogadorRealizouAcao,
             Guid idPartida,
+            Guid idMensagemSolicitante,
             TipoOperacaoSalaServidor tipoOperacaoSala,
             string idErro = null,
-            string descricaoErro = null) : base(idErro, descricaoErro)
+            string descricaoErro = null) : base(idMensagemSolicitante, idErro, descricaoErro)
         {
             IdSala = idSala;
             IdJogadorRealizouAcao = idJogadorRealizouAcao;
@@ -30,7 +31,10 @@ namespace Piratas.Protocolo.Sala.Servidor
             IdJogador = idJogador;
         }
 
-        public MensagemSalaServidor(string idErro = null, string descricaoErro = null) : base(idErro, descricaoErro)
+        public MensagemSalaServidor(
+            Guid idMensagemSolicitante,
+            string idErro = null,
+            string descricaoErro = null) : base(idMensagemSolicitante, idErro, descricaoErro)
         {
             IdPartida = Guid.Empty;
             IdJogador = Guid.Empty;

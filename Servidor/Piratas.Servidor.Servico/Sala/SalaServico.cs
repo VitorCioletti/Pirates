@@ -33,20 +33,23 @@ namespace Piratas.Servidor.Servico.Sala
             switch (mensagemSalaCliente.TipoOperacaoSala)
             {
                 case TipoOperacaoSala.Criar:
-                    MensagemSalaServidor mensagemCriacaoSala = _criarSala(mensagemSalaCliente.IdJogadorRealizouAcao);
+                    MensagemSalaServidor mensagemCriacaoSala = _criarSala(
+                        mensagemSalaCliente.Id,
+                        mensagemSalaCliente.IdJogadorRealizouAcao);
 
                     mensagensSalaServidor.Add(mensagemCriacaoSala);
                     break;
 
                 case TipoOperacaoSala.Sair:
                     IEnumerable<MensagemSalaServidor> mensagensSaidaSala =
-                        _sairSala(mensagemSalaCliente.IdJogadorRealizouAcao);
+                        _sairSala(mensagemSalaCliente.IdSala, mensagemSalaCliente.IdJogadorRealizouAcao);
 
                     mensagensSalaServidor.AddRange(mensagensSaidaSala);
                     break;
 
                 case TipoOperacaoSala.Entrar:
                     IEnumerable<MensagemSalaServidor> mensagensEntradaSala = _entrarSala(
+                        mensagemSalaCliente.Id,
                         mensagemSalaCliente.IdJogadorRealizouAcao,
                         mensagemSalaCliente.IdSala);
 
@@ -55,7 +58,7 @@ namespace Piratas.Servidor.Servico.Sala
 
                 case TipoOperacaoSala.IniciarPartida:
                     IEnumerable<MensagemSalaServidor> mensagensInicioPartida =
-                        _iniciarPartida(mensagemSalaCliente.IdJogadorRealizouAcao);
+                        _iniciarPartida(mensagemSalaCliente.Id, mensagemSalaCliente.IdJogadorRealizouAcao);
 
                     mensagensSalaServidor.AddRange(mensagensInicioPartida);
                     break;
@@ -67,7 +70,7 @@ namespace Piratas.Servidor.Servico.Sala
             return mensagensSalaServidor;
         }
 
-        private static MensagemSalaServidor _criarSala(Guid idJogadorCriador)
+        private static MensagemSalaServidor _criarSala(Guid idMensagemCliente, Guid idJogadorCriador)
         {
             bool estaNumaSala = _estaNumaSala(idJogadorCriador);
 
@@ -76,17 +79,18 @@ namespace Piratas.Servidor.Servico.Sala
 
             var idNovaSala = Guid.NewGuid();
 
-            _salasAbertas[idNovaSala] = new List<Guid> { idJogadorCriador };
+            _salasAbertas[idNovaSala] = new List<Guid> {idJogadorCriador};
 
             return new MensagemSalaServidor(
                 idNovaSala,
                 idJogadorCriador,
                 idJogadorCriador,
                 Guid.Empty,
+                idMensagemCliente,
                 TipoOperacaoSalaServidor.Criou);
         }
 
-        private static IEnumerable<MensagemSalaServidor> _sairSala(Guid idJogador)
+        private static IEnumerable<MensagemSalaServidor> _sairSala(Guid idMensagemCliente, Guid idJogador)
         {
             Guid idSala = _salasAbertas.FirstOrDefault(s => s.Value.Contains(idJogador)).Key;
 
@@ -99,6 +103,7 @@ namespace Piratas.Servidor.Servico.Sala
                 idJogador,
                 idSala,
                 Guid.Empty,
+                idMensagemCliente,
                 TipoOperacaoSalaServidor.JogadorSaiu);
 
             sala.Remove(idJogador);
@@ -106,7 +111,10 @@ namespace Piratas.Servidor.Servico.Sala
             return mensagensSaidaSala;
         }
 
-        private static IEnumerable<MensagemSalaServidor> _entrarSala(Guid idJogador, Guid idSala)
+        private static IEnumerable<MensagemSalaServidor> _entrarSala(
+            Guid idMensagemCliente,
+            Guid idJogador,
+            Guid idSala)
         {
             bool estaNumaSala = _estaNumaSala(idJogador);
 
@@ -122,6 +130,7 @@ namespace Piratas.Servidor.Servico.Sala
                 idJogador,
                 idSala,
                 Guid.Empty,
+                idMensagemCliente,
                 TipoOperacaoSalaServidor.JogadorEntrou);
 
             _salasAbertas[idSala].Add(idJogador);
@@ -129,7 +138,7 @@ namespace Piratas.Servidor.Servico.Sala
             return mensagensEntradaSala;
         }
 
-        private static IEnumerable<MensagemSalaServidor> _iniciarPartida(Guid idJogador)
+        private static IEnumerable<MensagemSalaServidor> _iniciarPartida(Guid idMensagemCliente, Guid idJogador)
         {
             Guid idSala = _salasAbertas.FirstOrDefault(s => s.Value.Contains(idJogador)).Key;
 
@@ -144,6 +153,7 @@ namespace Piratas.Servidor.Servico.Sala
                 idJogador,
                 Guid.Empty,
                 idPartida,
+                idMensagemCliente,
                 TipoOperacaoSalaServidor.IniciouPartida);
 
             _salasAbertas.Remove(idSala);
@@ -155,6 +165,7 @@ namespace Piratas.Servidor.Servico.Sala
             Guid idJogador,
             Guid idSala,
             Guid idPartida,
+            Guid idMensagemCliente,
             TipoOperacaoSalaServidor tipoOperacaoSalaServidor)
         {
             var mensagensSalaServidor = new List<MensagemSalaServidor>();
@@ -168,6 +179,7 @@ namespace Piratas.Servidor.Servico.Sala
                     id,
                     idJogador,
                     idPartida,
+                    idMensagemCliente,
                     tipoOperacaoSalaServidor);
 
                 mensagensSalaServidor.Add(mensagemSaidaSala);

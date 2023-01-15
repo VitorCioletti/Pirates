@@ -1,5 +1,6 @@
 namespace Piratas.Servidor.Servico.WebSocket.Controladores
 {
+    using System;
     using System.Collections.Generic;
     using Excecoes.Sala;
     using Protocolo;
@@ -14,9 +15,12 @@ namespace Piratas.Servidor.Servico.WebSocket.Controladores
     {
         protected override void OnMessage(MessageEventArgs e)
         {
+            Guid idMensagemSalaCliente = Guid.Empty;
+
             try
             {
                 var mensagemSalaCliente = Parser.Deserializar<MensagemSalaCliente>(e.Data);
+                idMensagemSalaCliente = mensagemSalaCliente.Id;
 
                 List<MensagemSalaServidor> mensagensSalaServidor =
                     SalaServico.ProcessarMensagemCliente(mensagemSalaCliente);
@@ -30,17 +34,17 @@ namespace Piratas.Servidor.Servico.WebSocket.Controladores
             }
             catch (BaseSalaExcecao baseSalaException)
             {
-                _enviaMensagemErro(baseSalaException.Id, baseSalaException.Message);
+                _enviaMensagemErro(idMensagemSalaCliente, baseSalaException.Id, baseSalaException.Message);
             }
             catch (BaseParserExcecao parserException)
             {
-                _enviaMensagemErro(parserException.Id, parserException.Message);
+                _enviaMensagemErro(idMensagemSalaCliente, parserException.Id, parserException.Message);
             }
         }
 
-        private void _enviaMensagemErro(string idErro, string descricaoErro)
+        private void _enviaMensagemErro(Guid idMensagemCliente, string idErro, string descricaoErro)
         {
-            var mensagem = new MensagemSalaServidor(idErro, descricaoErro);
+            var mensagem = new MensagemSalaServidor(idMensagemCliente, idErro, descricaoErro);
             var mensagemSerializada = Parser.Serializar(mensagem);
 
             Send(mensagemSerializada);

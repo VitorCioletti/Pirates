@@ -15,9 +15,12 @@ namespace Piratas.Servidor.Servico.WebSocket.Controladores
     {
         protected override void OnMessage(MessageEventArgs e)
         {
+            Guid idMensagemCliente = Guid.Empty;
+
             try
             {
                 var mensagemCliente = Parser.Deserializar<MensagemPartidaCliente>(e.Data);
+                idMensagemCliente = mensagemCliente.Id;
 
                 List<MensagemPartidaServidor> mensagensServidor =
                     GerenciadorPartidaServico.ProcessarMensagemCliente(mensagemCliente);
@@ -31,21 +34,29 @@ namespace Piratas.Servidor.Servico.WebSocket.Controladores
             }
             catch (BasePartidaExcecao partidaException)
             {
-                var mensagem = new MensagemPartidaServidor(partidaException.Id, partidaException.Message);
+                var mensagem = new MensagemPartidaServidor(
+                    idMensagemCliente,
+                    partidaException.Id,
+                    partidaException.Message);
+
                 string mensagemSerializada = Parser.Serializar(mensagem);
 
                 Send(mensagemSerializada);
             }
             catch (BaseParserExcecao parserException)
             {
-                var mensagem = new MensagemPartidaServidor(parserException.Id, parserException.Message);
+                var mensagem = new MensagemPartidaServidor(
+                    idMensagemCliente,
+                    parserException.Id,
+                    parserException.Message);
+
                 string mensagemSerializada = Parser.Serializar(mensagem);
 
                 Send(mensagemSerializada);
             }
             catch (Exception exception)
             {
-                var mensagem = new MensagemPartidaServidor("erro-desconhecido", exception.Message);
+                var mensagem = new MensagemPartidaServidor(idMensagemCliente, "erro-desconhecido", exception.Message);
                 string mensagemSerializada = Parser.Serializar(mensagem);
 
                 Send(mensagemSerializada);

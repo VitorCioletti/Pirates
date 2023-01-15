@@ -13,10 +13,11 @@ namespace Piratas.Protocolo.Partida.Cliente
         public MensagemPartidaCliente(
             Guid idJogador,
             Guid idMesa,
+            Guid idMensagemSolicitante,
             string idAcaoExecutada,
             BaseEscolha escolha,
             TipoMensagemCliente tipoMensagem)
-            : base(idJogador, idMesa)
+            : base(idJogador, idMesa, idMensagemSolicitante)
         {
             IdAcaoExecutada = idAcaoExecutada;
             Escolha = escolha;

@@ -1,5 +1,6 @@
 namespace Piratas.Cliente.Servicos
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -19,9 +20,11 @@ namespace Piratas.Cliente.Servicos
 
         public static void Inicializar()
         {
-            string endereco = "ws://0.0.0.0:8182";
+            string endereco = "ws://localhost:8182/sala";
 
             _webSocket = new WebSocket(endereco);
+
+            _webSocket.Connect();
 
             _webSocket.OnMessage += AoReceberMensagem;
 
@@ -29,7 +32,7 @@ namespace Piratas.Cliente.Servicos
             {
                 string mensagem = messageEventArgs.Data;
 
-                LogServico.Info(mensagem);
+                // LogServico.Info(mensagem);
 
                 var mensagemDeserializada = Parser.Deserializar<BaseMensagem>(mensagem);
 
@@ -37,7 +40,12 @@ namespace Piratas.Cliente.Servicos
             }
         }
 
-        public static BaseMensagem Enviar(BaseMensagem mensagem)
+        public static BaseMensagem EnviarMensagemSala(BaseMensagem mensagem)
+        {
+            return _enviar("sala", mensagem);
+        }
+
+        private static BaseMensagem _enviar(string controlador, BaseMensagem mensagem)
         {
             string mensagemSerializada = Parser.Serializar(mensagem);
 

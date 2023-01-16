@@ -10,7 +10,7 @@ namespace Piratas.Cliente.Servicos
         {
             var mensagem = new MensagemSalaCliente(Guid.Empty, Guid.Empty, Guid.Empty, TipoOperacaoSala.Criar);
 
-            var respostaServidor = (MensagemSalaServidor)WebSocketServico.Enviar(mensagem);
+            var respostaServidor = (MensagemSalaServidor)WebSocketServico.EnviarMensagemSala(mensagem);
 
             return respostaServidor;
         }
@@ -21,7 +21,7 @@ namespace Piratas.Cliente.Servicos
 
             var mensagem = new MensagemSalaCliente(Guid.Empty, guidIdSala, Guid.Empty, TipoOperacaoSala.Entrar);
 
-            var respostaServidor = (MensagemSalaServidor)WebSocketServico.Enviar(mensagem);
+            var respostaServidor = (MensagemSalaServidor)WebSocketServico.EnviarMensagemSala(mensagem);
 
             return respostaServidor;
         }

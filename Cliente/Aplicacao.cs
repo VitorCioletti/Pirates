@@ -8,7 +8,18 @@ namespace Piratas.Cliente
     {
         public static void Main()
         {
-            InicializacaoServico.Inicializar();
+            try
+            {
+                InicializacaoServico.Inicializar();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine("Erro de inicialização não tratado.");
+                Console.WriteLine(exception);
+
+                return;
+            }
+
 
             var maquinaEstados = new MaquinaEstados.MaquinaEstados();
 

@@ -1,6 +1,6 @@
 {
     "WebSocket": {
-        "Endereco": "0.0.0.0",
+        "Endereco": "localhost",
         "Porta": 8182
     },
     "Serilog": {

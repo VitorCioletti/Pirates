@@ -20,7 +20,7 @@ namespace Piratas.Cliente.MaquinaEstados.Estados
 
         public override void AoReceberTexto(string texto)
         {
-            if (int.TryParse(texto, out int operacao))
+            if (!int.TryParse(texto, out int operacao))
             {
                 Console.WriteLine("Apenas números são permitidos.");
 

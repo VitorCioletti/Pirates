@@ -50,6 +50,8 @@ namespace Piratas.Cliente.MaquinaEstados
 
         private void _imprimirEstado(BaseEstado estado)
         {
+            Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine($"Estado atual: \"{estado.GetType().Name}\".");
             Console.WriteLine();
             Console.WriteLine();

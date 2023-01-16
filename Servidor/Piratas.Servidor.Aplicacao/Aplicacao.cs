@@ -5,11 +5,11 @@
 
     public class Aplicacao
     {
-        public static void Main(string[] _)
+        public static void Main()
         {
             InicializacaoServico.Inicializar();
 
-            Console.ReadKey();
+            Console.Read();
         }
     }
 }

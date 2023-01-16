@@ -15,12 +15,12 @@ namespace Piratas.Servidor.Servico.Configuracao
 
         private static IConfigurationRoot _obterDados()
         {
-            var caminhoBinario = Assembly.GetExecutingAssembly().Location;
-            var pastaBinario = Path.GetDirectoryName(caminhoBinario);
+            string caminhoBinario = Assembly.GetExecutingAssembly().Location;
+            string pastaBinario = Path.GetDirectoryName(caminhoBinario);
 
             return new ConfigurationBuilder()
                 .SetBasePath(pastaBinario)
-                .AddJsonFile($"configuracao.json")
+                .AddJsonFile("Configuracao/Arquivos/configuracao.json")
                 .Build();
         }
     }

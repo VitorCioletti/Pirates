@@ -18,7 +18,7 @@ namespace Piratas.Servidor.Servico.WebSocket
         {
             LogServico.Info("Servidor inicializado.");
 
-            IConfigurationSection configuracaoWebSocket = ConfiguracaoServico.Dados.GetSection("WebSocketServico");
+            IConfigurationSection configuracaoWebSocket = ConfiguracaoServico.Dados.GetSection("WebSocket");
 
             string endereco = configuracaoWebSocket.GetSection("Endereco").Value;
             string porta = configuracaoWebSocket.GetSection("Porta").Value;

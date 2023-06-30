@@ -7,6 +7,17 @@ indent_style = space
 indent_size = 4
 insert_final_newline = true
 trim_trailing_whitespace = true
+max_line_length=120
+
+# Quebra os parâmetros se viola o limite de caracteres ou se possui múltiplos (Assinatura de métodos e classe).
+csharp_wrap_after_declaration_lpar=true
+csharp_wrap_parameters_style=chop_if_long
+csharp_max_formal_parameters_on_line=3
+
+# Quebra os parâmetros se viola o limite de caracteres ou se possui múltiplos (Chamada de função).
+resharper_csharp_wrap_after_invocation_lpar = true
+csharp_wrap_arguments_style=chop_if_long
+csharp_max_invocation_arguments_on_line=3
 
 dotnet_analyzer_diagnostic.severity = warning
 

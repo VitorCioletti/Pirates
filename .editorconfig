@@ -9,6 +9,47 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 max_line_length=120
 
+# Espaços em branco.
+csharp_keep_blank_lines_in_declarations = 1
+csharp_remove_blank_lines_near_braces_in_declarations = true
+csharp_blank_lines_after_start_comment = 0
+
+csharp_blank_lines_between_using_groups = 0
+csharp_blank_lines_after_using_list = 1
+
+csharp_blank_lines_around_namespace = 1
+csharp_blank_lines_inside_namespace = 0
+
+csharp_blank_lines_around_type = 1
+csharp_blank_lines_inside_type = 0
+
+csharp_blank_lines_around_field = 1
+csharp_blank_lines_around_single_line_field = 0
+
+csharp_blank_lines_around_property = 1
+csharp_blank_lines_around_single_line_property = 1
+
+csharp_blank_lines_around_auto_property = 1
+csharp_blank_lines_around_single_line_auto_property = 1
+
+csharp_blank_lines_around_invocable = 1
+csharp_blank_lines_around_single_line_invocable = 1
+
+csharp_keep_blank_lines_in_code = 1
+csharp_remove_blank_lines_near_braces_in_code = false
+csharp_blank_lines_around_local_method = 1
+
+csharp_blank_lines_around_single_line_local_method = 1
+
+csharp_blank_lines_before_control_transfer_statements = 1
+csharp_blank_lines_after_control_transfer_statements = 1
+
+csharp_blank_lines_before_block_statements = 1
+csharp_blank_lines_after_block_statements = 1
+
+csharp_blank_lines_before_multiline_statements = 1
+csharp_blank_lines_after_multiline_statements = 1
+
 # Quebra os parâmetros se viola o limite de caracteres ou se possui múltiplos (Assinatura de métodos e classe).
 csharp_wrap_after_declaration_lpar=true
 csharp_wrap_parameters_style=chop_if_long

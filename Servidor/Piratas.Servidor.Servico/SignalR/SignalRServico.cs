@@ -23,6 +23,7 @@ namespace Piratas.Servidor.Servico.SignalR
 
             WebApplicationBuilder webApplicationBuilder = WebApplication.CreateBuilder();
 
+            webApplicationBuilder.Services.AddLogging();
             webApplicationBuilder.Services.AddSignalR();
 
             _webApplication = webApplicationBuilder.Build();
@@ -35,6 +36,6 @@ namespace Piratas.Servidor.Servico.SignalR
 
         public static async Task ConectarAsync() => await _webApplication.StartAsync();
 
-        public static async Task Desconectar() => await _webApplication.StopAsync();
+        public static async Task DesconectarAsync() => await _webApplication.StopAsync();
     }
 }

@@ -13,7 +13,9 @@
 
             await SignalRServico.ConectarAsync();
 
-            Console.Read();
+            Console.ReadKey();
+
+            await SignalRServico.DesconectarAsync();
         }
     }
 }

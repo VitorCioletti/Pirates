@@ -17,7 +17,7 @@ namespace Piratas.Servidor.Servico.Partida
     using Protocolo.Partida.Servidor;
     using Protocolo.Partida.Servidor.Escolha;
 
-    internal class PartidaServico
+    internal sealed class PartidaServico
     {
         public Guid Id { get; }
 
@@ -91,6 +91,7 @@ namespace Piratas.Servidor.Servico.Partida
                         }
 
                         _possiveisAcoesEnviadasAosJogadores[jogadorComAcaoPendente].Remove(baseAcaoPendente);
+
                         break;
 
                     default:
@@ -99,17 +100,19 @@ namespace Piratas.Servidor.Servico.Partida
             }
             catch (BaseServicoException servicoException)
             {
-                mensagensServidor.Add(new MensagemPartidaServidor(
-                    mensagemPartidaCliente.Id,
-                    servicoException.Id,
-                    servicoException.Message));
+                mensagensServidor.Add(
+                    new MensagemPartidaServidor(
+                        mensagemPartidaCliente.Id,
+                        servicoException.Id,
+                        servicoException.Message));
             }
             catch (BaseDominioExcecao regraException)
             {
-                mensagensServidor.Add(new MensagemPartidaServidor(
-                    mensagemPartidaCliente.Id,
-                    regraException.Id,
-                    regraException.Message));
+                mensagensServidor.Add(
+                    new MensagemPartidaServidor(
+                        mensagemPartidaCliente.Id,
+                        regraException.Id,
+                        regraException.Message));
             }
 
             return mensagensServidor;
@@ -133,18 +136,21 @@ namespace Piratas.Servidor.Servico.Partida
                         ((DicionarioEscolhasCliente)mensagemPartidaCliente.Escolha).Escolhas;
 
                     resultanteComDicionarioEscolhas.PreencherEscolhas(dicionarioEscolhas);
+
                     break;
 
                 case BaseResultanteComEscolhaBooleana resultanteComEscolhaBooleana:
                     bool escolha = ((UmaEscolhaBooleanaCliente)mensagemPartidaCliente.Escolha).Escolha;
 
                     resultanteComEscolhaBooleana.PreencherEscolha(escolha);
+
                     break;
 
                 case BaseResultanteComListaEscolhas resultanteComListaEscolhas:
                     List<string> escolhas = ((ListaEscolhasCliente)mensagemPartidaCliente.Escolha).Escolhas;
 
                     resultanteComListaEscolhas.PreencherEscolhas(escolhas);
+
                     break;
             }
 
@@ -225,6 +231,7 @@ namespace Piratas.Servidor.Servico.Partida
                 case BaseResultanteComEscolhaBooleana resultanteComEscolhaBooleana:
                     escolhaResultante = new UmaEscolhaBooleanaServidor(
                         _obterTipoEscolhaProtocolo(resultanteComEscolhaBooleana.TipoEscolha));
+
                     break;
 
                 case BaseResultanteComListaEscolhas resultanteComListaEscolhas:
@@ -232,6 +239,7 @@ namespace Piratas.Servidor.Servico.Partida
                         _obterTipoEscolhaProtocolo(resultanteComListaEscolhas.TipoEscolha),
                         resultanteComListaEscolhas.Opcoes,
                         resultanteComListaEscolhas.LimiteEscolhas);
+
                     break;
 
                 default:
@@ -254,22 +262,38 @@ namespace Piratas.Servidor.Servico.Partida
 
         private void _aoAdicionarCartaNaMao(string idJogador, Carta carta)
         {
-            _adicionarEvento(idJogador, LocalEvento.Mao, carta.Id, true);
+            _adicionarEvento(
+                idJogador,
+                LocalEvento.Mao,
+                carta.Id,
+                true);
         }
 
         private void _aoRemoverCartaNaMao(string idJogador, Carta carta)
         {
-            _adicionarEvento(idJogador, LocalEvento.Mao, carta.Id, false);
+            _adicionarEvento(
+                idJogador,
+                LocalEvento.Mao,
+                carta.Id,
+                false);
         }
 
         private void _aoAdicionarCartaNoCampo(string idJogador, Carta carta)
         {
-            _adicionarEvento(idJogador, LocalEvento.Campo, carta.Id, true);
+            _adicionarEvento(
+                idJogador,
+                LocalEvento.Campo,
+                carta.Id,
+                true);
         }
 
         private void _aoRemoverCartaNoCampo(string idJogador, Carta carta)
         {
-            _adicionarEvento(idJogador, LocalEvento.Campo, carta.Id, false);
+            _adicionarEvento(
+                idJogador,
+                LocalEvento.Campo,
+                carta.Id,
+                false);
         }
 
         private void _adicionarEvento(

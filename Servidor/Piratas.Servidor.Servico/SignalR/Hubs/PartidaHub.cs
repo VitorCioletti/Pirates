@@ -1,7 +1,6 @@
 namespace Piratas.Servidor.Servico.SignalR.Hubs;
 
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Partida;
 using Protocolo.Partida.Cliente;
@@ -14,17 +13,11 @@ public class PartidaHub : Hub
         List<MensagemPartidaServidor> mensagensServidor =
             GerenciadorPartidaServico.ProcessarMensagemCliente(mensagemPartidaCliente);
 
-        List<Task> allSendAsyncTasks = new();
-
         foreach (MensagemPartidaServidor mensagemPartidaServidor in mensagensServidor)
         {
             string idJogadorRealizador = mensagemPartidaServidor.IdJogadorRealizador;
 
-            Task sendAsync = Clients.Client(idJogadorRealizador).SendAsync("AoProcessarMensagem", mensagensServidor);
-
-            allSendAsyncTasks.Add(sendAsync);
+            Clients.Client(idJogadorRealizador).SendAsync("AoProcessarMensagem", mensagensServidor);
         }
-
-        Task.WhenAll(allSendAsyncTasks);
     }
 }

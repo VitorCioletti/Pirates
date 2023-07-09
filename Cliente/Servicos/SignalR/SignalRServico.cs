@@ -5,6 +5,7 @@ namespace Piratas.Cliente.Servicos
     using System.Threading.Tasks;
     using Hubs;
     using Microsoft.AspNetCore.SignalR.Client;
+    using Microsoft.Extensions.DependencyInjection;
     using Protocolo;
     using Protocolo.Partida.Servidor;
 
@@ -27,6 +28,7 @@ namespace Piratas.Cliente.Servicos
 
             hubConnectionBuilder.WithUrl(endereco);
             hubConnectionBuilder.WithAutomaticReconnect();
+            hubConnectionBuilder.AddMessagePackProtocol();
 
             _hubConnection = hubConnectionBuilder.Build();
 

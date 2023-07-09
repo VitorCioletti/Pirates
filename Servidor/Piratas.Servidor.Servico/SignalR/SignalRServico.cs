@@ -4,7 +4,9 @@ namespace Piratas.Servidor.Servico.SignalR
     using Configuracao;
     using Hubs;
     using Log;
+    using MessagePack;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.SignalR;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Serilog;
@@ -25,7 +27,9 @@ namespace Piratas.Servidor.Servico.SignalR
             WebApplicationBuilder webApplicationBuilder = WebApplication.CreateBuilder();
 
             webApplicationBuilder.Host.UseSerilog(LogServico.Logger);
-            webApplicationBuilder.Services.AddSignalR();
+
+            ISignalRServerBuilder signalRServerBuilder = webApplicationBuilder.Services.AddSignalR();
+            signalRServerBuilder.AddMessagePackProtocol(_configureMessagePack);
 
             _webApplication = webApplicationBuilder.Build();
 
@@ -38,5 +42,11 @@ namespace Piratas.Servidor.Servico.SignalR
         public static async Task ConectarAsync() => await _webApplication.StartAsync();
 
         public static async Task DesconectarAsync() => await _webApplication.StopAsync();
+
+        private static void _configureMessagePack(MessagePackHubProtocolOptions messagePackHubProtocolOptions)
+        {
+            messagePackHubProtocolOptions.SerializerOptions =
+                MessagePackSerializerOptions.Standard.WithSecurity(MessagePackSecurity.UntrustedData);
+        }
     }
 }

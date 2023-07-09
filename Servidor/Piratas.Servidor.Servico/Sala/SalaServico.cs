@@ -56,11 +56,16 @@ namespace Piratas.Servidor.Servico.Sala
             _salasAbertas[idSala].Add(idJogador);
         }
 
-        public static Guid IniciarPartida(string idJogador)
+        public static Guid IniciarPartida(string idJogador, Guid idSala)
         {
-            Guid idSala = _salasAbertas.FirstOrDefault(s => s.Value.Contains(idJogador)).Key;
+            List<string> jogadoresSala = _salasAbertas.FirstOrDefault(s => s.Key == idSala).Value;
 
-            if (idSala == Guid.Empty)
+            if (jogadoresSala is null)
+                throw new SalaNaoEncontradaExcecao(idSala);
+
+            bool jogadorNaoEncontrado = jogadoresSala.FirstOrDefault(i => i == idJogador) is null;
+
+            if (jogadorNaoEncontrado)
                 throw new JogadorNaoEstaEmNenhumaSala(idJogador);
 
             List<string> idsJogadores = _salasAbertas[idSala];

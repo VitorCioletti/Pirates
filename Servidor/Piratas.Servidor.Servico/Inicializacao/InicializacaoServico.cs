@@ -2,7 +2,7 @@ namespace Piratas.Servidor.Servico.Inicializacao
 {
     using Configuracao;
     using Log;
-    using WebSocket;
+    using SignalR;
 
     public static class InicializacaoServico
     {
@@ -10,7 +10,7 @@ namespace Piratas.Servidor.Servico.Inicializacao
         {
             ConfiguracaoServico.Inicializar();
             LogServico.Inicializar();
-            WebSocketServico.Inicializar();
+            SignalRServico.Inicializar();
         }
     }
 }

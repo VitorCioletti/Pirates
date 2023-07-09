@@ -8,7 +8,7 @@ namespace Piratas.Protocolo.Sala.Servidor
 
         public Guid IdPartida { get; private set; }
 
-        public Guid IdJogador { get; private set; }
+        public string IdJogador { get; private set; }
 
         public Guid IdJogadorRealizouAcao { get; private set; }
 
@@ -16,7 +16,7 @@ namespace Piratas.Protocolo.Sala.Servidor
 
         public MensagemSalaServidor(
             Guid idSala,
-            Guid idJogador,
+            string idJogador,
             Guid idJogadorRealizouAcao,
             Guid idPartida,
             Guid idMensagemSolicitante,
@@ -37,7 +37,7 @@ namespace Piratas.Protocolo.Sala.Servidor
             string descricaoErro = null) : base(idMensagemSolicitante, idErro, descricaoErro)
         {
             IdPartida = Guid.Empty;
-            IdJogador = Guid.Empty;
+            IdJogador = string.Empty;
             IdSala = Guid.Empty;
             IdJogadorRealizouAcao = Guid.Empty;
             TipoOperacaoSala = TipoOperacaoSalaServidor.Desconhecido;

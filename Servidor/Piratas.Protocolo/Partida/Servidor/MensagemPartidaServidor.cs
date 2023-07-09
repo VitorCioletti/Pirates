@@ -11,15 +11,15 @@ namespace Piratas.Protocolo.Partida.Servidor
 
         public BaseEscolha Escolha { get; private set; }
 
-        public Dictionary<Guid, List<Evento>> Eventos { get; private set; }
+        public Dictionary<string, List<Evento>> Eventos { get; private set; }
 
         public MensagemPartidaServidor(
-            Guid idJogador,
+            string idJogador,
             Guid idMesa,
             Guid idMensagemSolicitante,
             int acoesRestantes,
             int tesouros,
-            Dictionary<Guid, List<Evento>> eventos,
+            Dictionary<string, List<Evento>> eventos,
             BaseEscolha escolha,
             string idErro = null,
             string descricaoErro = null
@@ -37,7 +37,7 @@ namespace Piratas.Protocolo.Partida.Servidor
         }
 
         public MensagemPartidaServidor(Guid idMensagemSolicitante, string idErro, string descricaoErro) : this(
-            Guid.Empty,
+            string.Empty,
             Guid.Empty,
             idMensagemSolicitante,
             0,

@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Servico.Excecoes.Partida
 
     public class JogadorSemAcaoPendenteExcecao : BasePartidaExcecao
     {
-        public JogadorSemAcaoPendenteExcecao(Guid idJogador)
+        public JogadorSemAcaoPendenteExcecao(string idJogador)
             : base("jogador-sem-acao-pendente", $" Jogador \"{idJogador}\" sem ação pendente.")
         {
         }

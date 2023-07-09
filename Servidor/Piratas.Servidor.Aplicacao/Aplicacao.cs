@@ -1,13 +1,17 @@
 ﻿namespace Piratas.Servidor.Aplicacao
 {
     using System;
+    using System.Threading.Tasks;
     using Servico.Inicializacao;
+    using Servico.SignalR;
 
-    public class Aplicacao
+    public static class Aplicacao
     {
-        public static void Main()
+        public static async Task Main()
         {
             InicializacaoServico.Inicializar();
+
+            await SignalRServico.ConectarAsync();
 
             Console.Read();
         }

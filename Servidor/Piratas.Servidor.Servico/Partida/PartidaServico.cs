@@ -25,15 +25,15 @@ namespace Piratas.Servidor.Servico.Partida
 
         private readonly Dictionary<Jogador, List<BaseAcao>> _possiveisAcoesEnviadasAosJogadores;
 
-        private readonly Dictionary<Guid, List<Evento>> _eventosAcaoAtual;
+        private readonly Dictionary<string, List<Evento>> _eventosAcaoAtual;
 
         private readonly object _lockObject;
 
-        public PartidaServico(List<Guid> idsJogadores)
+        public PartidaServico(List<string> idsJogadores)
         {
             var jogadores = new List<Jogador>();
 
-            foreach (Guid idJogador in idsJogadores)
+            foreach (string idJogador in idsJogadores)
             {
                 var jogador = new Jogador(
                     idJogador,
@@ -51,7 +51,7 @@ namespace Piratas.Servidor.Servico.Partida
 
             Id = _mesa.Id;
 
-            _eventosAcaoAtual = new Dictionary<Guid, List<Evento>>();
+            _eventosAcaoAtual = new Dictionary<string, List<Evento>>();
             _possiveisAcoesEnviadasAosJogadores = new Dictionary<Jogador, List<BaseAcao>>();
         }
 
@@ -153,7 +153,7 @@ namespace Piratas.Servidor.Servico.Partida
 
         private Jogador _obterJogadorComAcaoPendente(MensagemPartidaCliente mensagemPartidaCliente)
         {
-            Guid idJogadorRealizador = mensagemPartidaCliente.IdJogadorRealizador;
+            string idJogadorRealizador = mensagemPartidaCliente.IdJogadorRealizador;
 
             (Jogador jogadorComAcaoPendente, List<BaseAcao> _) =
                 _possiveisAcoesEnviadasAosJogadores.FirstOrDefault(a => a.Key.Id == idJogadorRealizador);
@@ -252,28 +252,28 @@ namespace Piratas.Servidor.Servico.Partida
             };
         }
 
-        private void _aoAdicionarCartaNaMao(Guid idJogador, Carta carta)
+        private void _aoAdicionarCartaNaMao(string idJogador, Carta carta)
         {
             _adicionarEvento(idJogador, LocalEvento.Mao, carta.Id, true);
         }
 
-        private void _aoRemoverCartaNaMao(Guid idJogador, Carta carta)
+        private void _aoRemoverCartaNaMao(string idJogador, Carta carta)
         {
             _adicionarEvento(idJogador, LocalEvento.Mao, carta.Id, false);
         }
 
-        private void _aoAdicionarCartaNoCampo(Guid idJogador, Carta carta)
+        private void _aoAdicionarCartaNoCampo(string idJogador, Carta carta)
         {
             _adicionarEvento(idJogador, LocalEvento.Campo, carta.Id, true);
         }
 
-        private void _aoRemoverCartaNoCampo(Guid idJogador, Carta carta)
+        private void _aoRemoverCartaNoCampo(string idJogador, Carta carta)
         {
             _adicionarEvento(idJogador, LocalEvento.Campo, carta.Id, false);
         }
 
         private void _adicionarEvento(
-            Guid idJogador,
+            string idJogador,
             LocalEvento localEvento,
             string idCarta,
             bool adicionado)
@@ -300,7 +300,7 @@ namespace Piratas.Servidor.Servico.Partida
                     escolha = new ListaEscolhasCliente(TipoEscolha.Acao, idAcoesPrimarias);
                 }
 
-                Dictionary<Guid, List<Evento>> eventos = _obterEventosInicioPartida(jogador);
+                Dictionary<string, List<Evento>> eventos = _obterEventosInicioPartida(jogador);
 
                 var mensagemPartidaServidor = new MensagemPartidaServidor(
                     jogador.Id,
@@ -317,9 +317,9 @@ namespace Piratas.Servidor.Servico.Partida
             return mensagens;
         }
 
-        private Dictionary<Guid, List<Evento>> _obterEventosInicioPartida(Jogador receptor)
+        private Dictionary<string, List<Evento>> _obterEventosInicioPartida(Jogador receptor)
         {
-            var eventos = new Dictionary<Guid, List<Evento>>();
+            var eventos = new Dictionary<string, List<Evento>>();
 
             foreach (Jogador jogador in _mesa.Jogadores)
             {

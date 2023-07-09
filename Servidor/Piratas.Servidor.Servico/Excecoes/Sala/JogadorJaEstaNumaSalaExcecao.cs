@@ -4,7 +4,7 @@ namespace Piratas.Servidor.Servico.Excecoes.Sala
 
     public class JogadorJaEstaNumaSalaExcecao : BaseSalaExcecao
     {
-        public JogadorJaEstaNumaSalaExcecao(Guid idJogador) :
+        public JogadorJaEstaNumaSalaExcecao(string idJogador) :
             base("jogador-ja-esta-numa-sala", $"O jogador \"{idJogador}\" já está numa sala.")
         {
         }

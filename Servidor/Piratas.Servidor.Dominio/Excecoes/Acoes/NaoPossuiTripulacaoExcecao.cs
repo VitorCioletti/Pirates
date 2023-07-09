@@ -5,7 +5,7 @@ namespace Piratas.Servidor.Dominio.Excecoes.Acoes
 
     public class NaoPossuiTripulacaoExcecao : BaseAcoesExcecao
     {
-        public NaoPossuiTripulacaoExcecao(BaseAcao acao, Guid idJogador) :
+        public NaoPossuiTripulacaoExcecao(BaseAcao acao, string idJogador) :
             base(acao, "nao-possui-tripulacao", $"Jogador \"{idJogador}\" não possui tripulação.")
         {
         }

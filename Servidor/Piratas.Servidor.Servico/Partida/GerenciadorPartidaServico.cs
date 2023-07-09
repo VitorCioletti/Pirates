@@ -27,7 +27,7 @@ namespace Piratas.Servidor.Servico.Partida
             return partida.ProcessarMensagemCliente(mensagemPartidaCliente);
         }
 
-        public static Guid CriarPartida(List<Guid> idsJogadores)
+        public static Guid CriarPartida(List<string> idsJogadores)
         {
             var novaPartida = new PartidaServico(idsJogadores);
 

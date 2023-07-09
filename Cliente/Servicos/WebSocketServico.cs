@@ -1,6 +1,5 @@
 namespace Piratas.Cliente.Servicos
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -32,11 +31,11 @@ namespace Piratas.Cliente.Servicos
             {
                 string mensagem = messageEventArgs.Data;
 
-                // LogServico.Info(mensagem);
-
-                var mensagemDeserializada = Parser.Deserializar<BaseMensagem>(mensagem);
-
-                MensagensRecebidas.Add(mensagemDeserializada);
+                // // LogServico.Info(mensagem);
+                //
+                // var mensagemDeserializada = Parser.Deserializar<BaseMensagem>(mensagem);
+                //
+                // MensagensRecebidas.Add(mensagemDeserializada);
             }
         }
 
@@ -47,9 +46,9 @@ namespace Piratas.Cliente.Servicos
 
         private static BaseMensagem _enviar(string controlador, BaseMensagem mensagem)
         {
-            string mensagemSerializada = Parser.Serializar(mensagem);
-
-            _webSocket.Send(mensagemSerializada);
+            // string mensagemSerializada = Parser.Serializar(mensagem);
+            //
+            // _webSocket.Send(mensagemSerializada);
 
             while (true)
             {

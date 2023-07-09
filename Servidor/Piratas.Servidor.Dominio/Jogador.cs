@@ -11,7 +11,7 @@ namespace Piratas.Servidor.Dominio
 
     public class Jogador
     {
-        public Guid Id { get; }
+        public string Id { get; }
 
         public int AcoesDisponiveis { get; private set; }
 
@@ -20,11 +20,11 @@ namespace Piratas.Servidor.Dominio
         public Campo Campo { get; }
 
         public Jogador(
-            Guid id,
-            Action<Guid, Carta> aoAdicionarCartaNaMao,
-            Action<Guid, Carta> aoRemoverCartaNaMao,
-            Action<Guid, Carta> aoAdicionarCartaNoCampo,
-            Action<Guid, Carta> aoRemoverCartaNoCampo)
+            string id,
+            Action<string, Carta> aoAdicionarCartaNaMao,
+            Action<string, Carta> aoRemoverCartaNaMao,
+            Action<string, Carta> aoAdicionarCartaNoCampo,
+            Action<string, Carta> aoRemoverCartaNoCampo)
         {
             Id = id;
             Mao = new Mao(new List<Carta>());

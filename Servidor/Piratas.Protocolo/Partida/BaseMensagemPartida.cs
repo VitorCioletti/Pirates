@@ -6,12 +6,12 @@ namespace Piratas.Protocolo
     {
         public Guid IdMesa { get; private set; }
 
-        public Guid IdJogadorRealizador { get; private set; }
+        public string IdJogadorRealizador { get; private set; }
 
         public DateTime DataHora { get; private set; }
 
         protected BaseMensagemPartida(
-            Guid idJogador,
+            string idJogador,
             Guid idMesa,
             Guid idMensagemSolicitante,
             string idErro = null,

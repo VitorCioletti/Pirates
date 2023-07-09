@@ -11,7 +11,7 @@ namespace Piratas.Protocolo.Partida.Cliente
         public string IdAcaoExecutada { get; private set; }
 
         public MensagemPartidaCliente(
-            Guid idJogador,
+            string idJogador,
             Guid idMesa,
             Guid idMensagemSolicitante,
             string idAcaoExecutada,

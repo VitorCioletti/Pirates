@@ -26,7 +26,9 @@ public class SalaHub : Hub
 
         await Groups.RemoveFromGroupAsync(idJogador, idSala.ToString());
 
-        await Clients.All.SendAsync("AoSair", idJogador);
+        IClientProxy group = Clients.Group(idSala.ToString());
+
+        await group.SendAsync("AoSair", idJogador);
     }
 
     public async Task Entrar(Guid idSala)
@@ -37,7 +39,9 @@ public class SalaHub : Hub
 
         await Groups.AddToGroupAsync(idJogador, idSala.ToString());
 
-        await Clients.All.SendAsync("AoEntrar", idJogador);
+        IClientProxy group = Clients.Group(idSala.ToString());
+
+        await group.SendAsync("AoEntrar", idJogador);
     }
 
     public async Task IniciarPartida(Guid idSala)

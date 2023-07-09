@@ -4,7 +4,7 @@ namespace Piratas.Cliente.Servicos
     {
         public static void Inicializar()
         {
-            WebSocketServico.Inicializar();
+            SignalRServico.Inicializar();
         }
     }
 }

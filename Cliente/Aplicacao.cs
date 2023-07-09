@@ -1,16 +1,19 @@
 namespace Piratas.Cliente
 {
     using System;
+    using System.Threading.Tasks;
     using MaquinaEstados.Estados;
     using Servicos;
 
     public static class Aplicacao
     {
-        public static void Main()
+        public static async Task Main()
         {
             try
             {
                 InicializacaoServico.Inicializar();
+
+                await SignalRServico.ConectarAsync();
             }
             catch (Exception exception)
             {
@@ -19,7 +22,6 @@ namespace Piratas.Cliente
 
                 return;
             }
-
 
             var maquinaEstados = new MaquinaEstados.MaquinaEstados();
 

@@ -4,6 +4,7 @@
 
 ### Essenciais
 
+- Implementar recebimento de dados no cliente de teste.
 - Envio de pacotes de erro no SignalR.
 - SignalR estaticamente tipado.
 - A função ObterEstadoAtualMesa só serve para retornar o estado inicial da mesa, alterar para retornar dados do campo e ações pendentes em caso de reconexão.

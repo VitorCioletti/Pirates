@@ -7,18 +7,18 @@ namespace Piratas.Servidor.Servico.Log
 
     public static class LogServico
     {
-        private static ILogger _logger { get; set; }
+        public static ILogger Logger { get; set; }
 
         public static void Inicializar()
         {
-            _logger = _obterLogger(ConfiguracaoServico.Dados);
+            Logger = _criarLogger(ConfiguracaoServico.Dados);
 
             _configuraExcecaoNaoTratada();
         }
 
-        public static void Info(string mensagem) => _logger.Information(mensagem);
+        public static void Info(string mensagem) => Logger.Information(mensagem);
 
-        private static ILogger _obterLogger(IConfiguration configuracao) =>
+        private static ILogger _criarLogger(IConfiguration configuracao) =>
             new LoggerConfiguration().ReadFrom.Configuration(configuracao).CreateLogger();
 
         private static void _configuraExcecaoNaoTratada()
@@ -27,8 +27,8 @@ namespace Piratas.Servidor.Servico.Log
 
             void ExcecaoNaoTratada(object _, UnhandledExceptionEventArgs args)
             {
-                _logger.Error($"Ocorreu um não tratado:\n\"{args.ExceptionObject}\".");
-                _logger.Information("Servidor finalizado com erro.");
+                Logger.Error($"Ocorreu um não tratado:\n\"{args.ExceptionObject}\".");
+                Logger.Information("Servidor finalizado com erro.");
 
                 Environment.Exit(1);
             }

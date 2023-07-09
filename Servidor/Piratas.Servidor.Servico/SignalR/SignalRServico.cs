@@ -7,6 +7,7 @@ namespace Piratas.Servidor.Servico.SignalR
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Serilog;
 
     public static class SignalRServico
     {
@@ -23,7 +24,7 @@ namespace Piratas.Servidor.Servico.SignalR
 
             WebApplicationBuilder webApplicationBuilder = WebApplication.CreateBuilder();
 
-            webApplicationBuilder.Services.AddLogging();
+            webApplicationBuilder.Host.UseSerilog(LogServico.Logger);
             webApplicationBuilder.Services.AddSignalR();
 
             _webApplication = webApplicationBuilder.Build();

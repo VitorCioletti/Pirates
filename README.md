@@ -4,13 +4,14 @@
 
 ### Essenciais
 
+- Envio de pacotes de erro no SignalR.
+- SignalR estaticamente tipado.
 - A função ObterEstadoAtualMesa só serve para retornar o estado inicial da mesa, alterar para retornar dados do campo e ações pendentes em caso de reconexão.
 - Alterar o sistema de ação para retornar uma fila de ações para um jogador. O resultado da última ação é entregue como
 parâmetro da próxima.
 - Fazer ações primárias retornarem uma resultante para que o jogador consiga escolher o que precisa. A classe jogador deve possuir um m
     método que retorna a lista da ações primárias.
 - Escrever testes de unidade.
-- Enviar resposta para as diferentes sessões dos jogadores. Pesquisar propriedade Sessions nos controladores.
 - Fazer captura de exceções em todos os controladores em um só lugar.
 - Resolver como avisar quando uma carta de evento for comprada.
 - Resolver como avisar o cliente que foi um Bau Armadilha na carta Saque.

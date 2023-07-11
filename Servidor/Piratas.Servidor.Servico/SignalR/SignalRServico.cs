@@ -18,7 +18,7 @@ public static class SignalRServico
 
     public static void Inicializar()
     {
-        LogServico.Info("Servidor inicializado.");
+        LogServico.Logger.Information("Servidor inicializado.");
 
         IConfigurationSection configuracaoWebSocket = ConfiguracaoServico.Dados.GetSection("WebSocket");
 
@@ -37,7 +37,7 @@ public static class SignalRServico
         _webApplication.MapHub<PartidaHub>("/partida");
         _webApplication.MapHub<SalaHub>("/hub");
 
-        LogServico.Info($"Escutando no endereço: \"{endereco}:{porta}\".");
+        LogServico.Logger.Information($"Escutando no endereço: \"{endereco}:{porta}\".");
     }
 
     public static async Task ConectarAsync() => await _webApplication.StartAsync();

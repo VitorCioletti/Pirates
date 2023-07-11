@@ -2,6 +2,7 @@ namespace Piratas.Servidor.Servico.SignalR.Filters;
 
 using System;
 using System.Threading.Tasks;
+using Log;
 using Microsoft.AspNetCore.SignalR;
 using Protocolo;
 
@@ -19,8 +20,10 @@ public class ExcecaoFilter : IHubFilter
         {
             return new Mensagem(Guid.Empty, servicoException.Id, servicoException.Message);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            LogServico.Logger.Error(e, "Erro desconhecido.");
+
             return new Mensagem(Guid.Empty, "erro-desconhecido", "Ocorreu um erro desconhecido.");
         }
     }

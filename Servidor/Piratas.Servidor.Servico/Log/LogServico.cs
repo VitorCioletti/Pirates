@@ -16,8 +16,6 @@ namespace Piratas.Servidor.Servico.Log
             _configuraExcecaoNaoTratada();
         }
 
-        public static void Info(string mensagem) => Logger.Information(mensagem);
-
         private static ILogger _criarLogger(IConfiguration configuracao) =>
             new LoggerConfiguration().ReadFrom.Configuration(configuracao).CreateLogger();
 

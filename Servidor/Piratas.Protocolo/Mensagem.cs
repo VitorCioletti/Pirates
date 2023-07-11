@@ -2,7 +2,7 @@ namespace Piratas.Protocolo
 {
     using System;
 
-    public abstract class BaseMensagem
+    public class Mensagem
     {
         public Guid Id { get; private set; }
 
@@ -14,7 +14,7 @@ namespace Piratas.Protocolo
 
         public Guid IdMensagemSolicitante { get; private set; }
 
-        protected BaseMensagem(Guid idMensagemSolicitante, string idErro = null, string descricaoErro = null)
+        public Mensagem(Guid idMensagemSolicitante, string idErro = null, string descricaoErro = null)
         {
             Id = Guid.NewGuid();
             IdMensagemSolicitante = idMensagemSolicitante;

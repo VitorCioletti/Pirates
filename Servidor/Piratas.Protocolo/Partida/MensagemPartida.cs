@@ -2,7 +2,7 @@ namespace Piratas.Protocolo
 {
     using System;
 
-    public abstract class BaseMensagemPartida : BaseMensagem
+    public abstract class MensagemPartida : Mensagem
     {
         public Guid IdMesa { get; private set; }
 
@@ -10,7 +10,7 @@ namespace Piratas.Protocolo
 
         public DateTime DataHora { get; private set; }
 
-        protected BaseMensagemPartida(
+        protected MensagemPartida(
             string idJogador,
             Guid idMesa,
             Guid idMensagemSolicitante,

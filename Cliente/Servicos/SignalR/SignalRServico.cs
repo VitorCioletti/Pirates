@@ -11,13 +11,13 @@ namespace Piratas.Cliente.Servicos
 
     public static class SignalRServico
     {
-        public static List<BaseMensagem> MensagensRecebidas { get; private set; }
+        public static List<Mensagem> MensagensRecebidas { get; private set; }
 
         private static HubConnection _hubConnection;
 
         static SignalRServico()
         {
-            MensagensRecebidas = new List<BaseMensagem>();
+            MensagensRecebidas = new List<Mensagem>();
         }
 
         public static void Inicializar()

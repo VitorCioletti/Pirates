@@ -98,7 +98,7 @@ namespace Piratas.Servidor.Servico.Partida
                         throw new TipoMensagemNaoSuportadaExcecao();
                 }
             }
-            catch (BaseServicoException servicoException)
+            catch (BaseServicoExcecao servicoException)
             {
                 mensagensServidor.Add(
                     new MensagemPartidaServidor(
@@ -171,7 +171,7 @@ namespace Piratas.Servidor.Servico.Partida
         }
 
         private MensagemPartidaServidor _criarMensagemServidor(
-            BaseMensagem mensagemCliente,
+            Mensagem mensagemCliente,
             Jogador jogador,
             List<BaseAcao> acoesDisponiveis)
         {

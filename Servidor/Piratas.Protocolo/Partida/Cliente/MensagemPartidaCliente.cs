@@ -2,7 +2,7 @@ namespace Piratas.Protocolo.Partida.Cliente
 {
     using System;
 
-    public class MensagemPartidaCliente : BaseMensagemPartida
+    public class MensagemPartidaCliente : MensagemPartida
     {
         public TipoMensagemCliente TipoMensagem { get; private set; }
 

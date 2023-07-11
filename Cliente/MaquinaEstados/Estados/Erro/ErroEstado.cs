@@ -10,7 +10,7 @@ namespace Piratas.Cliente.MaquinaEstados.Estados
 
         private readonly string _descricaoErro;
 
-        public ErroEstado(BaseMensagem mensagem, MaquinaEstados maquinaEstados) : base(maquinaEstados)
+        public ErroEstado(Mensagem mensagem, MaquinaEstados maquinaEstados) : base(maquinaEstados)
         {
             if (!mensagem.PossuiErro)
                 throw new InvalidOperationException($"Mensagem \"{mensagem.Id}\"não possui erro.");

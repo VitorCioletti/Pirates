@@ -2,7 +2,7 @@ namespace Piratas.Protocolo.Sala.Cliente
 {
     using System;
 
-    public class MensagemSalaCliente : BaseMensagem
+    public class MensagemSalaCliente : Mensagem
     {
         public Guid IdJogadorRealizouAcao { get; private set; }
 

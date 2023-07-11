@@ -3,7 +3,7 @@ namespace Piratas.Protocolo.Partida.Servidor
     using System;
     using System.Collections.Generic;
 
-    public class MensagemPartidaServidor : BaseMensagemPartida
+    public class MensagemPartidaServidor : MensagemPartida
     {
         public int AcoesRestantes { get; private set; }
 

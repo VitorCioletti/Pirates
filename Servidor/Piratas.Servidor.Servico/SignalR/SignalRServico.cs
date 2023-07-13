@@ -35,7 +35,7 @@ public static class SignalRServico
         _webApplication = webApplicationBuilder.Build();
 
         _webApplication.MapHub<PartidaHub>("/partida");
-        _webApplication.MapHub<SalaHub>("/hub");
+        _webApplication.MapHub<SalaHub>("/sala");
 
         LogServico.Logger.Information($"Escutando no endereço: \"{endereco}:{porta}\".");
     }

@@ -22,7 +22,7 @@ namespace Piratas.Cliente.Servicos
 
         public static void Inicializar()
         {
-            string endereco = "ws://localhost:8182/signalr/sala";
+            string endereco = "http://localhost:5000/sala";
 
             var hubConnectionBuilder = new HubConnectionBuilder();
 

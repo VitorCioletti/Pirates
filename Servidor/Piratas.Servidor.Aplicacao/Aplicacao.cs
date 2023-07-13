@@ -7,13 +7,13 @@
 
     public static class Aplicacao
     {
-        public static async Task Main()
+        public static async Task Main(string[] _)
         {
             InicializacaoServico.Inicializar();
 
             await SignalRServico.ConectarAsync();
 
-            Console.ReadKey();
+            Console.Read();
 
             await SignalRServico.DesconectarAsync();
         }

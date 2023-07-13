@@ -7,7 +7,7 @@ namespace Piratas.Servidor.Servico.Log
 
     public static class LogServico
     {
-        public static ILogger Logger { get; set; }
+        public static ILogger Logger { get; private set; }
 
         public static void Inicializar()
         {

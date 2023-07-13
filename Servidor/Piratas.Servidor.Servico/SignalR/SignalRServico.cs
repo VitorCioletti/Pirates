@@ -20,7 +20,7 @@ public static class SignalRServico
     {
         LogServico.Logger.Information("Servidor inicializado.");
 
-        IConfigurationSection configuracaoWebSocket = ConfiguracaoServico.Dados.GetSection("WebSocket");
+        IConfigurationSection configuracaoWebSocket = ConfiguracaoServico.Dados.GetSection("SignalR");
 
         string endereco = configuracaoWebSocket.GetSection("Endereco").Value;
         string porta = configuracaoWebSocket.GetSection("Porta").Value;

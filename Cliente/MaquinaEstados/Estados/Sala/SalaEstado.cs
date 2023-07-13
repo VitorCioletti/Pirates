@@ -38,7 +38,7 @@ namespace Piratas.Cliente.MaquinaEstados.Estados.Sala
         {
             Console.WriteLine("Sala");
 
-            Console.WriteLine($"Seu id: \"{mensagemSalaServidor.IdJogador}\".");
+            Console.WriteLine($"Seu id: \"{mensagemSalaServidor.IdJogadorRealizouAcao}\".");
             Console.WriteLine($"Id da sala: \"{mensagemSalaServidor.IdSala}\".");
 
             Console.WriteLine("Jogadores na sala: ");

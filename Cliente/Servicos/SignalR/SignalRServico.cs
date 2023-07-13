@@ -8,6 +8,7 @@ namespace Piratas.Cliente.Servicos
     using Microsoft.Extensions.DependencyInjection;
     using Protocolo;
     using Protocolo.Partida.Servidor;
+    using Protocolo.Sala.Servidor;
 
     public static class SignalRServico
     {
@@ -84,10 +85,10 @@ namespace Piratas.Cliente.Servicos
         {
             var salaHub = new SalaHub();
 
-            _hubConnection.On<Guid>(nameof(salaHub.AoCriar), salaHub.AoCriar);
-            _hubConnection.On<string>(nameof(salaHub.AoSair), salaHub.AoSair);
-            _hubConnection.On<string>(nameof(salaHub.AoEntrar), salaHub.AoEntrar);
-            _hubConnection.On<Guid>(nameof(salaHub.AoIniciarPartida), salaHub.AoIniciarPartida);
+            _hubConnection.On<MensagemSalaServidor>(nameof(salaHub.AoCriar), salaHub.AoCriar);
+            _hubConnection.On<MensagemSalaServidor>(nameof(salaHub.AoSair), salaHub.AoSair);
+            _hubConnection.On<MensagemSalaServidor>(nameof(salaHub.AoEntrar), salaHub.AoEntrar);
+            _hubConnection.On<MensagemSalaServidor>(nameof(salaHub.AoIniciarPartida), salaHub.AoIniciarPartida);
         }
 
         private static Task _aoIniciarReconexao(Exception exception)

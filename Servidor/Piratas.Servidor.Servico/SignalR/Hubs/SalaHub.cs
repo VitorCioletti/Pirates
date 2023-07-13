@@ -3,6 +3,7 @@ namespace Piratas.Servidor.Servico.SignalR.Hubs;
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using Protocolo.Sala.Servidor;
 using Sala;
 
 public class SalaHub : Hub
@@ -15,7 +16,9 @@ public class SalaHub : Hub
 
         await Groups.AddToGroupAsync(idJogador, idNovaSala.ToString());
 
-        await Clients.Caller.SendAsync("AoCriar", idNovaSala);
+        var mensagemSala = new MensagemSalaServidor(idNovaSala, idJogador, Guid.Empty);
+
+        await Clients.Caller.SendAsync("AoCriar", mensagemSala);
     }
 
     public async Task Sair()
@@ -28,7 +31,9 @@ public class SalaHub : Hub
 
         IClientProxy group = Clients.Group(idSala.ToString());
 
-        await group.SendAsync("AoSair", idJogador);
+        var mensagemSala = new MensagemSalaServidor(idSala, idJogador, Guid.Empty);
+
+        await group.SendAsync("AoSair", mensagemSala);
     }
 
     public async Task Entrar(Guid idSala)
@@ -41,7 +46,9 @@ public class SalaHub : Hub
 
         IClientProxy group = Clients.Group(idSala.ToString());
 
-        await group.SendAsync("AoEntrar", idJogador);
+        var mensagemSala = new MensagemSalaServidor(idSala, idJogador, Guid.Empty);
+
+        await group.SendAsync("AoEntrar", mensagemSala);
     }
 
     public async Task IniciarPartida(Guid idSala)
@@ -52,6 +59,8 @@ public class SalaHub : Hub
 
         IClientProxy group = Clients.Group(idSala.ToString());
 
-        await group.SendAsync("AoIniciarPartida", idPartida);
+        var mensagemSala = new MensagemSalaServidor(idSala, idJogador, idPartida);
+
+        await group.SendAsync("AoIniciarPartida", mensagemSala);
     }
 }

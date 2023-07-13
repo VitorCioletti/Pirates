@@ -6,6 +6,7 @@ using Filters;
 using Hubs;
 using Log;
 using MessagePack;
+using MessagePack.Resolvers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
@@ -42,7 +43,9 @@ public static class SignalRServico
 
     private static void _configurarMessagePack(MessagePackHubProtocolOptions messagePackHubProtocolOptions)
     {
-        messagePackHubProtocolOptions.SerializerOptions =
-            MessagePackSerializerOptions.Standard.WithSecurity(MessagePackSecurity.UntrustedData);
+        messagePackHubProtocolOptions.SerializerOptions = MessagePackSerializerOptions.Standard
+            .WithSecurity(MessagePackSecurity.UntrustedData)
+            .WithResolver(ContractlessStandardResolver.Instance);
+
     }
 }

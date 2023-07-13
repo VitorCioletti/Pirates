@@ -16,7 +16,6 @@ namespace Piratas.Protocolo.Partida.Servidor
         public MensagemPartidaServidor(
             string idJogador,
             Guid idMesa,
-            Guid idMensagemSolicitante,
             int acoesRestantes,
             int tesouros,
             Dictionary<string, List<Evento>> eventos,
@@ -26,7 +25,6 @@ namespace Piratas.Protocolo.Partida.Servidor
         ) : base(
             idJogador,
             idMesa,
-            idMensagemSolicitante,
             idErro,
             descricaoErro)
         {
@@ -36,10 +34,9 @@ namespace Piratas.Protocolo.Partida.Servidor
             Tesouros = tesouros;
         }
 
-        public MensagemPartidaServidor(Guid idMensagemSolicitante, string idErro, string descricaoErro) : this(
+        public MensagemPartidaServidor(string idErro, string descricaoErro) : this(
             string.Empty,
             Guid.Empty,
-            idMensagemSolicitante,
             0,
             0,
             null,

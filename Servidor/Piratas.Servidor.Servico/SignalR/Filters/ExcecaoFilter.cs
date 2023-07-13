@@ -18,13 +18,13 @@ public class ExcecaoFilter : IHubFilter
         }
         catch (BaseServicoExcecao servicoException)
         {
-            return new Mensagem(Guid.Empty, servicoException.Id, servicoException.Message);
+            return new Mensagem(servicoException.Id, servicoException.Message);
         }
         catch (Exception e)
         {
             LogServico.Logger.Error(e, "Erro desconhecido.");
 
-            return new Mensagem(Guid.Empty, "erro-desconhecido", "Ocorreu um erro desconhecido.");
+            return new Mensagem("erro-desconhecido", "Ocorreu um erro desconhecido.");
         }
     }
 }

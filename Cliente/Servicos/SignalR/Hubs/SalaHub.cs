@@ -1,23 +1,26 @@
 namespace Piratas.Cliente.Servicos.Hubs;
 
 using System;
+using Protocolo.Sala.Servidor;
 
 public class SalaHub
 {
-    public void AoCriar(Guid idNovaSala)
+    public void AoCriar(MensagemSalaServidor mensagemSalaServidor)
+    {
+        Console.WriteLine("Chegou coisinhaa");
+        Console.WriteLine(mensagemSalaServidor.IdSala);
+    }
+
+    public void AoSair(MensagemSalaServidor mensagemSalaServidor)
+    {
+
+    }
+
+    public void AoEntrar(MensagemSalaServidor mensagemSalaServidor)
     {
     }
 
-    public void AoSair(string idJogador)
-    {
-
-    }
-
-    public void AoEntrar(string idJogador)
-    {
-    }
-
-    public void AoIniciarPartida(Guid idPartida)
+    public void AoIniciarPartida(MensagemSalaServidor mensagemSalaServidor)
     {
     }
 }

@@ -10,11 +10,7 @@ namespace Piratas.Protocolo.Sala.Cliente
 
         public Guid IdSala { get; private set; }
 
-        public MensagemSalaCliente(
-            Guid idJogadorRealizouAcao,
-            Guid idSala,
-            Guid idMensagemSolicitante,
-            TipoOperacaoSala tipoOperacaoSala) : base(idMensagemSolicitante)
+        public MensagemSalaCliente(Guid idJogadorRealizouAcao, Guid idSala, TipoOperacaoSala tipoOperacaoSala)
         {
             IdSala = idSala;
             IdJogadorRealizouAcao = idJogadorRealizouAcao;

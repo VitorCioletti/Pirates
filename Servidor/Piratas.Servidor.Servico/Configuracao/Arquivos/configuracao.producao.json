@@ -1,7 +1,10 @@
 {
-    "SignalR": {
-        "Endereco": "localhost",
-        "Porta": 8182
+    "Kestrel": {
+        "Endpoints": {
+            "Http": {
+                "Url": "http://localhost:5000"
+            }
+        }
     },
     "Serilog": {
         "Using":  [ "Serilog.Sinks.Console", "Serilog.Sinks.File" ],
@@ -18,7 +21,7 @@
                 "Args": {
                     "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} - {Level:u} - {Message:lj}{NewLine}"
                 }
-            }
+           }
         ]
     },
     "Baralho": {

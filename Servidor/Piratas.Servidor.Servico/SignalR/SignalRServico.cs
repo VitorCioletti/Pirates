@@ -20,14 +20,10 @@ public static class SignalRServico
     {
         LogServico.Logger.Information("Servidor inicializado.");
 
-        IConfigurationSection configuracaoWebSocket = ConfiguracaoServico.Dados.GetSection("SignalR");
-
-        string endereco = configuracaoWebSocket.GetSection("Endereco").Value;
-        string porta = configuracaoWebSocket.GetSection("Porta").Value;
-
         WebApplicationBuilder webApplicationBuilder = WebApplication.CreateBuilder();
 
         webApplicationBuilder.Host.UseSerilog(LogServico.Logger);
+        webApplicationBuilder.Configuration.AddConfiguration(ConfiguracaoServico.Dados, false);
 
         ISignalRServerBuilder signalRServerBuilder = webApplicationBuilder.Services.AddSignalR(_adicionarFiltros);
         signalRServerBuilder.AddMessagePackProtocol(_configurarMessagePack);
@@ -36,8 +32,6 @@ public static class SignalRServico
 
         _webApplication.MapHub<PartidaHub>("/partida");
         _webApplication.MapHub<SalaHub>("/sala");
-
-        LogServico.Logger.Information($"Escutando no endereço: \"{endereco}:{porta}\".");
     }
 
     public static async Task ConectarAsync() => await _webApplication.StartAsync();

@@ -53,6 +53,14 @@ namespace Piratas.Cliente.MaquinaEstados.Estados
 
         public override void AoVoltarNoTopo(BaseResultadoEstado resultadoEstado)
         {
+            switch (resultadoEstado)
+            {
+                case AguardandoEntradaTextoResultadoEstado aguardandoEntradaTextoResultadoEstado:
+                    MaquinaEstados.Adicionar(
+                        new EntrandoSalaEstado(aguardandoEntradaTextoResultadoEstado.Texto, MaquinaEstados));
+
+                    break;
+            }
         }
 
         private void _imprimirMenu()

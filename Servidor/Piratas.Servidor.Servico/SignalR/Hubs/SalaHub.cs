@@ -1,6 +1,7 @@
 namespace Piratas.Servidor.Servico.SignalR.Hubs;
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Protocolo.Sala.Servidor;
@@ -16,7 +17,11 @@ public class SalaHub : Hub
 
         await Groups.AddToGroupAsync(idJogador, idNovaSala.ToString());
 
-        var mensagemSala = new MensagemSalaServidor(idNovaSala, idJogador, Guid.Empty);
+        var mensagemSala = new MensagemSalaServidor(
+            idNovaSala,
+            idJogador,
+            Guid.Empty,
+            new List<string>());
 
         await Clients.Caller.SendAsync("AoCriar", mensagemSala);
     }
@@ -31,7 +36,13 @@ public class SalaHub : Hub
 
         IClientProxy group = Clients.Group(idSala.ToString());
 
-        var mensagemSala = new MensagemSalaServidor(idSala, idJogador, Guid.Empty);
+        List<string> jogadoresSala = SalaServico.ObterJogadoresSala(idSala);
+
+        var mensagemSala = new MensagemSalaServidor(
+            idSala,
+            idJogador,
+            Guid.Empty,
+            jogadoresSala);
 
         await group.SendAsync("AoSair", mensagemSala);
     }
@@ -46,7 +57,13 @@ public class SalaHub : Hub
 
         IClientProxy group = Clients.Group(idSala.ToString());
 
-        var mensagemSala = new MensagemSalaServidor(idSala, idJogador, Guid.Empty);
+        List<string> jogadoresSala = SalaServico.ObterJogadoresSala(idSala);
+
+        var mensagemSala = new MensagemSalaServidor(
+            idSala,
+            idJogador,
+            Guid.Empty,
+            jogadoresSala);
 
         await group.SendAsync("AoEntrar", mensagemSala);
     }
@@ -59,7 +76,13 @@ public class SalaHub : Hub
 
         IClientProxy group = Clients.Group(idSala.ToString());
 
-        var mensagemSala = new MensagemSalaServidor(idSala, idJogador, idPartida);
+        List<string> jogadoresSala = SalaServico.ObterJogadoresSala(idSala);
+
+        var mensagemSala = new MensagemSalaServidor(
+            idSala,
+            idJogador,
+            idPartida,
+            jogadoresSala);
 
         await group.SendAsync("AoIniciarPartida", mensagemSala);
     }

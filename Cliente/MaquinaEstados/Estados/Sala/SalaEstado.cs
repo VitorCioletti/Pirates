@@ -2,21 +2,17 @@ namespace Piratas.Cliente.MaquinaEstados.Estados.Sala;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Protocolo.Sala.Servidor;
 
 public class SalaEstado : BaseEstado
 {
     private readonly MensagemSalaServidor _mensagemSalaServidor;
 
-    private readonly List<string> _jogadoresNaSala;
-
     public SalaEstado(
         MensagemSalaServidor mensagemSalaServidor,
         MaquinaEstados maquinaEstados) : base(maquinaEstados)
     {
         _mensagemSalaServidor = mensagemSalaServidor;
-        _jogadoresNaSala = new List<string> {mensagemSalaServidor.IdJogadorRealizouAcao};
     }
 
     public override void Inicializar()
@@ -41,8 +37,11 @@ public class SalaEstado : BaseEstado
 
     public override void AoEntrarSala(MensagemSalaServidor mensagemSalaServidor)
     {
-        _jogadoresNaSala.Add(mensagemSalaServidor.IdJogadorRealizouAcao);
+        _imprimirDadosSala(mensagemSalaServidor);
+    }
 
+    public override void AoSairSala(MensagemSalaServidor mensagemSalaServidor)
+    {
         _imprimirDadosSala(mensagemSalaServidor);
     }
 
@@ -54,9 +53,7 @@ public class SalaEstado : BaseEstado
         Console.WriteLine($"Id da sala: \"{mensagemSalaServidor.IdSala}\".");
         Console.WriteLine();
 
-        List<string> jogadores = _jogadoresNaSala.ToList();
-
-        jogadores.Remove(mensagemSalaServidor.IdJogadorRealizouAcao);
+        List<string> jogadores = mensagemSalaServidor.Jogadores;
 
         if (jogadores.Count == 0)
             Console.WriteLine("Só você está na sala");

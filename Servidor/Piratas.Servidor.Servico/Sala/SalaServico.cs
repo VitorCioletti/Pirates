@@ -15,6 +15,11 @@ namespace Piratas.Servidor.Servico.Sala
             _salasAbertas = new Dictionary<Guid, List<string>>();
         }
 
+        public static List<string> ObterJogadoresSala(Guid idSala)
+        {
+            return _salasAbertas[idSala];
+        }
+
         public static Guid Criar(string idJogadorCriador)
         {
             bool estaNumaSala = _estaNumaSala(idJogadorCriador);

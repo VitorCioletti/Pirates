@@ -1,109 +1,140 @@
-namespace Piratas.Cliente.Servicos
+namespace Piratas.Cliente.Servicos;
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Extensions.DependencyInjection;
+using Protocolo.Partida.Servidor;
+using Protocolo.Sala.Servidor;
+
+public static class SignalRServico
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Hubs;
-    using Microsoft.AspNetCore.SignalR.Client;
-    using Microsoft.Extensions.DependencyInjection;
-    using Protocolo;
-    using Protocolo.Partida.Servidor;
-    using Protocolo.Sala.Servidor;
+    private static HubConnection _hubConnection;
 
-    public static class SignalRServico
+    private static List<ISalaOuvinte> _salaOuvintes;
+
+    static SignalRServico()
     {
-        public static List<Mensagem> MensagensRecebidas { get; private set; }
+        _salaOuvintes = new List<ISalaOuvinte>();
+    }
 
-        private static HubConnection _hubConnection;
+    public static void Inicializar()
+    {
+        string endereco = "http://localhost:5000/sala";
 
-        static SignalRServico()
-        {
-            MensagensRecebidas = new List<Mensagem>();
-        }
+        var hubConnectionBuilder = new HubConnectionBuilder();
 
-        public static void Inicializar()
-        {
-            string endereco = "http://localhost:5000/sala";
+        hubConnectionBuilder.WithUrl(endereco);
+        hubConnectionBuilder.WithAutomaticReconnect();
+        hubConnectionBuilder.AddMessagePackProtocol();
 
-            var hubConnectionBuilder = new HubConnectionBuilder();
+        _hubConnection = hubConnectionBuilder.Build();
 
-            hubConnectionBuilder.WithUrl(endereco);
-            hubConnectionBuilder.WithAutomaticReconnect();
-            hubConnectionBuilder.AddMessagePackProtocol();
+        _registrarEventosConexao();
+        _registrarHubs();
+    }
 
-            _hubConnection = hubConnectionBuilder.Build();
+    public static async Task ConectarAsync() => await _hubConnection.StartAsync();
 
-            _registrarEventosConexao();
-            _registrarHubs();
-        }
+    public static async Task DesconectarAsync() => await _hubConnection.StopAsync();
 
-        public static async Task ConectarAsync() => await _hubConnection.StartAsync();
+    public static void RegistrarSalaOuvinte(ISalaOuvinte salaOuvinte)
+    {
+        _salaOuvintes.Add(salaOuvinte);
+    }
 
-        public static void EntrarSala(Guid idSala)
-        {
-            _hubConnection.SendAsync("Entrar", idSala);
-        }
+    public static void RemoverSalaOuvinte(ISalaOuvinte salaOuvinte)
+    {
+        _salaOuvintes.Remove(salaOuvinte);
+    }
 
-        public static void SairSala()
-        {
-            _hubConnection.SendAsync("Sair");
-        }
+    public static void EntrarSala(Guid idSala)
+    {
+        _hubConnection.SendAsync("Entrar", idSala);
+    }
 
-        public static void CriarSala()
-        {
-            _hubConnection.SendAsync("Criar");
-        }
+    public static void SairSala()
+    {
+        _hubConnection.SendAsync("Sair");
+    }
 
-        public static void IniciarPartida(Guid idSala)
-        {
-            _hubConnection.SendAsync("IniciarPartida", idSala);
-        }
+    public static void CriarSala()
+    {
+        _hubConnection.SendAsync("Criar");
+    }
 
-        private static void _registrarEventosConexao()
-        {
-            _hubConnection.Closed += _aoFechar;
-            _hubConnection.Reconnected += _aoReconectar;
-            _hubConnection.Reconnecting += _aoIniciarReconexao;
-        }
+    public static void IniciarPartida(Guid idSala)
+    {
+        _hubConnection.SendAsync("IniciarPartida", idSala);
+    }
 
-        private static void _registrarHubs()
-        {
-            _registrarPartidaHub();
-            _registrarSalaHub();
-        }
+    private static void _registrarEventosConexao()
+    {
+        _hubConnection.Closed += _aoFechar;
+        _hubConnection.Reconnected += _aoReconectar;
+        _hubConnection.Reconnecting += _aoIniciarReconexao;
+    }
 
-        private static void _registrarPartidaHub()
-        {
-            var salaHub = new PartidaHub();
+    private static void _registrarHubs()
+    {
+        _registrarPartidaHub();
+        _registrarSalaHub();
+    }
 
-            _hubConnection.On<MensagemPartidaServidor>(
-                nameof(salaHub.AoProcessarMensagem),
-                salaHub.AoProcessarMensagem);
-        }
+    private static void _registrarPartidaHub()
+    {
+        _hubConnection.On<MensagemPartidaServidor>(nameof(AoProcessarMensagem), AoProcessarMensagem);
+    }
 
-        private static void _registrarSalaHub()
-        {
-            var salaHub = new SalaHub();
+    private static void _registrarSalaHub()
+    {
+        _hubConnection.On<MensagemSalaServidor>("AoCriar", _aoCriar);
+        _hubConnection.On<MensagemSalaServidor>("AoSair", _aoSair);
+        _hubConnection.On<MensagemSalaServidor>("AoEntrar", _aoEntrar);
+        _hubConnection.On<MensagemSalaServidor>("AoIniciarPartida", _aoIniciarPartida);
+    }
 
-            _hubConnection.On<MensagemSalaServidor>(nameof(salaHub.AoCriar), salaHub.AoCriar);
-            _hubConnection.On<MensagemSalaServidor>(nameof(salaHub.AoSair), salaHub.AoSair);
-            _hubConnection.On<MensagemSalaServidor>(nameof(salaHub.AoEntrar), salaHub.AoEntrar);
-            _hubConnection.On<MensagemSalaServidor>(nameof(salaHub.AoIniciarPartida), salaHub.AoIniciarPartida);
-        }
+    private static void _aoIniciarPartida(MensagemSalaServidor mensagemSalaServidor)
+    {
+        foreach (ISalaOuvinte ouvinte in _salaOuvintes)
+            ouvinte.AoIniciarPartida(mensagemSalaServidor);
+    }
 
-        private static Task _aoIniciarReconexao(Exception exception)
-        {
-            return Task.CompletedTask;
-        }
+    private static void _aoEntrar(MensagemSalaServidor mensagemSalaServidor)
+    {
+        foreach (ISalaOuvinte ouvinte in _salaOuvintes)
+            ouvinte.AoEntrar(mensagemSalaServidor);
+    }
 
-        private static Task _aoReconectar(string idNovaConexao)
-        {
-            return Task.CompletedTask;
-        }
+    private static void _aoSair(MensagemSalaServidor mensagemSalaServidor)
+    {
+        foreach (ISalaOuvinte ouvinte in _salaOuvintes)
+            ouvinte.AoSair(mensagemSalaServidor);
+    }
 
-        private static Task _aoFechar(Exception exception)
-        {
-            return Task.CompletedTask;
-        }
+    private static void _aoCriar(MensagemSalaServidor mensagemSalaServidor)
+    {
+        foreach (ISalaOuvinte ouvinte in _salaOuvintes)
+            ouvinte.AoCriar(mensagemSalaServidor);
+    }
+
+    private static void AoProcessarMensagem(MensagemPartidaServidor mensagemPartidaServidor)
+    {
+    }
+
+    private static Task _aoIniciarReconexao(Exception exception)
+    {
+        return Task.CompletedTask;
+    }
+
+    private static Task _aoReconectar(string idNovaConexao)
+    {
+        return Task.CompletedTask;
+    }
+
+    private static Task _aoFechar(Exception exception)
+    {
+        return Task.CompletedTask;
     }
 }

@@ -1,6 +1,6 @@
 namespace Piratas.Cliente.MaquinaEstados.Estados
 {
-    using System;
+    using Protocolo.Sala.Servidor;
 
     public abstract class BaseEstado
     {
@@ -31,6 +31,22 @@ namespace Piratas.Cliente.MaquinaEstados.Estados
         protected void Remover()
         {
             MaquinaEstados.Remover(this);
+        }
+
+        public virtual void AoCriarSala(MensagemSalaServidor mensagemSalaServidor)
+        {
+        }
+
+        public virtual void AoSairSala(MensagemSalaServidor mensagemSalaServidor)
+        {
+        }
+
+        public virtual void AoIniciarPartida(MensagemSalaServidor mensagemSalaServidor)
+        {
+        }
+
+        public virtual void AoEntrarSala(MensagemSalaServidor mensagemSalaServidor)
+        {
         }
     }
 }

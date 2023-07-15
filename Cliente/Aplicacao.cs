@@ -25,6 +25,8 @@ namespace Piratas.Cliente
 
             var maquinaEstados = new MaquinaEstados.MaquinaEstados();
 
+            SignalRServico.RegistrarSalaOuvinte(maquinaEstados);
+
             maquinaEstados.Adicionar(new MenuEstado(maquinaEstados));
 
             while (true)
@@ -38,6 +40,10 @@ namespace Piratas.Cliente
 
                 estadoAtual.AoReceberTexto(texto);
             }
+
+            SignalRServico.RemoverSalaOuvinte(maquinaEstados);
+
+            await SignalRServico.DesconectarAsync();
         }
     }
 }

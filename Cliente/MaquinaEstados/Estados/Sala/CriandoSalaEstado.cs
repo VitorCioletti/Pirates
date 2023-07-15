@@ -1,6 +1,7 @@
-namespace Piratas.Cliente.MaquinaEstados.Estados.Sala.CriandoSala
+namespace Piratas.Cliente.MaquinaEstados.Estados.Sala
 {
     using System;
+    using Protocolo.Sala.Servidor;
     using Servicos;
 
     public class CriandoSalaEstado : BaseEstado
@@ -16,11 +17,9 @@ namespace Piratas.Cliente.MaquinaEstados.Estados.Sala.CriandoSala
             SalaServico.CriarSala();
         }
 
-        public override BaseResultadoEstado Limpar()
+        public override void AoCriarSala(MensagemSalaServidor mensagemSalaServidor)
         {
-            Console.Clear();
-
-            return new CriandoSalaResultadoEstado(null);
+            MaquinaEstados.Trocar(new SalaEstado(mensagemSalaServidor, MaquinaEstados));
         }
     }
 }

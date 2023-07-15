@@ -1,47 +1,66 @@
-namespace Piratas.Cliente.MaquinaEstados.Estados.Sala
+namespace Piratas.Cliente.MaquinaEstados.Estados.Sala;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Protocolo.Sala.Servidor;
+
+public class SalaEstado : BaseEstado
 {
-    using System;
-    using Protocolo.Sala.Servidor;
+    private readonly MensagemSalaServidor _mensagemSalaServidor;
 
-    public class SalaEstado : BaseEstado
+    private readonly List<string> _jogadoresNaSala;
+
+    public SalaEstado(
+        MensagemSalaServidor mensagemSalaServidor,
+        MaquinaEstados maquinaEstados) : base(maquinaEstados)
     {
-        private readonly MensagemSalaServidor _mensagemSalaServidor;
+        _mensagemSalaServidor = mensagemSalaServidor;
+        _jogadoresNaSala = new List<string> {mensagemSalaServidor.IdJogadorRealizouAcao};
+    }
 
-        public SalaEstado(
-            MensagemSalaServidor mensagemSalaServidor,
-            MaquinaEstados maquinaEstados) : base(maquinaEstados)
-        {
-            _mensagemSalaServidor = mensagemSalaServidor;
-        }
+    public override void Inicializar()
+    {
+        _imprimirDadosSala(_mensagemSalaServidor);
+    }
 
-        public override void Inicializar()
-        {
-            _imprimirDadosSala(_mensagemSalaServidor);
-        }
+    public override BaseResultadoEstado Limpar()
+    {
+        Console.Clear();
 
-        public override BaseResultadoEstado Limpar()
-        {
-            Console.Clear();
+        return null;
+    }
 
-            return null;
-        }
+    public override void AoVoltarNoTopo(BaseResultadoEstado resultadoEstado)
+    {
+    }
 
-        public override void AoVoltarNoTopo(BaseResultadoEstado resultadoEstado)
-        {
-        }
+    public override void AoReceberTexto(string texto)
+    {
+    }
 
-        public override void AoReceberTexto(string texto)
-        {
-        }
+    public override void AoEntrarSala(MensagemSalaServidor mensagemSalaServidor)
+    {
+        _jogadoresNaSala.Add(mensagemSalaServidor.IdJogadorRealizouAcao);
 
-        private void _imprimirDadosSala(MensagemSalaServidor mensagemSalaServidor)
-        {
-            Console.WriteLine("Sala");
+        _imprimirDadosSala(mensagemSalaServidor);
+    }
 
-            Console.WriteLine($"Seu id: \"{mensagemSalaServidor.IdJogadorRealizouAcao}\".");
-            Console.WriteLine($"Id da sala: \"{mensagemSalaServidor.IdSala}\".");
+    private void _imprimirDadosSala(MensagemSalaServidor mensagemSalaServidor)
+    {
+        Console.WriteLine("Sala");
 
-            Console.WriteLine("Jogadores na sala: ");
-        }
+        Console.WriteLine($"Seu id: \"{mensagemSalaServidor.IdJogadorRealizouAcao}\".");
+        Console.WriteLine($"Id da sala: \"{mensagemSalaServidor.IdSala}\".");
+        Console.WriteLine();
+
+        List<string> jogadores = _jogadoresNaSala.ToList();
+
+        jogadores.Remove(mensagemSalaServidor.IdJogadorRealizouAcao);
+
+        if (jogadores.Count == 0)
+            Console.WriteLine("Só você está na sala");
+        else
+            Console.WriteLine($"Jogadores na sala: {string.Join("\n", jogadores)}");
     }
 }

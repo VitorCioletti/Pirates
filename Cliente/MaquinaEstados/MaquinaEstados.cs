@@ -3,10 +3,12 @@ namespace Piratas.Cliente.MaquinaEstados
     using System;
     using System.Collections.Generic;
     using Estados;
+    using Protocolo.Sala.Servidor;
+    using Servicos;
 
-    public class MaquinaEstados
+    public class MaquinaEstados : ISalaOuvinte
     {
-        private Stack<BaseEstado> _estados;
+        private readonly Stack<BaseEstado> _estados;
 
         public MaquinaEstados()
         {
@@ -56,5 +58,16 @@ namespace Piratas.Cliente.MaquinaEstados
             Console.WriteLine();
             Console.WriteLine();
         }
+
+        public void AoCriar(MensagemSalaServidor mensagemSalaServidor) =>
+            ObterAtual().AoCriarSala(mensagemSalaServidor);
+
+        public void AoSair(MensagemSalaServidor mensagemSalaServidor) => ObterAtual().AoSairSala(mensagemSalaServidor);
+
+        public void AoEntrar(MensagemSalaServidor mensagemSalaServidor) =>
+            ObterAtual().AoEntrarSala(mensagemSalaServidor);
+
+        public void AoIniciarPartida(MensagemSalaServidor mensagemSalaServidor) =>
+            ObterAtual().AoIniciarPartida(mensagemSalaServidor);
     }
 }

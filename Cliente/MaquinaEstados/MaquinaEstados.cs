@@ -19,9 +19,9 @@ namespace Piratas.Cliente.MaquinaEstados
         {
             _imprimirEstado(estado);
 
-            estado.Inicializar();
-
             _estados.Push(estado);
+
+            estado.Inicializar();
         }
 
         public void Trocar(BaseEstado estado)

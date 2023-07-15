@@ -40,24 +40,12 @@ namespace Piratas.Cliente.MaquinaEstados.Estados
                     break;
 
                 case OperacaoMenu.EntrarSala:
-                    MaquinaEstados.Adicionar(new AguardandoEntradaTextoEstado("Digite o ID da sala.", MaquinaEstados));
+                    MaquinaEstados.Adicionar(new EntrandoSalaEstado(MaquinaEstados));
 
                     break;
 
                 default:
                     Console.WriteLine($"Operação \"{operacao}\"inválida. Digite novamente.");
-
-                    break;
-            }
-        }
-
-        public override void AoVoltarNoTopo(BaseResultadoEstado resultadoEstado)
-        {
-            switch (resultadoEstado)
-            {
-                case AguardandoEntradaTextoResultadoEstado aguardandoEntradaTextoResultadoEstado:
-                    MaquinaEstados.Adicionar(
-                        new EntrandoSalaEstado(aguardandoEntradaTextoResultadoEstado.Texto, MaquinaEstados));
 
                     break;
             }

@@ -24,13 +24,14 @@ namespace Piratas.Cliente.MaquinaEstados.Estados
 
         public override BaseResultadoEstado Limpar()
         {
-            Console.Clear();
-
             return new AguardandoEntradaTextoResultadoEstado(_textoDigitado);
         }
 
         public override void AoReceberTexto(string texto)
         {
+            if (texto is null || texto == String.Empty)
+                return;
+
             _textoDigitado = texto;
 
             Remover();

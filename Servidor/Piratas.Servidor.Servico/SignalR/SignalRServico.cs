@@ -39,7 +39,7 @@ public static class SignalRServico
 
     public static async Task DesconectarAsync() => await _webApplication.StopAsync();
 
-    private static void _adicionarFiltros(HubOptions hubOptions) => hubOptions.AddFilter<ExcecaoFilter>();
+    private static void _adicionarFiltros(HubOptions hubOptions) => hubOptions.AddFilter<ExcecaoFiltro>();
 
     private static void _configurarMessagePack(MessagePackHubProtocolOptions messagePackHubProtocolOptions)
     {

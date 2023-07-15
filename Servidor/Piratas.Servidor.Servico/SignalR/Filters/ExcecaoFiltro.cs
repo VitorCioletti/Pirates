@@ -6,7 +6,7 @@ using Log;
 using Microsoft.AspNetCore.SignalR;
 using Protocolo;
 
-public class ExcecaoFilter : IHubFilter
+public class ExcecaoFiltro : IHubFilter
 {
     public async ValueTask<object> InvokeMethodAsync(
         HubInvocationContext invocationContext,
@@ -18,13 +18,21 @@ public class ExcecaoFilter : IHubFilter
         }
         catch (BaseServicoExcecao servicoException)
         {
-            return new Mensagem(servicoException.Id, servicoException.Message);
+            LogServico.Logger.Debug(servicoException, servicoException.Message);
+
+            var mensagemErro = new Mensagem(servicoException.Id, servicoException.Message);
+
+            await invocationContext.Hub.Clients.Caller.SendAsync($"Ao{invocationContext.HubMethodName}", mensagemErro);
         }
         catch (Exception e)
         {
             LogServico.Logger.Error(e, "Erro desconhecido.");
 
-            return new Mensagem("erro-desconhecido", "Ocorreu um erro desconhecido.");
+            var mensagemErro = new Mensagem("erro-desconhecido", "Ocorreu um erro desconhecido.");
+
+            await invocationContext.Hub.Clients.Caller.SendAsync($"Ao{invocationContext.HubMethodName}", mensagemErro);
         }
+
+        return null;
     }
 }

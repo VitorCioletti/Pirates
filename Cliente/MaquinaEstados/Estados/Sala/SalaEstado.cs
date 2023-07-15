@@ -17,6 +17,17 @@ public class SalaEstado : BaseEstado
 
     public override void Inicializar()
     {
+        if (_mensagemSalaServidor.PossuiErro)
+        {
+            Console.WriteLine("Erro ao entrar na sala:");
+            Console.WriteLine(_mensagemSalaServidor.IdErro);
+            Console.WriteLine(_mensagemSalaServidor.DescricaoErro);
+
+            Remover();
+
+            return;
+        }
+
         _imprimirDadosSala(_mensagemSalaServidor);
     }
 

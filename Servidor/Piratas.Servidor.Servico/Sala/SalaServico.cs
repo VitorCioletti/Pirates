@@ -29,6 +29,8 @@ namespace Piratas.Servidor.Servico.Sala
 
             var idNovaSala = Guid.NewGuid();
 
+            _salasAbertas[idNovaSala] = new List<string> {idJogadorCriador};
+
             return idNovaSala;
         }
 

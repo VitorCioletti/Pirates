@@ -86,4 +86,9 @@ public class SalaHub : Hub
 
         await group.SendAsync("AoIniciarPartida", mensagemSala);
     }
+
+    public override async Task OnDisconnectedAsync(Exception exception)
+    {
+        await Sair();
+    }
 }

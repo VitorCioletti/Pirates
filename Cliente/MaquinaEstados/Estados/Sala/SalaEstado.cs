@@ -2,40 +2,36 @@ namespace Piratas.Cliente.MaquinaEstados.Estados.Sala;
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using Partida;
 using Protocolo.Sala.Servidor;
+using Servicos;
 
 public class SalaEstado : BaseEstado
 {
-    private readonly MensagemSalaServidor _mensagemSalaServidor;
+    private MensagemSalaServidor _ultimaMensagemSalaServidor;
 
     public SalaEstado(
-        MensagemSalaServidor mensagemSalaServidor,
+        MensagemSalaServidor ultimaMensagemSalaServidor,
         MaquinaEstados maquinaEstados) : base(maquinaEstados)
     {
-        _mensagemSalaServidor = mensagemSalaServidor;
+        _ultimaMensagemSalaServidor = ultimaMensagemSalaServidor;
     }
 
     public override void Inicializar()
     {
-        if (_mensagemSalaServidor.PossuiErro)
+        if (_ultimaMensagemSalaServidor.PossuiErro)
         {
             Console.WriteLine("Erro ao entrar na sala:");
-            Console.WriteLine(_mensagemSalaServidor.IdErro);
-            Console.WriteLine(_mensagemSalaServidor.DescricaoErro);
+            Console.WriteLine(_ultimaMensagemSalaServidor.IdErro);
+            Console.WriteLine(_ultimaMensagemSalaServidor.DescricaoErro);
 
             Remover();
 
             return;
         }
 
-        _imprimirDadosSala(_mensagemSalaServidor);
-    }
-
-    public override BaseResultadoEstado Limpar()
-    {
-        Console.Clear();
-
-        return null;
+        _imprimir(_ultimaMensagemSalaServidor);
     }
 
     public override void AoVoltarNoTopo(BaseResultadoEstado resultadoEstado)
@@ -44,19 +40,65 @@ public class SalaEstado : BaseEstado
 
     public override void AoReceberTexto(string texto)
     {
+        if (!int.TryParse(texto, out int operacao))
+        {
+            Console.WriteLine("Apenas números são permitidos.");
+
+            Thread.Sleep(500);
+
+            _imprimir(_ultimaMensagemSalaServidor);
+
+            return;
+        }
+
+        var operacaoSala = (OperacaoSala)operacao;
+
+        switch (operacaoSala)
+        {
+            case OperacaoSala.IniciarPartida:
+                MaquinaEstados.Trocar(new PartidaEstado(_ultimaMensagemSalaServidor.IdSala, MaquinaEstados));
+
+                break;
+
+            case OperacaoSala.Sair:
+                SalaServico.SairSala();
+                Remover();
+
+                break;
+
+            default:
+                Console.WriteLine($"Operação \"{operacao}\"inválida. Digite novamente.");
+
+                break;
+        }
     }
 
     public override void AoEntrarSala(MensagemSalaServidor mensagemSalaServidor)
     {
-        _imprimirDadosSala(mensagemSalaServidor);
+        _ultimaMensagemSalaServidor = mensagemSalaServidor;
+
+        _imprimir(mensagemSalaServidor);
     }
 
     public override void AoSairSala(MensagemSalaServidor mensagemSalaServidor)
     {
-        _imprimirDadosSala(mensagemSalaServidor);
+        _ultimaMensagemSalaServidor = mensagemSalaServidor;
+
+        _imprimir(mensagemSalaServidor);
     }
 
-    private void _imprimirDadosSala(MensagemSalaServidor mensagemSalaServidor)
+    public override void AoIniciarPartida(MensagemSalaServidor mensagemSalaServidor)
+    {
+        MaquinaEstados.Trocar(new PartidaEstado(mensagemSalaServidor.IdSala, MaquinaEstados));
+    }
+
+    private void _imprimir(MensagemSalaServidor mensagemSalaServidor)
+    {
+        _imprimirDados(mensagemSalaServidor);
+        _imprimirOpcoes();
+    }
+
+    private void _imprimirDados(MensagemSalaServidor mensagemSalaServidor)
     {
         Console.WriteLine("Sala");
 
@@ -70,5 +112,12 @@ public class SalaEstado : BaseEstado
             Console.WriteLine("Só você está na sala");
         else
             Console.WriteLine($"Jogadores na sala: {string.Join("\n", jogadores)}");
+    }
+
+    private void _imprimirOpcoes()
+    {
+        Console.WriteLine();
+        Console.WriteLine($"{(int)OperacaoSala.IniciarPartida} - Iniciar Partida");
+        Console.WriteLine($"{(int)OperacaoSala.Sair} - Sair");
     }
 }

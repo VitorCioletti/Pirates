@@ -33,8 +33,6 @@ namespace Piratas.Cliente.MaquinaEstados.Estados
 
         public override BaseResultadoEstado Limpar()
         {
-            Console.Clear();
-
             return new ErroResultadoEstado();
         }
     }

@@ -15,6 +15,11 @@ namespace Piratas.Cliente.MaquinaEstados.Estados
             _imprimirMenu();
         }
 
+        public override void AoVoltarNoTopo(BaseResultadoEstado resultadoEstado)
+        {
+            _imprimirMenu();
+        }
+
         public override void AoReceberTexto(string texto)
         {
             if (!int.TryParse(texto, out int operacao))
@@ -22,8 +27,6 @@ namespace Piratas.Cliente.MaquinaEstados.Estados
                 Console.WriteLine("Apenas números são permitidos.");
 
                 Thread.Sleep(500);
-
-                Console.Clear();
 
                 _imprimirMenu();
 

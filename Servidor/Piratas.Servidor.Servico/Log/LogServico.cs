@@ -9,7 +9,7 @@ namespace Piratas.Servidor.Servico.Log
     {
         public static ILogger Logger { get; private set; }
 
-        public static void Inicializar()
+        public static void ConfigurarLogger()
         {
             Logger = _criarLogger(ConfiguracaoServico.Dados);
 

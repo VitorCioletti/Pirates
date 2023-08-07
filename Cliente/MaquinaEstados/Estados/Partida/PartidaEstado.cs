@@ -1,6 +1,7 @@
 namespace Piratas.Cliente.MaquinaEstados.Estados.Partida;
 
 using System;
+using Protocolo.Sala.Servidor;
 using Servicos;
 
 public class PartidaEstado : BaseEstado
@@ -15,6 +16,10 @@ public class PartidaEstado : BaseEstado
     public override void Inicializar()
     {
         SalaServico.IniciarPartida(_idSala);
+    }
 
+    public override void AoIniciarPartida(MensagemSalaServidor mensagemSalaServidor)
+    {
+        Console.WriteLine(mensagemSalaServidor.Id);
     }
 }

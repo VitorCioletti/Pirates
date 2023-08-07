@@ -8,7 +8,7 @@ namespace Piratas.Servidor.Servico.Configuracao
     {
         public static IConfigurationRoot Dados { get; private set; }
 
-        public static void Inicializar()
+        public static void ObterDadosArquivoConfiguracao()
         {
             Dados = _obterDados();
         }

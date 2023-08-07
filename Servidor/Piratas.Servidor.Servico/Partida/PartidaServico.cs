@@ -3,10 +3,12 @@ namespace Piratas.Servidor.Servico.Partida
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Configuracao;
     using Dominio;
     using Dominio.Acoes;
     using Dominio.Acoes.Primaria;
     using Dominio.Acoes.Resultante.Base;
+    using Dominio.Baralhos;
     using Dominio.Cartas;
     using Dominio.Excecoes;
     using Excecoes.Partida;
@@ -29,8 +31,15 @@ namespace Piratas.Servidor.Servico.Partida
 
         private readonly object _lockObject;
 
+        public static void ConfigurarGeradorCartas()
+        {
+            GeradorCartas.Configurar(ConfiguracaoServico.Dados);
+        }
+
         public PartidaServico(List<string> idsJogadores)
         {
+            _eventosAcaoAtual = new Dictionary<string, List<Evento>>();
+
             var jogadores = new List<Jogador>();
 
             foreach (string idJogador in idsJogadores)
@@ -43,6 +52,8 @@ namespace Piratas.Servidor.Servico.Partida
                     _aoRemoverCartaNoCampo);
 
                 jogadores.Add(jogador);
+
+                _eventosAcaoAtual[jogador.Id] = new List<Evento>();
             }
 
             _lockObject = new object();
@@ -51,7 +62,6 @@ namespace Piratas.Servidor.Servico.Partida
 
             Id = _mesa.Id;
 
-            _eventosAcaoAtual = new Dictionary<string, List<Evento>>();
             _possiveisAcoesEnviadasAosJogadores = new Dictionary<Jogador, List<BaseAcao>>();
         }
 

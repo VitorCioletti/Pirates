@@ -26,7 +26,7 @@ public class ExcecaoFiltro : IHubFilter
         }
         catch (Exception e)
         {
-            LogServico.Logger.Error(e, "Erro desconhecido.");
+            LogServico.Logger.Error(e, "Erro não tratado.");
 
             var mensagemErro = new Mensagem("erro-desconhecido", "Ocorreu um erro desconhecido.");
 

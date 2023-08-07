@@ -7,68 +7,68 @@
         }
     },
     "Serilog": {
-        "Using":  [ "Serilog.Sinks.Console", "Serilog.Sinks.File" ],
+        "Using": [
+            "Serilog.Sinks.Console",
+            "Serilog.Sinks.File"
+        ],
         "MinimumLevel": "Debug",
         "WriteTo": [
             {
                 "Name": "Console",
                 "Args": {
-                    "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} - {Level:u} - {Message:lj}{NewLine}"
+                    "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} - {Level:u} - {Message:lj}{NewLine}{Exception}"
                 }
             },
             {
                 "Name": "File",
                 "Args": {
-                    "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} - {Level:u} - {Message:lj}{NewLine}"
+                    "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} - {Level:u} - {Message:lj}{NewLine}{Exception}"
                 }
             }
         ]
     },
     "Baralho": {
-        "QuantidadeTotalCartas": 56,
-        "QuantidadeCartas": {
-            "Duelo": {
-                "Canhao": 0,
-                "Timoneiro": 0
-            },
-            "DueloSurpresa": {
-                "AtaqueSurpresa": 0
-            },
-            "Embarcacao": {
-                "CascoAcao": 0,
-                "GuerrilhaNaval": 0,
-                "HolandesAlado": 0,
-                "MercadorTortuga": 0,
-                "OlhoCiclope": 0,
-                "OuricoInfernal": 0,
-                "RodaFortuna": 0,
-                "ServoPoseidon": 0,
-                "VossaAlteza": 0
-            },
-            "Evento": {
-                "Kraken": 0
-            },
-            "Passivo": {
-                "BauArmadilha": 0
-            },
-            "ResolucaoImediata": {
-                "ConvocarTripulacao": 0,
-                "Explosivos": 0,
-                "HomemAoMar": 0,
-                "Luneta": 0,
-                "MapaDoTesouro": 0,
-                "Mergulhador": 0,
-                "Papagaio": 0,
-                "Rum": 0,
-                "Saque": 0
-            },
-            "Tesouro": 0,
-            "Tripulacao": {
-                "Pirata": 0,
-                "PirataAmaldicoado": 0,
-                "PirataFantasma": 0,
-                "PirataNobre": 0
-            }
+        "Duelo": {
+            "Canhao": 20,
+            "Timoneiro": 5
+        },
+        "DueloSurpresa": {
+            "AtaqueSurpresa": 0
+        },
+        "Embarcacao": {
+            "CascoAco": 1,
+            "GuerrilhaNaval": 1,
+            "HolandesAlado": 1,
+            "MercadorTortuga": 1,
+            "OlhoCiclope": 1,
+            "OuricoInfernal": 1,
+            "RodaFortuna": 1,
+            "ServoPoseidon": 1,
+            "VossaAlteza": 1
+        },
+        "Evento": {
+            "Kraken": 0
+        },
+        "Passivo": {
+            "BauArmadilha": 0
+        },
+        "ResolucaoImediata": {
+            "ConvocarTripulacao": 4,
+            "Explosivos": 0,
+            "HomemAoMar": 5,
+            "Luneta": 5,
+            "MapaDoTesouro": 6,
+            "Mergulhador": 0,
+            "Papagaio": 8,
+            "Rum": 4,
+            "Saque": 10
+        },
+        "Tesouro": 18,
+        "Tripulacao": {
+            "Pirata": 8,
+            "PirataAmaldicoado": 4,
+            "PirataFantasma": 4,
+            "PirataNobre": 0
         }
     }
 }

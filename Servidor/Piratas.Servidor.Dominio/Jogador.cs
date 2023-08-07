@@ -70,7 +70,7 @@ namespace Piratas.Servidor.Dominio
             return tesouros;
         }
 
-        public override string ToString() => Id.ToString();
+        public override string ToString() => Id;
 
         public override bool Equals(object obj) => obj is Jogador jogador && this == jogador;
 

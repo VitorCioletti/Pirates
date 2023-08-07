@@ -17,7 +17,7 @@ public static class SignalRServico
 {
     private static WebApplication _webApplication;
 
-    public static void Inicializar()
+    public static void ConfigurarSignalR()
     {
         LogServico.Logger.Information("Servidor inicializado.");
 

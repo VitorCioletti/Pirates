@@ -1,21 +1,20 @@
 namespace Piratas.Servidor.Dominio.Cartas
 {
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Text.RegularExpressions;
     using Acoes;
 
     public abstract class Carta
     {
-        public string Id { get; protected set; }
+        public string Id { get; private set; }
 
         protected Carta()
         {
-            string nomeTipo = GetType().ToString();
+            string nomeTipo = GetType().Name;
 
-            string id = Regex.Replace(nomeTipo, "(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z0-9])", "-$1", RegexOptions.Compiled);
+            string id = Regex.Replace(nomeTipo, @"([a-z0–9])([A-Z])", "$1-$2").ToLowerInvariant();
 
-            Id = id.ToLower(CultureInfo.InvariantCulture);
+            Id = id;
         }
 
         public abstract List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa);

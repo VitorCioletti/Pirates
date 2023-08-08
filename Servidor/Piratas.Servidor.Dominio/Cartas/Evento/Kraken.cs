@@ -17,7 +17,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
 
             foreach (Jogador jogador in jogadoresNaMesa)
             {
-                bool possuiEmbarcacao = jogador.Campo.BaseEmbarcacao != null;
+                bool possuiEmbarcacao = jogador.Campo.Embarcacao != null;
                 bool possuiTripulacao = jogador.Campo.Tripulacao.Count == 0;
 
                 var resultanteAfogarTripulacao = new AfogarTripulante(acao, jogador, jogador);

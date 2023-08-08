@@ -13,6 +13,8 @@ namespace Piratas.Protocolo.Partida.Servidor
 
         public Dictionary<string, List<Evento>> Eventos { get; private set; }
 
+        public string IdJogadorTurnoCorrente { get; private set; }
+
         public MensagemPartidaServidor(
             string idJogador,
             Guid idMesa,
@@ -20,6 +22,7 @@ namespace Piratas.Protocolo.Partida.Servidor
             int tesouros,
             Dictionary<string, List<Evento>> eventos,
             BaseEscolha escolha,
+            string idJogadorTurnoCorrente,
             string idErro = null,
             string descricaoErro = null
         ) : base(
@@ -29,6 +32,7 @@ namespace Piratas.Protocolo.Partida.Servidor
             descricaoErro)
         {
             Escolha = escolha;
+            IdJogadorTurnoCorrente = idJogadorTurnoCorrente;
             AcoesRestantes = acoesRestantes;
             Eventos = eventos;
             Tesouros = tesouros;
@@ -41,6 +45,7 @@ namespace Piratas.Protocolo.Partida.Servidor
             0,
             null,
             null,
+            string.Empty,
             idErro,
             descricaoErro)
         {

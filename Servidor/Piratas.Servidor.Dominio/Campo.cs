@@ -24,7 +24,7 @@ namespace Piratas.Servidor.Dominio
 
         public List<BaseTripulante> Tripulacao { get; private set; }
 
-        public BaseEmbarcacao BaseEmbarcacao { get; private set; }
+        public BaseEmbarcacao Embarcacao { get; private set; }
 
         public event Action<Carta> AoAdicionar;
 
@@ -37,7 +37,7 @@ namespace Piratas.Servidor.Dominio
             Protegidas = new List<Carta>();
             Tripulacao = new List<BaseTripulante>();
 
-            BaseEmbarcacao = null;
+            Embarcacao = null;
         }
 
         public int CalcularPontosDuelo()
@@ -54,12 +54,12 @@ namespace Piratas.Servidor.Dominio
 
         public void DanificarEmbarcacao()
         {
-            if (BaseEmbarcacao == null)
+            if (Embarcacao == null)
                 return;
 
-            BaseEmbarcacao.Danificar(_danoEmbarcacao);
+            Embarcacao.Danificar(_danoEmbarcacao);
 
-            if (BaseEmbarcacao.Vida == 0)
+            if (Embarcacao.Vida == 0)
                 _removerEmbarcacao();
         }
 
@@ -75,10 +75,10 @@ namespace Piratas.Servidor.Dominio
 
         public void Adicionar(BaseEmbarcacao baseEmbarcacao)
         {
-            if (BaseEmbarcacao != null)
+            if (Embarcacao != null)
                 throw new ExisteEmbarcacaoExcecao();
 
-            BaseEmbarcacao = baseEmbarcacao;
+            Embarcacao = baseEmbarcacao;
 
             AoAdicionar?.Invoke(baseEmbarcacao);
         }
@@ -150,14 +150,14 @@ namespace Piratas.Servidor.Dominio
 
         private void _removerEmbarcacao()
         {
-            if (BaseEmbarcacao == null)
+            if (Embarcacao == null)
                 throw new SemEmbarcacaoExcecao();
 
             _removerTodasProtegidas();
 
-            AoRemover?.Invoke(BaseEmbarcacao);
+            AoRemover?.Invoke(Embarcacao);
 
-            BaseEmbarcacao = null;
+            Embarcacao = null;
         }
 
         private void _removerTodasProtegidas()
@@ -178,10 +178,10 @@ namespace Piratas.Servidor.Dominio
 
         private int _calcularTirosEmbarcacao(int tiros)
         {
-            if (BaseEmbarcacao is GuerrilhaNaval guerrilhaNaval)
+            if (Embarcacao is GuerrilhaNaval guerrilhaNaval)
                 tiros += guerrilhaNaval.TirosAdicionais * Canhoes.Count;
 
-            else if (BaseEmbarcacao is OuricoInfernal ouricoInfernal)
+            else if (Embarcacao is OuricoInfernal ouricoInfernal)
             {
                 if (tiros != 0)
                     tiros += ouricoInfernal.Tiros;

@@ -52,12 +52,12 @@ namespace Piratas.Servidor.Dominio
 
         public Carta ObterQualquer()
         {
-            int posicaoCarta = new Random().Next(0, QuantidadeCartas());
+            int posicaoCarta = new Random().Next(0, ObterQuantidadeCartas());
 
             return _cartas[posicaoCarta];
         }
 
-        public int QuantidadeCartas() => _cartas.Count;
+        public int ObterQuantidadeCartas() => _cartas.Count;
 
         public List<T> ObterTodas<T>() where T : Carta => _cartas.OfType<T>().ToList();
 

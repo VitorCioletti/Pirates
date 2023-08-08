@@ -63,7 +63,9 @@
             "Rum": 4,
             "Saque": 10
         },
-        "Tesouro": 18,
+        "Tesouro": {
+            "Tesouro": 18
+        },
         "Tripulacao": {
             "Pirata": 8,
             "PirataAmaldicoado": 4,

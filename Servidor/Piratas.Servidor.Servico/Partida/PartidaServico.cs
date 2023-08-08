@@ -12,6 +12,7 @@ namespace Piratas.Servidor.Servico.Partida
     using Dominio.Cartas;
     using Dominio.Excecoes;
     using Excecoes.Partida;
+    using Microsoft.Extensions.Configuration;
     using Protocolo;
     using Protocolo.Partida;
     using Protocolo.Partida.Cliente;
@@ -25,16 +26,11 @@ namespace Piratas.Servidor.Servico.Partida
 
         private readonly Mesa _mesa;
 
-        private readonly Dictionary<Jogador, List<BaseAcao>> _possiveisAcoesEnviadasAosJogadores;
+        private readonly Dictionary<Jogador, List<BaseAcao>> _acoesDisponiveisEnviadasAosJogadores;
 
         private readonly Dictionary<string, List<Evento>> _eventosAcaoAtual;
 
         private readonly object _lockObject;
-
-        public static void ConfigurarGeradorCartas()
-        {
-            GeradorCartas.Configurar(ConfiguracaoServico.Dados);
-        }
 
         public PartidaServico(List<string> idsJogadores)
         {
@@ -62,7 +58,38 @@ namespace Piratas.Servidor.Servico.Partida
 
             Id = _mesa.Id;
 
-            _possiveisAcoesEnviadasAosJogadores = new Dictionary<Jogador, List<BaseAcao>>();
+            _acoesDisponiveisEnviadasAosJogadores = new Dictionary<Jogador, List<BaseAcao>>();
+        }
+
+        public static void ConfigurarGeradorCartas()
+        {
+            var configuracaoCartas = new List<Tuple<string, int>>();
+
+            IConfigurationSection baralho = ConfiguracaoServico.Dados.GetSection("Baralho");
+
+            IEnumerable<IConfigurationSection> tiposCartas = baralho.GetChildren();
+
+            foreach (IConfigurationSection tipoCarta in tiposCartas)
+            {
+                IEnumerable<IConfigurationSection> cartas = tipoCarta.GetChildren();
+
+                foreach (IConfigurationSection carta in cartas)
+                {
+                    string nomeCarta = carta.Key;
+                    string quantidadeCarta = carta.Value;
+
+                    if (int.TryParse(quantidadeCarta, out int quantidade))
+                    {
+                        var configuracao = new Tuple<string, int>(nomeCarta, quantidade);
+
+                        configuracaoCartas.Add(configuracao);
+                    }
+                    else
+                        throw new InvalidOperationException($"Carta \"{nomeCarta}\" mal configurada.");
+                }
+            }
+
+            GeradorCartas.Configurar(configuracaoCartas);
         }
 
         public List<MensagemPartidaServidor> ProcessarMensagemCliente(MensagemPartidaCliente mensagemPartidaCliente)
@@ -97,10 +124,10 @@ namespace Piratas.Servidor.Servico.Partida
                             mensagensServidor.Add(mensagemPartidaServidor);
 
                             _eventosAcaoAtual.Clear();
-                            _possiveisAcoesEnviadasAosJogadores.Add(jogador, acoesDisponiveis);
+                            _acoesDisponiveisEnviadasAosJogadores.Add(jogador, acoesDisponiveis);
                         }
 
-                        _possiveisAcoesEnviadasAosJogadores[jogadorComAcaoPendente].Remove(baseAcaoPendente);
+                        _acoesDisponiveisEnviadasAosJogadores[jogadorComAcaoPendente].Remove(baseAcaoPendente);
 
                         break;
 
@@ -124,7 +151,7 @@ namespace Piratas.Servidor.Servico.Partida
         {
             string idAcaoExecutada = mensagemPartidaCliente.IdAcaoExecutada;
 
-            List<BaseAcao> acoesPendentes = _possiveisAcoesEnviadasAosJogadores[jogador];
+            List<BaseAcao> acoesPendentes = _acoesDisponiveisEnviadasAosJogadores[jogador];
 
             BaseAcao baseAcaoPendente = acoesPendentes.FirstOrDefault(a => a.Id == idAcaoExecutada);
 
@@ -164,7 +191,7 @@ namespace Piratas.Servidor.Servico.Partida
             string idJogadorRealizador = mensagemPartidaCliente.IdJogadorRealizador;
 
             (Jogador jogadorComAcaoPendente, List<BaseAcao> _) =
-                _possiveisAcoesEnviadasAosJogadores.FirstOrDefault(a => a.Key.Id == idJogadorRealizador);
+                _acoesDisponiveisEnviadasAosJogadores.FirstOrDefault(a => a.Key.Id == idJogadorRealizador);
 
             if (jogadorComAcaoPendente == null)
                 throw new JogadorSemAcaoPendenteExcecao(idJogadorRealizador);
@@ -183,6 +210,7 @@ namespace Piratas.Servidor.Servico.Partida
                 jogador.CalcularTesouros(),
                 _eventosAcaoAtual,
                 escolha,
+                _mesa.JogadorAtual.Id,
                 string.Empty);
 
             return mensagemServidor;
@@ -311,18 +339,13 @@ namespace Piratas.Servidor.Servico.Partida
 
             foreach (Jogador jogador in _mesa.Jogadores)
             {
-                BaseEscolha escolha = null;
+                List<BaseAcao> acoesDisponiveis = _mesa.AcoesDisponiveisJogadores[jogador];
 
-                if (jogador == _mesa.JogadorAtual)
-                {
-                    List<BasePrimaria> acoesPrimarias = _mesa.ObterAcoesPrimarias();
+                List<string> idAcoesDisponiveis = acoesDisponiveis.Select(a => a.Id).ToList();
 
-                    List<string> idAcoesPrimarias = acoesPrimarias.Select(a => a.Id).ToList();
+                var escolha = new ListaEscolhasCliente(TipoEscolha.Acao, idAcoesDisponiveis);
 
-                    escolha = new ListaEscolhasCliente(TipoEscolha.Acao, idAcoesPrimarias);
-                }
-
-                Dictionary<string, List<Evento>> eventos = _obterEventosInicioPartida(jogador);
+                Dictionary<string, List<Evento>> eventos = _obterEventosEstadoAtualMesa(jogador);
 
                 var mensagemPartidaServidor = new MensagemPartidaServidor(
                     jogador.Id,
@@ -330,7 +353,8 @@ namespace Piratas.Servidor.Servico.Partida
                     jogador.AcoesDisponiveis,
                     jogador.CalcularTesouros(),
                     eventos,
-                    escolha);
+                    escolha,
+                    _mesa.JogadorAtual.Id);
 
                 mensagens.Add(mensagemPartidaServidor);
             }
@@ -338,7 +362,7 @@ namespace Piratas.Servidor.Servico.Partida
             return mensagens;
         }
 
-        private Dictionary<string, List<Evento>> _obterEventosInicioPartida(Jogador receptor)
+        private Dictionary<string, List<Evento>> _obterEventosEstadoAtualMesa(Jogador receptor)
         {
             var eventos = new Dictionary<string, List<Evento>>();
 
@@ -346,21 +370,76 @@ namespace Piratas.Servidor.Servico.Partida
             {
                 var eventosCartasAdicionadas = new List<Evento>();
 
-                foreach (Carta carta in jogador.Mao.ObterTodas())
-                {
-                    bool deveMostrarIdCarta = jogador.Id == receptor.Id;
+                IEnumerable<Evento> eventosMao = _criarEventos(
+                    jogador,
+                    receptor,
+                    LocalEvento.Mao,
+                    jogador.Mao.ObterTodas());
 
-                    string idCarta = deveMostrarIdCarta ? carta.Id : string.Empty;
+                IEnumerable<Evento> eventosCampoCanhao = _criarEventos(
+                    jogador,
+                    receptor,
+                    LocalEvento.Campo,
+                    jogador.Campo.Canhoes);
 
-                    var evento = new Evento(LocalEvento.Mao, idCarta, true);
+                IEnumerable<Evento> eventosCampoProtegidas = _criarEventos(
+                    jogador,
+                    receptor,
+                    LocalEvento.Campo,
+                    jogador.Campo.Protegidas);
 
-                    eventosCartasAdicionadas.Add(evento);
-                }
+                IEnumerable<Evento> eventosCampoDuelosSurpresa = _criarEventos(
+                    jogador,
+                    receptor,
+                    LocalEvento.Campo,
+                    jogador.Campo.DuelosSurpresa);
+
+                IEnumerable<Evento> eventosCampoTripulacao = _criarEventos(
+                    jogador,
+                    receptor,
+                    LocalEvento.Campo,
+                    jogador.Campo.Tripulacao);
+
+                IEnumerable<Evento> eventosCampoEmbarcacao = _criarEventos(
+                    jogador,
+                    receptor,
+                    LocalEvento.Campo,
+                    new List<Carta> {jogador.Campo.Embarcacao});
+
+                eventosCartasAdicionadas.AddRange(eventosMao);
+
+                eventosCartasAdicionadas.AddRange(eventosCampoCanhao);
+                eventosCartasAdicionadas.AddRange(eventosCampoProtegidas);
+                eventosCartasAdicionadas.AddRange(eventosCampoDuelosSurpresa);
+                eventosCartasAdicionadas.AddRange(eventosCampoTripulacao);
+                eventosCartasAdicionadas.AddRange(eventosCampoEmbarcacao);
 
                 eventos[jogador.Id] = eventosCartasAdicionadas;
             }
 
             return eventos;
+        }
+
+        private IEnumerable<Evento> _criarEventos(
+            Jogador jogador,
+            Jogador receptor,
+            LocalEvento localEvento,
+            IEnumerable<Carta> cartas)
+        {
+            var eventosCartasAdicionadas = new List<Evento>();
+
+            foreach (Carta carta in cartas)
+            {
+                bool deveMostrarIdCarta = jogador.Id == receptor.Id;
+
+                string idCarta = deveMostrarIdCarta ? carta.Id : string.Empty;
+
+                var evento = new Evento(localEvento, idCarta, true);
+
+                eventosCartasAdicionadas.Add(evento);
+            }
+
+            return eventosCartasAdicionadas;
         }
     }
 }

@@ -1,17 +1,15 @@
 namespace Piratas.Servidor.Dominio.Baralhos
 {
-    using System;
-    using Cartas;
     using System.Collections.Generic;
-    using System.Linq;
+    using Cartas;
 
     public class BaralhoCentral : BaseBaralho
     {
-        public BaralhoCentral()
+        public void GerarCartas()
         {
             List<Carta> novasCartas = GeradorCartas.Gerar();
 
-            IEnumerable<Carta> cartasEmbaralhadas = _embaralhar(novasCartas);
+            IEnumerable<Carta> cartasEmbaralhadas = Embaralhar(novasCartas);
 
             Cartas = new LinkedList<Carta>(cartasEmbaralhadas);
         }
@@ -36,15 +34,6 @@ namespace Piratas.Servidor.Dominio.Baralhos
                 cartas.Add(ObterTopo());
 
             return cartas;
-        }
-
-        private IEnumerable<Carta> _embaralhar(IEnumerable<Carta> cartas)
-        {
-            var random = new Random();
-
-            List<Carta> cartasEmbaralhadas = cartas.OrderBy(_ => random.Next()).ToList();
-
-            return cartasEmbaralhadas;
         }
     }
 }

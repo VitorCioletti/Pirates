@@ -17,25 +17,23 @@ namespace Piratas.Servidor.Dominio
     {
         public Guid Id { get; private set; }
 
-        public List<Jogador> Jogadores { get; private set; }
+        public List<Jogador> Jogadores { get; }
 
         public Jogador JogadorAtual { get; private set; }
 
-        private DateTime _dataHoraInicio { get; set; }
+        public BaralhoCentral BaralhoCentral { get; }
 
-        private DateTime _dataHoraFim { get; set; }
+        public PilhaDescarte PilhaDescarte { get; private set; }
+
+        public Stack<BaseAcao> HistoricoAcao { get; }
+
+        public Dictionary<Jogador, List<BaseAcao>> AcoesDisponiveisJogadores { get; private set; }
 
         private bool _emDuelo { get; set; }
 
         private Tuple<Jogador, Jogador> _duelistas { get; set; }
 
-        private Queue<Jogador> _ordemDeJogadores { get; set; }
-
-        public BaralhoCentral BaralhoCentral { get; private set; }
-
-        public PilhaDescarte PilhaDescarte { get; private set; }
-
-        public Stack<BaseAcao> HistoricoAcao { get; private set; }
+        private Queue<Jogador> _ordemDeJogadores { get; }
 
         private BaseImediata _baseImediataAposResultantes;
 
@@ -52,39 +50,43 @@ namespace Piratas.Servidor.Dominio
         public Mesa(List<Jogador> jogadores)
         {
             _acoesPendentes = new List<BaseAcao>();
+            AcoesDisponiveisJogadores = new Dictionary<Jogador, List<BaseAcao>>();
             _baseImediataAposResultantes = null;
 
             Id = Guid.NewGuid();
-            _dataHoraInicio = DateTime.UtcNow;
 
             HistoricoAcao = new Stack<BaseAcao>();
-
             BaralhoCentral = new BaralhoCentral();
             PilhaDescarte = new PilhaDescarte();
 
             Jogadores = jogadores;
             _ordemDeJogadores = _gerarOrdemDeJogadores();
+            JogadorAtual = _ordemDeJogadores.Peek();
+
+            AcoesDisponiveisJogadores[JogadorAtual] = _obterAcoesPrimarias();
+
+            BaralhoCentral.GerarCartas();
 
             _distribuirCartas();
         }
 
-        public Dictionary<Jogador, List<BaseAcao>> ProcessarAcao(BaseAcao baseAcaoAProcessar)
+        public Dictionary<Jogador, List<BaseAcao>> ProcessarAcao(BaseAcao acaoAProcessar)
         {
-            baseAcaoAProcessar.Turno = _turnoAtual;
-            Jogador realizador = baseAcaoAProcessar.Realizador;
+            acaoAProcessar.Turno = _turnoAtual;
+            Jogador realizador = acaoAProcessar.Realizador;
 
             var acoesPorJogador = new Dictionary<Jogador, List<BaseAcao>>();
 
-            _verificarPrimariaJogadorAtual(baseAcaoAProcessar);
-            _verificarResultantePendente(baseAcaoAProcessar);
+            _verificarPrimariaJogadorAtual(acaoAProcessar);
+            _verificarResultantePendente(acaoAProcessar);
 
-            List<BaseAcao> acoesResultadoAcaoProcessada = baseAcaoAProcessar.AplicarRegra(this);
+            List<BaseAcao> acoesResultadoAcaoProcessada = acaoAProcessar.AplicarRegra(this);
 
-            HistoricoAcao.Push(baseAcaoAProcessar);
+            HistoricoAcao.Push(acaoAProcessar);
 
             _processarAcoesImediatas(acoesResultadoAcaoProcessada, acoesPorJogador);
 
-            if (baseAcaoAProcessar is BasePrimaria)
+            if (acaoAProcessar is BasePrimaria)
                 realizador.SubtrairAcoesDisponiveis();
 
             if (_acoesPendentes.Count == 0 && _baseImediataAposResultantes != null)
@@ -102,13 +104,12 @@ namespace Piratas.Servidor.Dominio
             return acoesPorJogador;
         }
 
-        public List<BasePrimaria> ObterAcoesPrimarias()
+        private List<BaseAcao> _obterAcoesPrimarias()
         {
-            var acoes = new List<BasePrimaria>();
-
-            acoes.Add(new Duelar(null, null, null));
-            acoes.Add(new DescerCarta(null, null));
-            acoes.Add(new ComprarCarta(null));
+            var acoes = new List<BaseAcao>
+            {
+                new Duelar(null, null, null), new DescerCarta(null, null), new ComprarCarta(null)
+            };
 
             return acoes;
         }
@@ -147,7 +148,7 @@ namespace Piratas.Servidor.Dominio
             if (proximoJogador.CalcularTesouros() >= _tesourosParaVitoria)
                 Finalizar(proximoJogador);
 
-            BaseEmbarcacao baseEmbarcacao = proximoJogador.Campo.BaseEmbarcacao;
+            BaseEmbarcacao baseEmbarcacao = proximoJogador.Campo.Embarcacao;
             Dictionary<Jogador, List<BaseAcao>> acoesPosEfeitoEmbarcacao = null;
 
             if (baseEmbarcacao != null)
@@ -179,7 +180,10 @@ namespace Piratas.Servidor.Dominio
             _duelistas = null;
         }
 
-        public void Finalizar(Jogador _) => _dataHoraFim = DateTime.UtcNow;
+        public void Finalizar(Jogador _)
+        {
+
+        }
 
         public void RegistrarImediataAposResultantes(BaseImediata baseImediata)
         {

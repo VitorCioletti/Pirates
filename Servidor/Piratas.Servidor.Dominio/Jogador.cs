@@ -72,7 +72,7 @@ namespace Piratas.Servidor.Dominio
 
         public override string ToString() => Id;
 
-        public override bool Equals(object obj) => obj is Jogador jogador && this == jogador;
+        public override bool Equals(object obj) => obj is Jogador jogador && Id == jogador.Id;
 
         public override int GetHashCode() => Id.GetHashCode();
 

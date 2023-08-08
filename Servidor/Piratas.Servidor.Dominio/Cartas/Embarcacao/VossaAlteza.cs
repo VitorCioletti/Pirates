@@ -16,7 +16,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Embarcacao
             List<Jogador> jogadoresNaMesa = mesa.Jogadores;
 
             List<Jogador> jogadoresOpcao =
-                jogadoresNaMesa.Where(j => j.Mao.QuantidadeCartas() >= _cartasMinimasNaMao && j != realizador).ToList();
+                jogadoresNaMesa.Where(j => j.Mao.ObterQuantidadeCartas() >= _cartasMinimasNaMao && j != realizador).ToList();
 
             List<string> idsJogadores = jogadoresOpcao.Select(j => j.Id.ToString()).ToList();
 

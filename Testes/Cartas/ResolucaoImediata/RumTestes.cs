@@ -1,46 +1,85 @@
-namespace Piratas.Servidor.Testes.Cartas.ResolucaoImediata
+namespace Piratas.Servidor.Testes.Cartas.ResolucaoImediata;
+
+using System;
+using System.Collections.Generic;
+using Dominio;
+using Dominio.Acoes;
+using Dominio.Baralhos;
+using Dominio.Cartas;
+using Dominio.Cartas.ResolucaoImediata;
+using NSubstitute;
+using NUnit.Framework;
+
+public class RumTestes
 {
-    using System;
-    using System.Collections.Generic;
-    using Dominio;
-    using Dominio.Acoes;
-    using Dominio.Cartas;
-    using Dominio.Cartas.ResolucaoImediata;
-    using NSubstitute;
-    using NUnit.Framework;
+    private Mesa _mesa;
 
-    public class RumTestes
+    public RumTestes()
     {
-        [Test]
-        public void AplicarEfeitoDeveComprarCartasParaJogador()
-        {
-            var jogadoresNaMesa = new List<Jogador>();
-            var cartasNaMao = new List<Carta>();
+        var configuracaoCartas = new List<Tuple<string, int>> {new(nameof(Rum), 1)};
 
-            var mesa = new Mesa(jogadoresNaMesa);
+        GeradorCartas.Configurar(configuracaoCartas);
+    }
 
-            var jogadorRealizador = new Jogador(
-                string.Empty,
-                null,
-                null,
-                null,
-                null);
+    [SetUp]
+    public void Inicializacao()
+    {
+        var jogadores = new List<Jogador>();
 
-            var cartasNoBaralhoCentral = new List<Carta> {Substitute.For<Carta>(), Substitute.For<Carta>(),};
+        var jogador1 = new Jogador(
+            "jogador1",
+            (_, _) => { },
+            (_, _) => { },
+            (_, _) => { },
+            (_, _) => { });
 
-            mesa.BaralhoCentral.InserirTopo(cartasNoBaralhoCentral);
-            jogadorRealizador.Mao.Adicionar(cartasNaMao);
+        var jogador2 = new Jogador(
+            "jogador2",
+            (_, _) => { },
+            (_, _) => { },
+            (_, _) => { },
+            (_, _) => { });
 
-            var acao = Substitute.For<BaseAcao>(jogadorRealizador, null);
+        var jogador3 = new Jogador(
+            "jogador3",
+            (_, _) => { },
+            (_, _) => { },
+            (_, _) => { },
+            (_, _) => { });
 
-            var rum = new Rum();
+        jogadores.Add(jogador1);
+        jogadores.Add(jogador2);
+        jogadores.Add(jogador3);
 
-            rum.AplicarEfeito(acao, mesa);
+        _mesa = new Mesa(jogadores);
+    }
 
-            foreach (Carta carta in cartasNoBaralhoCentral)
-                Assert.IsTrue(jogadorRealizador.Mao.Possui(carta));
+    [Test]
+    public void AplicarEfeitoDeveComprarCartasParaJogador()
+    {
+        var cartasNaMao = new List<Carta>();
 
-            Assert.IsNull(mesa.BaralhoCentral.ObterTopo());
-        }
+        var jogadorRealizador = new Jogador(
+            string.Empty,
+            null,
+            null,
+            null,
+            null);
+
+        var cartasNoBaralhoCentral = new List<Carta> {Substitute.For<Carta>(), Substitute.For<Carta>(),};
+
+        _mesa.BaralhoCentral.InserirTopo(cartasNoBaralhoCentral);
+        jogadorRealizador.Mao.Adicionar(cartasNaMao);
+
+        var acao = Substitute.For<BaseAcao>(jogadorRealizador, null);
+
+        var rum = new Rum();
+
+        rum.AplicarEfeito(acao, _mesa);
+
+        foreach (Carta carta in cartasNoBaralhoCentral)
+            Assert.IsTrue(jogadorRealizador.Mao.Possui(carta));
+
+        Assert.IsNull(_mesa.BaralhoCentral.ObterTopo());
     }
 }

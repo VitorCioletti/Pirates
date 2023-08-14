@@ -1,130 +1,138 @@
-namespace Piratas.Servidor.Dominio
+namespace Piratas.Servidor.Dominio;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Cartas;
+using Cartas.Tesouro;
+using Cartas.Tripulacao;
+
+public class Jogador
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Acoes;
-    using Acoes.Primaria;
-    using Cartas;
-    using Cartas.Tesouro;
-    using Cartas.Tripulacao;
+    public string Id { get; }
 
-    public class Jogador
+    public int AcoesDisponiveis { get; private set; }
+
+    public Mao Mao { get; }
+
+    public Campo Campo { get; }
+
+    public Jogador(
+        string id,
+        Action<string, Carta> aoAdicionarCartaNaMao,
+        Action<string, Carta> aoRemoverCartaNaMao,
+        Action<string, Carta> aoAdicionarCartaNoCampo,
+        Action<string, Carta> aoRemoverCartaNoCampo)
     {
-        public string Id { get; }
+        Id = id;
+        Mao = new Mao(new List<Carta>());
+        Campo = new Campo();
 
-        public int AcoesDisponiveis { get; private set; }
+        Mao.AoAdicionar += AoAdicionarCartaNaMao;
+        Mao.AoRemover += AoRemoverCartaNaMao;
+        Campo.AoAdicionar += AoAdicionarCartaNoCampo;
+        Campo.AoRemover += AoRemoverCartaNoCampo;
 
-        public Mao Mao { get; }
+        void AoAdicionarCartaNaMao(Carta carta) =>
+            aoAdicionarCartaNaMao?.Invoke(Id, carta);
 
-        public Campo Campo { get; }
+        void AoRemoverCartaNaMao(Carta carta) =>
+            aoRemoverCartaNaMao?.Invoke(Id, carta);
 
-        public Jogador(
-            string id,
-            Action<string, Carta> aoAdicionarCartaNaMao,
-            Action<string, Carta> aoRemoverCartaNaMao,
-            Action<string, Carta> aoAdicionarCartaNoCampo,
-            Action<string, Carta> aoRemoverCartaNoCampo)
-        {
-            Id = id;
-            Mao = new Mao(new List<Carta>());
-            Campo = new Campo();
+        void AoAdicionarCartaNoCampo(Carta carta) =>
+            aoAdicionarCartaNoCampo?.Invoke(Id, carta);
 
-            Mao.AoAdicionar += AoAdicionarCartaNaMao;
-            Mao.AoRemover += AoRemoverCartaNaMao;
-            Campo.AoAdicionar += AoAdicionarCartaNoCampo;
-            Campo.AoRemover += AoRemoverCartaNoCampo;
+        void AoRemoverCartaNoCampo(Carta carta) =>
+            aoRemoverCartaNoCampo?.Invoke(Id, carta);
+    }
 
-            void AoAdicionarCartaNaMao(Carta carta) =>
-                aoAdicionarCartaNaMao?.Invoke(Id, carta);
+    public void ResetarAcoesDisponiveis(int acoes)
+    {
+        AcoesDisponiveis = acoes;
+    }
 
-            void AoRemoverCartaNaMao(Carta carta) =>
-                aoRemoverCartaNaMao?.Invoke(Id, carta);
+    public void SubtrairAcoesDisponiveis()
+    {
+        AcoesDisponiveis--;
+    }
 
-            void AoAdicionarCartaNoCampo(Carta carta) =>
-                aoAdicionarCartaNoCampo?.Invoke(Id, carta);
+    public int CalcularTesouros()
+    {
+        int tesouros = 0;
 
-            void AoRemoverCartaNoCampo(Carta carta) =>
-                aoRemoverCartaNoCampo?.Invoke(Id, carta);
-        }
+        tesouros += _obterTesourosMeioAmuleto();
+        tesouros += _obterTesourosMao();
+        tesouros += _obterTesourosProtegidos();
+        tesouros += _obterTesourosPiratasNobres();
 
-        public void ResetarAcoesDisponiveis(int acoes)
-        {
-            AcoesDisponiveis = acoes;
-        }
+        return tesouros;
+    }
 
-        public void SubtrairAcoesDisponiveis()
-        {
-            AcoesDisponiveis--;
-        }
+    public override string ToString() => Id;
 
-        public int CalcularTesouros()
-        {
-            int tesouros = 0;
+    public override bool Equals(object obj) => Equals(obj as Jogador);
 
-            tesouros += _obterTesourosMeioAmuleto();
-            tesouros += _obterTesourosMao();
-            tesouros += _obterTesourosProtegidos();
-            tesouros += _obterTesourosPiratasNobres();
+    public override int GetHashCode() => Id.GetHashCode();
 
-            return tesouros;
-        }
+    public static bool operator ==(Jogador jogador1, Jogador jogador2)
+    {
+        if (ReferenceEquals(jogador1, jogador2))
+            return true;
 
-        public override string ToString() => Id;
+        if (ReferenceEquals(jogador1, null))
+            return false;
 
-        public override bool Equals(object obj) => obj is Jogador jogador && Id == jogador.Id;
+        if (ReferenceEquals(jogador2, null))
+            return false;
 
-        public override int GetHashCode() => Id.GetHashCode();
+        return jogador1.Equals(jogador2);
+    }
 
-        public static bool operator ==(Jogador jogador1, Jogador jogador2)
-        {
-            if (jogador1 == null || jogador2 == null)
-                return false;
+    public static bool operator !=(Jogador jogador1, Jogador jogador2) => !(jogador1 == jogador2);
 
-            return jogador1.Id == jogador2.Id;
-        }
+    private bool Equals(Jogador outroJogador)
+    {
+        if (ReferenceEquals(outroJogador, null))
+            return false;
 
-        public static bool operator !=(Jogador jogador1, Jogador jogador2)
-        {
-            if (jogador1 == null || jogador2 == null)
-                return false;
+        if (ReferenceEquals(outroJogador, this))
+            return true;
 
-            return jogador1.Id != jogador2.Id;
-        }
+        return Id == outroJogador.Id;
+    }
 
-        private int _obterTesourosPiratasNobres()
-        {
-            int tesourosPiratasNobres =
-                Campo.Tripulacao.Where(t => t is PirataNobre).Sum(t => ((PirataNobre)t).Tesouros);
+    private int _obterTesourosPiratasNobres()
+    {
+        int tesourosPiratasNobres =
+            Campo.Tripulacao.Where(t => t is PirataNobre).Sum(t => ((PirataNobre)t).Tesouros);
 
-            return tesourosPiratasNobres;
-        }
+        return tesourosPiratasNobres;
+    }
 
-        private int _obterTesourosProtegidos()
-        {
-            IEnumerable<Tesouro> tesourosProtegidos = Campo.ObterTodasProtegidas().OfType<Tesouro>();
+    private int _obterTesourosProtegidos()
+    {
+        IEnumerable<Tesouro> tesourosProtegidos = Campo.ObterTodasProtegidas().OfType<Tesouro>();
 
-            int somaTesourosProtegidos = tesourosProtegidos.Sum(c => c.Valor);
+        int somaTesourosProtegidos = tesourosProtegidos.Sum(c => c.Valor);
 
-            return somaTesourosProtegidos;
-        }
+        return somaTesourosProtegidos;
+    }
 
-        private int _obterTesourosMao()
-        {
-            List<Tesouro> tesourosMao = Mao.ObterTodas<Tesouro>();
+    private int _obterTesourosMao()
+    {
+        List<Tesouro> tesourosMao = Mao.ObterTodas<Tesouro>();
 
-            int somaTesourosMao = tesourosMao.Sum(c => c.Valor);
+        int somaTesourosMao = tesourosMao.Sum(c => c.Valor);
 
-            return somaTesourosMao;
-        }
+        return somaTesourosMao;
+    }
 
-        private int _obterTesourosMeioAmuleto()
-        {
-            List<MeioAmuleto> meiosAmuletos = Mao.ObterTodas<MeioAmuleto>();
+    private int _obterTesourosMeioAmuleto()
+    {
+        List<MeioAmuleto> meiosAmuletos = Mao.ObterTodas<MeioAmuleto>();
 
-            int somaMeiosAmuletos = MeioAmuleto.CalcularPontosTesouro(meiosAmuletos);
+        int somaMeiosAmuletos = MeioAmuleto.CalcularPontosTesouro(meiosAmuletos);
 
-            return somaMeiosAmuletos;
-        }
+        return somaMeiosAmuletos;
     }
 }

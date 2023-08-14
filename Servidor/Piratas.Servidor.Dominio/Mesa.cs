@@ -35,7 +35,7 @@ namespace Piratas.Servidor.Dominio
 
         private Queue<Jogador> _ordemDeJogadores { get; }
 
-        private BaseImediata _baseImediataAposResultantes;
+        private BaseImediata _imediataAposResultantes;
 
         private readonly List<BaseAcao> _acoesPendentes;
 
@@ -51,7 +51,7 @@ namespace Piratas.Servidor.Dominio
         {
             _acoesPendentes = new List<BaseAcao>();
             AcoesDisponiveisJogadores = new Dictionary<Jogador, List<BaseAcao>>();
-            _baseImediataAposResultantes = null;
+            _imediataAposResultantes = null;
 
             Id = Guid.NewGuid();
 
@@ -64,6 +64,9 @@ namespace Piratas.Servidor.Dominio
             JogadorAtual = _ordemDeJogadores.Peek();
 
             AcoesDisponiveisJogadores[JogadorAtual] = _obterAcoesPrimarias();
+
+            foreach (Jogador jogador in Jogadores)
+                jogador.ResetarAcoesDisponiveis(_acoesPorTurno);
 
             BaralhoCentral.GerarCartas();
 
@@ -84,15 +87,16 @@ namespace Piratas.Servidor.Dominio
 
             HistoricoAcao.Push(acaoAProcessar);
 
-            _processarAcoesImediatas(acoesResultadoAcaoProcessada, acoesPorJogador);
+            if (acoesResultadoAcaoProcessada is not null)
+                _processarAcoesImediatas(acoesResultadoAcaoProcessada, acoesPorJogador);
 
             if (acaoAProcessar is BasePrimaria)
                 realizador.SubtrairAcoesDisponiveis();
 
-            if (_acoesPendentes.Count == 0 && _baseImediataAposResultantes != null)
+            if (_acoesPendentes.Count == 0 && _imediataAposResultantes != null)
             {
-                _processarAcaoImediata(_baseImediataAposResultantes, acoesPorJogador);
-                _baseImediataAposResultantes = null;
+                _processarAcaoImediata(_imediataAposResultantes, acoesPorJogador);
+                _imediataAposResultantes = null;
             }
 
             if (acoesResultadoAcaoProcessada?.Count == 0 && JogadorAtual.AcoesDisponiveis == 0)
@@ -108,7 +112,9 @@ namespace Piratas.Servidor.Dominio
         {
             var acoes = new List<BaseAcao>
             {
-                new Duelar(null, null, null), new DescerCarta(null, null), new ComprarCarta(null)
+                new Duelar(JogadorAtual, null, null),
+                new DescerCarta(JogadorAtual, null),
+                new ComprarCarta(JogadorAtual)
             };
 
             return acoes;
@@ -148,12 +154,12 @@ namespace Piratas.Servidor.Dominio
             if (proximoJogador.CalcularTesouros() >= _tesourosParaVitoria)
                 Finalizar(proximoJogador);
 
-            BaseEmbarcacao baseEmbarcacao = proximoJogador.Campo.Embarcacao;
+            BaseEmbarcacao embarcacao = proximoJogador.Campo.Embarcacao;
             Dictionary<Jogador, List<BaseAcao>> acoesPosEfeitoEmbarcacao = null;
 
-            if (baseEmbarcacao != null)
+            if (embarcacao != null)
             {
-                var aplicarEfeitoEmbarcacao = new AplicarEfeitoEmbarcacao(proximoJogador, baseEmbarcacao);
+                var aplicarEfeitoEmbarcacao = new AplicarEfeitoEmbarcacao(proximoJogador, embarcacao);
                 acoesPosEfeitoEmbarcacao = ProcessarAcao(aplicarEfeitoEmbarcacao);
             }
 
@@ -185,12 +191,12 @@ namespace Piratas.Servidor.Dominio
 
         }
 
-        public void RegistrarImediataAposResultantes(BaseImediata baseImediata)
+        public void RegistrarImediataAposResultantes(BaseImediata imediata)
         {
-            if (_baseImediataAposResultantes != null)
+            if (_imediataAposResultantes != null)
                 throw new ImediataRegistradaExcecao();
 
-            _baseImediataAposResultantes = baseImediata;
+            _imediataAposResultantes = imediata;
         }
 
         private Queue<Jogador> _gerarOrdemDeJogadores() => new(Jogadores);
@@ -215,24 +221,24 @@ namespace Piratas.Servidor.Dominio
             }
         }
 
-        private void _verificarPrimariaJogadorAtual(BaseAcao baseAcao)
+        private void _verificarPrimariaJogadorAtual(BaseAcao acao)
         {
-            Jogador realizador = baseAcao.Realizador;
+            Jogador realizador = acao.Realizador;
 
-            if (baseAcao is BasePrimaria)
-            {
-                if (realizador != JogadorAtual)
-                    throw new TurnoDeOutroJogadorExcecao(realizador);
-            }
+            if (acao is not BasePrimaria)
+                return;
+
+            if (realizador != JogadorAtual)
+                throw new TurnoDeOutroJogadorExcecao(realizador);
         }
 
-        private void _verificarResultantePendente(BaseAcao baseAcao)
+        private void _verificarResultantePendente(BaseAcao acao)
         {
-            if (baseAcao is BaseResultante resultante)
-            {
-                if (!_acoesPendentes.Contains(resultante))
-                    throw new ResultanteNaoEsperadaExcecao(resultante);
-            }
+            if (acao is not BaseResultante resultante)
+                return;
+
+            if (!_acoesPendentes.Contains(resultante))
+                throw new ResultanteNaoEsperadaExcecao(resultante);
         }
     }
 }

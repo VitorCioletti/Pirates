@@ -10,6 +10,7 @@ using Dominio.Acoes.Resultante;
 using Dominio.Baralhos;
 using Dominio.Cartas.Duelo;
 using Dominio.Cartas.ResolucaoImediata;
+using Dominio.Cartas.Tesouro;
 using Dominio.Excecoes.Mesa;
 using NUnit.Framework;
 
@@ -170,5 +171,27 @@ public class MesaTestes
         }
 
         Assert.Pass();
+    }
+
+    [Test]
+    public void JogadorDeveGanharSePossuirTesourosSuficientes()
+    {
+        Jogador primeiroJogador = _mesa.JogadorAtual;
+        Jogador jogadorVencedor = _mesa.Jogadores[1];
+
+        jogadorVencedor.Mao.Adicionar(new Tesouro(5));
+
+        while (primeiroJogador.AcoesDisponiveis > 0)
+        {
+            List<BaseAcao> acoesDisponiveis = _mesa.AcoesDisponiveisJogadores[primeiroJogador];
+
+            BaseAcao comprarCarta = acoesDisponiveis.First(a => a is ComprarCarta);
+
+            primeiroJogador.Mao.Remover(primeiroJogador.Mao.ObterQualquer());
+
+            _mesa.ProcessarAcao(comprarCarta);
+        }
+
+        Assert.AreEqual(jogadorVencedor, _mesa.Vencedor);
     }
 }

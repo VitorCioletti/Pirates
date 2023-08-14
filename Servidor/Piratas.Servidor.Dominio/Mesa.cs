@@ -29,9 +29,9 @@ namespace Piratas.Servidor.Dominio
 
         public Dictionary<Jogador, List<BaseAcao>> AcoesDisponiveisJogadores { get; private set; }
 
-        private bool _emDuelo { get; set; }
+        public Jogador Vencedor { get; private set; }
 
-        private Tuple<Jogador, Jogador> _duelistas { get; set; }
+        private bool _emDuelo { get; set; }
 
         private Queue<Jogador> _ordemDeJogadores { get; }
 
@@ -160,7 +160,11 @@ namespace Piratas.Servidor.Dominio
             Jogador proximoJogador = _obterProximoJogador();
 
             if (proximoJogador.CalcularTesouros() >= _tesourosParaVitoria)
+            {
                 Finalizar(proximoJogador);
+
+                return null;
+            }
 
             BaseEmbarcacao embarcacao = proximoJogador.Campo.Embarcacao;
             Dictionary<Jogador, List<BaseAcao>> acoesPosEfeitoEmbarcacao = null;
@@ -182,7 +186,6 @@ namespace Piratas.Servidor.Dominio
                 throw new EmDueloExcecao();
 
             _emDuelo = true;
-            _duelistas = new Tuple<Jogador, Jogador>(realizador, alvo);
         }
 
         public void SairModoDuelo()
@@ -191,12 +194,11 @@ namespace Piratas.Servidor.Dominio
                 throw new SemDueloExcecao();
 
             _emDuelo = false;
-            _duelistas = null;
         }
 
-        public void Finalizar(Jogador _)
+        public void Finalizar(Jogador vencedor)
         {
-
+            Vencedor = vencedor;
         }
 
         public void RegistrarImediataAposResultantes(BaseImediata imediata)

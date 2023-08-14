@@ -6,7 +6,9 @@ using System.Linq;
 using Dominio;
 using Dominio.Acoes;
 using Dominio.Acoes.Primaria;
+using Dominio.Acoes.Resultante;
 using Dominio.Baralhos;
+using Dominio.Cartas.Duelo;
 using Dominio.Cartas.ResolucaoImediata;
 using Dominio.Excecoes.Mesa;
 using NUnit.Framework;
@@ -17,7 +19,7 @@ public class MesaTestes
 
     public MesaTestes()
     {
-        var configuracaoCartas = new List<Tuple<string, int>> {new(nameof(Rum), 100)};
+        var configuracaoCartas = new List<Tuple<string, int>> { new(nameof(Rum), 100) };
 
         GeradorCartas.Configurar(configuracaoCartas);
     }
@@ -132,5 +134,41 @@ public class MesaTestes
     [Test]
     public void JogadorNaoExecutaResultanteNaoEsperada()
     {
+        Jogador jogadorAtual = _mesa.Jogadores[1];
+
+        var acaoOrigem = new DescerCarta(jogadorAtual, new Canhao());
+
+        var resultante = new DescartarCarta(
+            acaoOrigem,
+            jogadorAtual,
+            jogadorAtual,
+            new List<string>());
+
+        Assert.Throws<ResultanteNaoEsperadaExcecao>(ProcessarAcao);
+
+        void ProcessarAcao()
+        {
+            _mesa.ProcessarAcao(resultante);
+        }
+    }
+
+    [Test]
+    public void DeveMudarJogadorAtualAposAnteriorJogar()
+    {
+        foreach (Jogador jogador in _mesa.Jogadores)
+        {
+            while (jogador.AcoesDisponiveis > 0)
+            {
+                List<BaseAcao> acoesDisponiveis = _mesa.AcoesDisponiveisJogadores[jogador];
+
+                BaseAcao comprarCarta = acoesDisponiveis.First(a => a is ComprarCarta);
+
+                jogador.Mao.Remover(jogador.Mao.ObterQualquer());
+
+                _mesa.ProcessarAcao(comprarCarta);
+            }
+        }
+
+        Assert.Pass();
     }
 }

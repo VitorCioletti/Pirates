@@ -99,11 +99,19 @@ namespace Piratas.Servidor.Dominio
                 _imediataAposResultantes = null;
             }
 
-            if (acoesResultadoAcaoProcessada?.Count == 0 && JogadorAtual.AcoesDisponiveis == 0)
+            bool naoPossuiResultadoAcao =
+                (acoesResultadoAcaoProcessada?.Count == 0 || acoesResultadoAcaoProcessada is null);
+
+            bool possuiAcaoDisponivel = JogadorAtual.AcoesDisponiveis == 0;
+
+            if (naoPossuiResultadoAcao && possuiAcaoDisponivel)
                 acoesPorJogador = _moverParaProximoTurno();
 
-            foreach (List<BaseAcao> acoesPendentes in acoesPorJogador.Values)
-                _acoesPendentes.AddRange(acoesPendentes);
+            if (acoesPorJogador is not null)
+            {
+                foreach (List<BaseAcao> acoesPendentes in acoesPorJogador.Values)
+                    _acoesPendentes.AddRange(acoesPendentes);
+            }
 
             return acoesPorJogador;
         }
@@ -124,7 +132,7 @@ namespace Piratas.Servidor.Dominio
             BaseImediata acaoBaseImediata,
             IReadOnlyDictionary<Jogador, List<BaseAcao>> acoesPorJogador)
         {
-            _processarAcoesImediatas(new List<BaseImediata> {acaoBaseImediata}, acoesPorJogador);
+            _processarAcoesImediatas(new List<BaseImediata> { acaoBaseImediata }, acoesPorJogador);
         }
 
         private void _processarAcoesImediatas(
@@ -207,6 +215,7 @@ namespace Piratas.Servidor.Dominio
             _ordemDeJogadores.Enqueue(proximoJogador);
 
             JogadorAtual = proximoJogador;
+            AcoesDisponiveisJogadores[JogadorAtual] = _obterAcoesPrimarias();
 
             return proximoJogador;
         }

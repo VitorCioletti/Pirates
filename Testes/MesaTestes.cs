@@ -194,4 +194,40 @@ public class MesaTestes
 
         Assert.AreEqual(jogadorVencedor, _mesa.Vencedor);
     }
+
+    [Test]
+    public void DeveEntrarEmModoDuelo()
+    {
+        Assert.IsFalse(_mesa.EmDuelo);
+
+        _mesa.EntrarModoDuelo();
+
+        Assert.IsTrue(_mesa.EmDuelo);
+    }
+
+    [Test]
+    public void DeveSairEmModoDuelo()
+    {
+        _mesa.EntrarModoDuelo();
+
+        Assert.IsTrue(_mesa.EmDuelo);
+
+        _mesa.SairModoDuelo();
+
+        Assert.IsFalse(_mesa.EmDuelo);
+    }
+
+    [Test]
+    public void DeveLancarExcecaoSeEmDuelo()
+    {
+        _mesa.EntrarModoDuelo();
+
+        Assert.Throws<EmDueloExcecao>(_mesa.EntrarModoDuelo);
+    }
+
+    [Test]
+    public void DeveLancarExcecaoSeNaoEstaEmDuelo()
+    {
+        Assert.Throws<SemDueloExcecao>(_mesa.SairModoDuelo);
+    }
 }

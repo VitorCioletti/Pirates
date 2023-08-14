@@ -28,13 +28,13 @@ namespace Piratas.Servidor.Dominio.Acoes.Resultante
 
             canhaoIniciador.AplicarEfeito(this, mesa);
 
-            mesa.EntrarModoDuelo(Realizador, Alvo);
+            mesa.EntrarModoDuelo();
 
             BaseAcao proximaAcao = !Alvo.Mao.Possui<Duelo>()
                 ? new CalcularResultadoDuelo(Realizador, Alvo)
                 : new DescerCartaRespostaDuelo(this, Alvo, Realizador);
 
-            var acoesResultantes = new List<BaseAcao> {proximaAcao};
+            var acoesResultantes = new List<BaseAcao> { proximaAcao };
 
             return acoesResultantes;
         }

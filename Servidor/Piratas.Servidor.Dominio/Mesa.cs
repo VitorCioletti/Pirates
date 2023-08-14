@@ -31,7 +31,7 @@ namespace Piratas.Servidor.Dominio
 
         public Jogador Vencedor { get; private set; }
 
-        private bool _emDuelo { get; set; }
+        public bool EmDuelo { get; set; }
 
         private Queue<Jogador> _ordemDeJogadores { get; }
 
@@ -180,20 +180,20 @@ namespace Piratas.Servidor.Dominio
             return acoesPosEfeitoEmbarcacao;
         }
 
-        public void EntrarModoDuelo(Jogador realizador, Jogador alvo)
+        public void EntrarModoDuelo()
         {
-            if (_emDuelo)
+            if (EmDuelo)
                 throw new EmDueloExcecao();
 
-            _emDuelo = true;
+            EmDuelo = true;
         }
 
         public void SairModoDuelo()
         {
-            if (!_emDuelo)
+            if (!EmDuelo)
                 throw new SemDueloExcecao();
 
-            _emDuelo = false;
+            EmDuelo = false;
         }
 
         public void Finalizar(Jogador vencedor)

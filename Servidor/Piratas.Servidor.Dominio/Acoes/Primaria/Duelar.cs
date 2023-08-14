@@ -22,7 +22,7 @@ namespace Piratas.Servidor.Dominio.Acoes.Primaria
             if (cartasCanhao.Count == 0)
                 throw new NaoPossuiCartaDueloExcecao(this);
 
-            mesa.EntrarModoDuelo(Realizador, Alvo);
+            mesa.EntrarModoDuelo();
 
             var escolherCartaIniciadoraDuelo = new EscolherCanhaoIniciadorDuelo(
                 this,

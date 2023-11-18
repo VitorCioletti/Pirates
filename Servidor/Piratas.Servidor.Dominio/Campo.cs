@@ -12,9 +12,7 @@ namespace Piratas.Servidor.Dominio
 
     public class Campo
     {
-        private readonly int _danoEmbarcacao = 1;
-
-        private readonly int _tripulacaoMaxima = 2;
+        public const int TripulacaoMaxima = 2;
 
         public List<Canhao> Canhoes { get; private set; }
 
@@ -29,6 +27,8 @@ namespace Piratas.Servidor.Dominio
         public event Action<Carta> AoAdicionar;
 
         public event Action<Carta> AoRemover;
+
+        private const int _danoEmbarcacao = 1;
 
         public Campo()
         {
@@ -65,7 +65,7 @@ namespace Piratas.Servidor.Dominio
 
         public void Adicionar(BaseTripulante baseTripulante)
         {
-            if (Tripulacao.Count >= _tripulacaoMaxima)
+            if (Tripulacao.Count >= TripulacaoMaxima)
                 throw new TripulacaoCheiaExcecao();
 
             Tripulacao.Add(baseTripulante);
@@ -123,7 +123,7 @@ namespace Piratas.Servidor.Dominio
 
         public void AfogarTripulacao()
         {
-            foreach (BaseTripulante tripulante in Tripulacao)
+            foreach (BaseTripulante tripulante in Tripulacao.ToList())
             {
                 if (tripulante.Afogavel)
                     Remover(tripulante);
@@ -136,7 +136,7 @@ namespace Piratas.Servidor.Dominio
             DuelosSurpresa.Clear();
         }
 
-        public bool TripulacaoCheia() => Tripulacao.Count == _tripulacaoMaxima;
+        public bool TripulacaoCheia() => Tripulacao.Count == TripulacaoMaxima;
 
         public void TrocarEmbarcacao(BaseEmbarcacao baseEmbarcacao)
         {

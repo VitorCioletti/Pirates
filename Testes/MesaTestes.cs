@@ -20,7 +20,7 @@ public class MesaTestes
 
     public MesaTestes()
     {
-        var configuracaoCartas = new List<Tuple<string, int>> { new(nameof(Rum), 100) };
+        var configuracaoCartas = new List<Tuple<string, int>> {new(nameof(Rum), 100)};
 
         GeradorCartas.Configurar(configuracaoCartas);
     }
@@ -122,20 +122,21 @@ public class MesaTestes
     [Test]
     public void JogadorNaoExecutaAcaoPrimariaForaTurno()
     {
-        Jogador jogadorAtual = _mesa.Jogadores[1];
+        Jogador proximoJogador = _mesa.Jogadores[1];
 
         Assert.Throws<TurnoDeOutroJogadorExcecao>(ProcessarAcao);
 
         void ProcessarAcao()
         {
-            _mesa.ProcessarAcao(new ComprarCarta(jogadorAtual));
+            _mesa.ProcessarAcao(new ComprarCarta(proximoJogador));
         }
     }
 
     [Test]
     public void JogadorNaoExecutaResultanteNaoEsperada()
     {
-        Jogador jogadorAtual = _mesa.Jogadores[1];
+        Jogador jogadorAtual = _mesa.Jogadores[0];
+        Jogador jogadorAlvo = _mesa.Jogadores[1];
 
         var acaoOrigem = new DescerCarta(jogadorAtual, new Canhao());
 

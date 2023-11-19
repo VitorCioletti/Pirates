@@ -122,7 +122,15 @@ public class Jogador
     {
         List<Tesouro> tesourosMao = Mao.ObterTodas<Tesouro>();
 
-        int somaTesourosMao = tesourosMao.Sum(c => c.Valor);
+        int somaTesourosMao = 0;
+
+        foreach (Tesouro tesouro in tesourosMao)
+        {
+            if (tesouro is MeioAmuleto)
+                continue;
+
+            somaTesourosMao = tesourosMao.Sum(c => c.Valor);
+        }
 
         return somaTesourosMao;
     }

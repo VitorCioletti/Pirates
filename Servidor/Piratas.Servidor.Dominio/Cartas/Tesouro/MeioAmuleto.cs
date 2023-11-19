@@ -8,7 +8,7 @@ namespace Piratas.Servidor.Dominio.Cartas.Tesouro
 
         private const int _valorAmuletoCompleto = 2;
 
-        public MeioAmuleto(int valor) : base(valor)
+        public MeioAmuleto() : base(0)
         {
         }
 

@@ -8,7 +8,7 @@ namespace Piratas.Servidor.Dominio
 
     public class Mao
     {
-        private const int _limiteCartas = 10;
+        public const int LimiteCartas = 10;
 
         private readonly List<Carta> _cartas;
 
@@ -23,7 +23,7 @@ namespace Piratas.Servidor.Dominio
 
         public void Adicionar(Carta carta)
         {
-            if (_cartas.Count == _limiteCartas)
+            if (_cartas.Count == LimiteCartas)
                 throw new LimiteCartasMaoAtingidoExcecao();
 
             _cartas.Add(carta);

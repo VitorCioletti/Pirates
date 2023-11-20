@@ -27,11 +27,13 @@ namespace Piratas.Servidor.Dominio
 
         public Stack<BaseAcao> HistoricoAcao { get; }
 
+        public int Turno { get; private set; }
+
         public Dictionary<Jogador, List<BaseAcao>> AcoesDisponiveisJogadores { get; private set; }
 
         public Jogador Vencedor { get; private set; }
 
-        public bool EmDuelo { get; set; }
+        public bool EmDuelo { get; private set; }
 
         private Queue<Jogador> _ordemDeJogadores { get; }
 
@@ -44,8 +46,6 @@ namespace Piratas.Servidor.Dominio
         private const int _tesourosParaVitoria = 5;
 
         private const int _acoesPorTurno = 3;
-
-        private int _turnoAtual;
 
         public Mesa(List<Jogador> jogadores)
         {
@@ -61,7 +61,7 @@ namespace Piratas.Servidor.Dominio
 
             Jogadores = jogadores;
             _ordemDeJogadores = _gerarOrdemDeJogadores();
-            JogadorAtual = _ordemDeJogadores.Peek();
+            JogadorAtual = _obterProximoJogador();
 
             AcoesDisponiveisJogadores[JogadorAtual] = _obterAcoesPrimarias();
 
@@ -75,7 +75,7 @@ namespace Piratas.Servidor.Dominio
 
         public Dictionary<Jogador, List<BaseAcao>> ProcessarAcao(BaseAcao acaoAProcessar)
         {
-            acaoAProcessar.Turno = _turnoAtual;
+            acaoAProcessar.Turno = Turno;
             Jogador realizador = acaoAProcessar.Realizador;
 
             var acoesPorJogador = new Dictionary<Jogador, List<BaseAcao>>();
@@ -87,8 +87,13 @@ namespace Piratas.Servidor.Dominio
 
             HistoricoAcao.Push(acaoAProcessar);
 
-            if (acoesResultadoAcaoProcessada is not null)
-                _processarAcoesImediatas(acoesResultadoAcaoProcessada, acoesPorJogador);
+            if (acoesResultadoAcaoProcessada != null)
+            {
+                List<BaseAcao> acoesImediatas = acoesResultadoAcaoProcessada.Where(a => a is BaseImediata).ToList();
+
+                if (acoesImediatas.Count > 0)
+                    _processarAcoesImediatas(acoesImediatas, acoesPorJogador);
+            }
 
             if (acaoAProcessar is BasePrimaria)
                 realizador.SubtrairAcoesDisponiveis();
@@ -96,18 +101,26 @@ namespace Piratas.Servidor.Dominio
             if (_acoesPendentes.Count == 0 && _imediataAposResultantes != null)
             {
                 _processarAcaoImediata(_imediataAposResultantes, acoesPorJogador);
-                _imediataAposResultantes = null;
             }
 
             bool naoPossuiResultadoAcao =
-                (acoesResultadoAcaoProcessada?.Count == 0 || acoesResultadoAcaoProcessada is null);
+                acoesResultadoAcaoProcessada is null || acoesResultadoAcaoProcessada.Count == 0;
 
-            bool possuiAcaoDisponivel = JogadorAtual.AcoesDisponiveis == 0;
+            bool naoPossuiAcoesDisponiveis = JogadorAtual.AcoesDisponiveis == 0;
 
-            if (naoPossuiResultadoAcao && possuiAcaoDisponivel)
+            if (naoPossuiResultadoAcao && naoPossuiAcoesDisponiveis)
+            {
                 acoesPorJogador = _moverParaProximoTurno();
+            }
+            else if (acoesResultadoAcaoProcessada is not null)
+            {
+                Jogador jogador = acoesResultadoAcaoProcessada[0].Realizador;
 
-            if (acoesPorJogador is not null)
+                acoesPorJogador.Add(jogador, acoesResultadoAcaoProcessada);
+            }
+
+            // ReSharper disable once InvertIf
+            if (acoesPorJogador.Count > 0)
             {
                 foreach (List<BaseAcao> acoesPendentes in acoesPorJogador.Values)
                     _acoesPendentes.AddRange(acoesPendentes);
@@ -132,7 +145,8 @@ namespace Piratas.Servidor.Dominio
             BaseImediata acaoBaseImediata,
             IReadOnlyDictionary<Jogador, List<BaseAcao>> acoesPorJogador)
         {
-            _processarAcoesImediatas(new List<BaseImediata> { acaoBaseImediata }, acoesPorJogador);
+            _imediataAposResultantes = null;
+            _processarAcoesImediatas(new List<BaseImediata> {acaoBaseImediata}, acoesPorJogador);
         }
 
         private void _processarAcoesImediatas(
@@ -155,19 +169,20 @@ namespace Piratas.Servidor.Dominio
             if (JogadorAtual?.AcoesDisponiveis > 0)
                 throw new PossuiAcoesDisponiveisExcecao(JogadorAtual);
 
-            _turnoAtual++;
+            Turno++;
 
             Jogador proximoJogador = _obterProximoJogador();
+
+            var acoesPosEfeitoEmbarcacao = new Dictionary<Jogador, List<BaseAcao>>();
 
             if (proximoJogador.CalcularTesouros() >= _tesourosParaVitoria)
             {
                 Finalizar(proximoJogador);
 
-                return null;
+                return acoesPosEfeitoEmbarcacao;
             }
 
             BaseEmbarcacao embarcacao = proximoJogador.Campo.Embarcacao;
-            Dictionary<Jogador, List<BaseAcao>> acoesPosEfeitoEmbarcacao = null;
 
             if (embarcacao != null)
             {

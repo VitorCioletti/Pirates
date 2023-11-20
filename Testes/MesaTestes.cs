@@ -5,13 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Dominio;
 using Dominio.Acoes;
+using Dominio.Acoes.Imediata;
 using Dominio.Acoes.Primaria;
 using Dominio.Acoes.Resultante;
+using Dominio.Acoes.Resultante.Base;
+using Dominio.Acoes.Resultante.Enums;
 using Dominio.Baralhos;
 using Dominio.Cartas.Duelo;
 using Dominio.Cartas.ResolucaoImediata;
 using Dominio.Cartas.Tesouro;
 using Dominio.Excecoes.Mesa;
+using NSubstitute;
+using NSubstitute.Core;
 using NUnit.Framework;
 
 public class MesaTestes
@@ -136,7 +141,6 @@ public class MesaTestes
     public void JogadorNaoExecutaResultanteNaoEsperada()
     {
         Jogador jogadorAtual = _mesa.Jogadores[0];
-        Jogador jogadorAlvo = _mesa.Jogadores[1];
 
         var acaoOrigem = new DescerCarta(jogadorAtual, new Canhao());
 
@@ -230,5 +234,131 @@ public class MesaTestes
     public void DeveLancarExcecaoSeNaoEstaEmDuelo()
     {
         Assert.Throws<SemDueloExcecao>(_mesa.SairModoDuelo);
+    }
+
+    [Test]
+    public void JogadorInicialDeveConseguirExecutarAcaoPrimaria()
+    {
+        Jogador jogadorInicial = _mesa.JogadorAtual;
+
+        int quantidadeCartas = jogadorInicial.Mao.ObterQuantidadeCartas();
+        int quantidadeAcoesDisponiveis = jogadorInicial.AcoesDisponiveis;
+
+        var comprarCarta = new ComprarCarta(jogadorInicial);
+
+        _mesa.ProcessarAcao(comprarCarta);
+
+        Assert.IsTrue(quantidadeCartas < jogadorInicial.Mao.ObterQuantidadeCartas());
+        Assert.IsTrue(quantidadeAcoesDisponiveis > jogadorInicial.AcoesDisponiveis);
+    }
+
+    [Test]
+    public void ExecutarTodasPrimariasDeveMudarJogadorAtual()
+    {
+        Jogador jogadorInicial = _mesa.JogadorAtual;
+        int turnoInicial = _mesa.Turno;
+
+        int quantidadeAcoesDisponiveis = jogadorInicial.AcoesDisponiveis;
+
+        for (int i = 0; i < quantidadeAcoesDisponiveis; i++)
+        {
+            var comprarCarta = new ComprarCarta(jogadorInicial);
+
+            _mesa.ProcessarAcao(comprarCarta);
+        }
+
+        Assert.AreNotEqual(jogadorInicial, _mesa.JogadorAtual);
+        Assert.IsTrue(turnoInicial < _mesa.Turno);
+    }
+
+    [Test]
+    public void DeveLevantarErroAoJogarForaDoTurno()
+    {
+        Assert.Throws<TurnoDeOutroJogadorExcecao>(ComprarCartaForaTurno);
+
+        void ComprarCartaForaTurno()
+        {
+            Jogador jogador = _mesa.Jogadores[1];
+
+            var comprarCarta = new ComprarCarta(jogador);
+
+            _mesa.ProcessarAcao(comprarCarta);
+        }
+    }
+
+    [Test]
+    public void DeveRegistrarEExecutarImediata()
+    {
+        Jogador jogadorAtual = _mesa.JogadorAtual;
+
+        bool primariaExecutada = false;
+        bool imediataExecutada = false;
+
+        var primaria = Substitute.For<BasePrimaria>(jogadorAtual, null);
+        var imediata = Substitute.For<BaseImediata>(jogadorAtual, null);
+
+        primaria.When(i => i.AplicarRegra(_mesa)).Do(AoAplicarRegraPrimaria);
+        imediata.When(i => i.AplicarRegra(_mesa)).Do(AoAplicarRegraImediata);
+
+        _mesa.ProcessarAcao(primaria);
+
+        Assert.IsTrue(primariaExecutada && imediataExecutada);
+
+        void AoAplicarRegraPrimaria(CallInfo _)
+        {
+            _mesa.RegistrarImediataAposResultantes(imediata);
+
+            primariaExecutada = true;
+        }
+
+        void AoAplicarRegraImediata(CallInfo _)
+        {
+            imediataExecutada = true;
+        }
+    }
+
+    [Test]
+    public void AcaoPrimariaDeveRetornarAcaoResultanteParaJogador()
+    {
+        Jogador jogadorAtual = _mesa.JogadorAtual;
+
+        bool primariaExecutada = false;
+        bool resultanteExecutada = false;
+
+        var primaria = Substitute.For<BasePrimaria>(jogadorAtual, null);
+
+        var resultante = Substitute.For<BaseResultante>(
+            primaria,
+            jogadorAtual,
+            TipoEscolha.Acao,
+            null);
+
+        var acoesResultantesEsperadas = new List<BaseAcao> {resultante};
+
+        primaria.AplicarRegra(_mesa).Returns(acoesResultantesEsperadas).AndDoes(AoAplicarRegraPrimaria);
+        resultante.When(i => i.AplicarRegra(_mesa)).Do(AoAplicarRegraResultante);
+
+        Dictionary<Jogador, List<BaseAcao>> resultado = _mesa.ProcessarAcao(primaria);
+
+        Assert.IsTrue(resultado.Count > 0);
+
+        BaseAcao resultanteObtida = resultado[jogadorAtual].Single();
+
+        Assert.AreEqual(acoesResultantesEsperadas[0], resultanteObtida);
+
+        Dictionary<Jogador, List<BaseAcao>> resultadoAcaoResultante = _mesa.ProcessarAcao(resultanteObtida);
+
+        Assert.IsTrue(resultadoAcaoResultante.Count == 0);
+        Assert.IsTrue(primariaExecutada && resultanteExecutada);
+
+        void AoAplicarRegraPrimaria(CallInfo _)
+        {
+            primariaExecutada = true;
+        }
+
+        void AoAplicarRegraResultante(CallInfo _)
+        {
+            resultanteExecutada = true;
+        }
     }
 }

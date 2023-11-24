@@ -1,0 +1,25 @@
+{
+    "name": "Piratas.Cliente.Servico",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b56ea529b681e8e4ea0755fa67859d68",
+        "GUID:50296654109a416594f24cf9b14d0d73",
+        "GUID:ba703485307c475fb00e4e2507c65441"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Microsoft.AspNetCore.SignalR.Client.dll",
+        "Microsoft.AspNetCore.SignalR.Client.Core.dll",
+        "Microsoft.AspNetCore.SignalR.Common.dll",
+        "Piratas.Protocolo.dll",
+        "Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "Microsoft.Extensions.DependencyInjection.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

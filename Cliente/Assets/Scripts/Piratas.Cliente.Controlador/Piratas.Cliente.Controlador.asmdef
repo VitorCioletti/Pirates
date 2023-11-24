@@ -1,0 +1,21 @@
+{
+    "name": "Piratas.Cliente.Controlador",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:ba703485307c475fb00e4e2507c65441",
+        "GUID:50296654109a416594f24cf9b14d0d73",
+        "GUID:11a577f1c6694ab7afcdb034a1a3191b",
+        "GUID:d1e3ff71ed1a40c2aeaaaa596e265bb1",
+        "GUID:5d0c2ddbca8e47d786976717818716e0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

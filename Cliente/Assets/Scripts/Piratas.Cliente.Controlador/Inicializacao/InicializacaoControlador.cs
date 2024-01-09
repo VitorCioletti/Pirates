@@ -2,17 +2,15 @@
 {
     using Cliente.Bootstrapper;
     using UnityEngine;
+    using UnityEngine.SceneManagement;
 
     public class InicializacaoControlador : MonoBehaviour
     {
         private void Start()
         {
-            _boot();
-        }
+            Inicializacao.Inicializar();
 
-        private void _boot()
-        {
-            Inicializacao.Boot();
+            SceneManager.LoadScene("Home");
         }
     }
 }

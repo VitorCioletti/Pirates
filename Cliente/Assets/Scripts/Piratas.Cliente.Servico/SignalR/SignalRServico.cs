@@ -18,7 +18,7 @@ namespace Piratas.Cliente.Servico
             _salaOuvintes = new List<ISalaOuvinte>();
         }
 
-        public static void Inicializar()
+        public static void ConfigurarConexao()
         {
             string endereco = "http://localhost:5000/sala";
 

@@ -9,20 +9,20 @@ using NUnit.Framework;
 
 public class MaoTestes
 {
-    private Mao _mao;
+    private Hand _hand;
 
     [SetUp]
     public void Inicializacao()
     {
-        var cartas = new List<Carta>();
+        var cartas = new List<Card>();
 
-        _mao = new Mao(cartas);
+        _hand = new Hand(cartas);
 
-        for (int i = 0; i < Mao.LimiteCartas; i++)
+        for (int i = 0; i < Hand.CardLimit; i++)
         {
             var rum = new Rum();
 
-            _mao.Adicionar(rum);
+            _hand.Add(rum);
         }
     }
 
@@ -31,31 +31,31 @@ public class MaoTestes
     {
         var rum = new Rum();
 
-        _mao.Adicionar(rum);
+        _hand.Add(rum);
 
-        Assert.IsTrue(_mao.Possui(rum));
+        Assert.IsTrue(_hand.Exists(rum));
     }
 
     [Test]
     public void DeveAdicionarCartas()
     {
-        var cartas = new List<Carta> {new Rum(), new Rum(), new Rum()};
+        var cartas = new List<Card> {new Rum(), new Rum(), new Rum()};
 
-        _mao.Adicionar(cartas);
+        _hand.Add(cartas);
 
-        Assert.AreEqual(cartas.Count, _mao.ObterTodas().Count);
+        Assert.AreEqual(cartas.Count, _hand.GetAll().Count);
     }
 
     [Test]
     public void DeveLevantarErroLimiteCartasAtingidoAoAdicionar()
     {
-        Assert.Throws<LimiteCartasMaoAtingidoExcecao>(AdicionarCarta);
+        Assert.Throws<HandCardLimitReachedException>(AdicionarCarta);
 
         void AdicionarCarta()
         {
             var rum = new Rum();
 
-            _mao.Adicionar(rum);
+            _hand.Add(rum);
         }
     }
 
@@ -63,71 +63,71 @@ public class MaoTestes
     public void DeveObterTodasCartas()
     {
 
-        Assert.AreEqual(Mao.LimiteCartas, _mao.ObterTodas().Count);
+        Assert.AreEqual(Hand.CardLimit, _hand.GetAll().Count);
     }
 
     [Test]
     public void DeveObterCartaPorId()
     {
-        Carta cartaObtida = _mao.ObterPorId(new Rum().Id);
+        Card cardObtida = _hand.GetById(new Rum().Id);
 
-        Assert.IsTrue(cartaObtida is not null);
+        Assert.IsTrue(cardObtida is not null);
     }
 
     [Test]
     public void DeveRemoverCarta()
     {
-        Assert.AreEqual(Mao.LimiteCartas, _mao.ObterTodas().Count);
+        Assert.AreEqual(Hand.CardLimit, _hand.GetAll().Count);
 
-        Carta cartaObtida = _mao.ObterQualquer();
+        Card cardObtida = _hand.GetAny();
 
-        _mao.Remover(cartaObtida);
+        _hand.Remove(cardObtida);
 
-        Assert.AreEqual(Mao.LimiteCartas - 1, _mao.ObterTodas().Count);
+        Assert.AreEqual(Hand.CardLimit - 1, _hand.GetAll().Count);
     }
 
     [Test]
     public void DeveObterQualquerCarta()
     {
 
-        Carta cartaObtida = _mao.ObterQualquer();
+        Card cardObtida = _hand.GetAny();
 
-        Assert.IsTrue(cartaObtida is not null);
+        Assert.IsTrue(cardObtida is not null);
     }
 
     [Test]
     public void DeveObterTodasCartasDeUmTipo()
     {
-        List<Rum> cartasObtidas = _mao.ObterTodas<Rum>();
+        List<Rum> cartasObtidas = _hand.GetAll<Rum>();
 
-        Assert.AreEqual(Mao.LimiteCartas, cartasObtidas.Count);
+        Assert.AreEqual(Hand.CardLimit, cartasObtidas.Count);
     }
 
     [Test]
     public void DevePossuirCartaPorTipo()
     {
-        Assert.IsTrue(_mao.Possui<Rum>());
+        Assert.IsTrue(_hand.Exists<Rum>());
     }
 
     [Test]
     public void NaoDevePossuirCartaPorTipo()
     {
-        Assert.IsFalse(_mao.Possui<Papagaio>());
+        Assert.IsFalse(_hand.Exists<Parrot>());
     }
 
     [Test]
     public void DevePossuirCarta()
     {
-        Carta cartaObtida = _mao.ObterQualquer();
+        Card cardObtida = _hand.GetAny();
 
-        Assert.IsTrue(_mao.Possui(cartaObtida));
+        Assert.IsTrue(_hand.Exists(cardObtida));
     }
 
     [Test]
     public void NaoDevePossuirCarta()
     {
-        Carta papagaio = new Papagaio();
+        Card papagaio = new Parrot();
 
-        Assert.IsFalse(_mao.Possui(papagaio));
+        Assert.IsFalse(_hand.Exists(papagaio));
     }
 }

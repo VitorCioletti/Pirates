@@ -21,35 +21,35 @@ using NUnit.Framework;
 
 public class MesaTestes
 {
-    private Mesa _mesa;
+    private Table _table;
 
     public MesaTestes()
     {
         var configuracaoCartas = new List<Tuple<string, int>> {new(nameof(Rum), 100)};
 
-        GeradorCartas.Configurar(configuracaoCartas);
+        CardsGenerator.Configure(configuracaoCartas);
     }
 
     [SetUp]
     public void Inicializacao()
     {
-        var jogadores = new List<Jogador>();
+        var jogadores = new List<Player>();
 
-        var jogador1 = new Jogador(
+        var jogador1 = new Player(
             "jogador1",
             (_, _) => { },
             (_, _) => { },
             (_, _) => { },
             (_, _) => { });
 
-        var jogador2 = new Jogador(
+        var jogador2 = new Player(
             "jogador2",
             (_, _) => { },
             (_, _) => { },
             (_, _) => { },
             (_, _) => { });
 
-        var jogador3 = new Jogador(
+        var jogador3 = new Player(
             "jogador3",
             (_, _) => { },
             (_, _) => { },
@@ -60,13 +60,13 @@ public class MesaTestes
         jogadores.Add(jogador2);
         jogadores.Add(jogador3);
 
-        _mesa = new Mesa(jogadores);
+        _table = new Table(jogadores);
     }
 
     [Test]
     public void TodosJogadoresDevemPossuirCartasAoCriarMesa()
     {
-        bool todosPossuemCartas = _mesa.Jogadores.All(j => j.Mao.ObterQuantidadeCartas() > 0);
+        bool todosPossuemCartas = _table.Players.All(j => j.Hand.GetCardQuantity() > 0);
 
         Assert.True(todosPossuemCartas);
     }
@@ -74,7 +74,7 @@ public class MesaTestes
     [Test]
     public void BaralhoCentralDevePossuirCartasAoCriarMesa()
     {
-        bool possuiCartas = _mesa.BaralhoCentral.QuantidadeCartas > 0;
+        bool possuiCartas = _table.CentralDeck.CardsAmount > 0;
 
         Assert.True(possuiCartas);
     }
@@ -82,7 +82,7 @@ public class MesaTestes
     [Test]
     public void PilhaDescarteDeveEstarVaziaAoCriarMesa()
     {
-        bool estaVazia = _mesa.PilhaDescarte.QuantidadeCartas == 0;
+        bool estaVazia = _table.DiscardDeck.CardsAmount == 0;
 
         Assert.True(estaVazia);
     }
@@ -90,12 +90,12 @@ public class MesaTestes
     [Test]
     public void JogadorInicialDevePossuirAcoesPrimariasDisponiveis()
     {
-        var acoesDisponiveisEsperadas = new List<BasePrimaria>
+        var acoesDisponiveisEsperadas = new List<BasePrimaryAction>
         {
-            new Duelar(null, null, null), new DescerCarta(null, null), new ComprarCarta(null)
+            new Duel(null, null, null), new DrawCard(null, null), new BuyCard(null)
         };
 
-        List<BaseAcao> acoesDisponiveis = _mesa.AcoesDisponiveisJogadores[_mesa.JogadorAtual];
+        List<BaseAction> acoesDisponiveis = _table.ActionsAvailableToPlayers[_table.CurrentPlayer];
 
         bool possuiTodasEsperadas =
             acoesDisponiveisEsperadas.All(pe => acoesDisponiveis.Exists(po => po.GetType() == pe.GetType()));
@@ -106,72 +106,72 @@ public class MesaTestes
     [Test]
     public void JogadorInicialDeveConseguirComprarCarta()
     {
-        Jogador jogadorAtual = _mesa.JogadorAtual;
+        Player playerAtual = _table.CurrentPlayer;
 
-        int quantidadeCartasAntesCompra = jogadorAtual.Mao.ObterQuantidadeCartas();
-        int quantidadeAcoesDisponiveisAntesCompra = jogadorAtual.AcoesDisponiveis;
+        int quantidadeCartasAntesCompra = playerAtual.Hand.GetCardQuantity();
+        int quantidadeAcoesDisponiveisAntesCompra = playerAtual.AvailableActions;
 
         int quantidadeCartasEsperada = quantidadeCartasAntesCompra + 1;
         int quantidadeAcoesDisponiveisEsperada = quantidadeAcoesDisponiveisAntesCompra - 1;
 
-        List<BaseAcao> acoesDisponiveis = _mesa.AcoesDisponiveisJogadores[jogadorAtual];
+        List<BaseAction> acoesDisponiveis = _table.ActionsAvailableToPlayers[playerAtual];
 
-        BaseAcao comprarCarta = acoesDisponiveis.First(a => a is ComprarCarta);
+        BaseAction comprarCarta = acoesDisponiveis.First(a => a is BuyCard);
 
-        _mesa.ProcessarAcao(comprarCarta);
+        _table.ProcessAction(comprarCarta);
 
-        Assert.AreEqual(quantidadeCartasEsperada, jogadorAtual.Mao.ObterQuantidadeCartas());
-        Assert.AreEqual(quantidadeAcoesDisponiveisEsperada, jogadorAtual.AcoesDisponiveis);
+        Assert.AreEqual(quantidadeCartasEsperada, playerAtual.Hand.GetCardQuantity());
+        Assert.AreEqual(quantidadeAcoesDisponiveisEsperada, playerAtual.AvailableActions);
     }
 
     [Test]
     public void JogadorNaoExecutaAcaoPrimariaForaTurno()
     {
-        Jogador proximoJogador = _mesa.Jogadores[1];
+        Player proximoPlayer = _table.Players[1];
 
-        Assert.Throws<TurnoDeOutroJogadorExcecao>(ProcessarAcao);
+        Assert.Throws<OtherPlayerTurnException>(ProcessarAcao);
 
         void ProcessarAcao()
         {
-            _mesa.ProcessarAcao(new ComprarCarta(proximoJogador));
+            _table.ProcessAction(new BuyCard(proximoPlayer));
         }
     }
 
     [Test]
     public void JogadorNaoExecutaResultanteNaoEsperada()
     {
-        Jogador jogadorAtual = _mesa.Jogadores[0];
+        Player playerAtual = _table.Players[0];
 
-        var acaoOrigem = new DescerCarta(jogadorAtual, new Canhao());
+        var acaoOrigem = new DrawCard(playerAtual, new Cannon());
 
-        var resultante = new DescartarCarta(
+        var resultante = new DiscardCard(
             acaoOrigem,
-            jogadorAtual,
-            jogadorAtual,
+            playerAtual,
+            playerAtual,
             new List<string>());
 
-        Assert.Throws<ResultanteNaoEsperadaExcecao>(ProcessarAcao);
+        Assert.Throws<UnexpectedResultantAction>(ProcessarAcao);
 
         void ProcessarAcao()
         {
-            _mesa.ProcessarAcao(resultante);
+            _table.ProcessAction(resultante);
         }
     }
 
     [Test]
     public void DeveMudarJogadorAtualAposAnteriorJogar()
     {
-        foreach (Jogador jogador in _mesa.Jogadores)
+        foreach (Player jogador in _table.Players)
         {
-            while (jogador.AcoesDisponiveis > 0)
+            while (jogador.AvailableActions > 0)
             {
-                List<BaseAcao> acoesDisponiveis = _mesa.AcoesDisponiveisJogadores[jogador];
+                List<BaseAction> acoesDisponiveis = _table.ActionsAvailableToPlayers[jogador];
 
-                BaseAcao comprarCarta = acoesDisponiveis.First(a => a is ComprarCarta);
+                BaseAction comprarCarta = acoesDisponiveis.First(a => a is BuyCard);
 
-                jogador.Mao.Remover(jogador.Mao.ObterQualquer());
+                jogador.Hand.Remove(jogador.Hand.GetAny());
 
-                _mesa.ProcessarAcao(comprarCarta);
+                _table.ProcessAction(comprarCarta);
             }
         }
 
@@ -181,132 +181,132 @@ public class MesaTestes
     [Test]
     public void JogadorDeveGanharSePossuirTesourosSuficientes()
     {
-        Jogador primeiroJogador = _mesa.JogadorAtual;
-        Jogador jogadorVencedor = _mesa.Jogadores[1];
+        Player primeiroPlayer = _table.CurrentPlayer;
+        Player playerVencedor = _table.Players[1];
 
-        jogadorVencedor.Mao.Adicionar(new Tesouro(5));
+        playerVencedor.Hand.Add(new Treasure(5));
 
-        while (primeiroJogador.AcoesDisponiveis > 0)
+        while (primeiroPlayer.AvailableActions > 0)
         {
-            List<BaseAcao> acoesDisponiveis = _mesa.AcoesDisponiveisJogadores[primeiroJogador];
+            List<BaseAction> acoesDisponiveis = _table.ActionsAvailableToPlayers[primeiroPlayer];
 
-            BaseAcao comprarCarta = acoesDisponiveis.First(a => a is ComprarCarta);
+            BaseAction comprarCarta = acoesDisponiveis.First(a => a is BuyCard);
 
-            primeiroJogador.Mao.Remover(primeiroJogador.Mao.ObterQualquer());
+            primeiroPlayer.Hand.Remove(primeiroPlayer.Hand.GetAny());
 
-            _mesa.ProcessarAcao(comprarCarta);
+            _table.ProcessAction(comprarCarta);
         }
 
-        Assert.AreEqual(jogadorVencedor, _mesa.Vencedor);
+        Assert.AreEqual(playerVencedor, _table.Winner);
     }
 
     [Test]
     public void DeveEntrarEmModoDuelo()
     {
-        Assert.IsFalse(_mesa.EmDuelo);
+        Assert.IsFalse(_table.InDuel);
 
-        _mesa.EntrarModoDuelo();
+        _table.EnterDuelMode();
 
-        Assert.IsTrue(_mesa.EmDuelo);
+        Assert.IsTrue(_table.InDuel);
     }
 
     [Test]
     public void DeveSairEmModoDuelo()
     {
-        _mesa.EntrarModoDuelo();
+        _table.EnterDuelMode();
 
-        Assert.IsTrue(_mesa.EmDuelo);
+        Assert.IsTrue(_table.InDuel);
 
-        _mesa.SairModoDuelo();
+        _table.EndDuelMode();
 
-        Assert.IsFalse(_mesa.EmDuelo);
+        Assert.IsFalse(_table.InDuel);
     }
 
     [Test]
     public void DeveLancarExcecaoSeEmDuelo()
     {
-        _mesa.EntrarModoDuelo();
+        _table.EnterDuelMode();
 
-        Assert.Throws<EmDueloExcecao>(_mesa.EntrarModoDuelo);
+        Assert.Throws<InDuelException>(_table.EnterDuelMode);
     }
 
     [Test]
     public void DeveLancarExcecaoSeNaoEstaEmDuelo()
     {
-        Assert.Throws<SemDueloExcecao>(_mesa.SairModoDuelo);
+        Assert.Throws<NoDuelException>(_table.EndDuelMode);
     }
 
     [Test]
     public void JogadorInicialDeveConseguirExecutarAcaoPrimaria()
     {
-        Jogador jogadorInicial = _mesa.JogadorAtual;
+        Player playerInicial = _table.CurrentPlayer;
 
-        int quantidadeCartas = jogadorInicial.Mao.ObterQuantidadeCartas();
-        int quantidadeAcoesDisponiveis = jogadorInicial.AcoesDisponiveis;
+        int quantidadeCartas = playerInicial.Hand.GetCardQuantity();
+        int quantidadeAcoesDisponiveis = playerInicial.AvailableActions;
 
-        var comprarCarta = new ComprarCarta(jogadorInicial);
+        var comprarCarta = new BuyCard(playerInicial);
 
-        _mesa.ProcessarAcao(comprarCarta);
+        _table.ProcessAction(comprarCarta);
 
-        Assert.IsTrue(quantidadeCartas < jogadorInicial.Mao.ObterQuantidadeCartas());
-        Assert.IsTrue(quantidadeAcoesDisponiveis > jogadorInicial.AcoesDisponiveis);
+        Assert.IsTrue(quantidadeCartas < playerInicial.Hand.GetCardQuantity());
+        Assert.IsTrue(quantidadeAcoesDisponiveis > playerInicial.AvailableActions);
     }
 
     [Test]
     public void ExecutarTodasPrimariasDeveMudarJogadorAtual()
     {
-        Jogador jogadorInicial = _mesa.JogadorAtual;
-        int turnoInicial = _mesa.Turno;
+        Player playerInicial = _table.CurrentPlayer;
+        int turnoInicial = _table.CurrentTurn;
 
-        int quantidadeAcoesDisponiveis = jogadorInicial.AcoesDisponiveis;
+        int quantidadeAcoesDisponiveis = playerInicial.AvailableActions;
 
         for (int i = 0; i < quantidadeAcoesDisponiveis; i++)
         {
-            var comprarCarta = new ComprarCarta(jogadorInicial);
+            var comprarCarta = new BuyCard(playerInicial);
 
-            _mesa.ProcessarAcao(comprarCarta);
+            _table.ProcessAction(comprarCarta);
         }
 
-        Assert.AreNotEqual(jogadorInicial, _mesa.JogadorAtual);
-        Assert.IsTrue(turnoInicial < _mesa.Turno);
+        Assert.AreNotEqual(playerInicial, _table.CurrentPlayer);
+        Assert.IsTrue(turnoInicial < _table.CurrentTurn);
     }
 
     [Test]
     public void DeveLevantarErroAoJogarForaDoTurno()
     {
-        Assert.Throws<TurnoDeOutroJogadorExcecao>(ComprarCartaForaTurno);
+        Assert.Throws<OtherPlayerTurnException>(ComprarCartaForaTurno);
 
         void ComprarCartaForaTurno()
         {
-            Jogador jogador = _mesa.Jogadores[1];
+            Player player = _table.Players[1];
 
-            var comprarCarta = new ComprarCarta(jogador);
+            var comprarCarta = new BuyCard(player);
 
-            _mesa.ProcessarAcao(comprarCarta);
+            _table.ProcessAction(comprarCarta);
         }
     }
 
     [Test]
     public void DeveRegistrarEExecutarImediata()
     {
-        Jogador jogadorAtual = _mesa.JogadorAtual;
+        Player playerAtual = _table.CurrentPlayer;
 
         bool primariaExecutada = false;
         bool imediataExecutada = false;
 
-        var primaria = Substitute.For<BasePrimaria>(jogadorAtual, null);
-        var imediata = Substitute.For<BaseImediata>(jogadorAtual, null);
+        var primaria = Substitute.For<BasePrimaryAction>(playerAtual, null);
+        var imediata = Substitute.For<BaseImediate>(playerAtual, null);
 
-        primaria.When(i => i.AplicarRegra(_mesa)).Do(AoAplicarRegraPrimaria);
-        imediata.When(i => i.AplicarRegra(_mesa)).Do(AoAplicarRegraImediata);
+        primaria.When(i => i.ApplyRule(_table)).Do(AoAplicarRegraPrimaria);
+        imediata.When(i => i.AplicarRegra(_table)).Do(AoAplicarRegraImediata);
 
-        _mesa.ProcessarAcao(primaria);
+        _table.ProcessAction(primaria);
 
         Assert.IsTrue(primariaExecutada && imediataExecutada);
 
         void AoAplicarRegraPrimaria(CallInfo _)
         {
-            _mesa.RegistrarImediataAposResultantes(imediata);
+            _table.RegisterImmediateAfterResultants(imediata);
 
             primariaExecutada = true;
         }
@@ -320,33 +320,33 @@ public class MesaTestes
     [Test]
     public void AcaoPrimariaDeveRetornarAcaoResultanteParaJogador()
     {
-        Jogador jogadorAtual = _mesa.JogadorAtual;
+        Player playerAtual = _table.CurrentPlayer;
 
         bool primariaExecutada = false;
         bool resultanteExecutada = false;
 
-        var primaria = Substitute.For<BasePrimaria>(jogadorAtual, null);
+        var primaria = Substitute.For<BasePrimaryAction>(playerAtual, null);
 
-        var resultante = Substitute.For<BaseResultante>(
+        var resultante = Substitute.For<BaseResultant>(
             primaria,
-            jogadorAtual,
-            TipoEscolha.Acao,
+            playerAtual,
+            ChoiceType.Action,
             null);
 
-        var acoesResultantesEsperadas = new List<BaseAcao> {resultante};
+        var acoesResultantesEsperadas = new List<BaseAction> {resultante};
 
-        primaria.AplicarRegra(_mesa).Returns(acoesResultantesEsperadas).AndDoes(AoAplicarRegraPrimaria);
-        resultante.When(i => i.AplicarRegra(_mesa)).Do(AoAplicarRegraResultante);
+        primaria.ApplyRule(_table).Returns(acoesResultantesEsperadas).AndDoes(AoAplicarRegraPrimaria);
+        resultante.When(i => i.ApplyRule(_table)).Do(AoAplicarRegraResultante);
 
-        Dictionary<Jogador, List<BaseAcao>> resultado = _mesa.ProcessarAcao(primaria);
+        Dictionary<Player, List<BaseAction>> resultado = _table.ProcessAction(primaria);
 
         Assert.IsTrue(resultado.Count > 0);
 
-        BaseAcao resultanteObtida = resultado[jogadorAtual].Single();
+        BaseAction resultanteObtida = resultado[playerAtual].Single();
 
         Assert.AreEqual(acoesResultantesEsperadas[0], resultanteObtida);
 
-        Dictionary<Jogador, List<BaseAcao>> resultadoAcaoResultante = _mesa.ProcessarAcao(resultanteObtida);
+        Dictionary<Player, List<BaseAction>> resultadoAcaoResultante = _table.ProcessAction(resultanteObtida);
 
         Assert.IsTrue(resultadoAcaoResultante.Count == 0);
         Assert.IsTrue(primariaExecutada && resultanteExecutada);

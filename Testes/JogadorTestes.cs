@@ -12,100 +12,100 @@ using NUnit.Framework;
 
 public class JogadorTestes
 {
-    private Jogador _jogador;
+    private Player _player;
 
-    private List<Tuple<string, Carta>> _cartasAdicionadasNaMao;
+    private List<Tuple<string, Card>> _cartasAdicionadasNaMao;
 
-    private List<Tuple<string, Carta>> _cartasRemovidasNaMao;
+    private List<Tuple<string, Card>> _cartasRemovidasNaMao;
 
-    private List<Tuple<string, Carta>> _cartasAdicionadasNoCampo;
+    private List<Tuple<string, Card>> _cartasAdicionadasNoCampo;
 
-    private List<Tuple<string, Carta>> _cartasRemovidasNoCampo;
+    private List<Tuple<string, Card>> _cartasRemovidasNoCampo;
 
     [SetUp]
     public void Inicializacao()
     {
         string id = Guid.NewGuid().ToString();
 
-        _cartasAdicionadasNaMao = new List<Tuple<string, Carta>>();
-        _cartasRemovidasNaMao = new List<Tuple<string, Carta>>();
-        _cartasAdicionadasNoCampo = new List<Tuple<string, Carta>>();
-        _cartasRemovidasNoCampo = new List<Tuple<string, Carta>>();
+        _cartasAdicionadasNaMao = new List<Tuple<string, Card>>();
+        _cartasRemovidasNaMao = new List<Tuple<string, Card>>();
+        _cartasAdicionadasNoCampo = new List<Tuple<string, Card>>();
+        _cartasRemovidasNoCampo = new List<Tuple<string, Card>>();
 
-        _jogador = new Jogador(
+        _player = new Player(
             id,
             AoAdicionarCartasNaMao,
             AoRemoverCartasNaMao,
             AoAdicionarCartasNoCampo,
             AoRemoverCartasNoCampo);
 
-        void AoAdicionarCartasNaMao(string idJogador, Carta carta)
+        void AoAdicionarCartasNaMao(string idJogador, Card carta)
         {
-            _cartasAdicionadasNaMao.Add(new Tuple<string, Carta>(idJogador, carta));
+            _cartasAdicionadasNaMao.Add(new Tuple<string, Card>(idJogador, carta));
         }
 
-        void AoRemoverCartasNaMao(string idJogador, Carta carta)
+        void AoRemoverCartasNaMao(string idJogador, Card carta)
         {
-            _cartasRemovidasNaMao.Add(new Tuple<string, Carta>(idJogador, carta));
+            _cartasRemovidasNaMao.Add(new Tuple<string, Card>(idJogador, carta));
         }
 
-        void AoAdicionarCartasNoCampo(string idJogador, Carta carta)
+        void AoAdicionarCartasNoCampo(string idJogador, Card carta)
         {
-            _cartasAdicionadasNoCampo.Add(new Tuple<string, Carta>(idJogador, carta));
+            _cartasAdicionadasNoCampo.Add(new Tuple<string, Card>(idJogador, carta));
         }
 
-        void AoRemoverCartasNoCampo(string idJogador, Carta carta)
+        void AoRemoverCartasNoCampo(string idJogador, Card carta)
         {
-            _cartasRemovidasNoCampo.Add(new Tuple<string, Carta>(idJogador, carta));
+            _cartasRemovidasNoCampo.Add(new Tuple<string, Card>(idJogador, carta));
         }
     }
 
     [Test]
     public void DeveResetarAcoesDisponiveis()
     {
-        for (int i = 0; i < _jogador.AcoesDisponiveis; i++)
+        for (int i = 0; i < _player.AvailableActions; i++)
         {
-            _jogador.SubtrairAcoesDisponiveis();
+            _player.SubtractAvailableActions();
         }
 
         const int acoes = 10;
 
-        _jogador.ResetarAcoesDisponiveis(acoes);
+        _player.ResetAvailableActions(acoes);
 
-        Assert.AreEqual(acoes, _jogador.AcoesDisponiveis);
+        Assert.AreEqual(acoes, _player.AvailableActions);
     }
 
     [Test]
     public void DeveSubtrairAcoesDisponviveis()
     {
-        int acoesEsperadas = _jogador.AcoesDisponiveis - 1;
+        int acoesEsperadas = _player.AvailableActions - 1;
 
-        _jogador.SubtrairAcoesDisponiveis();
+        _player.SubtractAvailableActions();
 
-        Assert.AreEqual(acoesEsperadas, _jogador.AcoesDisponiveis);
+        Assert.AreEqual(acoesEsperadas, _player.AvailableActions);
     }
 
     [Test]
     public void DeveCalcularTesouros()
     {
-        var pirataNobre = new PirataNobre();
+        var pirataNobre = new NoblePirate();
 
         const int tesourosMao = 2;
         const int tesourosProtegidos = 1;
-        int tesourosPirataNobre = pirataNobre.Tesouros;
+        int tesourosPirataNobre = pirataNobre.Treasures;
         const int tesourosMeioAmuleto = 2;
 
         int tesourosEsperados = tesourosMao + tesourosProtegidos + tesourosPirataNobre + tesourosMeioAmuleto;
 
-        _jogador.Mao.Adicionar(new Tesouro(tesourosMao));
-        _jogador.Mao.Adicionar(new MeioAmuleto());
-        _jogador.Mao.Adicionar(new MeioAmuleto());
+        _player.Hand.Add(new Treasure(tesourosMao));
+        _player.Hand.Add(new HalfAmulet());
+        _player.Hand.Add(new HalfAmulet());
 
-        _jogador.Campo.AdicionarProtegida(new Tesouro(tesourosProtegidos));
+        _player.Field.AddProtected(new Treasure(tesourosProtegidos));
 
-        _jogador.Campo.Adicionar(pirataNobre);
+        _player.Field.Add(pirataNobre);
 
-        Assert.AreEqual(tesourosEsperados, _jogador.CalcularTesouros());
+        Assert.AreEqual(tesourosEsperados, _player.CalculateTreasurePoints());
     }
 
     [Test]
@@ -113,10 +113,10 @@ public class JogadorTestes
     {
         var rum = new Rum();
 
-        _jogador.Mao.Adicionar(rum);
+        _player.Hand.Add(rum);
 
         Assert.AreEqual(rum, _cartasAdicionadasNaMao[0].Item2);
-        Assert.AreEqual(_jogador.Id, _cartasAdicionadasNaMao[0].Item1);
+        Assert.AreEqual(_player.Id, _cartasAdicionadasNaMao[0].Item1);
     }
 
     [Test]
@@ -124,39 +124,39 @@ public class JogadorTestes
     {
         var rum = new Rum();
 
-        _jogador.Mao.Adicionar(rum);
-        _jogador.Mao.Remover(rum);
+        _player.Hand.Add(rum);
+        _player.Hand.Remove(rum);
 
         Assert.AreEqual(rum, _cartasRemovidasNaMao[0].Item2);
-        Assert.AreEqual(_jogador.Id, _cartasRemovidasNaMao[0].Item1);
+        Assert.AreEqual(_player.Id, _cartasRemovidasNaMao[0].Item1);
     }
 
     [Test]
     public void DeveInvocarFuncaoAoAdicionarCartaNoCampo()
     {
-        var cascoAco = new CascoAco();
+        var cascoAco = new IronHull();
 
-        _jogador.Campo.Adicionar(cascoAco);
+        _player.Field.Add(cascoAco);
 
         Assert.AreEqual(cascoAco, _cartasAdicionadasNoCampo[0].Item2);
-        Assert.AreEqual(_jogador.Id, _cartasAdicionadasNoCampo[0].Item1);
+        Assert.AreEqual(_player.Id, _cartasAdicionadasNoCampo[0].Item1);
     }
 
     [Test]
     public void DeveInvocarFuncaoAoRemoverCartaNoCampo()
     {
-        var cascoAco = new CascoAco();
+        var cascoAco = new IronHull();
 
-        _jogador.Campo.Adicionar(cascoAco);
+        _player.Field.Add(cascoAco);
 
-        int vidaTotal = cascoAco.Vida;
+        int vidaTotal = cascoAco.Life;
 
         for (int i = 0; i <= vidaTotal; i++)
         {
-            _jogador.Campo.DanificarEmbarcacao();
+            _player.Field.DamageShip();
         }
 
         Assert.AreEqual(cascoAco, _cartasRemovidasNoCampo[0].Item2);
-        Assert.AreEqual(_jogador.Id, _cartasRemovidasNoCampo[0].Item1);
+        Assert.AreEqual(_player.Id, _cartasRemovidasNoCampo[0].Item1);
     }
 }

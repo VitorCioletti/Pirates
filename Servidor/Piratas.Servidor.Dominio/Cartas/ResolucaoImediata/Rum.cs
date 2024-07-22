@@ -4,17 +4,17 @@ namespace Piratas.Servidor.Dominio.Cartas.ResolucaoImediata
     using Acoes;
     using Baralhos;
 
-    public class Rum : BaseResolucaoImediata
+    public class Rum : BaseImmediateResolution
     {
-        private readonly int _cartasCompradas = 2;
+        private readonly int _cardsToBuy = 2;
 
-        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
+        public override List<BaseAction> ApplyEffect(BaseAction action, Table table)
         {
-            Mao maoRealizador = acao.Realizador.Mao;
-            BaralhoCentral baralhoCentral = mesa.BaralhoCentral;
+            Hand starterHand = action.Starter.Hand;
+            CentralDeck centralDeck = table.CentralDeck;
 
-            List<Carta> cartasCompradas = baralhoCentral.ObterTopo(_cartasCompradas);
-            maoRealizador.Adicionar(cartasCompradas);
+            List<Card> boughtCards = centralDeck.GetTop(_cardsToBuy);
+            starterHand.Add(boughtCards);
 
             return null;
         }

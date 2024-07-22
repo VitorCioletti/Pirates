@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="Configuracao/Arquivos/configuracao.json">
+        <None Include="Configuracao\Arquivos\configuration.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>

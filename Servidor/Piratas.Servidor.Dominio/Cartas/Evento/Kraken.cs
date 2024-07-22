@@ -7,55 +7,55 @@ namespace Piratas.Servidor.Dominio.Cartas.Evento
     using Acoes.Resultante;
     using Tripulacao;
 
-    public class Kraken : BaseEvento
+    public class Kraken : BaseEvent
     {
-        public override List<BaseAcao> AplicarEfeito(BaseAcao acao, Mesa mesa)
+        public override List<BaseAction> ApplyEffect(BaseAction action, Table table)
         {
-            List<Jogador> jogadoresNaMesa = mesa.Jogadores;
+            List<Player> allPlayers = table.Players;
 
-            var acoesResultantes = new List<BaseAcao>();
+            var resultantActions = new List<BaseAction>();
 
-            foreach (Jogador jogador in jogadoresNaMesa)
+            foreach (Player player in allPlayers)
             {
-                bool possuiEmbarcacao = jogador.Campo.Embarcacao != null;
-                bool possuiTripulacao = jogador.Campo.Tripulacao.Count == 0;
+                bool hasShip = player.Field.Ship != null;
+                bool hasAnyCrew = player.Field.Crew.Count == 0;
 
-                var resultanteAfogarTripulacao = new AfogarTripulante(acao, jogador, jogador);
-                var resultanteDanificarEmbarcacao = new DanificarEmbarcacao(jogador);
+                var drownCrewMember = new DrownCrewMember(action, player, player);
+                var damageShip = new DamageShip(player);
 
-                if (!possuiEmbarcacao && !possuiTripulacao)
+                if (!hasShip && !hasAnyCrew)
                     continue;
 
-                if (possuiEmbarcacao && possuiTripulacao)
+                if (hasShip && hasAnyCrew)
                 {
-                    var escolherResultante = new EscolherAcao(
-                        acao,
-                        jogador,
-                        resultanteAfogarTripulacao,
-                        resultanteDanificarEmbarcacao);
+                    var chooseAction = new ChooseAction(
+                        action,
+                        player,
+                        drownCrewMember,
+                        damageShip);
 
-                    acoesResultantes.Add(escolherResultante);
+                    resultantActions.Add(chooseAction);
                 }
-                else if (!possuiEmbarcacao)
+                else if (!hasShip)
                 {
-                    List<BaseTripulante> afogaveis = jogador.Campo.Tripulacao.Where(t => t.Afogavel).ToList();
+                    List<BaseCrewMember> drownableCrewMembers = player.Field.Crew.Where(t => t.Drownable).ToList();
 
-                    if (afogaveis.Count == 0)
+                    if (drownableCrewMembers.Count == 0)
                         continue;
 
-                    if (afogaveis.Count == 1)
-                        jogador.Campo.AfogarTripulacao();
+                    if (drownableCrewMembers.Count == 1)
+                        player.Field.DrownCrew();
 
                     else
-                        acoesResultantes.Add(resultanteAfogarTripulacao);
+                        resultantActions.Add(drownCrewMember);
                 }
                 else
                 {
-                    jogador.Campo.DanificarEmbarcacao();
+                    player.Field.DamageShip();
                 }
             }
 
-            return acoesResultantes;
+            return resultantActions;
         }
     }
 }

@@ -1,0 +1,76 @@
+{
+    "Kestrel": {
+        "Endpoints": {
+            "Http": {
+                "Url": "http://localhost:5000"
+            }
+        }
+    },
+    "Serilog": {
+        "Using": [
+            "Serilog.Sinks.Console",
+            "Serilog.Sinks.File"
+        ],
+        "MinimumLevel": "Debug",
+        "WriteTo": [
+            {
+                "Name": "Console",
+                "Args": {
+                    "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} - {Level:u} - {Message:lj}{NewLine}{Exception}"
+                }
+            },
+            {
+                "Name": "File",
+                "Args": {
+                    "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} - {Level:u} - {Message:lj}{NewLine}{Exception}"
+                }
+            }
+        ]
+    },
+    "Deck": {
+        "Duel": {
+            "Cannon": 20,
+            "Helmsman": 5
+        },
+        "SurpriseDuel": {
+            "SurpriseAttack": 0
+        },
+        "Ship": {
+            "IronHull": 1,
+            "NavalGuerrilla": 1,
+            "WingedDutch": 1,
+            "TortugaMerchant": 1,
+            "CyclopsEye": 1,
+            "HellishUrchin": 1,
+            "FortuneWheel": 1,
+            "PoseidonServant": 1,
+            "YourHighness": 1
+        },
+        "Event": {
+            "Kraken": 0
+        },
+        "Passive": {
+            "TrapChest": 0
+        },
+        "ImmediateResolution": {
+            "CallCrew": 4,
+            "Explosived": 0,
+            "ManOverboard": 5,
+            "Spyglass": 5,
+            "TreasureMap": 6,
+            "Diver": 0,
+            "Parrot": 8,
+            "Rum": 4,
+            "Sake": 10
+        },
+        "Treasure": {
+            "Treasure": 18
+        },
+        "Crew": {
+            "Pirate": 8,
+            "CursedPirate": 4,
+            "GhostPirate": 4,
+            "NoblePirate": 0
+        }
+    }
+}

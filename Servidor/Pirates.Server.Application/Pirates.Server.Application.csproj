@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <RootNamespace>Pirates.Server.Application</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Pirates.Server.Domain\Pirates.Server.Domain.csproj" />
+        <ProjectReference Include="..\Pirates.Server.Service\Pirates.Server.Service.csproj" />
+        <ProjectReference Include="..\Pirates.Protocol\Pirates.Protocol.csproj" />
+    </ItemGroup>
+
+</Project>

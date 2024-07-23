@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <RootNamespace>Pirates.Server.Service</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.8" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client.Core " Version="7.0.8" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack " Version="7.0.8" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+        <PackageReference Include="Serilog" Version="3.0.1" />
+        <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="7.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+        <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Pirates.Protocol\Pirates.Protocol.csproj" />
+        <ProjectReference Include="..\Pirates.Server.Domain\Pirates.Server.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="Configuration\Files\configuration.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Exception\" />
+    </ItemGroup>
+
+</Project>

@@ -1,13 +1,12 @@
-namespace Piratas.Servidor.Testes;
+namespace Pirates.Server.Domain.Test;
 
 using System.Collections.Generic;
-using Dominio;
-using Dominio.Cartas.Duelo;
-using Dominio.Cartas.DueloSurpresa;
-using Dominio.Cartas.Embarcacao;
-using Dominio.Cartas.Tesouro;
-using Dominio.Cartas.Tripulacao;
-using Dominio.Excecoes.Campo;
+using Domain.Card.Crew;
+using Domain.Card.Duel;
+using Domain.Card.Ship;
+using Domain.Card.SurpriseDuel;
+using Domain.Card.Treasure;
+using Exception.Field;
 using NUnit.Framework;
 
 public class FieldTests
@@ -64,43 +63,43 @@ public class FieldTests
     }
 
     [Test]
-    public void DeveLevantarErroAoAdicionarEmbarcacaoEJaExistir()
+    public void MustRaiseErrorWhenShipAlreadyOnField()
     {
-        var cascoAco = new IronHull();
+        var ironHull = new IronHull();
 
-        _field.Add(cascoAco);
+        _field.Add(ironHull);
 
         Assert.Throws<ShipAlreadyExistsException>(Adicionar);
 
         void Adicionar()
         {
-            _field.Add(cascoAco);
+            _field.Add(ironHull);
         }
     }
 
     [Test]
-    public void DeveTrocarEmbarcacao()
+    public void MustChangeShip()
     {
-        var cascoAco = new IronHull();
-        var guerrilhaNaval = new NavalGuerrilla();
+        var ironHull = new IronHull();
+        var navalGuerrilla = new NavalGuerrilla();
 
-        _field.Add(cascoAco);
+        _field.Add(ironHull);
 
-        _field.ChangeShip(guerrilhaNaval);
+        _field.ChangeShip(navalGuerrilla);
 
-        Assert.AreEqual(guerrilhaNaval, _field.Ship);
+        Assert.AreEqual(navalGuerrilla, _field.Ship);
     }
 
     [Test]
-    public void DeveLevantarErroAoTrocarEmbarcacaoENaoExistirNenhuma()
+    public void MustRaiseErrorWhenChangingShipButThereIsNone()
     {
-        var guerrilhaNaval = new NavalGuerrilla();
+        var navalGuerrilla = new NavalGuerrilla();
 
-        Assert.Throws<NoShipException>(TrocarEmbarcacao);
+        Assert.Throws<NoShipException>(ChangeShip);
 
-        void TrocarEmbarcacao()
+        void ChangeShip()
         {
-            _field.ChangeShip(guerrilhaNaval);
+            _field.ChangeShip(navalGuerrilla);
         }
     }
 
@@ -115,48 +114,48 @@ public class FieldTests
     }
 
     [Test]
-    public void DeveAdicionarCanhoes()
+    public void MustAddCannons()
     {
-        var canhoes = new List<Cannon> {new(), new()};
+        var cannons = new List<Cannon> {new(), new()};
 
-        _field.Add(canhoes);
+        _field.Add(cannons);
 
-        Assert.AreEqual(canhoes, _field.Cannons);
+        Assert.AreEqual(cannons, _field.Cannons);
     }
 
     [Test]
     public void DeveRemoverCanhao()
     {
-        var canhao = new Cannon();
+        var cannon = new Cannon();
 
-        _field.Add(canhao);
+        _field.Add(cannon);
 
-        _field.Remover(canhao);
+        _field.Remover(cannon);
 
         Assert.AreEqual(0, _field.Cannons.Count);
     }
 
     [Test]
-    public void DeveAdicionarTripulante()
+    public void MustAddCrewMember()
     {
-        var pirata = new Pirate();
+        var pirate = new Pirate();
 
-        _field.Add(pirata);
+        _field.Add(pirate);
 
-        Assert.AreEqual(pirata, _field.Crew[0]);
+        Assert.AreEqual(pirate, _field.Crew[0]);
     }
 
     [Test]
-    public void DeveLevantarErroAoAdicionarETriuplacaoCheia()
+    public void MustRaiseErrorWhenAddingCrewMemberAndFull()
     {
         for (int i = 0; i < Field.MaximumCrew; i++)
         {
-            AdicionarPirata();
+            AddPirate();
         }
 
-        Assert.Throws<FullCrewException>(AdicionarPirata);
+        Assert.Throws<FullCrewException>(AddPirate);
 
-        void AdicionarPirata()
+        void AddPirate()
         {
             var pirata = new Pirate();
 
@@ -165,22 +164,22 @@ public class FieldTests
     }
 
     [Test]
-    public void DeveRemoverTripulante()
+    public void MustRemoveCrewMember()
     {
-        var pirata = new Pirate();
+        var pirate = new Pirate();
 
-        _field.Add(pirata);
-        _field.Remove(pirata);
+        _field.Add(pirate);
+        _field.Remove(pirate);
 
         Assert.AreEqual(0, _field.Crew.Count);
     }
 
     [Test]
-    public void DeveLevantarErroAoRemoverTripulanteENaoExistir()
+    public void MustRaiseErrorWhenRemovingNonExistantCrewMember()
     {
-        Assert.Throws<EmptyCrewException>(Remover);
+        Assert.Throws<EmptyCrewException>(Remove);
 
-        void Remover()
+        void Remove()
         {
             var pirata = new Pirate();
 
@@ -189,27 +188,27 @@ public class FieldTests
     }
 
     [Test]
-    public void DeveLevantarErroAoNaoEncontrarTripulante()
+    public void MustRaiseErrorWhenDoesNotFindCrewMember()
     {
-        var pirata = new Pirate();
+        var pirate = new Pirate();
 
-        _field.Add(pirata);
-        Assert.Throws<CrewMemberNotFoundException>(Remover);
+        _field.Add(pirate);
+        Assert.Throws<CrewMemberNotFoundException>(Remove);
 
-        void Remover()
+        void Remove()
         {
-            var pirataARemover = new Pirate();
+            var pirateToRemove = new Pirate();
 
-            _field.Remove(pirataARemover);
+            _field.Remove(pirateToRemove);
         }
     }
 
     [Test]
-    public void DeveAfogarTripulacao()
+    public void MustDrownCrew()
     {
-        var pirata = new Pirate();
+        var pirate = new Pirate();
 
-        _field.Add(pirata);
+        _field.Add(pirate);
 
         _field.DrownCrew();
 
@@ -217,13 +216,13 @@ public class FieldTests
     }
 
     [Test]
-    public void DeveRemoverCartasDuelo()
+    public void MustRemoveDuelCard()
     {
-        var canhao = new Cannon();
-        var ataqueSurpresa = new SurpriseAttack();
+        var cannon = new Cannon();
+        var surpriseAttack = new SurpriseAttack();
 
-        _field.Add(canhao);
-        _field.Add(ataqueSurpresa);
+        _field.Add(cannon);
+        _field.Add(surpriseAttack);
 
         _field.RemoveDuelCards();
 
@@ -232,27 +231,27 @@ public class FieldTests
     }
 
     [Test]
-    public void DeveAdicionarCartaProtegida()
+    public void MustAddProtectedCard()
     {
-        var tesouro = new Treasure(3);
+        var treasure = new Treasure(3);
 
-        _field.AddProtected(tesouro);
+        _field.AddProtected(treasure);
 
-        Assert.AreEqual(tesouro, _field.Protected[0]);
+        Assert.AreEqual(treasure, _field.Protected[0]);
     }
 
     [Test]
-    public void DeveRemoverProtegidasAoRemoverEmbarcacao()
+    public void MustRemoveProtectedWhenDestroyingShip()
     {
-        var tesouro = new Treasure(3);
-        var cascoAco = new IronHull();
+        var treasure = new Treasure(3);
+        var ironHull = new IronHull();
 
-        _field.Add(cascoAco);
-        _field.AddProtected(tesouro);
+        _field.Add(ironHull);
+        _field.AddProtected(treasure);
 
-        int vidaTotal = cascoAco.Life;
+        int life = ironHull.Life;
 
-        for (int i = 0; i <= vidaTotal; i++)
+        for (int i = 0; i <= life; i++)
         {
             _field.DamageShip();
         }
@@ -261,12 +260,12 @@ public class FieldTests
     }
 
     [Test]
-    public void DeveAdicionarDueloSurpresa()
+    public void MustAddSurpriseAttack()
     {
-        var dueloSurpresa = new SurpriseAttack();
+        var surpriseAttack = new SurpriseAttack();
 
-        _field.Add(dueloSurpresa);
+        _field.Add(surpriseAttack);
 
-        Assert.AreEqual(dueloSurpresa, _field.SurpriseDuel[0]);
+        Assert.AreEqual(surpriseAttack, _field.SurpriseDuel[0]);
     }
 }

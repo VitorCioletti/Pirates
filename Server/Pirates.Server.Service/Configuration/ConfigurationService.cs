@@ -24,7 +24,7 @@ namespace Pirates.Server.Service.Configuration
 
             return new ConfigurationBuilder()
                 .SetBasePath(binaryFolder)
-                .AddJsonFile("Configuration/Folders/configuration.json")
+                .AddJsonFile("Configuration/Files/configuration.json")
                 .Build();
         }
     }

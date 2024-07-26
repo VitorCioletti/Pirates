@@ -15,13 +15,6 @@ public class HandTests
         var cards = new List<Domain.Card.Card>();
 
         _hand = new Hand(cards);
-
-        for (int i = 0; i < Hand.CardLimit; i++)
-        {
-            var rum = new Rum();
-
-            _hand.Add(rum);
-        }
     }
 
     [Test]
@@ -47,25 +40,30 @@ public class HandTests
     [Test]
     public void MustThrowExceptionIfCardLimitReached()
     {
-        Assert.Throws<HandCardLimitReachedException>(AddCard);
+        Assert.Throws<HandCardLimitReachedException>(OverfillHand);
 
-        void AddCard()
+        void OverfillHand()
         {
-            var rum = new Rum();
-
-            _hand.Add(rum);
+            _fillHand();
+            _fillHand();
         }
     }
 
     [Test]
     public void MustGetAllCards()
     {
+        _fillHand();
+
         Assert.AreEqual(Hand.CardLimit, _hand.GetAll().Count);
     }
 
     [Test]
     public void MustGetCardById()
     {
+        var rum = new Rum();
+
+        _hand.Add(rum);
+
         Domain.Card.Card card = _hand.GetById(new Rum().Id);
 
         Assert.IsTrue(card is not null);
@@ -74,6 +72,8 @@ public class HandTests
     [Test]
     public void MustRemoveCard()
     {
+        _fillHand();
+
         Assert.AreEqual(Hand.CardLimit, _hand.GetAll().Count);
 
         Domain.Card.Card card = _hand.GetAny();
@@ -86,6 +86,8 @@ public class HandTests
     [Test]
     public void MustGetAnyCard()
     {
+        _fillHand();
+
         Domain.Card.Card card = _hand.GetAny();
 
         Assert.IsTrue(card is not null);
@@ -94,6 +96,8 @@ public class HandTests
     [Test]
     public void MustGetAllCardsOfAType()
     {
+        _fillHand();
+
         List<Rum> card = _hand.GetAll<Rum>();
 
         Assert.AreEqual(Hand.CardLimit, card.Count);
@@ -102,6 +106,8 @@ public class HandTests
     [Test]
     public void MustHaveCardByType()
     {
+        _hand.Add(new Rum());
+
         Assert.IsTrue(_hand.Exists<Rum>());
     }
 
@@ -114,6 +120,8 @@ public class HandTests
     [Test]
     public void MustHaveCard()
     {
+        _hand.Add(new Rum());
+
         Domain.Card.Card card = _hand.GetAny();
 
         Assert.IsTrue(_hand.Exists(card));
@@ -125,5 +133,15 @@ public class HandTests
         Domain.Card.Card parrot = new Parrot();
 
         Assert.IsFalse(_hand.Exists(parrot));
+    }
+
+    private void _fillHand()
+    {
+        for (int i = 0; i < Hand.CardLimit; i++)
+        {
+            var rum = new Rum();
+
+            _hand.Add(rum);
+        }
     }
 }

@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Servidor\Pirates.Server.Domain\Pirates.Server.Domain.csproj" />
+        <ProjectReference Include="..\Server\Pirates.Server.Domain\Pirates.Server.Domain.csproj" />
     </ItemGroup>
 
 </Project>

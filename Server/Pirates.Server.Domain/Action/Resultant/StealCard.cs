@@ -9,23 +9,23 @@ namespace Pirates.Server.Domain.Action.Resultant
 
     public class StealCard : BaseResultantWithChoiceList
     {
-        public StealCard(BaseAction origin, Player starter, Player alvo)
+        public StealCard(BaseAction origin, Player starter, Player target)
             : base(
                 origin,
                 starter,
                 ChoiceType.Card,
-                alvo.Hand.GetAll<Card>().GetIds())
+                target.Hand.GetAll<Card>().GetIds())
         {
         }
 
         public override List<BaseAction> ApplyRule(Table table)
         {
-            string escolha = Choices.First();
+            string choice = Choices.First();
 
-            Card cardRoubada = Target.Hand.GetById(escolha);
+            Card stolenCard = Target.Hand.GetById(choice);
 
-            Starter.Hand.Add(cardRoubada);
-            Target.Hand.Remove(cardRoubada);
+            Starter.Hand.Add(stolenCard);
+            Target.Hand.Remove(stolenCard);
 
             return null;
         }

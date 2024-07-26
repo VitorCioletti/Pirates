@@ -8,12 +8,11 @@ namespace Pirates.Server.Domain.Card.ImmediateResolution
     {
         public override List<BaseAction> ApplyEffect(BaseAction action, Table table)
         {
-            Player alvo = action.Target;
+            Player target = action.Target;
 
-            var afogarTripulante = new DrownCrewMember(action, action.Starter, alvo);
-            var acoesResultantes = new List<BaseAction> { afogarTripulante };
+            var drownCrewMember = new DrownCrewMember(action, action.Starter, target);
 
-            return acoesResultantes;
+           return new List<BaseAction> {drownCrewMember};
         }
-    }
+   }
 }

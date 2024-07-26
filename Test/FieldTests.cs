@@ -157,9 +157,9 @@ public class FieldTests
 
         void AddPirate()
         {
-            var pirata = new Pirate();
+            var pirate = new Pirate();
 
-            _field.Add(pirata);
+            _field.Add(pirate);
         }
     }
 
@@ -181,9 +181,9 @@ public class FieldTests
 
         void Remove()
         {
-            var pirata = new Pirate();
+            var pirate = new Pirate();
 
-            _field.Remove(pirata);
+            _field.Remove(pirate);
         }
     }
 

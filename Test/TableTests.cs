@@ -138,7 +138,7 @@ public class TableTests
     }
 
     [Test]
-    public void JogadorNaoExecutaResultanteNaoEsperada()
+    public void PlayerMustNotExecuteNonExpectedResultant()
     {
         Player currentPlayer = _table.Players[0];
 
@@ -159,7 +159,7 @@ public class TableTests
     }
 
     [Test]
-    public void DeveMudarJogadorAtualAposAnteriorJogar()
+    public void MustChangeCurrentPlayerAfterPreviousOnePlay()
     {
         foreach (Player player in _table.Players)
         {
@@ -179,7 +179,7 @@ public class TableTests
     }
 
     [Test]
-    public void JogadorDeveGanharSePossuirTesourosSuficientes()
+    public void PlayerMustWinIfHasEnoughTreasures()
     {
         Player currentPlayer = _table.CurrentPlayer;
         Player winnerPlayer = _table.Players[1];
@@ -272,17 +272,17 @@ public class TableTests
     }
 
     [Test]
-    public void DeveLevantarErroAoJogarForaDoTurno()
+    public void MustThrowErrorIfPlaysOutOfTurn()
     {
-        Assert.Throws<OtherPlayerTurnException>(ComprarCartaForaTurno);
+        Assert.Throws<OtherPlayerTurnException>(BuyCardOutOfTurn);
 
-        void ComprarCartaForaTurno()
+        void BuyCardOutOfTurn()
         {
             Player player = _table.Players[1];
 
-            var comprarCarta = new BuyCard(player);
+            var buyCard = new BuyCard(player);
 
-            _table.ProcessAction(comprarCarta);
+            _table.ProcessAction(buyCard);
         }
     }
 

@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirates.Server.Domain", "Pi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirates.Server.Service", "Pirates.Server.Service\Pirates.Server.Service.csproj", "{8988B7BD-8C8A-48C7-B37A-1FB2126D5169}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirates.Server.Domain.Test", "..\Testes\Pirates.Server.Domain.Test.csproj", "{233B2E58-9862-4407-A267-CCCB1C42F6A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirates.Server.Domain.Test", "..\Test\Pirates.Server.Domain.Test.csproj", "{233B2E58-9862-4407-A267-CCCB1C42F6A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

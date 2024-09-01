@@ -20,8 +20,8 @@ The source code is far from perfect but I am happy with the result.
 After [reading the game rules](https://geeksnorcs.com.br/piratas/), I recommend start reading the code by the Domain namespace. This layer has all game rules inside it
 and thus the game core.
 
-[!TIP]
-`Rum` card allows the player to get 2 cards from the central deck. I would start reading its code.
+> [!TIP]
+> `Rum` card allows the player to get 2 cards from the central deck. I would start reading its code.
 
 If you are still interested in this, I recommend reading the article I have done for a class at UFMG
 (Minas Gerais Federal University).

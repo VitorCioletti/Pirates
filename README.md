@@ -26,8 +26,8 @@ and thus the game core.
 If you are still interested in this, I recommend reading the article I have done for a class at UFMG
 (Minas Gerais Federal University).
 
-- [English](Documents/article-en.pdf)
-- [Português](Documents/article-pt.pdf)
+- [English](Documents/Articles/article-en.pdf)
+- [Português](Documents/Articles/article-pt.pdf)
 
 
 <p align="center">

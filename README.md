@@ -4,7 +4,7 @@
     <img width="300" height="150" src="/Documents/Images/cards.png">
 </p>
 
-[Pirates is a brazilian card game from Geeks N' Orcs](https://geeksnorcs.com.br/piratas/)  to 2 up to 6 players where you play as a pirate and must steal treasure cards in order
+[Pirates is a brazilian card game from Geeks N' Orcs](https://geeksnorcs.com.br/piratas/) from 2 to 6 players where you play as a pirate and must steal treasure cards in order
 to win.
 
 This is a fun little project of mine to write an online multiplayer card game server from scratch without googling much

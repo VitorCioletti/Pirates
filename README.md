@@ -1,6 +1,8 @@
 # [Pirates](https://geeksnorcs.com.br/piratas/)
 
-<img align="center" width="150" height="150" src="/Documents/Images/cards.png">
+<p align="center">
+    <img width="300" height="150" src="/Documents/Images/cards.png">
+</p>
 
 [Pirates is a brazillian card game from Geeks N' Orcs](https://geeksnorcs.com.br/piratas/)  to 2 up to 6 players where you play as a pirate and must steal treasure cards in order
 to win.
@@ -13,7 +15,7 @@ The source code is far from perfect but I am happy with the result.
 
 ## Reading the code
 
-<img align="right" width="200" height="200" src="/Documents/Images/map.png">
+<img align="right" width="150" height="200" src="/Documents/Images/map.png">
 
 After [reading the game rules](https://geeksnorcs.com.br/piratas/), I recommend start reading the code by the Domain namespace. This layer has all game rules inside it
 and thus the game core.
@@ -27,4 +29,7 @@ If you are still interested in this, I recommend reading the article I have done
 - [English](Documents/article-en.pdf)
 - [Português](Documents/article-pt.pdf)
 
-<img align="center" width="200" height="200" src="/Documents/Images/cannon.png">
+
+<p align="center">
+    <img width="300" height="160" src="/Documents/Images/cannon.png">
+</p>

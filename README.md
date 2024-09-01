@@ -1,4 +1,4 @@
-# [Pirates](https://geeksnorcs.com.br/piratas/)
+# Pirates
 
 <p align="center">
     <img width="300" height="150" src="/Documents/Images/cards.png">
@@ -17,7 +17,7 @@ The source code is far from perfect but I am happy with the result.
 
 <img align="right" width="150" height="200" src="/Documents/Images/map.png">
 
-After [reading the game rules](https://geeksnorcs.com.br/piratas/), I recommend start reading the code by the Domain namespace. This layer has all game rules inside it
+After reading the game rules, I recommend start reading the code by the Domain namespace. This layer has all game rules inside it
 and thus the game core.
 
 > [!TIP]

@@ -21,7 +21,7 @@ After reading the game rules, I recommend start reading the code by the Domain n
 and thus the game core.
 
 > [!TIP]
-> `Rum` card allows the player to get 2 cards from the central deck. I would start reading its code.
+> [`Rum`](Server/Pirates.Server.Domain/Card/ImmediateResolution/Rum.cs) card allows the player to get 2 cards from the central deck. I would start reading its code.
 
 If you are still interested in this, I recommend reading the article I have done for a class at UFMG
 (Minas Gerais Federal University).

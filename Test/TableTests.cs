@@ -68,7 +68,7 @@ public class TableTests
     {
         bool allHaveCards = _table.Players.All(j => j.Hand.GetCardQuantity() > 0);
 
-        Assert.True(allHaveCards);
+        Assert.That(allHaveCards, Is.True);
     }
 
     [Test]
@@ -76,7 +76,7 @@ public class TableTests
     {
         bool hasCards = _table.CentralDeck.CardsAmount > 0;
 
-        Assert.True(hasCards);
+        Assert.That(hasCards, Is.True);
     }
 
     [Test]
@@ -84,7 +84,7 @@ public class TableTests
     {
         bool isEmpty = _table.DiscardDeck.CardsAmount == 0;
 
-        Assert.True(isEmpty);
+        Assert.That(isEmpty, Is.True);
     }
 
     [Test]
@@ -100,7 +100,7 @@ public class TableTests
         bool hasAllExpected =
             expectedAvailableActions.All(pe => availableActions.Exists(po => po.GetType() == pe.GetType()));
 
-        Assert.IsTrue(hasAllExpected);
+        Assert.That(hasAllExpected, Is.True);
     }
 
     [Test]
@@ -120,8 +120,8 @@ public class TableTests
 
         _table.ProcessAction(buyCard);
 
-        Assert.AreEqual(expectedCards, currentPlayer.Hand.GetCardQuantity());
-        Assert.AreEqual(expectedAvailableActions, currentPlayer.AvailableActions);
+        Assert.That(currentPlayer.Hand.GetCardQuantity(), Is.EqualTo(expectedCards));
+        Assert.That(currentPlayer.AvailableActions, Is.EqualTo(expectedAvailableActions));
     }
 
     [Test]
@@ -197,17 +197,17 @@ public class TableTests
             _table.ProcessAction(buyCard);
         }
 
-        Assert.AreEqual(winnerPlayer, _table.Winner);
+        Assert.That(_table.Winner, Is.EqualTo(winnerPlayer));
     }
 
     [Test]
     public void MustEnterInDuelMode()
     {
-        Assert.IsFalse(_table.InDuel);
+        Assert.That(_table.InDuel, Is.False);
 
         _table.EnterDuelMode();
 
-        Assert.IsTrue(_table.InDuel);
+        Assert.That(_table.InDuel, Is.True);
     }
 
     [Test]
@@ -215,11 +215,11 @@ public class TableTests
     {
         _table.EnterDuelMode();
 
-        Assert.IsTrue(_table.InDuel);
+        Assert.That(_table.InDuel, Is.True);
 
         _table.EndDuelMode();
 
-        Assert.IsFalse(_table.InDuel);
+        Assert.That(_table.InDuel, Is.False);
     }
 
     [Test]
@@ -248,8 +248,8 @@ public class TableTests
 
         _table.ProcessAction(buyCard);
 
-        Assert.IsTrue(cards < currentPlayer.Hand.GetCardQuantity());
-        Assert.IsTrue(availableActions > currentPlayer.AvailableActions);
+        Assert.That(cards < currentPlayer.Hand.GetCardQuantity(), Is.True);
+        Assert.That(availableActions > currentPlayer.AvailableActions, Is.True);
     }
 
     [Test]
@@ -267,8 +267,8 @@ public class TableTests
             _table.ProcessAction(buyCard);
         }
 
-        Assert.AreNotEqual(currentPlayer, _table.CurrentPlayer);
-        Assert.IsTrue(currentTurn < _table.CurrentTurn);
+        Assert.That(_table.CurrentPlayer, Is.Not.EqualTo(currentPlayer));
+        Assert.That(currentTurn < _table.CurrentTurn, Is.True);
     }
 
     [Test]
@@ -302,7 +302,7 @@ public class TableTests
 
         _table.ProcessAction(primary);
 
-        Assert.IsTrue(primaryExecuted && immediateExecuted);
+        Assert.That(primaryExecuted && immediateExecuted, Is.True);
 
         void OnApplyPrimaryRule(CallInfo _)
         {
@@ -340,16 +340,16 @@ public class TableTests
 
         Dictionary<Player, List<BaseAction>> result = _table.ProcessAction(primary);
 
-        Assert.IsTrue(result.Count > 0);
+        Assert.That(result.Count > 0, Is.True);
 
         BaseAction resultantAction = result[currentPlayer].Single();
 
-        Assert.AreEqual(expectedResultantActions[0], resultantAction);
+        Assert.That(resultantAction, Is.EqualTo(expectedResultantActions[0]));
 
         Dictionary<Player, List<BaseAction>> resultantActionResult = _table.ProcessAction(resultantAction);
 
-        Assert.IsTrue(resultantActionResult.Count == 0);
-        Assert.IsTrue(primaryExecuted && resultantExecuted);
+        Assert.That(resultantActionResult.Count == 0, Is.True);
+        Assert.That(primaryExecuted && resultantExecuted, Is.True);
 
         void OnApplyPrimaryRule(CallInfo _)
         {

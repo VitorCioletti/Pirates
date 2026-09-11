@@ -17,7 +17,7 @@ public class NavalGuerrillaTests
 
         List<BaseAction> result = navalGuerrilla.ApplyEffect(null, null);
 
-        Assert.IsNull(result);
+        Assert.That(result, Is.Null);
     }
 
     [Test]
@@ -25,7 +25,7 @@ public class NavalGuerrillaTests
     {
         var navalGuerrilla = new NavalGuerrilla();
 
-        Assert.AreEqual(2, navalGuerrilla.AdditionalShots);
+        Assert.That(navalGuerrilla.AdditionalShots, Is.EqualTo(2));
     }
 
     [Test]
@@ -33,7 +33,7 @@ public class NavalGuerrillaTests
     {
         var navalGuerrilla = new NavalGuerrilla();
 
-        Assert.AreEqual(3, navalGuerrilla.Life);
+        Assert.That(navalGuerrilla.Life, Is.EqualTo(3));
     }
 
     [Test]
@@ -43,7 +43,7 @@ public class NavalGuerrillaTests
 
         navalGuerrilla.TakeDamage(1);
 
-        Assert.AreEqual(2, navalGuerrilla.Life);
+        Assert.That(navalGuerrilla.Life, Is.EqualTo(2));
     }
 
     [Test]
@@ -74,6 +74,6 @@ public class NavalGuerrillaTests
         int cannonShots = cannons.Sum(c => c.Shots);
         int expectedShots = cannonShots + navalGuerrilla.AdditionalShots * cannons.Count;
 
-        Assert.AreEqual(expectedShots, field.CalculateDuelShots());
+        Assert.That(field.CalculateDuelShots(), Is.EqualTo(expectedShots));
     }
 }

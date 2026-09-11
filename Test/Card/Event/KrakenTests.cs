@@ -81,9 +81,9 @@ public class KrakenTests
 
         List<BaseAction> result = kraken.ApplyEffect(action, _table);
 
-        Assert.AreEqual(2, player1.Field.Ship.Life);
-        Assert.AreEqual(1, player1.Field.Crew.Count);
-        Assert.AreEqual(0, result.Count);
+        Assert.That(player1.Field.Ship.Life, Is.EqualTo(2));
+        Assert.That(player1.Field.Crew.Count, Is.EqualTo(1));
+        Assert.That(result.Count, Is.EqualTo(0));
     }
 
     [Test]
@@ -109,8 +109,8 @@ public class KrakenTests
 
         List<BaseAction> result = kraken.ApplyEffect(action, _table);
 
-        Assert.AreEqual(1, player1.Field.Crew.Count);
-        Assert.AreEqual(0, result.Count);
+        Assert.That(player1.Field.Crew.Count, Is.EqualTo(1));
+        Assert.That(result.Count, Is.EqualTo(0));
     }
 
     [Test]
@@ -133,7 +133,7 @@ public class KrakenTests
 
         List<BaseAction> result = kraken.ApplyEffect(action, _table);
 
-        Assert.AreEqual(0, result.Count);
-        Assert.AreEqual(2, player1.Field.Crew.Count);
+        Assert.That(result.Count, Is.EqualTo(0));
+        Assert.That(player1.Field.Crew.Count, Is.EqualTo(2));
     }
 }

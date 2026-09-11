@@ -17,7 +17,7 @@ public class TrapChestTests
 
         var result = trapChest.ApplyEffect(action, null);
 
-        Assert.IsNull(result);
+        Assert.That(result, Is.Null);
     }
 
     [Test]
@@ -30,8 +30,8 @@ public class TrapChestTests
 
         trapChest.ApplyEffect(action, null);
 
-        Assert.AreEqual(0, starterPlayer.Field.Crew.Count);
-        Assert.AreEqual(0, starterPlayer.Hand.GetCardQuantity());
-        Assert.IsNull(starterPlayer.Field.Ship);
+        Assert.That(starterPlayer.Field.Crew.Count, Is.EqualTo(0));
+        Assert.That(starterPlayer.Hand.GetCardQuantity(), Is.EqualTo(0));
+        Assert.That(starterPlayer.Field.Ship, Is.Null);
     }
 }

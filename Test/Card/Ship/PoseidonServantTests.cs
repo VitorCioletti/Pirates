@@ -81,7 +81,7 @@ public class PoseidonServantTests
     {
         var poseidonServant = new PoseidonServant();
 
-        Assert.AreEqual(3, poseidonServant.Life);
+        Assert.That(poseidonServant.Life, Is.EqualTo(3));
     }
 
     [Test]
@@ -91,7 +91,7 @@ public class PoseidonServantTests
 
         poseidonServant.TakeDamage(1);
 
-        Assert.AreEqual(2, poseidonServant.Life);
+        Assert.That(poseidonServant.Life, Is.EqualTo(2));
     }
 
     [Test]

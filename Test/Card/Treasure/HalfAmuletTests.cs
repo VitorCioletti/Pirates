@@ -13,7 +13,7 @@ public class HalfAmuletTests
     {
         var halfAmulet = new HalfAmulet();
 
-        Assert.AreEqual(0, halfAmulet.Value);
+        Assert.That(halfAmulet.Value, Is.EqualTo(0));
     }
 
     [Test]
@@ -26,7 +26,7 @@ public class HalfAmuletTests
 
         var result = halfAmulet.ApplyEffect(action, null);
 
-        Assert.IsNull(result);
+        Assert.That(result, Is.Null);
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class HalfAmuletTests
 
         int points = HalfAmulet.CalulateTreasurePoints(amulets);
 
-        Assert.AreEqual(0, points);
+        Assert.That(points, Is.EqualTo(0));
     }
 
     [Test]
@@ -46,7 +46,7 @@ public class HalfAmuletTests
 
         int points = HalfAmulet.CalulateTreasurePoints(amulets);
 
-        Assert.AreEqual(0, points);
+        Assert.That(points, Is.EqualTo(0));
     }
 
     [Test]
@@ -56,7 +56,7 @@ public class HalfAmuletTests
 
         int points = HalfAmulet.CalulateTreasurePoints(amulets);
 
-        Assert.AreEqual(2, points);
+        Assert.That(points, Is.EqualTo(2));
     }
 
     [Test]
@@ -66,7 +66,7 @@ public class HalfAmuletTests
 
         int points = HalfAmulet.CalulateTreasurePoints(amulets);
 
-        Assert.AreEqual(2, points);
+        Assert.That(points, Is.EqualTo(2));
     }
 
     [Test]
@@ -76,7 +76,7 @@ public class HalfAmuletTests
 
         int points = HalfAmulet.CalulateTreasurePoints(amulets);
 
-        Assert.AreEqual(4, points);
+        Assert.That(points, Is.EqualTo(4));
     }
 
     [Test]
@@ -87,7 +87,7 @@ public class HalfAmuletTests
         player.Hand.Add(new HalfAmulet());
         player.Hand.Add(new HalfAmulet());
 
-        Assert.AreEqual(2, player.CalculateTreasurePoints());
+        Assert.That(player.CalculateTreasurePoints(), Is.EqualTo(2));
     }
 
     [Test]
@@ -97,6 +97,6 @@ public class HalfAmuletTests
 
         player.Hand.Add(new HalfAmulet());
 
-        Assert.AreEqual(0, player.CalculateTreasurePoints());
+        Assert.That(player.CalculateTreasurePoints(), Is.EqualTo(0));
     }
 }

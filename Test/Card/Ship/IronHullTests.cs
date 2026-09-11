@@ -34,13 +34,13 @@ public class IronHullTests
 
         List<BaseAction> resultantActions = ironHull.ApplyEffect(action, null);
 
-        Assert.AreEqual(1, resultantActions.Count);
+        Assert.That(resultantActions.Count, Is.EqualTo(1));
 
         var chooseCardAtTheHand = resultantActions[0] as ChooseCardAtTheHand;
 
-        Assert.IsNotNull(chooseCardAtTheHand);
-        Assert.AreEqual(_player, chooseCardAtTheHand.Starter);
-        CollectionAssert.AreEqual(new List<string> {treasure.Id}, chooseCardAtTheHand.Options);
+        Assert.That(chooseCardAtTheHand, Is.Not.Null);
+        Assert.That(chooseCardAtTheHand.Starter, Is.EqualTo(_player));
+        Assert.That(chooseCardAtTheHand.Options, Is.EqualTo(new List<string> {treasure.Id}));
     }
 
     [Test]
@@ -59,9 +59,9 @@ public class IronHullTests
 
         List<BaseAction> result = chooseCardAtTheHand.ApplyRule(null);
 
-        Assert.IsNull(result);
-        Assert.IsFalse(_player.Hand.Exists(treasure));
-        Assert.IsTrue(_player.Field.GetAllProtected().Contains(treasure));
+        Assert.That(result, Is.Null);
+        Assert.That(_player.Hand.Exists(treasure), Is.False);
+        Assert.That(_player.Field.GetAllProtected().Contains(treasure), Is.True);
     }
 
     [Test]
@@ -70,10 +70,10 @@ public class IronHullTests
         var ironHull = new IronHull();
 
         ironHull.TakeDamage(2);
-        Assert.AreEqual(1, ironHull.Life);
+        Assert.That(ironHull.Life, Is.EqualTo(1));
 
         ironHull.TakeDamage(1);
-        Assert.AreEqual(0, ironHull.Life);
+        Assert.That(ironHull.Life, Is.EqualTo(0));
 
         Assert.Throws<ShipHasNoLifeException>(() => ironHull.TakeDamage(1));
     }
@@ -91,6 +91,6 @@ public class IronHullTests
         for (int i = 0; i < initialLife; i++)
             field.DamageShip();
 
-        Assert.IsNull(field.Ship);
+        Assert.That(field.Ship, Is.Null);
     }
 }

@@ -52,16 +52,16 @@ public class CyclopsEyeTests
 
         List<BaseAction> resultantActions = cyclopsEye.ApplyEffect(action, _table);
 
-        Assert.AreEqual(1, resultantActions.Count);
+        Assert.That(resultantActions.Count, Is.EqualTo(1));
 
         var choosePlayer = resultantActions[0] as ChoosePlayer;
 
-        Assert.IsNotNull(choosePlayer);
-        Assert.AreEqual(_player1, choosePlayer.Starter);
+        Assert.That(choosePlayer, Is.Not.Null);
+        Assert.That(choosePlayer.Starter, Is.EqualTo(_player1));
 
         var expectedOptions = new List<string> {_player2.Id, _player3.Id};
 
-        CollectionAssert.AreEquivalent(expectedOptions, choosePlayer.Options);
+        Assert.That(choosePlayer.Options, Is.EquivalentTo(expectedOptions));
     }
 
     [Test]
@@ -80,15 +80,15 @@ public class CyclopsEyeTests
 
         List<BaseAction> resultantActions = choosePlayer.ApplyRule(_table);
 
-        Assert.AreEqual(1, resultantActions.Count);
+        Assert.That(resultantActions.Count, Is.EqualTo(1));
 
         var lookAtPlayerCards = resultantActions[0] as LookAtPlayerCards;
 
-        Assert.IsNotNull(lookAtPlayerCards);
-        Assert.AreEqual(_player1, lookAtPlayerCards.Starter);
+        Assert.That(lookAtPlayerCards, Is.Not.Null);
+        Assert.That(lookAtPlayerCards.Starter, Is.EqualTo(_player1));
 
         List<string> expectedCardIds = _player2.Hand.GetAll().Select(c => c.Id).ToList();
 
-        CollectionAssert.AreEqual(expectedCardIds, lookAtPlayerCards.Choices);
+        Assert.That(lookAtPlayerCards.Choices, Is.EqualTo(expectedCardIds));
     }
 }

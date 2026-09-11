@@ -13,8 +13,8 @@ public class PirateTests
     {
         var pirate = new Pirate();
 
-        Assert.AreEqual(0, pirate.Shots);
-        Assert.IsTrue(pirate.Drownable);
+        Assert.That(pirate.Shots, Is.EqualTo(0));
+        Assert.That(pirate.Drownable, Is.True);
     }
 
     [Test]
@@ -28,9 +28,9 @@ public class PirateTests
 
         var result = pirate.ApplyEffect(action, null);
 
-        Assert.IsTrue(starterPlayer.Field.Crew.Contains(pirate));
-        Assert.IsFalse(targetPlayer.Field.Crew.Contains(pirate));
-        Assert.IsNull(result);
+        Assert.That(starterPlayer.Field.Crew.Contains(pirate), Is.True);
+        Assert.That(targetPlayer.Field.Crew.Contains(pirate), Is.False);
+        Assert.That(result, Is.Null);
     }
 
     [Test]

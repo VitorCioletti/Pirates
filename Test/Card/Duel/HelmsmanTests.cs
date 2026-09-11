@@ -49,8 +49,8 @@ public class HelmsmanTests
 
         List<BaseAction> result = helmsman.ApplyEffect(action, _table);
 
-        Assert.IsFalse(_table.InDuel);
-        Assert.IsNull(result);
+        Assert.That(_table.InDuel, Is.False);
+        Assert.That(result, Is.Null);
     }
 
     [Test]

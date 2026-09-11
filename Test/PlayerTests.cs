@@ -70,7 +70,7 @@ public class PlayerTests
 
         _player.ResetAvailableActions(actions);
 
-        Assert.AreEqual(actions, _player.AvailableActions);
+        Assert.That(_player.AvailableActions, Is.EqualTo(actions));
     }
 
     [Test]
@@ -80,7 +80,7 @@ public class PlayerTests
 
         _player.SubtractAvailableActions();
 
-        Assert.AreEqual(expectedActions, _player.AvailableActions);
+        Assert.That(_player.AvailableActions, Is.EqualTo(expectedActions));
     }
 
     [Test]
@@ -103,7 +103,7 @@ public class PlayerTests
 
         _player.Field.Add(noblePirate);
 
-        Assert.AreEqual(expectedTreasures, _player.CalculateTreasurePoints());
+        Assert.That(_player.CalculateTreasurePoints(), Is.EqualTo(expectedTreasures));
     }
 
     [Test]
@@ -113,8 +113,8 @@ public class PlayerTests
 
         _player.Hand.Add(rum);
 
-        Assert.AreEqual(rum, _cardsAddAtHand[0].Item2);
-        Assert.AreEqual(_player.Id, _cardsAddAtHand[0].Item1);
+        Assert.That(_cardsAddAtHand[0].Item2, Is.EqualTo(rum));
+        Assert.That(_cardsAddAtHand[0].Item1, Is.EqualTo(_player.Id));
     }
 
     [Test]
@@ -125,8 +125,8 @@ public class PlayerTests
         _player.Hand.Add(rum);
         _player.Hand.Remove(rum);
 
-        Assert.AreEqual(rum, _cardsRemovedAtHand[0].Item2);
-        Assert.AreEqual(_player.Id, _cardsRemovedAtHand[0].Item1);
+        Assert.That(_cardsRemovedAtHand[0].Item2, Is.EqualTo(rum));
+        Assert.That(_cardsRemovedAtHand[0].Item1, Is.EqualTo(_player.Id));
     }
 
     [Test]
@@ -136,8 +136,8 @@ public class PlayerTests
 
         _player.Field.Add(ironHull);
 
-        Assert.AreEqual(ironHull, _cardsAddedAtField[0].Item2);
-        Assert.AreEqual(_player.Id, _cardsAddedAtField[0].Item1);
+        Assert.That(_cardsAddedAtField[0].Item2, Is.EqualTo(ironHull));
+        Assert.That(_cardsAddedAtField[0].Item1, Is.EqualTo(_player.Id));
     }
 
     [Test]
@@ -154,7 +154,7 @@ public class PlayerTests
             _player.Field.DamageShip();
         }
 
-        Assert.AreEqual(ironHull, _cardsRemovedAtField[0].Item2);
-        Assert.AreEqual(_player.Id, _cardsRemovedAtField[0].Item1);
+        Assert.That(_cardsRemovedAtField[0].Item2, Is.EqualTo(ironHull));
+        Assert.That(_cardsRemovedAtField[0].Item1, Is.EqualTo(_player.Id));
     }
 }

@@ -13,8 +13,8 @@ public class GhostPirateTests
     {
         var ghostPirate = new GhostPirate();
 
-        Assert.AreEqual(0, ghostPirate.Shots);
-        Assert.IsFalse(ghostPirate.Drownable);
+        Assert.That(ghostPirate.Shots, Is.EqualTo(0));
+        Assert.That(ghostPirate.Drownable, Is.False);
     }
 
     [Test]
@@ -28,9 +28,9 @@ public class GhostPirateTests
 
         var result = ghostPirate.ApplyEffect(action, null);
 
-        Assert.IsTrue(targetPlayer.Field.Crew.Contains(ghostPirate));
-        Assert.IsFalse(starterPlayer.Field.Crew.Contains(ghostPirate));
-        Assert.IsNull(result);
+        Assert.That(targetPlayer.Field.Crew.Contains(ghostPirate), Is.True);
+        Assert.That(starterPlayer.Field.Crew.Contains(ghostPirate), Is.False);
+        Assert.That(result, Is.Null);
     }
 
     [Test]
@@ -58,6 +58,6 @@ public class GhostPirateTests
 
         player.Field.DrownCrew();
 
-        Assert.IsTrue(player.Field.Crew.Contains(ghostPirate));
+        Assert.That(player.Field.Crew.Contains(ghostPirate), Is.True);
     }
 }

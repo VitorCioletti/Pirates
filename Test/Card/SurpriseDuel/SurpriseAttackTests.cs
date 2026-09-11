@@ -13,7 +13,7 @@ public class SurpriseAttackTests
     {
         var surpriseAttack = new SurpriseAttack();
 
-        Assert.AreEqual(1, surpriseAttack.Shots);
+        Assert.That(surpriseAttack.Shots, Is.EqualTo(1));
     }
 
     [Test]
@@ -26,8 +26,8 @@ public class SurpriseAttackTests
 
         List<BaseAction> result = surpriseAttack.ApplyEffect(action, null);
 
-        Assert.IsTrue(starterPlayer.Field.SurpriseDuel.Contains(surpriseAttack));
-        Assert.IsNull(result);
+        Assert.That(starterPlayer.Field.SurpriseDuel.Contains(surpriseAttack), Is.True);
+        Assert.That(result, Is.Null);
     }
 
     [Test]
@@ -40,7 +40,7 @@ public class SurpriseAttackTests
 
         surpriseAttack.ApplyEffect(action, null);
 
-        Assert.AreEqual(surpriseAttack.Shots, starterPlayer.Field.CalculateDuelShots());
+        Assert.That(starterPlayer.Field.CalculateDuelShots(), Is.EqualTo(surpriseAttack.Shots));
     }
 
     [Test]
@@ -55,10 +55,10 @@ public class SurpriseAttackTests
         firstSurpriseAttack.ApplyEffect(action, null);
         secondSurpriseAttack.ApplyEffect(action, null);
 
-        Assert.AreEqual(2, starterPlayer.Field.SurpriseDuel.Count);
+        Assert.That(starterPlayer.Field.SurpriseDuel.Count, Is.EqualTo(2));
 
-        Assert.AreEqual(
-            firstSurpriseAttack.Shots + secondSurpriseAttack.Shots,
-            starterPlayer.Field.CalculateDuelShots());
+        Assert.That(
+            starterPlayer.Field.CalculateDuelShots(),
+            Is.EqualTo(firstSurpriseAttack.Shots + secondSurpriseAttack.Shots));
     }
 }

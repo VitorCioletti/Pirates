@@ -105,11 +105,11 @@ public class ParrotTests
 
         List<BaseAction> result = parrot.ApplyEffect(action, _table);
 
-        Assert.IsNotNull(result);
-        Assert.AreEqual(0, result.Count);
-        Assert.IsFalse(_player1.Hand.Exists(rumToCopy));
-        Assert.AreEqual(handCardsBeforeEffect + 2, _player1.Hand.GetCardQuantity());
-        Assert.AreEqual(1, _table.DiscardDeck.CardsAmount);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Count, Is.EqualTo(0));
+        Assert.That(_player1.Hand.Exists(rumToCopy), Is.False);
+        Assert.That(_player1.Hand.GetCardQuantity(), Is.EqualTo(handCardsBeforeEffect + 2));
+        Assert.That(_table.DiscardDeck.CardsAmount, Is.EqualTo(1));
     }
 
     [Test]
@@ -126,21 +126,21 @@ public class ParrotTests
 
         List<BaseAction> result = parrot.ApplyEffect(action, _table);
 
-        Assert.AreEqual(1, result.Count);
+        Assert.That(result.Count, Is.EqualTo(1));
 
         var choosePlayer = result[0] as ChoosePlayer;
 
-        Assert.IsNotNull(choosePlayer);
-        Assert.AreEqual(2, choosePlayer.Options.Count);
-        CollectionAssert.DoesNotContain(choosePlayer.Options, _player1.Id);
-        CollectionAssert.Contains(choosePlayer.Options, _player2.Id);
-        CollectionAssert.Contains(choosePlayer.Options, _player3.Id);
+        Assert.That(choosePlayer, Is.Not.Null);
+        Assert.That(choosePlayer.Options.Count, Is.EqualTo(2));
+        Assert.That(choosePlayer.Options, Does.Not.Contain(_player1.Id));
+        Assert.That(choosePlayer.Options, Does.Contain(_player2.Id));
+        Assert.That(choosePlayer.Options, Does.Contain(_player3.Id));
 
         choosePlayer.FillChoices(new List<string> {_player2.Id});
 
         List<BaseAction> afterChoiceResult = choosePlayer.ApplyRule(_table);
 
-        Assert.AreEqual(1, afterChoiceResult.Count);
-        Assert.IsInstanceOf<CopyPrimmary>(afterChoiceResult[0]);
+        Assert.That(afterChoiceResult.Count, Is.EqualTo(1));
+        Assert.That(afterChoiceResult[0], Is.InstanceOf<CopyPrimmary>());
     }
 }

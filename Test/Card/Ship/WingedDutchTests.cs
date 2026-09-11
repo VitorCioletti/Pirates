@@ -67,7 +67,7 @@ public class WingedDutchTests
 
         wingedDutch.ApplyEffect(action, _table);
 
-        Assert.AreEqual(starterPlayer, _table.Winner);
+        Assert.That(_table.Winner, Is.EqualTo(starterPlayer));
     }
 
     [Test]
@@ -82,7 +82,7 @@ public class WingedDutchTests
 
         wingedDutch.ApplyEffect(action, _table);
 
-        Assert.IsNull(_table.Winner);
+        Assert.That(_table.Winner, Is.Null);
     }
 
     [Test]
@@ -95,7 +95,7 @@ public class WingedDutchTests
 
         List<BaseAction> result = wingedDutch.ApplyEffect(action, _table);
 
-        Assert.IsNull(result);
+        Assert.That(result, Is.Null);
     }
 
     [Test]
@@ -103,7 +103,7 @@ public class WingedDutchTests
     {
         var wingedDutch = new WingedDutch();
 
-        Assert.AreEqual(3, wingedDutch.Life);
+        Assert.That(wingedDutch.Life, Is.EqualTo(3));
     }
 
     [Test]
@@ -113,7 +113,7 @@ public class WingedDutchTests
 
         wingedDutch.TakeDamage(1);
 
-        Assert.AreEqual(2, wingedDutch.Life);
+        Assert.That(wingedDutch.Life, Is.EqualTo(2));
     }
 
     [Test]

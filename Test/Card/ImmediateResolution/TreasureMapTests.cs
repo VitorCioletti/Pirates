@@ -67,13 +67,13 @@ public class TreasureMapTests
 
         List<BaseAction> result = treasureMap.ApplyEffect(action, _table);
 
-        Assert.AreEqual(1, result.Count);
+        Assert.That(result.Count, Is.EqualTo(1));
 
         var chooseCardInDeck = result[0] as ChooseCardInDeck;
 
-        Assert.IsNotNull(chooseCardInDeck);
-        Assert.AreEqual(4, chooseCardInDeck.Options.Count);
-        Assert.AreEqual(cardsInDeckBeforeEffect - 4, _table.CentralDeck.CardsAmount);
+        Assert.That(chooseCardInDeck, Is.Not.Null);
+        Assert.That(chooseCardInDeck.Options.Count, Is.EqualTo(4));
+        Assert.That(_table.CentralDeck.CardsAmount, Is.EqualTo(cardsInDeckBeforeEffect - 4));
     }
 
     [Test]
@@ -95,8 +95,8 @@ public class TreasureMapTests
         chooseCardInDeck.FillChoices(new List<string> {chosenId});
         chooseCardInDeck.ApplyRule(_table);
 
-        Assert.AreEqual(handCardsBeforeEffect + 1, _player1.Hand.GetCardQuantity());
-        Assert.IsNotNull(_player1.Hand.GetById(chosenId));
-        Assert.AreEqual(cardsInDeckBeforeEffect - 1, _table.CentralDeck.CardsAmount);
+        Assert.That(_player1.Hand.GetCardQuantity(), Is.EqualTo(handCardsBeforeEffect + 1));
+        Assert.That(_player1.Hand.GetById(chosenId), Is.Not.Null);
+        Assert.That(_table.CentralDeck.CardsAmount, Is.EqualTo(cardsInDeckBeforeEffect - 1));
     }
 }

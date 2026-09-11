@@ -14,7 +14,7 @@ public class HellishUrchinTests
 
         var result = hellishUrchin.ApplyEffect(null, null);
 
-        Assert.IsNull(result);
+        Assert.That(result, Is.Null);
     }
 
     [Test]
@@ -22,8 +22,8 @@ public class HellishUrchinTests
     {
         var hellishUrchin = new HellishUrchin();
 
-        Assert.AreEqual(3, hellishUrchin.Shots);
-        Assert.AreEqual(3, hellishUrchin.Life);
+        Assert.That(hellishUrchin.Shots, Is.EqualTo(3));
+        Assert.That(hellishUrchin.Life, Is.EqualTo(3));
     }
 
     [Test]
@@ -32,10 +32,10 @@ public class HellishUrchinTests
         var hellishUrchin = new HellishUrchin();
 
         hellishUrchin.TakeDamage(1);
-        Assert.AreEqual(2, hellishUrchin.Life);
+        Assert.That(hellishUrchin.Life, Is.EqualTo(2));
 
         hellishUrchin.TakeDamage(2);
-        Assert.AreEqual(0, hellishUrchin.Life);
+        Assert.That(hellishUrchin.Life, Is.EqualTo(0));
 
         Assert.Throws<ShipHasNoLifeException>(() => hellishUrchin.TakeDamage(1));
     }
@@ -48,12 +48,12 @@ public class HellishUrchinTests
 
         field.Add(hellishUrchin);
 
-        Assert.AreEqual(0, field.CalculateDuelShots());
+        Assert.That(field.CalculateDuelShots(), Is.EqualTo(0));
 
         var cannon = new Cannon();
 
         field.Add(cannon);
 
-        Assert.AreEqual(cannon.Shots + hellishUrchin.Shots, field.CalculateDuelShots());
+        Assert.That(field.CalculateDuelShots(), Is.EqualTo(cannon.Shots + hellishUrchin.Shots));
     }
 }

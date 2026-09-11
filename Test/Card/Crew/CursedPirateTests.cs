@@ -13,8 +13,8 @@ public class CursedPirateTests
     {
         var cursedPirate = new CursedPirate();
 
-        Assert.AreEqual(-1, cursedPirate.Shots);
-        Assert.IsTrue(cursedPirate.Drownable);
+        Assert.That(cursedPirate.Shots, Is.EqualTo(-1));
+        Assert.That(cursedPirate.Drownable, Is.True);
     }
 
     [Test]
@@ -28,9 +28,9 @@ public class CursedPirateTests
 
         var result = cursedPirate.ApplyEffect(action, null);
 
-        Assert.IsTrue(targetPlayer.Field.Crew.Contains(cursedPirate));
-        Assert.IsFalse(starterPlayer.Field.Crew.Contains(cursedPirate));
-        Assert.IsNull(result);
+        Assert.That(targetPlayer.Field.Crew.Contains(cursedPirate), Is.True);
+        Assert.That(starterPlayer.Field.Crew.Contains(cursedPirate), Is.False);
+        Assert.That(result, Is.Null);
     }
 
     [Test]

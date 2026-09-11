@@ -24,7 +24,7 @@ public class HandTests
 
         _hand.Add(rum);
 
-        Assert.IsTrue(_hand.Exists(rum));
+        Assert.That(_hand.Exists(rum), Is.True);
     }
 
     [Test]
@@ -34,7 +34,7 @@ public class HandTests
 
         _hand.Add(cards);
 
-        Assert.AreEqual(cards.Count, _hand.GetAll().Count);
+        Assert.That(_hand.GetAll().Count, Is.EqualTo(cards.Count));
     }
 
     [Test]
@@ -54,7 +54,7 @@ public class HandTests
     {
         _fillHand();
 
-        Assert.AreEqual(Hand.CardLimit, _hand.GetAll().Count);
+        Assert.That(_hand.GetAll().Count, Is.EqualTo(Hand.CardLimit));
     }
 
     [Test]
@@ -66,7 +66,7 @@ public class HandTests
 
         Domain.Card.Card card = _hand.GetById(new Rum().Id);
 
-        Assert.IsTrue(card is not null);
+        Assert.That(card is not null, Is.True);
     }
 
     [Test]
@@ -74,13 +74,13 @@ public class HandTests
     {
         _fillHand();
 
-        Assert.AreEqual(Hand.CardLimit, _hand.GetAll().Count);
+        Assert.That(_hand.GetAll().Count, Is.EqualTo(Hand.CardLimit));
 
         Domain.Card.Card card = _hand.GetAny();
 
         _hand.Remove(card);
 
-        Assert.AreEqual(Hand.CardLimit - 1, _hand.GetAll().Count);
+        Assert.That(_hand.GetAll().Count, Is.EqualTo(Hand.CardLimit - 1));
     }
 
     [Test]
@@ -90,7 +90,7 @@ public class HandTests
 
         Domain.Card.Card card = _hand.GetAny();
 
-        Assert.IsTrue(card is not null);
+        Assert.That(card is not null, Is.True);
     }
 
     [Test]
@@ -100,7 +100,7 @@ public class HandTests
 
         List<Rum> card = _hand.GetAll<Rum>();
 
-        Assert.AreEqual(Hand.CardLimit, card.Count);
+        Assert.That(card.Count, Is.EqualTo(Hand.CardLimit));
     }
 
     [Test]
@@ -108,13 +108,13 @@ public class HandTests
     {
         _hand.Add(new Rum());
 
-        Assert.IsTrue(_hand.Exists<Rum>());
+        Assert.That(_hand.Exists<Rum>(), Is.True);
     }
 
     [Test]
     public void MustNotHaveCardByType()
     {
-        Assert.IsFalse(_hand.Exists<Parrot>());
+        Assert.That(_hand.Exists<Parrot>(), Is.False);
     }
 
     [Test]
@@ -124,7 +124,7 @@ public class HandTests
 
         Domain.Card.Card card = _hand.GetAny();
 
-        Assert.IsTrue(_hand.Exists(card));
+        Assert.That(_hand.Exists(card), Is.True);
     }
 
     [Test]
@@ -132,7 +132,7 @@ public class HandTests
     {
         Domain.Card.Card parrot = new Parrot();
 
-        Assert.IsFalse(_hand.Exists(parrot));
+        Assert.That(_hand.Exists(parrot), Is.False);
     }
 
     private void _fillHand()

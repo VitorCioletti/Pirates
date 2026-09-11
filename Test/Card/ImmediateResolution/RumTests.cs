@@ -77,8 +77,8 @@ public class RumTests
         rum.ApplyEffect(action, _table);
 
         foreach (Card card in cardsOnCentralDeck)
-            Assert.IsTrue(starterPlayer.Hand.Exists(card));
+            Assert.That(starterPlayer.Hand.Exists(card), Is.True);
 
-        Assert.IsNull(_table.CentralDeck.GetTop());
+        Assert.That(_table.CentralDeck.GetTop(), Is.Null);
     }
 }

@@ -65,8 +65,8 @@ public class TortugaMerchantTests
 
         List<BaseAction> result = tortugaMerchant.ApplyEffect(action, _table);
 
-        Assert.AreEqual(1, result.Count);
-        Assert.IsInstanceOf<CopyPrimmary>(result[0]);
+        Assert.That(result.Count, Is.EqualTo(1));
+        Assert.That(result[0], Is.InstanceOf<CopyPrimmary>());
     }
 
     [Test]
@@ -83,7 +83,7 @@ public class TortugaMerchantTests
 
         result[0].ApplyRule(_table);
 
-        Assert.AreEqual(cardsBeforeBuy + 1, starterPlayer.Hand.GetCardQuantity());
+        Assert.That(starterPlayer.Hand.GetCardQuantity(), Is.EqualTo(cardsBeforeBuy + 1));
     }
 
     [Test]
@@ -91,7 +91,7 @@ public class TortugaMerchantTests
     {
         var tortugaMerchant = new TortugaMerchant();
 
-        Assert.AreEqual(3, tortugaMerchant.Life);
+        Assert.That(tortugaMerchant.Life, Is.EqualTo(3));
     }
 
     [Test]
@@ -101,7 +101,7 @@ public class TortugaMerchantTests
 
         tortugaMerchant.TakeDamage(1);
 
-        Assert.AreEqual(2, tortugaMerchant.Life);
+        Assert.That(tortugaMerchant.Life, Is.EqualTo(2));
     }
 
     [Test]

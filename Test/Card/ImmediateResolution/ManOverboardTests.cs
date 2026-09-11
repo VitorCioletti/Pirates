@@ -50,12 +50,12 @@ public class ManOverboardTests
 
         List<BaseAction> result = manOverboard.ApplyEffect(action, null);
 
-        Assert.AreEqual(1, result.Count);
+        Assert.That(result.Count, Is.EqualTo(1));
 
         var drownCrewMember = result[0] as DrownCrewMember;
 
-        Assert.IsNotNull(drownCrewMember);
-        Assert.AreEqual(starterPlayer, drownCrewMember.Starter);
-        Assert.AreEqual(targetPlayer, drownCrewMember.Target);
+        Assert.That(drownCrewMember, Is.Not.Null);
+        Assert.That(drownCrewMember.Starter, Is.EqualTo(starterPlayer));
+        Assert.That(drownCrewMember.Target, Is.EqualTo(targetPlayer));
     }
 }

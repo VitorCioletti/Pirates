@@ -32,7 +32,7 @@ public class FieldTests
 
         int lifePosDamage = _field.Ship.Life;
 
-        Assert.Greater(lifePreDamage, lifePosDamage);
+        Assert.That(lifePreDamage, Is.GreaterThan(lifePosDamage));
     }
 
     [Test]
@@ -49,7 +49,7 @@ public class FieldTests
             _field.DamageShip();
         }
 
-        Assert.AreEqual(null, _field.Ship);
+        Assert.That(_field.Ship, Is.Null);
     }
 
     [Test]
@@ -59,7 +59,7 @@ public class FieldTests
 
         _field.Add(ironHull);
 
-        Assert.AreEqual(ironHull, _field.Ship);
+        Assert.That(_field.Ship, Is.EqualTo(ironHull));
     }
 
     [Test]
@@ -87,7 +87,7 @@ public class FieldTests
 
         _field.ChangeShip(navalGuerrilla);
 
-        Assert.AreEqual(navalGuerrilla, _field.Ship);
+        Assert.That(_field.Ship, Is.EqualTo(navalGuerrilla));
     }
 
     [Test]
@@ -110,7 +110,7 @@ public class FieldTests
 
         _field.Add(canhao);
 
-        Assert.AreEqual(canhao, _field.Cannons[0]);
+        Assert.That(_field.Cannons[0], Is.EqualTo(canhao));
     }
 
     [Test]
@@ -120,7 +120,7 @@ public class FieldTests
 
         _field.Add(cannons);
 
-        Assert.AreEqual(cannons, _field.Cannons);
+        Assert.That(_field.Cannons, Is.EqualTo(cannons));
     }
 
     [Test]
@@ -132,7 +132,7 @@ public class FieldTests
 
         _field.Remover(cannon);
 
-        Assert.AreEqual(0, _field.Cannons.Count);
+        Assert.That(_field.Cannons.Count, Is.EqualTo(0));
     }
 
     [Test]
@@ -142,7 +142,7 @@ public class FieldTests
 
         _field.Add(pirate);
 
-        Assert.AreEqual(pirate, _field.Crew[0]);
+        Assert.That(_field.Crew[0], Is.EqualTo(pirate));
     }
 
     [Test]
@@ -171,7 +171,7 @@ public class FieldTests
         _field.Add(pirate);
         _field.Remove(pirate);
 
-        Assert.AreEqual(0, _field.Crew.Count);
+        Assert.That(_field.Crew.Count, Is.EqualTo(0));
     }
 
     [Test]
@@ -212,7 +212,7 @@ public class FieldTests
 
         _field.DrownCrew();
 
-        Assert.AreEqual(0, _field.Crew.Count);
+        Assert.That(_field.Crew.Count, Is.EqualTo(0));
     }
 
     [Test]
@@ -226,8 +226,8 @@ public class FieldTests
 
         _field.RemoveDuelCards();
 
-        Assert.AreEqual(0, _field.Cannons.Count);
-        Assert.AreEqual(0, _field.SurpriseDuel.Count);
+        Assert.That(_field.Cannons.Count, Is.EqualTo(0));
+        Assert.That(_field.SurpriseDuel.Count, Is.EqualTo(0));
     }
 
     [Test]
@@ -237,7 +237,7 @@ public class FieldTests
 
         _field.AddProtected(treasure);
 
-        Assert.AreEqual(treasure, _field.Protected[0]);
+        Assert.That(_field.Protected[0], Is.EqualTo(treasure));
     }
 
     [Test]
@@ -256,7 +256,7 @@ public class FieldTests
             _field.DamageShip();
         }
 
-        Assert.AreEqual(null, _field.Ship);
+        Assert.That(_field.Ship, Is.Null);
     }
 
     [Test]
@@ -266,6 +266,6 @@ public class FieldTests
 
         _field.Add(surpriseAttack);
 
-        Assert.AreEqual(surpriseAttack, _field.SurpriseDuel[0]);
+        Assert.That(_field.SurpriseDuel[0], Is.EqualTo(surpriseAttack));
     }
 }

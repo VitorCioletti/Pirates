@@ -51,22 +51,22 @@ public class ExplosivesTests
 
         List<BaseAction> result = explosives.ApplyEffect(action, _table);
 
-        Assert.AreEqual(1, result.Count);
+        Assert.That(result.Count, Is.EqualTo(1));
 
         var distributeCards = result[0] as DistributeCards;
 
-        Assert.IsNotNull(distributeCards);
-        Assert.AreEqual(starterPlayer, distributeCards.Starter);
-        Assert.AreEqual(2, distributeCards.LimitValuePerKey);
+        Assert.That(distributeCards, Is.Not.Null);
+        Assert.That(distributeCards.Starter, Is.EqualTo(starterPlayer));
+        Assert.That(distributeCards.LimitValuePerKey, Is.EqualTo(2));
 
         foreach (Card card in cardsOnTop)
-            Assert.IsTrue(distributeCards.ValueOptions.Contains(card.Id));
+            Assert.That(distributeCards.ValueOptions.Contains(card.Id), Is.True);
 
-        CollectionAssert.AreEquivalent(
-            _table.Players.Select(p => p.Id),
-            distributeCards.KeysOptions);
+        Assert.That(
+            distributeCards.KeysOptions,
+            Is.EquivalentTo(_table.Players.Select(p => p.Id)));
 
-        Assert.IsNull(_table.CentralDeck.GetTop());
+        Assert.That(_table.CentralDeck.GetTop(), Is.Null);
     }
 
     [Test]

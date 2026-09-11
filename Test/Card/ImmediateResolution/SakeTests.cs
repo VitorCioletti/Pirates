@@ -44,9 +44,9 @@ public class SakeTests
 
         List<BaseAction> result = sake.ApplyEffect(action, null);
 
-        Assert.IsNull(result);
-        Assert.IsTrue(_starterPlayer.Hand.Exists(targetCard));
-        Assert.IsFalse(_targetPlayer.Hand.Exists(targetCard));
+        Assert.That(result, Is.Null);
+        Assert.That(_starterPlayer.Hand.Exists(targetCard), Is.True);
+        Assert.That(_targetPlayer.Hand.Exists(targetCard), Is.False);
     }
 
     [Test]
@@ -64,9 +64,9 @@ public class SakeTests
 
         List<BaseAction> result = sake.ApplyEffect(action, null);
 
-        Assert.IsNull(result);
-        Assert.IsTrue(_targetPlayer.Hand.Exists(starterCard));
-        Assert.IsFalse(_starterPlayer.Hand.Exists(starterCard));
-        Assert.IsTrue(_targetPlayer.Hand.Exists(trapChest));
+        Assert.That(result, Is.Null);
+        Assert.That(_targetPlayer.Hand.Exists(starterCard), Is.True);
+        Assert.That(_starterPlayer.Hand.Exists(starterCard), Is.False);
+        Assert.That(_targetPlayer.Hand.Exists(trapChest), Is.True);
     }
 }

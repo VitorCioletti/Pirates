@@ -55,13 +55,13 @@ public class FortuneWheelTests
 
         List<BaseAction> resultantActions = fortuneWheel.ApplyEffect(action, _table);
 
-        Assert.AreEqual(1, resultantActions.Count);
+        Assert.That(resultantActions.Count, Is.EqualTo(1));
 
         var lookAtDeckCards = resultantActions[0] as LookAtDeckCards;
 
-        Assert.IsNotNull(lookAtDeckCards);
-        Assert.AreEqual(_player1, lookAtDeckCards.Starter);
-        Assert.AreEqual(cardsAmountBeforeEffect - 2, _table.CentralDeck.CardsAmount);
+        Assert.That(lookAtDeckCards, Is.Not.Null);
+        Assert.That(lookAtDeckCards.Starter, Is.EqualTo(_player1));
+        Assert.That(_table.CentralDeck.CardsAmount, Is.EqualTo(cardsAmountBeforeEffect - 2));
     }
 
     [Test]
@@ -82,8 +82,8 @@ public class FortuneWheelTests
 
         List<BaseAction> result = lookAtDeckCards.ApplyRule(_table);
 
-        Assert.IsNull(result);
-        Assert.AreEqual(cardsAmountBeforeEffect, _table.CentralDeck.CardsAmount);
+        Assert.That(result, Is.Null);
+        Assert.That(_table.CentralDeck.CardsAmount, Is.EqualTo(cardsAmountBeforeEffect));
     }
 
     [Test]
@@ -110,7 +110,7 @@ public class FortuneWheelTests
         List<Card> lastTwoCards =
             allCardsFromTopToBottom.GetRange(allCardsFromTopToBottom.Count - 2, 2);
 
-        CollectionAssert.Contains(lastTwoCards, firstCard);
-        CollectionAssert.Contains(lastTwoCards, secondCard);
+        Assert.That(lastTwoCards, Does.Contain(firstCard));
+        Assert.That(lastTwoCards, Does.Contain(secondCard));
     }
 }

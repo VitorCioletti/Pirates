@@ -45,14 +45,14 @@ public class SpyglassTests
 
         List<BaseAction> result = spyglass.ApplyEffect(action, null);
 
-        Assert.AreEqual(1, result.Count);
+        Assert.That(result.Count, Is.EqualTo(1));
 
         var discardCard = result[0] as DiscardCard;
 
-        Assert.IsNotNull(discardCard);
-        Assert.AreEqual(_starterPlayer, discardCard.Starter);
-        Assert.AreEqual(_targetPlayer, discardCard.Target);
-        CollectionAssert.AreEquivalent(new List<string> {rum.Id, sake.Id}, discardCard.Options);
+        Assert.That(discardCard, Is.Not.Null);
+        Assert.That(discardCard.Starter, Is.EqualTo(_starterPlayer));
+        Assert.That(discardCard.Target, Is.EqualTo(_targetPlayer));
+        Assert.That(discardCard.Options, Is.EquivalentTo(new List<string> {rum.Id, sake.Id}));
     }
 
     [Test]
@@ -64,11 +64,11 @@ public class SpyglassTests
 
         List<BaseAction> result = spyglass.ApplyEffect(action, null);
 
-        Assert.AreEqual(1, result.Count);
+        Assert.That(result.Count, Is.EqualTo(1));
 
         var discardCard = result[0] as DiscardCard;
 
-        Assert.IsNotNull(discardCard);
-        Assert.AreEqual(0, discardCard.Options.Count);
+        Assert.That(discardCard, Is.Not.Null);
+        Assert.That(discardCard.Options.Count, Is.EqualTo(0));
     }
 }

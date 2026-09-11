@@ -13,7 +13,7 @@ public class CannonTests
     {
         var cannon = new Cannon();
 
-        Assert.AreEqual(1, cannon.Shots);
+        Assert.That(cannon.Shots, Is.EqualTo(1));
     }
 
     [Test]
@@ -25,8 +25,8 @@ public class CannonTests
 
         List<BaseAction> result = cannon.ApplyEffect(action, null);
 
-        Assert.IsTrue(starterPlayer.Field.Cannons.Contains(cannon));
-        Assert.IsNull(result);
+        Assert.That(starterPlayer.Field.Cannons.Contains(cannon), Is.True);
+        Assert.That(result, Is.Null);
     }
 
     [Test]
@@ -38,7 +38,7 @@ public class CannonTests
 
         cannon.ApplyEffect(action, null);
 
-        Assert.AreEqual(cannon.Shots, starterPlayer.Field.CalculateDuelShots());
+        Assert.That(starterPlayer.Field.CalculateDuelShots(), Is.EqualTo(cannon.Shots));
     }
 
     [Test]
@@ -52,8 +52,10 @@ public class CannonTests
         firstCannon.ApplyEffect(action, null);
         secondCannon.ApplyEffect(action, null);
 
-        Assert.AreEqual(2, starterPlayer.Field.Cannons.Count);
+        Assert.That(starterPlayer.Field.Cannons.Count, Is.EqualTo(2));
 
-        Assert.AreEqual(firstCannon.Shots + secondCannon.Shots, starterPlayer.Field.CalculateDuelShots());
+        Assert.That(
+            starterPlayer.Field.CalculateDuelShots(),
+            Is.EqualTo(firstCannon.Shots + secondCannon.Shots));
     }
 }

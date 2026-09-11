@@ -13,9 +13,9 @@ public class NoblePirateTests
     {
         var noblePirate = new NoblePirate();
 
-        Assert.AreEqual(0, noblePirate.Shots);
-        Assert.AreEqual(1, noblePirate.Treasures);
-        Assert.IsTrue(noblePirate.Drownable);
+        Assert.That(noblePirate.Shots, Is.EqualTo(0));
+        Assert.That(noblePirate.Treasures, Is.EqualTo(1));
+        Assert.That(noblePirate.Drownable, Is.True);
     }
 
     [Test]
@@ -29,9 +29,9 @@ public class NoblePirateTests
 
         var result = noblePirate.ApplyEffect(action, null);
 
-        Assert.IsTrue(starterPlayer.Field.Crew.Contains(noblePirate));
-        Assert.IsFalse(targetPlayer.Field.Crew.Contains(noblePirate));
-        Assert.IsNull(result);
+        Assert.That(starterPlayer.Field.Crew.Contains(noblePirate), Is.True);
+        Assert.That(targetPlayer.Field.Crew.Contains(noblePirate), Is.False);
+        Assert.That(result, Is.Null);
     }
 
     [Test]
@@ -56,6 +56,6 @@ public class NoblePirateTests
         player.Field.Add(new NoblePirate());
         player.Field.Add(new NoblePirate());
 
-        Assert.AreEqual(2, player.CalculateTreasurePoints());
+        Assert.That(player.CalculateTreasurePoints(), Is.EqualTo(2));
     }
 }

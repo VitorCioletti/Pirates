@@ -70,11 +70,11 @@ public class YourHighnessTests
 
         List<BaseAction> result = yourHighness.ApplyEffect(action, _table);
 
-        Assert.AreEqual(1, result.Count);
+        Assert.That(result.Count, Is.EqualTo(1));
 
         var choosePlayer = (ChoosePlayer)result[0];
 
-        CollectionAssert.AreEquivalent(otherPlayers.Select(p => p.Id), choosePlayer.Options);
+        Assert.That(choosePlayer.Options, Is.EquivalentTo(otherPlayers.Select(p => p.Id)));
     }
 
     [Test]
@@ -94,7 +94,7 @@ public class YourHighnessTests
 
         var choosePlayer = (ChoosePlayer)result[0];
 
-        CollectionAssert.AreEquivalent(new[] {playerThatStillQualifies.Id}, choosePlayer.Options);
+        Assert.That(choosePlayer.Options, Is.EquivalentTo(new[] {playerThatStillQualifies.Id}));
     }
 
     [Test]
@@ -112,8 +112,8 @@ public class YourHighnessTests
 
         List<BaseAction> stealResult = choosePlayer.ApplyRule(_table);
 
-        Assert.AreEqual(1, stealResult.Count);
-        Assert.IsInstanceOf<StealCard>(stealResult[0]);
+        Assert.That(stealResult.Count, Is.EqualTo(1));
+        Assert.That(stealResult[0], Is.InstanceOf<StealCard>());
     }
 
     // StealCard's constructor forwards the chosen target only to compute the
@@ -141,7 +141,7 @@ public class YourHighnessTests
 
         stealCard.FillChoices(new List<string> {cardToSteal.Id});
 
-        Assert.IsNull(stealCard.Target);
+        Assert.That(stealCard.Target, Is.Null);
         Assert.Throws<NullReferenceException>(ApplyRule);
 
         void ApplyRule()
@@ -155,7 +155,7 @@ public class YourHighnessTests
     {
         var yourHighness = new YourHighness();
 
-        Assert.AreEqual(3, yourHighness.Life);
+        Assert.That(yourHighness.Life, Is.EqualTo(3));
     }
 
     [Test]
@@ -165,7 +165,7 @@ public class YourHighnessTests
 
         yourHighness.TakeDamage(1);
 
-        Assert.AreEqual(2, yourHighness.Life);
+        Assert.That(yourHighness.Life, Is.EqualTo(2));
     }
 
     [Test]

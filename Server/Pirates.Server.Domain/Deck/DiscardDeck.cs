@@ -7,11 +7,11 @@ namespace Pirates.Server.Domain.Deck
 
     public class DiscardDeck : BaseDeck
     {
-        public DiscardDeck() => Cards = new LinkedList<Card>();
+        public DiscardDeck() => Cards = [];
 
         public List<T> GetAll<T>() where T : Card
         {
-            var cards = (List<T>)Cards.Select(c => c is T);
+            List<T> cards = Cards.OfType<T>().ToList();
 
             if (cards.Count == 0)
                 throw new CardNotFoundInDiscardDeckException(typeof(T).ToString());

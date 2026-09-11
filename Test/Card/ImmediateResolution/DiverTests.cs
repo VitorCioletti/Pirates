@@ -3,9 +3,11 @@ namespace Pirates.Server.Domain.Test.Card.ImmediateResolution;
 using System;
 using System.Collections.Generic;
 using Action;
+using Action.Resultant;
 using Deck;
 using Domain.Card;
 using Domain.Card.ImmediateResolution;
+using Domain.Exception.Deck;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -37,33 +39,35 @@ public class DiverTests
     }
 
     [Test]
-    public void ApplyEffectMustThrowInvalidCastExceptionWhenDiscardDeckIsEmpty()
+    public void ApplyEffectMustThrowCardNotFoundInDiscardDeckExceptionWhenDiscardDeckIsEmpty()
     {
-        // Diver.ApplyEffect always calls DiscardDeck.GetAll<Card>(), whose
-        // implementation casts Cards.Select(c => c is T) (an IEnumerable<bool>)
-        // directly to List<T>. That cast is invalid at runtime, so calling
-        // Diver.ApplyEffect currently always throws InvalidCastException,
-        // regardless of the discard deck's contents, and its intended
-        // "let the starter pick any card from the discard deck" behavior is
-        // unreachable.
         var starterPlayer = new Player(string.Empty, null, null, null, null);
 
         var action = Substitute.For<BaseAction>(starterPlayer, null);
         var diver = new Diver();
 
-        Assert.Throws<InvalidCastException>(() => diver.ApplyEffect(action, _table));
+        Assert.Throws<CardNotFoundInDiscardDeckException>(() => diver.ApplyEffect(action, _table));
     }
 
     [Test]
-    public void ApplyEffectMustThrowInvalidCastExceptionEvenWhenDiscardDeckHasCards()
+    public void ApplyEffectMustReturnChooseCardInDeckOfferingEveryDiscardedCard()
     {
         var starterPlayer = new Player(string.Empty, null, null, null, null);
+        var firstDiscardedCard = Substitute.For<Card>();
+        var secondDiscardedCard = Substitute.For<Card>();
 
-        _table.DiscardDeck.PushTop(new List<Card> {Substitute.For<Card>(), Substitute.For<Card>()});
+        _table.DiscardDeck.PushTop(new List<Card> {firstDiscardedCard, secondDiscardedCard});
 
         var action = Substitute.For<BaseAction>(starterPlayer, null);
         var diver = new Diver();
 
-        Assert.Throws<InvalidCastException>(() => diver.ApplyEffect(action, _table));
+        List<BaseAction> result = diver.ApplyEffect(action, _table);
+
+        Assert.That(result.Count, Is.EqualTo(1));
+
+        var chooseCardInDeck = result[0] as ChooseCardInDeck;
+
+        Assert.That(chooseCardInDeck, Is.Not.Null);
+        Assert.That(chooseCardInDeck.Options.Count, Is.EqualTo(2));
     }
 }

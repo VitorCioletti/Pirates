@@ -1,6 +1,6 @@
 namespace Pirates.Protocol.Match.Server
 {
-    public class Event
+    public class ServerEvent
     {
         public EventLocation Location { get; private set; }
 
@@ -8,7 +8,7 @@ namespace Pirates.Protocol.Match.Server
 
         public bool Added { get; private set; }
 
-        public Event(EventLocation location, string cardId, bool added)
+        public ServerEvent(EventLocation location, string cardId, bool added)
         {
             Location = location;
             CardId = cardId;

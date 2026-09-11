@@ -3,9 +3,12 @@ namespace Pirates.Server.Domain.Test.Card.Ship;
 using System;
 using System.Collections.Generic;
 using Action;
+using Action.Resultant;
 using Deck;
+using Domain.Card;
 using Domain.Card.ImmediateResolution;
 using Domain.Card.Ship;
+using Domain.Exception.Deck;
 using Exception.Card;
 using NSubstitute;
 using NUnit.Framework;
@@ -54,26 +57,37 @@ public class PoseidonServantTests
         _table = new Table(players);
     }
 
-    // DiscardDeck.GetAll<T>() casts an IEnumerable<bool> (the result of
-    // Cards.Select(c => c is T)) directly to List<T>, which always fails at
-    // runtime. Because PoseidonServant.ApplyEffect calls that method to build
-    // the card choices for ChooseCardInDeck, invoking the effect currently
-    // always throws instead of letting the starter choose a card back from
-    // the discard pile.
     [Test]
-    public void ApplyEffectMustThrowBecauseDiscardDeckGetAllIsBroken()
+    public void ApplyEffectMustThrowCardNotFoundInDiscardDeckExceptionWhenDiscardDeckIsEmpty()
     {
         Player starterPlayer = _table.CurrentPlayer;
 
         var action = Substitute.For<BaseAction>(starterPlayer, null);
         var poseidonServant = new PoseidonServant();
 
-        Assert.Throws<InvalidCastException>(ApplyEffect);
+        Assert.Throws<CardNotFoundInDiscardDeckException>(ApplyEffect);
 
         void ApplyEffect()
         {
             poseidonServant.ApplyEffect(action, _table);
         }
+    }
+
+    [Test]
+    public void ApplyEffectMustReturnChooseCardInDeckOfferingEveryDiscardedCard()
+    {
+        Player starterPlayer = _table.CurrentPlayer;
+        var discardedCard = Substitute.For<Card>();
+
+        _table.DiscardDeck.PushTop(discardedCard);
+
+        var action = Substitute.For<BaseAction>(starterPlayer, null);
+        var poseidonServant = new PoseidonServant();
+
+        List<BaseAction> result = poseidonServant.ApplyEffect(action, _table);
+
+        Assert.That(result.Count, Is.EqualTo(1));
+        Assert.That(result[0], Is.InstanceOf<ChooseCardInDeck>());
     }
 
     [Test]

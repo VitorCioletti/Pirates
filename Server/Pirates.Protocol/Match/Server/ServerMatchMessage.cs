@@ -11,7 +11,7 @@ namespace Pirates.Protocol.Match.Server
 
         public BaseChoice Choice { get; private set; }
 
-        public Dictionary<string, List<Event>> Events { get; private set; }
+        public Dictionary<string, List<ServerEvent>> Events { get; private set; }
 
         public string CurrentTurnPlayerId { get; private set; }
 
@@ -20,7 +20,7 @@ namespace Pirates.Protocol.Match.Server
             Guid roomId,
             int remainingActions,
             int treasurePoints,
-            Dictionary<string, List<Event>> events,
+            Dictionary<string, List<ServerEvent>> events,
             BaseChoice choice,
             string currentTurnPlayerId,
             string errorId = null,

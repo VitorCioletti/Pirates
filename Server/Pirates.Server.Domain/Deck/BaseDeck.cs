@@ -11,7 +11,7 @@ namespace Pirates.Server.Domain.Deck
 
         protected LinkedList<Card> Cards { get; set; }
 
-        public void PushTop(Card card) => PushTop(new List<Card> {card});
+        public void PushTop(Card card) => PushTop([card]);
 
         public void PushTop(List<Card> cards) => _insert(cards, true);
 

@@ -16,14 +16,14 @@ namespace Pirates.Server.Domain.Deck
 
         public Card GetTop()
         {
-            LinkedListNode<Card> lastNode = Cards.Last;
+            LinkedListNode<Card> firstNode = Cards.First;
 
-            if (lastNode == null)
+            if (firstNode == null)
                 return null;
 
-            Cards.RemoveLast();
+            Cards.RemoveFirst();
 
-            return lastNode.Value;
+            return firstNode.Value;
         }
 
         public List<Card> GetTop(int amount)

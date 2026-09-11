@@ -28,13 +28,13 @@ namespace Pirates.Server.Service.Match
 
         private readonly Dictionary<Player, List<BaseAction>> _availableActionsSentToPlayers;
 
-        private readonly Dictionary<string, List<Event>> _currentActionsTriggeredEvents;
+        private readonly Dictionary<string, List<ServerEvent>> _currentActionsTriggeredEvents;
 
         private readonly object _lockObject;
 
         public MatchService(List<string> playersIds)
         {
-            _currentActionsTriggeredEvents = new Dictionary<string, List<Event>>();
+            _currentActionsTriggeredEvents = new Dictionary<string, List<ServerEvent>>();
 
             var players = new List<Player>();
 
@@ -49,7 +49,7 @@ namespace Pirates.Server.Service.Match
 
                 players.Add(player);
 
-                _currentActionsTriggeredEvents[player.Id] = new List<Event>();
+                _currentActionsTriggeredEvents[player.Id] = new List<ServerEvent>();
             }
 
             _lockObject = new object();
@@ -161,7 +161,7 @@ namespace Pirates.Server.Service.Match
             {
                 case BaseResultantWithDictionaryChoice resultantWithDictionaryChoice:
                     Dictionary<string, string> choiceDictionary =
-                        ((ClientBooleanChoiceDictionary)clientMatchMessage.Choice).Choices;
+                        ((ClientBooleanChoice)clientMatchMessage.Choice).Choices;
 
                     resultantWithDictionaryChoice.FillChoices(choiceDictionary);
 
@@ -327,7 +327,7 @@ namespace Pirates.Server.Service.Match
             string cardId,
             bool added)
         {
-            var newEvent = new Event(eventLocation, cardId, added);
+            var newEvent = new ServerEvent(eventLocation, cardId, added);
 
             _currentActionsTriggeredEvents[playerId].Add(newEvent);
         }
@@ -344,7 +344,7 @@ namespace Pirates.Server.Service.Match
 
                 var choice = new ClientChoiceList(ChoiceType.Action, idAvailableActions);
 
-                Dictionary<string, List<Event>> events = _getCurrentMatchState(player);
+                Dictionary<string, List<ServerEvent>> events = _getCurrentMatchState(player);
 
                 var serverMatchMessage = new ServerMatchMessage(
                     player.Id,
@@ -361,45 +361,45 @@ namespace Pirates.Server.Service.Match
             return messages;
         }
 
-        private Dictionary<string, List<Event>> _getCurrentMatchState(Player target)
+        private Dictionary<string, List<ServerEvent>> _getCurrentMatchState(Player target)
         {
-            var allEvents = new Dictionary<string, List<Event>>();
+            var allEvents = new Dictionary<string, List<ServerEvent>>();
 
             foreach (Player player in _table.Players)
             {
-                var eventsAddedCards = new List<Event>();
+                var eventsAddedCards = new List<ServerEvent>();
 
-                IEnumerable<Event> handEvents = _createEvents(
+                IEnumerable<ServerEvent> handEvents = _createEvents(
                     player,
                     target,
                     EventLocation.Hand,
                     player.Hand.GetAll());
 
-                IEnumerable<Event> cannonEvents = _createEvents(
+                IEnumerable<ServerEvent> cannonEvents = _createEvents(
                     player,
                     target,
                     EventLocation.Cannon,
                     player.Field.Cannons);
 
-                IEnumerable<Event> protectedEvents = _createEvents(
+                IEnumerable<ServerEvent> protectedEvents = _createEvents(
                     player,
                     target,
                     EventLocation.Protected,
                     player.Field.Protected);
 
-                IEnumerable<Event> surpriseDuelEvents = _createEvents(
+                IEnumerable<ServerEvent> surpriseDuelEvents = _createEvents(
                     player,
                     target,
                     EventLocation.SurpriseDuel,
                     player.Field.SurpriseDuel);
 
-                IEnumerable<Event> crewEvents = _createEvents(
+                IEnumerable<ServerEvent> crewEvents = _createEvents(
                     player,
                     target,
                     EventLocation.Crew,
                     player.Field.Crew);
 
-                IEnumerable<Event> shipEvents = _createEvents(
+                IEnumerable<ServerEvent> shipEvents = _createEvents(
                     player,
                     target,
                     EventLocation.Ship,
@@ -418,13 +418,13 @@ namespace Pirates.Server.Service.Match
             return allEvents;
         }
 
-        private List<Event> _createEvents(
+        private List<ServerEvent> _createEvents(
             Player player,
             Player target,
             EventLocation eventLocation,
             IEnumerable<Card> cards)
         {
-            var addedCardsEvents = new List<Event>();
+            var addedCardsEvents = new List<ServerEvent>();
 
             foreach (Card card in cards)
             {
@@ -432,7 +432,7 @@ namespace Pirates.Server.Service.Match
 
                 string cardId = shouldShowCardId ? card.Id : string.Empty;
 
-                var newEvent = new Event(eventLocation, cardId, true);
+                var newEvent = new ServerEvent(eventLocation, cardId, true);
 
                 addedCardsEvents.Add(newEvent);
             }

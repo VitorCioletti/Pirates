@@ -3,11 +3,13 @@ namespace Pirates.Server.Domain.Test.Card.ImmediateResolution;
 using System;
 using System.Collections.Generic;
 using Action;
+using Action.Resultant;
 using Deck;
 using Domain.Card;
 using Domain.Card.Crew;
 using Domain.Card.ImmediateResolution;
 using Domain.Exception.Card;
+using Domain.Exception.Deck;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -53,33 +55,54 @@ public class CallCrewTests
     }
 
     [Test]
-    public void ApplyEffectMustThrowInvalidCastExceptionWhenDiscardDeckIsEmpty()
+    public void ApplyEffectMustThrowCardNotFoundInDiscardDeckExceptionWhenDiscardDeckIsEmpty()
     {
-        // DiscardDeck.GetAll<T>() casts the result of Cards.Select(c => c is T)
-        // (an IEnumerable<bool>) directly to List<T>. That cast is invalid at
-        // runtime for any T, so it always throws InvalidCastException before
-        // the "no crew member in discard deck" check can ever run - meaning
-        // NoCrewMemberInDiscardDeckException is currently unreachable.
+        // CallCrew.ApplyEffect calls discardDeck.GetAll<BaseCrewMember>() and only
+        // afterward checks `if (discardedCrewMembers.Count == 0) throw new
+        // NoCrewMemberInDiscardDeckException(...)`. But GetAll<T>() itself already
+        // throws CardNotFoundInDiscardDeckException whenever no card of type T is
+        // found, so it never returns an empty list — CallCrew's own
+        // NoCrewMemberInDiscardDeckException check is unreachable dead code, and the
+        // exception actually surfaced is CardNotFoundInDiscardDeckException instead.
         var starterPlayer = new Player(string.Empty, null, null, null, null);
 
         var action = Substitute.For<BaseAction>(starterPlayer, null);
         var callCrew = new CallCrew();
 
-        Assert.Throws<InvalidCastException>(() => callCrew.ApplyEffect(action, _table));
+        Assert.Throws<CardNotFoundInDiscardDeckException>(() => callCrew.ApplyEffect(action, _table));
     }
 
     [Test]
-    public void ApplyEffectMustThrowInvalidCastExceptionEvenWhenDiscardDeckHasCrewMembers()
+    public void ApplyEffectMustThrowCardNotFoundInDiscardDeckExceptionWhenDiscardDeckHasNoCrewMembers()
     {
-        // Same underlying DiscardDeck.GetAll<T> bug: it throws unconditionally,
-        // regardless of the discard deck's actual contents.
         var starterPlayer = new Player(string.Empty, null, null, null, null);
 
-        _table.DiscardDeck.PushTop(new List<Card> {new Pirate()});
+        _table.DiscardDeck.PushTop(new Rum());
 
         var action = Substitute.For<BaseAction>(starterPlayer, null);
         var callCrew = new CallCrew();
 
-        Assert.Throws<InvalidCastException>(() => callCrew.ApplyEffect(action, _table));
+        Assert.Throws<CardNotFoundInDiscardDeckException>(() => callCrew.ApplyEffect(action, _table));
+    }
+
+    [Test]
+    public void ApplyEffectMustReturnChooseCardInDeckOfferingEveryDiscardedCrewMember()
+    {
+        var starterPlayer = new Player(string.Empty, null, null, null, null);
+        var discardedPirate = new Pirate();
+
+        _table.DiscardDeck.PushTop(discardedPirate);
+
+        var action = Substitute.For<BaseAction>(starterPlayer, null);
+        var callCrew = new CallCrew();
+
+        List<BaseAction> result = callCrew.ApplyEffect(action, _table);
+
+        Assert.That(result.Count, Is.EqualTo(1));
+
+        var chooseCardInDeck = result[0] as ChooseCardInDeck;
+
+        Assert.That(chooseCardInDeck, Is.Not.Null);
+        Assert.That(chooseCardInDeck.Options, Is.EqualTo(new List<string> {discardedPirate.Id}));
     }
 }

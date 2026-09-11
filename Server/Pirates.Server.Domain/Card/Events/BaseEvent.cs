@@ -1,4 +1,4 @@
-namespace Pirates.Server.Domain.Card.Event
+namespace Pirates.Server.Domain.Card.Events
 {
     public abstract class BaseEvent : Card
     {

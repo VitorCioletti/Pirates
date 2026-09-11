@@ -91,7 +91,7 @@ namespace Pirates.Server.Domain
             OnAdd?.Invoke(cannon);
         }
 
-        public void Remover(Cannon cannon)
+        public void Remove(Cannon cannon)
         {
             Cannons.Remove(cannon);
 

@@ -29,7 +29,7 @@ public static class CardsGenerator
         return cards;
     }
 
-    private static IEnumerable<Card> _createCards(string name, int amount)
+    private static List<Card> _createCards(string name, int amount)
     {
         var cards = new List<Card>();
 

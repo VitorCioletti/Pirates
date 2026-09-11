@@ -130,12 +130,12 @@ namespace Pirates.Server.Domain
 
         private List<BaseAction> _getPrimaryActions()
         {
-            var acoes = new List<BaseAction>
+            var actions = new List<BaseAction>
             {
                 new Duel(CurrentPlayer, null, null), new DrawCard(CurrentPlayer, null), new BuyCard(CurrentPlayer)
             };
 
-            return acoes;
+            return actions;
         }
 
         private void _processImmediateAction(

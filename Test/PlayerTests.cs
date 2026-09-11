@@ -147,9 +147,9 @@ public class PlayerTests
 
         _player.Field.Add(ironHull);
 
-        int vidaTotal = ironHull.Life;
+        int totalLife = ironHull.Life;
 
-        for (int i = 0; i <= vidaTotal; i++)
+        for (int i = 0; i <= totalLife; i++)
         {
             _player.Field.DamageShip();
         }

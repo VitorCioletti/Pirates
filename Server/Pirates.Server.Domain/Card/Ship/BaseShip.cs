@@ -6,12 +6,12 @@ namespace Pirates.Server.Domain.Card.Ship
     {
         public int Life { get; private set; } = 3;
 
-        public void TakeDamage(int dano)
+        public void TakeDamage(int damage)
         {
             if (Life == 0)
                 throw new ShipHasNoLifeException(this);
 
-            Life -= dano;
+            Life -= damage;
         }
     }
 }

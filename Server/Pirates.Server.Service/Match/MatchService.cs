@@ -287,7 +287,7 @@ namespace Pirates.Server.Service.Match
 
         private void _onAddCardAtHand(string playerId, Card card)
         {
-            _adicionarEvento(
+            _addEvent(
                 playerId,
                 EventLocation.Hand,
                 card.Id,
@@ -296,7 +296,7 @@ namespace Pirates.Server.Service.Match
 
         private void _onRemoveCardAtHand(string playerId, Card card)
         {
-            _adicionarEvento(
+            _addEvent(
                 playerId,
                 EventLocation.Hand,
                 card.Id,
@@ -305,7 +305,7 @@ namespace Pirates.Server.Service.Match
 
         private void _onAddCardAtField(string playerId, Card card)
         {
-            _adicionarEvento(
+            _addEvent(
                 playerId,
                 EventLocation.Field,
                 card.Id,
@@ -314,14 +314,14 @@ namespace Pirates.Server.Service.Match
 
         private void _onRemoveCardAtField(string playerId, Card card)
         {
-            _adicionarEvento(
+            _addEvent(
                 playerId,
                 EventLocation.Field,
                 card.Id,
                 false);
         }
 
-        private void _adicionarEvento(
+        private void _addEvent(
             string playerId,
             EventLocation eventLocation,
             string cardId,
@@ -418,7 +418,7 @@ namespace Pirates.Server.Service.Match
             return allEvents;
         }
 
-        private IEnumerable<Event> _createEvents(
+        private List<Event> _createEvents(
             Player player,
             Player target,
             EventLocation eventLocation,

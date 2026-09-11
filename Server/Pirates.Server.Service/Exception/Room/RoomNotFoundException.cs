@@ -4,8 +4,8 @@ namespace Pirates.Server.Service.Exception.Room
 
     public class RoomNotFoundException : BaseRoomException
     {
-        public RoomNotFoundException(Guid idSala) :
-            base("room-not-found", $"Room \"{idSala}\" was not found.")
+        public RoomNotFoundException(Guid roomId) :
+            base("room-not-found", $"Room \"{roomId}\" was not found.")
         {
         }
     }

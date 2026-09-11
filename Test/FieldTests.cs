@@ -69,9 +69,9 @@ public class FieldTests
 
         _field.Add(ironHull);
 
-        Assert.Throws<ShipAlreadyExistsException>(Adicionar);
+        Assert.Throws<ShipAlreadyExistsException>(AddShip);
 
-        void Adicionar()
+        void AddShip()
         {
             _field.Add(ironHull);
         }
@@ -104,13 +104,13 @@ public class FieldTests
     }
 
     [Test]
-    public void DeveAdicionarCanhao()
+    public void MustAddCannon()
     {
-        var canhao = new Cannon();
+        var cannon = new Cannon();
 
-        _field.Add(canhao);
+        _field.Add(cannon);
 
-        Assert.That(_field.Cannons[0], Is.EqualTo(canhao));
+        Assert.That(_field.Cannons[0], Is.EqualTo(cannon));
     }
 
     [Test]
@@ -124,13 +124,13 @@ public class FieldTests
     }
 
     [Test]
-    public void DeveRemoverCanhao()
+    public void MustRemoveCannon()
     {
         var cannon = new Cannon();
 
         _field.Add(cannon);
 
-        _field.Remover(cannon);
+        _field.Remove(cannon);
 
         Assert.That(_field.Cannons.Count, Is.EqualTo(0));
     }

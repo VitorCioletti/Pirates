@@ -2,7 +2,7 @@ namespace Pirates.Server.Domain.Action.Primary
 {
     using System.Collections.Generic;
     using Card;
-    using Card.Event;
+    using Card.Events;
 
     public class BuyCard : BasePrimaryAction
     {

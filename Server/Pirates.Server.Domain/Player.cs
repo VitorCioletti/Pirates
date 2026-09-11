@@ -73,18 +73,18 @@ public class Player
 
     public override int GetHashCode() => Id.GetHashCode();
 
-    public static bool operator ==(Player jogador1, Player jogador2)
+    public static bool operator ==(Player player1, Player player2)
     {
-        if (ReferenceEquals(jogador1, jogador2))
+        if (ReferenceEquals(player1, player2))
             return true;
 
-        if (ReferenceEquals(jogador1, null))
+        if (ReferenceEquals(player1, null))
             return false;
 
-        if (ReferenceEquals(jogador2, null))
+        if (ReferenceEquals(player2, null))
             return false;
 
-        return jogador1.Equals(jogador2);
+        return player1.Equals(player2);
     }
 
     public static bool operator !=(Player player1, Player player2) => !(player1 == player2);

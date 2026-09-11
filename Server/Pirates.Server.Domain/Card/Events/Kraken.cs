@@ -1,11 +1,11 @@
-namespace Pirates.Server.Domain.Card.Event
+namespace Pirates.Server.Domain.Card.Events
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Action;
-    using Action.Immediate;
-    using Action.Resultant;
-    using Crew;
+    using Pirates.Server.Domain.Action;
+    using Pirates.Server.Domain.Action.Immediate;
+    using Pirates.Server.Domain.Action.Resultant;
+    using Pirates.Server.Domain.Card.Crew;
 
     public class Kraken : BaseEvent
     {

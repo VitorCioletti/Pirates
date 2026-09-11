@@ -12,8 +12,8 @@ namespace Pirates.Server.Domain.Action.Resultant
         public DistributeCards(
             BaseAction origin,
             Player starter,
-            IEnumerable<Player> jogadores,
-            IEnumerable<Card> cartas)
+            IEnumerable<Player> players,
+            IEnumerable<Card> cards)
             : base(
                 origin,
                 starter,
@@ -21,8 +21,8 @@ namespace Pirates.Server.Domain.Action.Resultant
                 ChoiceType.Player,
                 ChoiceType.Card,
                 2,
-                cartas.GetIds(),
-                jogadores.Select(j => j.Id.ToString()).ToList())
+                cards.GetIds(),
+                players.Select(j => j.Id.ToString()).ToList())
         {
         }
 

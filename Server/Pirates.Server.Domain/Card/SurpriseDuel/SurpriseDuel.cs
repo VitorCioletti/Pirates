@@ -12,9 +12,9 @@ namespace Pirates.Server.Domain.Card.SurpriseDuel
 
         public override List<BaseAction> ApplyEffect(BaseAction action, Table table)
         {
-            Field fieldRealizador = action.Starter.Field;
+            Field starterField = action.Starter.Field;
 
-            fieldRealizador.Add(this);
+            starterField.Add(this);
 
             return null;
         }

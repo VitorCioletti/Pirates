@@ -1,14 +1,13 @@
-namespace Pirates.Server.Domain.Test.Card.Event;
+namespace Pirates.Server.Domain.Test.Card.Events;
 
 using System;
 using System.Collections.Generic;
-using Domain.Action;
-using Domain.Action.Resultant;
+using Action;
+using Deck;
 using Domain.Card.Crew;
-using Domain.Card.Event;
+using Domain.Card.Events;
 using Domain.Card.Ship;
-using Domain.Deck;
-using Domain.Exception.Action;
+using Exception.Action;
 using NSubstitute;
 using NUnit.Framework;
 

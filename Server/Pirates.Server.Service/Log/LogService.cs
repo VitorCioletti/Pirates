@@ -4,6 +4,7 @@ namespace Pirates.Server.Service.Log
     using Configuration;
     using Microsoft.Extensions.Configuration;
     using Serilog;
+    using Serilog.Core;
 
     public static class LogService
     {
@@ -11,22 +12,22 @@ namespace Pirates.Server.Service.Log
 
         public static void ConfigureLogger()
         {
-            Logger = _criarLogger(ConfigurationService.Data);
+            Logger = _createLogger(ConfigurationService.Data);
 
-            _configuraExcecaoNaoTratada();
+            _configureUnhandledExceptionHandling();
         }
 
-        private static ILogger _criarLogger(IConfiguration configuracao) =>
-            new LoggerConfiguration().ReadFrom.Configuration(configuracao).CreateLogger();
+        private static Logger _createLogger(IConfiguration configuration) =>
+            new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
 
-        private static void _configuraExcecaoNaoTratada()
+        private static void _configureUnhandledExceptionHandling()
         {
-            AppDomain.CurrentDomain.UnhandledException += ExcecaoNaoTratada;
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
-            void ExcecaoNaoTratada(object _, UnhandledExceptionEventArgs args)
+            void UnhandledExceptionHandler(object _, UnhandledExceptionEventArgs args)
             {
-                Logger.Error($"Ocorreu um não tratado:\n\"{args.ExceptionObject}\".");
-                Logger.Information("Servidor finalizado com erro.");
+                Logger.Error($"An unhandled exception occurred:\n\"{args.ExceptionObject}\".");
+                Logger.Information("Server terminated with error.");
 
                 Environment.Exit(1);
             }

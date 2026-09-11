@@ -46,7 +46,7 @@ namespace Pirates.Server.Domain
             duelShots += _calculateCannonDuelShots();
             duelShots += _calculateSurpriseDuelShots();
             duelShots += _calculateCrewDuelShots();
-            duelShots += _calculateShipDuelShots(duelShots);
+            duelShots = _calculateShipDuelShots(duelShots);
 
             return duelShots;
         }
